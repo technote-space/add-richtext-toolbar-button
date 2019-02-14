@@ -28,6 +28,11 @@ This plugin needs PHP5.6 or higher.
 
 == Screenshots ==
 
+1. Gutenberg editor
+2. Add button setting
+3. Button setting list
+4. Dashboard
+
 == Upgrade Notice ==
 
 == Changelog ==
