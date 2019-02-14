@@ -1,0 +1,6 @@
+node_modules/
+src/
+
+gutenberg.config.js
+package.json
+package-lock.json

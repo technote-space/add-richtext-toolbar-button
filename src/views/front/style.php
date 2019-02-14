@@ -1,0 +1,47 @@
+<?php
+/**
+ * @version 0.0.1
+ * @author technote-space
+ * @copyright technote-space All Rights Reserved
+ * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
+ * @link https://technote.space/
+ */
+
+if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
+	return;
+}
+/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
+/** @var array $settings */
+/** @var string $wrap */
+/** @var array|null $pre_style */
+!isset($pre_style) and $pre_style = [];
+?>
+<style>
+<?php foreach ($settings as $setting):?>
+<?php if (!empty($setting['options']['styles']) || !empty($pre_style)):?>
+<?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['tag_name'] . '.' . $setting['options']['class_name'];?>
+<?php if (empty($setting['options']['styles'])):?>
+<?php $instance->h($selector);?> {
+<?php foreach ($pre_style as $style):?>
+    <?php $instance->h($style, false, true, false);?>
+
+<?php endforeach;?>
+}
+<?php else:?>
+<?php foreach ($setting['options']['styles'] as $pseudo => $styles):?>
+<?php '' !== $pseudo and $selector .= ':' . $pseudo;?>
+<?php $instance->h($selector);?> {
+<?php foreach ($pre_style as $style):?>
+    <?php $instance->h($style, false, true, false);?>
+
+<?php endforeach;?>
+<?php foreach ($styles as $style):?>
+    <?php $instance->h($style, false, true, false);?>
+
+<?php endforeach;?>
+}
+<?php endforeach;?>
+<?php endif;?>
+<?php endif;?>
+<?php endforeach;?>
+</style>

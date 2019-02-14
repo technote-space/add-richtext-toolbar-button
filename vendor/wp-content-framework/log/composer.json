@@ -1,0 +1,23 @@
+{
+    "name": "wp-content-framework/log",
+    "type": "library",
+    "description": "Wordpress content framework",
+    "homepage": "https://github.com/wp-content-framework",
+    "keywords": ["wordpress", "framework"],
+    "authors": [
+        {
+            "name": "technote",
+            "email": "technote.space@gmail.com",
+            "homepage": "https://technote.space"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "wp-content-framework/db": "~0.0.1",
+        "wp-content-framework/cron": "~0.0.1",
+        "wp-content-framework/admin": "~0.0.1"
+    },
+    "autoload": {
+    },
+    "license": "GPL-2.0+"
+}

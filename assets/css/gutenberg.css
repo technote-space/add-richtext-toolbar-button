@@ -1,0 +1,24 @@
+/**
+ * @version 0.0.1
+ * @author technote-space
+ * @copyright technote-space All Rights Reserved
+ * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
+ * @link https://technote.space/
+ */
+
+.add-richtext-toolbar-button-is-active.components-dropdown-menu .components-dropdown-menu__toggle {
+    box-shadow: none;
+    background-color: #555d66;
+    color: #fff;
+}
+
+.components-tooltip .components-popover__content .add-richtext-toolbar-button-nav-item-title {
+    color: black;
+    padding: 3px;
+    font-size: 1em !important;
+}
+
+.add-richtext-toolbar-button-nav-item-title-wrapper {
+    width: 100%;
+    text-align: left;
+}

@@ -1,0 +1,12 @@
+Order Deny,Allow
+Deny from all
+
+#allow access to assets
+<FilesMatch "^(.+)\.(css|js|woff|woff2|ttf)$">
+	Allow from all
+</FilesMatch>
+
+#allow access to images
+<FilesMatch "^(.+)\.(png|gif|jpg|jpeg|ico)$">
+	Allow from all
+</FilesMatch>
