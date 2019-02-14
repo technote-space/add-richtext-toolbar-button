@@ -11,10 +11,10 @@
         "description": "This plugin makes it easy to add RichText toolbar button."
     },
     "banners": {
-        "low": "https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/banner-772x250.png"
+        "low": "https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/banner-772x250.png"
     },
     "icons" : {
-        "1x" : "https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/icon-128x128.png",
-        "2x" : "https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/icon-256x256.png"
+        "1x" : "https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/icon-128x128.png",
+        "2x" : "https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/icon-256x256.png"
     }
 }
