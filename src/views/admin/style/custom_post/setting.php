@@ -20,10 +20,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         line-height: 1;
     }
 
-    .preview-item {
-        display: inline-block;
-    }
-
     .display-area {
         max-width: 100px;
         max-height: 100px;
