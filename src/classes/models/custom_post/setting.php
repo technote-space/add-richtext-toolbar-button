@@ -679,6 +679,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'shadow'           => 'box-shadow: 3px 3px 3px #ccc;',
 			'highlighter'      => 'background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, #6f6 75%);',
 			'block'            => 'display: block;',
+			'inline block'     => 'display: inline-block;',
 			'icon'             => [
 				'display: block;',
 				'padding: 10px;',
