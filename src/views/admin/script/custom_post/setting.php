@@ -159,6 +159,18 @@ $instance->add_script_view( 'admin/script/icon' );
                     return false;
                 });
             })();
+
+            // preview
+            (function () {
+                $('.display-auxiliary-line').on('change', function () {
+                    const $target = $('.setting-preview');
+                    if ($(this).prop('checked')) {
+                        $target.addClass('auxiliary-line');
+                    } else {
+                        $target.removeClass('auxiliary-line');
+                    }
+                }).trigger('change');
+            })();
         });
     })(jQuery);
 </script>

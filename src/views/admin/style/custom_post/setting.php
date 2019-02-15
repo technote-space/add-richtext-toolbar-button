@@ -24,6 +24,10 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         display: inline-block;
     }
 
+    .setting-preview.auxiliary-line {
+        border: dashed #ddd 2px;
+    }
+
     .display-area {
         max-width: 100px;
         max-height: 100px;
@@ -82,5 +86,9 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 
     .checkbox input[type=checkbox] {
         vertical-align: bottom;
+    }
+    
+    .display-auxiliary-line-wrap {
+        text-align: right;
     }
 </style>
