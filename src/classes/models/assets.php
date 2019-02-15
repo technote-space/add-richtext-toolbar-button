@@ -144,7 +144,6 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 */
 	private function get_pre_style_for_front() {
 		return $this->apply_filters( 'pre_style_for_front', [
-			'display: inline-block;',
 			'line-height: 1;',
 			'font-size: 1em;',
 		] );

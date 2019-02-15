@@ -20,10 +20,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         line-height: 1;
     }
 
-    .preview-item {
-        display: inline-block;
-    }
-
     .setting-preview.auxiliary-line {
         border: dashed #ddd 2px;
     }
