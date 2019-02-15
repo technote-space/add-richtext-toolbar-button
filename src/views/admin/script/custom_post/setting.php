@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.1
+ * @version 0.0.2
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -129,7 +129,7 @@ $instance->add_script_view( 'admin/script/icon' );
                 $target.on('keyup', function () {
                     const search = $(this).val().toLowerCase();
                     $result.find('.select-group').addClass('disabled');
-                        $result.find('.select-group').each(function () {
+                    $result.find('.select-group').each(function () {
                         if ('' !== search) {
                             const val = $(this).val().toLowerCase();
                             if (val.indexOf(search) !== -1 && val !== search) {
@@ -137,8 +137,8 @@ $instance->add_script_view( 'admin/script/icon' );
                             }
                         } else {
                             $(this).removeClass('disabled');
-                    }
-                });
+                        }
+                    });
                 }).trigger('keyup');
             })();
 
