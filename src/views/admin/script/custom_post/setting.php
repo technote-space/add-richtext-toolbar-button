@@ -129,14 +129,17 @@ $instance->add_script_view( 'admin/script/icon' );
                 $target.on('keyup', function () {
                     const search = $(this).val().toLowerCase();
                     $result.find('.select-group').addClass('disabled');
-                    if ('' !== search) {
                         $result.find('.select-group').each(function () {
-                            if ($(this).val().toLowerCase().indexOf(search) !== -1) {
+                        if ('' !== search) {
+                            const val = $(this).val().toLowerCase();
+                            if (val.indexOf(search) !== -1 && val !== search) {
                                 $(this).removeClass('disabled');
                             }
-                        });
+                        } else {
+                            $(this).removeClass('disabled');
                     }
                 });
+                }).trigger('keyup');
             })();
 
             // preset
