@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-02-15 00:07+0900\n"
+"PO-Revision-Date: 2019-02-15 17:22+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -177,6 +177,9 @@ msgstr "ラベル"
 msgid "block"
 msgstr "ブロック"
 
+msgid "inline block"
+msgstr "インラインブロック"
+
 msgid "default icon"
 msgstr "デフォルトアイコン"
 
@@ -191,3 +194,6 @@ msgstr "詳細: [%s](%s)"
 
 msgid "registerFormatType's check"
 msgstr "registerFormatType のチェック動作"
+
+msgid "Display auxiliary line"
+msgstr "補助線を表示"

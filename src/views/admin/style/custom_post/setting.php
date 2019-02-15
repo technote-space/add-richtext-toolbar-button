@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.1
+ * @version 0.0.2
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -20,8 +20,8 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         line-height: 1;
     }
 
-    .preview-item {
-        display: inline-block;
+    .setting-preview.auxiliary-line {
+        border: dashed #ddd 2px;
     }
 
     .display-area {
@@ -82,5 +82,9 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 
     .checkbox input[type=checkbox] {
         vertical-align: bottom;
+    }
+
+    .display-auxiliary-line-wrap {
+        text-align: right;
     }
 </style>
