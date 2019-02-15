@@ -194,3 +194,6 @@ msgstr "詳細: [%s](%s)"
 
 msgid "registerFormatType's check"
 msgstr "registerFormatType のチェック動作"
+
+msgid "Display auxiliary line"
+msgstr "補助線を表示"
