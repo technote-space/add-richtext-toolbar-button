@@ -103,6 +103,22 @@ border: 1px solid #acf;
 ### 有効かどうか
 これを外すと全てのボタンが無効になります。
 
+### 文字色ボタンが有効かどうか
+文字色を変更できるボタンを追加するかどうかを指定します。
+
+![文字色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170357.png)
+
+## 文字色ボタンのアイコン
+文字色を変更できるボタンのアイコンを指定します。
+
+### 背景色ボタンが有効かどうか
+背景色を変更できるボタンを追加するかどうかを指定します。
+
+![背景色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170358.png)
+
+## 背景色ボタンのアイコン
+背景色を変更できるボタンのアイコンを指定します。
+
 ### デフォルトアイコン
 設定でアイコンを指定しなかった場合に使用されるアイコンです。
 
