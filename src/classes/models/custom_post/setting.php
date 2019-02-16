@@ -369,7 +369,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	public function get_settings( $target, $post_type = null ) {
 		if ( ! isset( $this->_cache_settings[ $target ][ $post_type ] ) ) {
 			$setting_details = $this->get_setting_details( $target );
-			$settings        = [];
+			$settings        = $this->get_default_buttons( $target );
 			$direction       = 'front' === $target ? 'DESC' : 'ASC';
 			foreach (
 				$this->list_data( true, null, 1, null, [
@@ -410,6 +410,41 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
+	 * @param string $target
+	 *
+	 * @return array
+	 */
+	private function get_default_buttons( $target ) {
+		$settings = [];
+		if ( 'editor' === $target ) {
+			if ( $this->apply_filters( 'is_valid_font_color' ) ) {
+				$settings[] = [
+					'id'      => 'font-color',
+					'options' => [
+						'class_name' => $this->get_default_class_name( 'font-color' ),
+						'icon'       => $this->apply_filters( 'font_color_icon' ),
+						'style'      => 'color',
+					],
+					'title'   => $this->translate( 'font color' ),
+				];
+			}
+			if ( $this->apply_filters( 'is_valid_background_color' ) ) {
+				$settings[] = [
+					'id'      => 'background-color',
+					'options' => [
+						'class_name' => $this->get_default_class_name( 'background-color' ),
+						'icon'       => $this->apply_filters( 'background_color_icon' ),
+						'style'      => 'background-color',
+					],
+					'title'   => $this->translate( 'background color' ),
+				];
+			}
+		}
+
+		return $settings;
+	}
+
+	/**
 	 * @param array $options
 	 * @param \WP_Post $post
 	 *
@@ -426,7 +461,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
-	 * @param int $post_id
+	 * @param int|string $post_id
 	 *
 	 * @return string
 	 */

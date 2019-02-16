@@ -34,11 +34,12 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$handle = 'add-richtext-toolbar-button-editor';
 		$this->enqueue_style( $handle, 'gutenberg.css' );
 		$this->enqueue_script( $handle, 'add-richtext-toolbar-button-gutenberg.min.js', [
-			'wp-blocks',
+			'wp-data',
 			'wp-element',
 			'wp-rich-text',
 			'wp-components',
 			'wp-url',
+			'wp-i18n',
 			'lodash',
 		] );
 		$this->localize_script( $handle, 'artb_params', $this->get_editor_params( $post->post_type ) );
