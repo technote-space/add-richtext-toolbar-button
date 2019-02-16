@@ -1,8 +1,8 @@
 <?php
 /**
- * WP_Framework Package Log
+ * WP_Framework Package Update
  *
- * @version 0.0.10
+ * @version 0.0.2
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -16,16 +16,16 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 /**
- * Class Package_Log
+ * Class Package_Update
  * @package WP_Framework
  */
-class Package_Log extends Package_Base {
+class Package_Update extends Package_Base {
 
 	/**
 	 * @return int
 	 */
 	public function get_priority() {
-		return 10;
+		return 20;
 	}
 
 	/**
@@ -36,22 +36,13 @@ class Package_Log extends Package_Base {
 	}
 
 	/**
-	 * @return bool
-	 */
-	protected function is_valid_admin() {
-		return true;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function get_configs() {
 		return [
 			'config',
-			'db',
 			'filter',
 			'map',
-			'setting',
 		];
 	}
 }

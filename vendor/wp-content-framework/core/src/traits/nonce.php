@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Nonce
  *
- * @version 0.0.21
+ * @version 0.0.33
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -71,10 +71,19 @@ trait Nonce {
 			$uid = - 1;
 		}
 
-		$token = wp_get_session_token();
+		$token = $this->get_session_token();
 		$i     = wp_nonce_tick();
 
 		return substr( wp_hash( $i . '|' . $action . '|' . $uid . '|' . $token, 'nonce' ), - 12, 10 );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_session_token() {
+		$cookie = wp_parse_auth_cookie( '', 'logged_in' );
+
+		return ! empty( $cookie['token'] ) ? $cookie['token'] : '';
 	}
 
 	/**
@@ -117,7 +126,7 @@ trait Nonce {
 			$uid = - 1;
 		}
 
-		$token = wp_get_session_token();
+		$token = $this->get_session_token();
 		$i     = wp_nonce_tick();
 
 		// Nonce generated 0-12 hours ago

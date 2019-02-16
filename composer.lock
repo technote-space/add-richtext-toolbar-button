@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c40f6a2ee6b2116665dfc89d13b771b6",
+    "content-hash": "14cbd9d941e1b880c691f5d6594ef2aa",
     "packages": [
         {
             "name": "matthiasmullie/minify",
@@ -217,16 +217,16 @@
         },
         {
             "name": "wp-content-framework/admin",
-            "version": "v0.0.8",
+            "version": "v0.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/admin.git",
-                "reference": "fcc7b6f45590d2ca5fb4601a376169df1b49c851"
+                "reference": "3ea5659d358f26b7b44a621284543840e7ff2625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/fcc7b6f45590d2ca5fb4601a376169df1b49c851",
-                "reference": "fcc7b6f45590d2ca5fb4601a376169df1b49c851",
+                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/3ea5659d358f26b7b44a621284543840e7ff2625",
+                "reference": "3ea5659d358f26b7b44a621284543840e7ff2625",
                 "shasum": ""
             },
             "require": {
@@ -252,7 +252,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-02-13T17:39:45+00:00"
+            "time": "2019-02-16T13:36:39+00:00"
         },
         {
             "name": "wp-content-framework/common",
@@ -335,16 +335,16 @@
         },
         {
             "name": "wp-content-framework/core",
-            "version": "v0.0.31",
+            "version": "v0.0.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/core.git",
-                "reference": "cb77d461b829bca76746899cbc1e9da009759501"
+                "reference": "bc04fbee14c47094b87633825040315104d54aff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/core/zipball/cb77d461b829bca76746899cbc1e9da009759501",
-                "reference": "cb77d461b829bca76746899cbc1e9da009759501",
+                "url": "https://api.github.com/repos/wp-content-framework/core/zipball/bc04fbee14c47094b87633825040315104d54aff",
+                "reference": "bc04fbee14c47094b87633825040315104d54aff",
                 "shasum": ""
             },
             "require": {
@@ -378,7 +378,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-02-08T08:27:12+00:00"
+            "time": "2019-02-16T10:25:40+00:00"
         },
         {
             "name": "wp-content-framework/cron",
@@ -502,16 +502,16 @@
         },
         {
             "name": "wp-content-framework/log",
-            "version": "v0.0.9",
+            "version": "v0.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/log.git",
-                "reference": "932531fe956a7e668cdc6ea2eae5fca37112414a"
+                "reference": "7bcad8c6c89b2370637acacbece680f11f3185d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/932531fe956a7e668cdc6ea2eae5fca37112414a",
-                "reference": "932531fe956a7e668cdc6ea2eae5fca37112414a",
+                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/7bcad8c6c89b2370637acacbece680f11f3185d6",
+                "reference": "7bcad8c6c89b2370637acacbece680f11f3185d6",
                 "shasum": ""
             },
             "require": {
@@ -538,7 +538,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-02-12T17:50:00+00:00"
+            "time": "2019-02-16T07:48:55+00:00"
         },
         {
             "name": "wp-content-framework/mail",
@@ -657,23 +657,22 @@
             "time": "2019-02-02T19:08:53+00:00"
         },
         {
-            "name": "wp-content-framework/upgrade",
-            "version": "v0.0.8",
+            "name": "wp-content-framework/update",
+            "version": "v0.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/wp-content-framework/upgrade.git",
-                "reference": "6088532b1787a779eb2aed73388c11e46f07511d"
+                "url": "https://github.com/wp-content-framework/update.git",
+                "reference": "fbc8362a5ed8d04625a8796bfec5dbc5d789e0b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/upgrade/zipball/6088532b1787a779eb2aed73388c11e46f07511d",
-                "reference": "6088532b1787a779eb2aed73388c11e46f07511d",
+                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/fbc8362a5ed8d04625a8796bfec5dbc5d789e0b7",
+                "reference": "fbc8362a5ed8d04625a8796bfec5dbc5d789e0b7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0",
-                "wp-content-framework/presenter": "~0.0.1",
-                "yahnis-elsts/plugin-update-checker": "^4.4"
+                "wp-content-framework/presenter": "~0.0.1"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -693,7 +692,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-02-13T18:15:59+00:00"
+            "time": "2019-02-16T07:00:52+00:00"
         },
         {
             "name": "wp-content-framework/view",
@@ -732,51 +731,6 @@
                 "wordpress"
             ],
             "time": "2019-02-14T10:17:52+00:00"
-        },
-        {
-            "name": "yahnis-elsts/plugin-update-checker",
-            "version": "v4.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/YahnisElsts/plugin-update-checker.git",
-                "reference": "d98d6bc6caac4b46b61186447a947323a466a021"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/d98d6bc6caac4b46b61186447a947323a466a021",
-                "reference": "d98d6bc6caac4b46b61186447a947323a466a021",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "plugin-update-checker.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yahnis Elsts",
-                    "email": "whiteshadow@w-shadow.com",
-                    "homepage": "http://w-shadow.com/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A custom update checker for WordPress plugins and themes. Useful if you can't host your plugin in the official WP repository but still want it to support automatic updates.",
-            "homepage": "https://github.com/YahnisElsts/plugin-update-checker/",
-            "keywords": [
-                "automatic updates",
-                "plugin updates",
-                "theme updates",
-                "wordpress"
-            ],
-            "time": "2018-12-30T10:38:32+00:00"
         }
     ],
     "packages-dev": [],

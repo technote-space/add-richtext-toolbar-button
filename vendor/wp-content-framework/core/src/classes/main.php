@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.30
+ * @version 0.0.32
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -41,6 +41,8 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * @property \WP_Framework_Session\Classes\Models\Session $session
  * @property \WP_Framework_Social\Classes\Models\Social $social
  * @property \WP_Framework_Post\Classes\Models\Post $post
+ * @property \WP_Framework_Update\Classes\Models\Update $update
+ * @property \WP_Framework_Update_Check\Classes\Models\Update_Check $update_check
  * @property \WP_Framework_Upgrade\Classes\Models\Upgrade $upgrade
  */
 class Main {

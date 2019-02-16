@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.1
+ * @version 0.0.3
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -77,6 +77,10 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	private function get_setting_list() {
 		return [
 			'is_valid',
+			'is_valid_font_color',
+			'font_color_icon',
+			'is_valid_background_color',
+			'background_color_icon',
 			'default_icon',
 			'default_group',
 			'test_phrase',
@@ -99,7 +103,9 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 			}
 			$detail['value'] = 1;
 		}
-		'default_icon' === $name and $detail['form_type'] = 'icon';
+		if ( $this->app->utility->ends_with( $name, '_icon' ) ) {
+			$detail['form_type'] = 'icon';
+		}
 
 		return $detail;
 	}

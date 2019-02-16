@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.2
+ * @version 0.0.3
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -43,7 +43,7 @@ $instance->add_script_view( 'admin/script/icon' );
                             const key = match[3];
                             const val = match[4];
                             if (!styles[pseudo]) styles[pseudo] = [];
-                            styles[pseudo].push(key + ': ' + val);
+                            styles[pseudo].push(key + ': ' + val + ' !important;');
                         }
                     });
 
@@ -51,7 +51,7 @@ $instance->add_script_view( 'admin/script/icon' );
                     Object.keys(styles).forEach(function (pseudo) {
                         let s = selector;
                         if (pseudo) s += ':' + pseudo;
-                        results.push(s + '{' + styles[pseudo].join(';\r\n') + '}');
+                        results.push(s + '{' + styles[pseudo].join('\r\n') + '}');
                     });
                     $elem.text(results.join('\r\n'));
                 };
