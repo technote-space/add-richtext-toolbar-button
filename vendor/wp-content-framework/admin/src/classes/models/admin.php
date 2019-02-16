@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.1
+ * @version 0.0.9
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -257,10 +257,14 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	 * @return array
 	 */
 	protected function get_namespaces() {
-		return [
-			$this->app->define->plugin_namespace . '\\Classes\\Controllers\\Admin\\',
-			$this->get_package_namespace() . '\\Classes\\Controllers\\Admin\\',
-		];
+		$namespaces = [$this->app->define->plugin_namespace . '\\Classes\\Controllers\\Admin\\'];
+		foreach ($this->app->get_packages() as $package) {
+			foreach ($package->get_admin_namespaces() as $namespace) {
+				$namespaces[] = $namespace;
+			}
+		}
+
+		return $namespaces;
 	}
 
 	/**

@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'cbd6bada88b6bca5d1b8b1b5733f514e' => $vendorDir . '/wp-content-framework/core/autoload.php',
-    '89ff252b349d4d088742a09c25f5dd74' => $vendorDir . '/yahnis-elsts/plugin-update-checker/plugin-update-checker.php',
 );

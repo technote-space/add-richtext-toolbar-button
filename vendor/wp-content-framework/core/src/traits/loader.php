@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Loader
  *
- * @version 0.0.23
+ * @version 0.0.32
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -38,6 +38,11 @@ trait Loader {
 	 * @var int $_count
 	 */
 	private $_count = null;
+
+	/**
+	 * @var array
+	 */
+	private $_namespaces = null;
 
 	/**
 	 * @return string
@@ -88,7 +93,7 @@ trait Loader {
 			$this->_list = [];
 			$sort        = [];
 			/** @var \WP_Framework_Core\Traits\Singleton $class */
-			foreach ( $this->get_namespaces() as $namespace ) {
+			foreach ( $this->_get_namespaces() as $namespace ) {
 				foreach ( $this->get_classes( $this->namespace_to_dir( $namespace ), $this->get_instanceof() ) as $class ) {
 					$slug = $class->get_class_name();
 					if ( ! isset( $this->_list[ $slug ] ) ) {
@@ -127,7 +132,7 @@ trait Loader {
 		if ( ! $exact && ! isset( $this->_list ) ) {
 			if ( ! isset( $this->_count ) ) {
 				$this->_count = 0;
-				foreach ( $this->get_namespaces() as $namespace ) {
+				foreach ( $this->_get_namespaces() as $namespace ) {
 					$this->_count += count( $this->app->utility->scan_dir_namespace_class( $this->namespace_to_dir( $namespace ) ) );
 				}
 			}
@@ -179,7 +184,7 @@ trait Loader {
 		if ( isset( $this->_cache[ $add_namespace . $class_name ] ) ) {
 			return $this->_cache[ $add_namespace . $class_name ];
 		}
-		$namespaces = $this->get_namespaces();
+		$namespaces = $this->_get_namespaces();
 		if ( ! empty( $namespaces ) ) {
 			foreach ( $namespaces as $namespace ) {
 				$class = rtrim( $namespace, '\\' ) . '\\' . $add_namespace . $class_name;
@@ -223,6 +228,17 @@ trait Loader {
 	 * @return array
 	 */
 	protected abstract function get_namespaces();
+
+	/**
+	 * @return array
+	 */
+	private function _get_namespaces() {
+		if ( ! isset( $this->_namespaces ) ) {
+			$this->_namespaces = $this->get_namespaces();
+		}
+
+		return $this->_namespaces;
+	}
 
 	/**
 	 * @return string
