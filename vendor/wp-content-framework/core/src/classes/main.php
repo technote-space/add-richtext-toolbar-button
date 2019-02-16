@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.32
+ * @version 0.0.34
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -356,12 +356,14 @@ class Main {
 	}
 
 	/**
-	 * @param string $message
+	 * @param mixed $message
 	 * @param mixed $context
 	 * @param string $level
 	 */
 	public function log( $message, $context = null, $level = '' ) {
 		if ( ! $this->app->is_valid_package( 'log' ) ) {
+			$this->error_log( $message, $context );
+
 			return;
 		}
 		if ( $message instanceof \Exception ) {
@@ -370,6 +372,20 @@ class Main {
 			$this->log->log( $message->get_error_message(), isset( $context ) ? $context : $message->get_error_data(), empty( $level ) ? 'error' : $level );
 		} else {
 			$this->log->log( $message, $context, $level );
+		}
+	}
+
+	/**
+	 * @param mixed $message
+	 * @param mixed $context
+	 */
+	private function error_log( $message, $context ) {
+		if ( $message instanceof \Exception ) {
+			error_log( $message->getMessage() );
+			error_log( print_r( isset( $context ) ? $context : $message->getTraceAsString(), true ) );
+		} elseif ( $message instanceof \WP_Error ) {
+			error_log( $message->get_error_message() );
+			error_log( print_r( isset( $context ) ? $context : $message->get_error_data(), true ) );
 		}
 	}
 
