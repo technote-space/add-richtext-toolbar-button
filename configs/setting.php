@@ -16,21 +16,39 @@ return [
 	9 => [
 		'Main Setting' => [
 			10 => [
-				'is_valid'      => [
+				'is_valid'                  => [
 					'label'   => 'validity',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'test_phrase'   => [
+				'is_valid_font_color'       => [
+					'label'   => 'font color button validity',
+					'type'    => 'bool',
+					'default' => true,
+				],
+				'font_color_icon'           => [
+					'label'   => 'font color icon',
+					'default' => 'dashicons-edit',
+				],
+				'is_valid_background_color' => [
+					'label'   => 'background color button validity',
+					'type'    => 'bool',
+					'default' => true,
+				],
+				'background_color_icon'     => [
+					'label'   => 'background color icon',
+					'default' => 'dashicons-edit',
+				],
+				'test_phrase'               => [
 					'label'     => 'test phrase',
 					'default'   => 'Hello world!',
 					'translate' => true,
 				],
-				'default_icon'  => [
+				'default_icon'              => [
 					'label'   => 'default icon',
 					'default' => 'dashicons-edit',
 				],
-				'default_group' => [
+				'default_group'             => [
 					'label' => 'default group',
 				],
 			],

@@ -77,6 +77,10 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	private function get_setting_list() {
 		return [
 			'is_valid',
+			'is_valid_font_color',
+			'font_color_icon',
+			'is_valid_background_color',
+			'background_color_icon',
 			'default_icon',
 			'default_group',
 			'test_phrase',
@@ -99,7 +103,9 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 			}
 			$detail['value'] = 1;
 		}
-		'default_icon' === $name and $detail['form_type'] = 'icon';
+		if ( $this->app->utility->ends_with( $name, '_icon' ) ) {
+			$detail['form_type'] = 'icon';
+		}
 
 		return $detail;
 	}
