@@ -15,7 +15,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 ### 設定追加
 
-![設定追加](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902150446.png)
+![設定追加](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170345.png)
 
 ### 設定一覧
 
@@ -23,7 +23,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 ### ダッシュボード
 
-![ダッシュボード](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902150415.png)
+![ダッシュボード](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170343.png)
 
 ## 要件
 - PHP 5.6 以上
