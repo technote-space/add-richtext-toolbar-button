@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.9
+ * @version 0.0.10
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -123,15 +123,17 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 			}
 		}
 
-		$hook = add_menu_page(
-			$this->get_main_menu_title(),
-			$this->get_main_menu_title(),
+		$title = $this->get_main_menu_title();
+		$slug  = $this->get_menu_slug();
+		$hook  = add_menu_page(
+			$title,
+			$title,
 			$capability,
-			$this->get_menu_slug(),
+			$slug,
 			function () {
 			},
 			$this->get_img_url( $this->app->get_config( 'config', 'menu_image' ), '' ),
-			$this->apply_filters( 'admin_menu_position' )
+			$this->get_admin_menu_position( $slug, $title )
 		);
 
 		if ( isset( $this->page ) && $this->app->user_can( $this->page->get_capability() ) ) {
@@ -164,6 +166,24 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 				} );
 			}
 		}
+	}
+
+	/**
+	 * @param string $menu_slug
+	 * @param string $menu_title
+	 *
+	 * @return float|string
+	 */
+	private function get_admin_menu_position( $menu_slug, $menu_title ) {
+		$position = $this->apply_filters( 'admin_menu_position' );
+
+		global $wp_version, $menu;
+		if ( isset( $menu["$position"] ) && version_compare( $wp_version, '4.4', '<' ) ) {
+			$position = $position + substr( base_convert( md5( $menu_slug . $menu_title ), 16, 10 ), - 5 ) * 0.00001;
+			$position = "$position";
+		}
+
+		return $position;
 	}
 
 	/**
@@ -257,9 +277,9 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	 * @return array
 	 */
 	protected function get_namespaces() {
-		$namespaces = [$this->app->define->plugin_namespace . '\\Classes\\Controllers\\Admin\\'];
-		foreach ($this->app->get_packages() as $package) {
-			foreach ($package->get_admin_namespaces() as $namespace) {
+		$namespaces = [ $this->app->define->plugin_namespace . '\\Classes\\Controllers\\Admin\\' ];
+		foreach ( $this->app->get_packages() as $package ) {
+			foreach ( $package->get_admin_namespaces() as $namespace ) {
 				$namespaces[] = $namespace;
 			}
 		}
