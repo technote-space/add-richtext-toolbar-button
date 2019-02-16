@@ -24,6 +24,10 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         border: dashed #ddd 2px;
     }
 
+    .setting-preview.auxiliary-line .preview-item {
+        border: dotted #666 1px;
+    }
+
     .display-area {
         max-width: 100px;
         max-height: 100px;

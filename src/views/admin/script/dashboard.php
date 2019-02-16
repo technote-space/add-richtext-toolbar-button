@@ -24,7 +24,7 @@ foreach ( $settings as $k => $v ) {
         $(function () {
             // icon
             (function () {
-                const target = '' + <?php $instance->json( $target );?>;
+				<?php $instance->h( 'const target = ' );?><?php $instance->json( $target );?>;
                 Object.keys(target).forEach(function (key) {
                     const $target = $(target[key]);
                     $target.on('change', function () {
