@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Presenter Traits Presenter
  *
- * @version 0.0.13
+ * @version 0.0.14
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -728,6 +728,7 @@ trait Presenter {
 	public function setup_color_picker() {
 		$this->app->get_package_instance( 'view' );
 		wp_enqueue_script( 'wp-color-picker' );
+		wp_enqueue_style( 'wp-color-picker' );
 		$this->add_script_view( 'include/script/color', [], 1 );
 	}
 

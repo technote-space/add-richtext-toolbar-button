@@ -322,16 +322,16 @@
         },
         {
             "name": "wp-content-framework/db",
-            "version": "v0.0.12",
+            "version": "v0.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/db.git",
-                "reference": "54deff4594e4d51735e14b7b3cf05d275f6a87a6"
+                "reference": "aa7ff3a418d657bb829378573de05dcd00288c02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/db/zipball/54deff4594e4d51735e14b7b3cf05d275f6a87a6",
-                "reference": "54deff4594e4d51735e14b7b3cf05d275f6a87a6",
+                "url": "https://api.github.com/repos/wp-content-framework/db/zipball/aa7ff3a418d657bb829378573de05dcd00288c02",
+                "reference": "aa7ff3a418d657bb829378573de05dcd00288c02",
                 "shasum": ""
             },
             "require": {
@@ -360,20 +360,20 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-02-12T17:49:05+00:00"
+            "time": "2019-02-17T20:45:24+00:00"
         },
         {
             "name": "wp-content-framework/presenter",
-            "version": "v0.0.13",
+            "version": "v0.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/presenter.git",
-                "reference": "e793b52eb89a4ad7d0142273d7269a8bc42a95a7"
+                "reference": "6e45be3f310c63accc8fab3c9f78b0199d79b3b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/presenter/zipball/e793b52eb89a4ad7d0142273d7269a8bc42a95a7",
-                "reference": "e793b52eb89a4ad7d0142273d7269a8bc42a95a7",
+                "url": "https://api.github.com/repos/wp-content-framework/presenter/zipball/6e45be3f310c63accc8fab3c9f78b0199d79b3b1",
+                "reference": "6e45be3f310c63accc8fab3c9f78b0199d79b3b1",
                 "shasum": ""
             },
             "require": {
@@ -399,7 +399,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-02-14T17:57:50+00:00"
+            "time": "2019-02-17T20:15:27+00:00"
         },
         {
             "name": "wp-content-framework/session",
