@@ -28,7 +28,7 @@ return [
 				],
 				'font_color_icon'           => [
 					'label'   => 'font color button icon',
-					'default' => 'dashicons-edit',
+					'default' => 'dashicons-editor-textcolor',
 				],
 				'is_valid_background_color' => [
 					'label'   => 'background color button validity',
@@ -37,7 +37,16 @@ return [
 				],
 				'background_color_icon'     => [
 					'label'   => 'background color button icon',
-					'default' => 'dashicons-edit',
+					'default' => 'dashicons-editor-textcolor',
+				],
+				'is_valid_font_size'        => [
+					'label'   => 'font size button validity',
+					'type'    => 'bool',
+					'default' => true,
+				],
+				'font_size_icon'            => [
+					'label'   => 'font size button icon',
+					'default' => 'dashicons-editor-textcolor',
 				],
 				'test_phrase'               => [
 					'label'     => 'test phrase',

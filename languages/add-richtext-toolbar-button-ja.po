@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-02-17 01:17+0900\n"
+"PO-Revision-Date: 2019-02-17 23:41+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -68,6 +68,18 @@ msgstr "文字色ボタンが有効かどうか"
 
 msgid "background color button validity"
 msgstr "背景色ボタンが有効かどうか"
+
+msgid "font size button validity"
+msgstr "文字サイズボタンが有効かどうか"
+
+msgid "font color button icon"
+msgstr "文字色ボタンのアイコン"
+
+msgid "background color button icon"
+msgstr "背景色ボタンのアイコン"
+
+msgid "font size button icon"
+msgstr "文字サイズボタンのアイコン"
 
 msgid "Main Setting"
 msgstr "メイン設定"
@@ -203,9 +215,3 @@ msgstr "registerFormatType のチェック動作"
 
 msgid "Display auxiliary line"
 msgstr "補助線を表示"
-
-msgid "font color button icon"
-msgstr "文字色ボタンのアイコン"
-
-msgid "background color button icon"
-msgstr "背景色ボタンのアイコン"

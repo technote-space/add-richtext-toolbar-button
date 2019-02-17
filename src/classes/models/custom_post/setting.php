@@ -439,6 +439,18 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'title'   => $this->translate( 'background color' ),
 				];
 			}
+			if ( $this->apply_filters( 'is_valid_font_size' ) ) {
+				$settings[] = [
+					'id'      => 'font-size',
+					'options' => [
+						'class_name' => $this->get_default_class_name( 'font-size' ),
+						'icon'       => $this->apply_filters( 'font_size_icon' ),
+						'style'      => 'font-size',
+					],
+					'title'   => $this->translate( 'font size' ),
+				];
+			}
+			$settings = $this->apply_filters( 'get_default_buttons', $settings );
 		}
 
 		return $settings;
