@@ -38,7 +38,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 ## 導入手順
 1. 管理画面のプラグインから「新規追加」  
 ![手順1](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902182243.png)  
-2. 「リッチテキスト」で検索し「今すぐインストール」を押下  
+2. 「RichText」で検索し「今すぐインストール」を押下  
 ![手順2](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902182300.png)
 3. 「有効化」  
 
