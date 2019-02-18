@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.16
+ * @version 0.0.17
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -200,6 +200,12 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return array
 	 */
 	public function get_update_data_params( \WP_Post $post, $update );
+
+	/**
+	 * @param int $post_id
+	 * @param \WP_Post $post
+	 */
+	public function untrash_post( $post_id, \WP_Post $post );
 
 	/**
 	 * @param int $post_id

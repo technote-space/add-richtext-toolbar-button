@@ -355,6 +355,14 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param int $post_id
+	 * @param \WP_Post $post
+	 */
+	public function untrash_post( $post_id, \WP_Post $post ) {
+		$this->clear_cache_file();
+	}
+
+	/**
+	 * @param int $post_id
 	 */
 	public function trash_post( $post_id ) {
 		$this->clear_cache_file();
