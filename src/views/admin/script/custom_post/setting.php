@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.1
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -19,10 +19,30 @@ $instance->add_script_view( 'admin/script/icon' );
 <script>
     (function ($) {
         $(function () {
+            // tagName
+            (function () {
+                //preview-item
+                const $target = $('#<?php $instance->h( $name_prefix );?>tag_name');
+                $target.on('input', function () {
+                    const original = $(this).val();
+                    const replaced = $(this).val().replace(/[^a-zA-Z]/g, '');
+                    if (original !== replaced) {
+                        $target.val(replaced);
+                    }
+
+                    const tag = replaced || 'span';
+                    if (tag) {
+                        console.log(tag);
+                        const html = '<' + tag + ' class="preview-item">' + '<?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) ); ?>' + '</' + tag + '>';
+                        $('.preview-item-wrap').html(html);
+                    }
+                }).trigger('input');
+            })();
+
             // style
             (function () {
                 const applyStyles = function (style) {
-                    const selector = '.setting-preview span.preview-item';
+                    const selector = '.setting-preview .preview-item-wrap .preview-item';
                     const previewStyleId = 'setting-preview-style';
                     {
                         $('#' + previewStyleId).remove();
@@ -43,7 +63,7 @@ $instance->add_script_view( 'admin/script/icon' );
                             const key = match[3];
                             const val = match[4];
                             if (!styles[pseudo]) styles[pseudo] = [];
-                            styles[pseudo].push(key + ': ' + val);
+                            styles[pseudo].push(key + ': ' + val + ' !important;');
                         }
                     });
 
@@ -51,7 +71,7 @@ $instance->add_script_view( 'admin/script/icon' );
                     Object.keys(styles).forEach(function (pseudo) {
                         let s = selector;
                         if (pseudo) s += ':' + pseudo;
-                        results.push(s + '{' + styles[pseudo].join(';\r\n') + '}');
+                        results.push(s + '{' + styles[pseudo].join('\r\n') + '}');
                     });
                     $elem.text(results.join('\r\n'));
                 };
@@ -129,14 +149,17 @@ $instance->add_script_view( 'admin/script/icon' );
                 $target.on('keyup', function () {
                     const search = $(this).val().toLowerCase();
                     $result.find('.select-group').addClass('disabled');
-                    if ('' !== search) {
-                        $result.find('.select-group').each(function () {
-                            if ($(this).val().toLowerCase().indexOf(search) !== -1) {
+                    $result.find('.select-group').each(function () {
+                        if ('' !== search) {
+                            const val = $(this).val().toLowerCase();
+                            if (val.indexOf(search) !== -1 && val !== search) {
                                 $(this).removeClass('disabled');
                             }
-                        });
-                    }
-                });
+                        } else {
+                            $(this).removeClass('disabled');
+                        }
+                    });
+                }).trigger('keyup');
             })();
 
             // preset
@@ -158,6 +181,18 @@ $instance->add_script_view( 'admin/script/icon' );
                     $target.val(result).trigger('blur');
                     return false;
                 });
+            })();
+
+            // preview
+            (function () {
+                $('.display-auxiliary-line').on('change', function () {
+                    const $target = $('.setting-preview');
+                    if ($(this).prop('checked')) {
+                        $target.addClass('auxiliary-line');
+                    } else {
+                        $target.removeClass('auxiliary-line');
+                    }
+                }).trigger('change');
             })();
         });
     })(jQuery);

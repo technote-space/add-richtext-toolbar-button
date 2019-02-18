@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Translate
  *
- * @version 0.0.25
+ * @version 0.0.33
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -80,7 +80,11 @@ trait Translate {
 	 */
 	private function setup_textdomain( $textdomain, $dir ) {
 		if ( ! isset( self::$_loaded_languages[ $textdomain ] ) ) {
-			$locale = apply_filters( 'plugin_locale', determine_locale(), $textdomain );
+			if ( function_exists( 'determine_locale' ) ) {
+				$locale = apply_filters( 'plugin_locale', determine_locale(), $textdomain );
+			} else {
+				$locale = apply_filters( 'plugin_locale', get_locale(), $textdomain );
+			}
 			$mofile = $textdomain . '-' . $locale . '.mo';
 			$path   = $dir . DS . $mofile;
 

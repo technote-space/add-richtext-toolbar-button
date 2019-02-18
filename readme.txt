@@ -1,10 +1,10 @@
 === Add RichText Toolbar Button ===
 Contributors: technote0space
-Tags: Gutenberg, Toolbar Button, RichText, ツールバー, リッチテキスト
+Tags: Gutenberg, Toolbar Button, RichText, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 0.0.1
+Stable tag: 0.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,11 +28,16 @@ This plugin needs PHP5.6 or higher.
 
 == Screenshots ==
 
+1. Gutenberg editor
+2. Add button setting
+3. Button setting list
+4. Dashboard
+
 == Upgrade Notice ==
 
 == Changelog ==
 
-= 0.0.1 =
+= 0.0.3 (2019/2/xx) =
 
 * First release
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.1
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -35,7 +35,10 @@ return [
 	],
 
 	'\Richtext_Toolbar_Button\Classes\Models\Custom_Post\Setting' => [
-		'load-edit.php' => [
+		'${prefix}app_activated' => [
+			'insert_presets',
+		],
+		'load-edit.php'          => [
 			'setup_assets',
 		],
 	],

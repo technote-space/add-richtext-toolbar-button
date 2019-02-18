@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Db Classes Models Db
  *
- * @version 0.0.11
+ * @version 0.0.13
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -429,7 +429,7 @@ class Db implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\
 					$columns = [ $columns ];
 				}
 				$columns = implode( ', ', $columns );
-				$index[] = "INDEX {$name} ({$columns})";
+				$index[] = "KEY {$name} ({$columns})";
 			}
 		}
 		if ( ! empty( $define['index']['unique'] ) ) {

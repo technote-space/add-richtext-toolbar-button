@@ -8,18 +8,9 @@ class ComposerStaticInit734242936b8562e788583a6c7eae5ff3
 {
     public static $files = array (
         'cbd6bada88b6bca5d1b8b1b5733f514e' => __DIR__ . '/..' . '/wp-content-framework/core/autoload.php',
-        '89ff252b349d4d088742a09c25f5dd74' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/plugin-update-checker.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'T' => 
-        array (
-            'TijsVerkoyen\\CssToInlineStyles\\' => 31,
-        ),
-        'S' => 
-        array (
-            'Symfony\\Component\\CssSelector\\' => 30,
-        ),
         'M' => 
         array (
             'MatthiasMullie\\PathConverter\\' => 29,
@@ -28,14 +19,6 @@ class ComposerStaticInit734242936b8562e788583a6c7eae5ff3
     );
 
     public static $prefixDirsPsr4 = array (
-        'TijsVerkoyen\\CssToInlineStyles\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
-        ),
-        'Symfony\\Component\\CssSelector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/css-selector',
-        ),
         'MatthiasMullie\\PathConverter\\' => 
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',

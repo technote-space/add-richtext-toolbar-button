@@ -2,7 +2,7 @@
 /**
  * WP_Framework
  *
- * @version 0.0.31
+ * @version 0.0.35
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -48,18 +48,20 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
  * @property \WP_Framework_Session\Classes\Models\Session $session
  * @property \WP_Framework_Social\Classes\Models\Social $social
  * @property \WP_Framework_Post\Classes\Models\Post $post
+ * @property \WP_Framework_Update\Classes\Models\Update $update
+ * @property \WP_Framework_Update_Check\Classes\Models\Update_Check $update_check
  * @property \WP_Framework_Upgrade\Classes\Models\Upgrade $upgrade
  *
  * @method void main_init()
  * @method bool has_initialized()
  * @method array get_mapped_class( string $class )
  * @method string get_plugin_version()
- * @method mixed get_config( string $name, string $key, mixed $default = null )
+ * @method mixed get_config( string $name, string | null $key = null, mixed $default = null )
  * @method mixed get_option( string $key, mixed $default = '' )
  * @method mixed get_session( string $key, mixed $default = '' )
  * @method mixed set_session( string $key, mixed $value, int | null $duration = null )
  * @method bool user_can( null | string | false $capability = null )
- * @method void log( string $message, mixed $context = null, string $level = '' )
+ * @method void log( mixed $message, mixed $context = null, string $level = '' )
  * @method void add_message( string $message, string $group = '', bool $error = false, bool $escape = true )
  * @method string get_page_slug( string $file )
  * @method mixed get_shared_object( string $key, string | null $target = null )
