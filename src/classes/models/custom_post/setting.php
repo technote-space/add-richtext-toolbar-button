@@ -32,6 +32,24 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	private $_cache_settings = [];
 
 	/**
+	 * insert presets
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function insert_presets() {
+		if ( $this->app->get_option( 'has_inserted_presets' ) ) {
+			return;
+		}
+		$this->app->option->set( 'has_inserted_presets', true );
+
+		foreach ( $this->app->get_config( 'preset' ) as $item ) {
+			$item['post_title'] = $this->translate( $this->app->utility->array_get( $item, 'name', $this->app->utility->array_get( $item, 'class_name', $item['tag_name'] ) ) );
+			unset( $item['name'] );
+			! empty( $item['group_name'] ) and $item['group_name'] = $this->translate( $item['group_name'] );
+			$this->insert( $item );
+		}
+	}
+
+	/**
 	 * setup assets
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
