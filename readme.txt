@@ -4,7 +4,7 @@ Tags: Gutenberg, Toolbar Button, RichText, Formatting, ツールバー, リッ�
 Requires at least: 4.7.0
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 0.0.3
+Stable tag: 0.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,16 +28,17 @@ This plugin needs PHP5.6 or higher.
 
 == Screenshots ==
 
-1. Gutenberg editor
-2. Add button setting
-3. Button setting list
-4. Dashboard
+1. Gutenberg editor (Toolbar buttons)
+2. Gutenberg editor (Sidebar settings)
+3. Add button setting
+4. Button setting list
+5. Dashboard
 
 == Upgrade Notice ==
 
 == Changelog ==
 
-= 0.0.3 (2019/2/xx) =
+= 0.0.4 (2019/2/18) =
 
 * First release
 
