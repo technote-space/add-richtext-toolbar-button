@@ -8,6 +8,8 @@
 
 Gutenberg エディタのツールバーに文章修飾用のボタンを追加するプラグインです。
 
+[WordPress公式ディレクトリ](https://ja.wordpress.org/plugins/add-richtext-toolbar-button/)
+
 ## スクリーンショット
 ### ツールバー
 
@@ -34,9 +36,11 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 - WordPress 4.7.0 以上
 
 ## 導入手順
-1. [ここから](https://github.com/technote-space/add-richtext-toolbar-button/archive/master.zip) ZIPをダウンロード
-2. wp-content/plugins に展開
-3. 管理画面から有効化
+1. 管理画面のプラグインから「新規追加」  
+![手順1](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902182243.png)  
+2. 「リッチテキスト」で検索し「今すぐインストール」を押下  
+![手順2](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902182300.png)
+3. 「有効化」  
 
 ## 使用方法
 ### 設定の追加
