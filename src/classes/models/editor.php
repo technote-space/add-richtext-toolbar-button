@@ -59,8 +59,9 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'     => $setting->get_settings( 'editor', $post_type ),
-			'default_icon' => $this->apply_filters( 'default_icon' ),
+			'settings'        => $setting->get_settings( 'editor', $post_type ),
+			'default_icon'    => $this->apply_filters( 'default_icon' ),
+			'inspector_title' => $this->translate( 'Inline Text Settings' ),
 		];
 	}
 }

@@ -435,40 +435,37 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	private function get_default_buttons( $target ) {
 		$settings = [];
 		if ( 'editor' === $target ) {
-			if ( $this->apply_filters( 'is_valid_font_color' ) ) {
-				$settings[] = [
-					'id'      => 'font-color',
-					'options' => [
-						'class_name' => $this->get_default_class_name( 'font-color' ),
-						'icon'       => $this->apply_filters( 'font_color_icon' ),
-						'style'      => 'color',
-					],
-					'title'   => $this->translate( 'font color' ),
-				];
-			}
-			if ( $this->apply_filters( 'is_valid_background_color' ) ) {
-				$settings[] = [
-					'id'      => 'background-color',
-					'options' => [
-						'class_name' => $this->get_default_class_name( 'background-color' ),
-						'icon'       => $this->apply_filters( 'background_color_icon' ),
-						'style'      => 'background-color',
-					],
-					'title'   => $this->translate( 'background color' ),
-				];
-			}
-			if ( $this->apply_filters( 'is_valid_font_size' ) ) {
-				$settings[] = [
-					'id'      => 'font-size',
-					'options' => [
-						'class_name' => $this->get_default_class_name( 'font-size' ),
-						'icon'       => $this->apply_filters( 'font_size_icon' ),
-						'style'      => 'font-size',
-					],
-					'title'   => $this->translate( 'font size' ),
-				];
-			}
-			$settings = $this->apply_filters( 'get_default_buttons', $settings );
+			$settings[] = [
+				'id'      => 'font-color',
+				'options' => [
+					'class_name' => $this->get_default_class_name( 'font-color' ),
+					'icon'       => $this->apply_filters( 'font_color_icon' ),
+				],
+				'title'   => $this->translate( 'font color' ),
+				'style'   => 'color',
+				'hide'    => ! $this->apply_filters( 'is_valid_font_color' ),
+			];
+			$settings[] = [
+				'id'      => 'background-color',
+				'options' => [
+					'class_name' => $this->get_default_class_name( 'background-color' ),
+					'icon'       => $this->apply_filters( 'background_color_icon' ),
+				],
+				'title'   => $this->translate( 'background color' ),
+				'style'   => 'background-color',
+				'hide'    => ! $this->apply_filters( 'is_valid_background_color' ),
+			];
+			$settings[] = [
+				'id'      => 'font-size',
+				'options' => [
+					'class_name' => $this->get_default_class_name( 'font-size' ),
+					'icon'       => $this->apply_filters( 'font_size_icon' ),
+				],
+				'title'   => $this->translate( 'font size' ),
+				'style'   => 'font-size',
+				'hide'    => ! $this->apply_filters( 'is_valid_font_size' ),
+			];
+			$settings   = $this->apply_filters( 'get_default_buttons', $settings );
 		}
 
 		return $settings;
