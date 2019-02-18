@@ -722,7 +722,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'background color' => 'background-color: #9ff;',
 			'border'           => 'border: solid 2px #f9f;',
 			'border radius'    => 'border-radius: 5px;',
-			'padding'          => 'padding: 5px;',
+			'padding'          => 'padding: .5em;',
 			'shadow'           => 'box-shadow: 3px 3px 3px #ccc;',
 			'highlighter'      => 'background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, #6f6 75%);',
 			'block'            => 'display: block;',
