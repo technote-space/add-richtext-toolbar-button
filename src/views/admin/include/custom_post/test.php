@@ -15,7 +15,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 <fieldset>
     <legend><?php $instance->h( 'preview', true ); ?></legend>
     <div class="setting-preview">
-        <span class="preview-item"><?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) ); ?></span>
+        <span class="preview-item-wrap"/>
     </div>
 </fieldset>
 <div class="display-auxiliary-line-wrap">
