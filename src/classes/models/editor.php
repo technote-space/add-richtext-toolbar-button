@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.3
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -59,8 +59,9 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'     => $setting->get_settings( 'editor', $post_type ),
-			'default_icon' => $this->apply_filters( 'default_icon' ),
+			'settings'        => $setting->get_settings( 'editor', $post_type ),
+			'default_icon'    => $this->apply_filters( 'default_icon' ),
+			'inspector_title' => $this->translate( 'Inline Text Settings' ),
 		];
 	}
 }

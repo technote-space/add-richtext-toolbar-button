@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.3
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -19,10 +19,30 @@ $instance->add_script_view( 'admin/script/icon' );
 <script>
     (function ($) {
         $(function () {
+            // tagName
+            (function () {
+                //preview-item
+                const $target = $('#<?php $instance->h( $name_prefix );?>tag_name');
+                $target.on('input', function () {
+                    const original = $(this).val();
+                    const replaced = $(this).val().replace(/[^a-zA-Z]/g, '');
+                    if (original !== replaced) {
+                        $target.val(replaced);
+                    }
+
+                    const tag = replaced || 'span';
+                    if (tag) {
+                        console.log(tag);
+                        const html = '<' + tag + ' class="preview-item">' + '<?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) ); ?>' + '</' + tag + '>';
+                        $('.preview-item-wrap').html(html);
+                    }
+                }).trigger('input');
+            })();
+
             // style
             (function () {
                 const applyStyles = function (style) {
-                    const selector = '.setting-preview span.preview-item';
+                    const selector = '.setting-preview .preview-item-wrap .preview-item';
                     const previewStyleId = 'setting-preview-style';
                     {
                         $('#' + previewStyleId).remove();

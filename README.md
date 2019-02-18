@@ -13,6 +13,10 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 ![ツールバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902150444.png)
 
+### サイドバー
+
+![サイドバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181831.png)
+
 ### 設定追加
 
 ![設定追加](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170345.png)
@@ -23,7 +27,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 ### ダッシュボード
 
-![ダッシュボード](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170343.png)
+![ダッシュボード](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181859.png)
 
 ## 要件
 - PHP 5.6 以上
@@ -45,6 +49,16 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 1. 記事の投稿画面に移動（Gutenbergエディタ）
 2. 修飾したい文字列を選択
 3. 適用するボタンを押下
+![ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181846.png)
+
+## インラインテキスト設定の利用
+1. 記事の投稿画面に移動（Gutenbergエディタ）
+2. 修飾したい文字列を選択
+3. 右側のサイドバーから適用する色やサイズを選択
+![インラインテキスト設定](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181842.png)
+* サイドバーが見つからない場合  
+右上の歯車マークを押してサイドバーを表示
+![設定](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181841.png)
 
 ## 設定
 ### タグ名
@@ -101,12 +115,14 @@ border: 1px solid #acf;
 
 ## ダッシュボード
 ### 有効かどうか
-これを外すと全てのボタンが無効になります。
+これを外すと全ての機能が無効になります。
 
 ### 文字色ボタンが有効かどうか
 文字色を変更できるボタンを追加するかどうかを指定します。
 
 ![文字色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170357.png)
+
+[インラインテキスト設定の利用](#インラインテキスト設定の利用) からは常に使用できるため、ツールバーにもボタンが必要であればONにします。
 
 ## 文字色ボタンのアイコン
 文字色を変更できるボタンのアイコンを指定します。
@@ -116,8 +132,20 @@ border: 1px solid #acf;
 
 ![背景色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170358.png)
 
+[インラインテキスト設定の利用](#インラインテキスト設定の利用) からは常に使用できるため、ツールバーにもボタンが必要であればONにします。
+
 ## 背景色ボタンのアイコン
 背景色を変更できるボタンのアイコンを指定します。
+
+## 文字サイズボタンのアイコン
+文字サイズを変更できるボタンのアイコンを指定します。
+
+### 文字サイズボタンが有効かどうか
+文字サイズを変更できるボタンを追加するかどうかを指定します。
+
+![文字サイズボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181852.png)
+
+[インラインテキスト設定の利用](#インラインテキスト設定の利用) からは常に使用できるため、ツールバーにもボタンが必要であればONにします。
 
 ### デフォルトアイコン
 設定でアイコンを指定しなかった場合に使用されるアイコンです。

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.2
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -15,7 +15,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 <fieldset>
     <legend><?php $instance->h( 'preview', true ); ?></legend>
     <div class="setting-preview">
-        <span class="preview-item"><?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) ); ?></span>
+        <span class="preview-item-wrap"/>
     </div>
 </fieldset>
 <div class="display-auxiliary-line-wrap">

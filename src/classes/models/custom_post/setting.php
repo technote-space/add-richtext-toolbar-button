@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 0.0.3
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -30,6 +30,24 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @var array $_cache_settings
 	 */
 	private $_cache_settings = [];
+
+	/**
+	 * insert presets
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function insert_presets() {
+		if ( $this->app->get_option( 'has_inserted_presets' ) ) {
+			return;
+		}
+		$this->app->option->set( 'has_inserted_presets', true );
+
+		foreach ( $this->app->get_config( 'preset' ) as $item ) {
+			$item['post_title'] = $this->translate( $this->app->utility->array_get( $item, 'name', $this->app->utility->array_get( $item, 'class_name', $item['tag_name'] ) ) );
+			unset( $item['name'] );
+			! empty( $item['group_name'] ) and $item['group_name'] = $this->translate( $item['group_name'] );
+			$this->insert( $item );
+		}
+	}
 
 	/**
 	 * setup assets
@@ -417,28 +435,37 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	private function get_default_buttons( $target ) {
 		$settings = [];
 		if ( 'editor' === $target ) {
-			if ( $this->apply_filters( 'is_valid_font_color' ) ) {
-				$settings[] = [
-					'id'      => 'font-color',
-					'options' => [
-						'class_name' => $this->get_default_class_name( 'font-color' ),
-						'icon'       => $this->apply_filters( 'font_color_icon' ),
-						'style'      => 'color',
-					],
-					'title'   => $this->translate( 'font color' ),
-				];
-			}
-			if ( $this->apply_filters( 'is_valid_background_color' ) ) {
-				$settings[] = [
-					'id'      => 'background-color',
-					'options' => [
-						'class_name' => $this->get_default_class_name( 'background-color' ),
-						'icon'       => $this->apply_filters( 'background_color_icon' ),
-						'style'      => 'background-color',
-					],
-					'title'   => $this->translate( 'background color' ),
-				];
-			}
+			$settings[] = [
+				'id'      => 'font-color',
+				'options' => [
+					'class_name' => $this->get_default_class_name( 'font-color' ),
+					'icon'       => $this->apply_filters( 'font_color_icon' ),
+				],
+				'title'   => $this->translate( 'font color' ),
+				'style'   => 'color',
+				'hide'    => ! $this->apply_filters( 'is_valid_font_color' ),
+			];
+			$settings[] = [
+				'id'      => 'background-color',
+				'options' => [
+					'class_name' => $this->get_default_class_name( 'background-color' ),
+					'icon'       => $this->apply_filters( 'background_color_icon' ),
+				],
+				'title'   => $this->translate( 'background color' ),
+				'style'   => 'background-color',
+				'hide'    => ! $this->apply_filters( 'is_valid_background_color' ),
+			];
+			$settings[] = [
+				'id'      => 'font-size',
+				'options' => [
+					'class_name' => $this->get_default_class_name( 'font-size' ),
+					'icon'       => $this->apply_filters( 'font_size_icon' ),
+				],
+				'title'   => $this->translate( 'font size' ),
+				'style'   => 'font-size',
+				'hide'    => ! $this->apply_filters( 'is_valid_font_size' ),
+			];
+			$settings   = $this->apply_filters( 'get_default_buttons', $settings );
 		}
 
 		return $settings;
@@ -710,7 +737,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'background color' => 'background-color: #9ff;',
 			'border'           => 'border: solid 2px #f9f;',
 			'border radius'    => 'border-radius: 5px;',
-			'padding'          => 'padding: 5px;',
+			'padding'          => 'padding: .5em;',
 			'shadow'           => 'box-shadow: 3px 3px 3px #ccc;',
 			'highlighter'      => 'background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, #6f6 75%);',
 			'block'            => 'display: block;',

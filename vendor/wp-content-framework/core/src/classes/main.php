@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.34
+ * @version 0.0.35
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -308,12 +308,12 @@ class Main {
 
 	/**
 	 * @param string $name
-	 * @param string $key
+	 * @param string|null $key
 	 * @param mixed $default
 	 *
 	 * @return mixed
 	 */
-	public function get_config( $name, $key, $default = null ) {
+	public function get_config( $name, $key = null, $default = null ) {
 		return $this->config->get( $name, $key, $default );
 	}
 
