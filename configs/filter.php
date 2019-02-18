@@ -35,7 +35,10 @@ return [
 	],
 
 	'\Richtext_Toolbar_Button\Classes\Models\Custom_Post\Setting' => [
-		'load-edit.php' => [
+		'${prefix}app_activated' => [
+			'insert_presets',
+		],
+		'load-edit.php'          => [
 			'setup_assets',
 		],
 	],
