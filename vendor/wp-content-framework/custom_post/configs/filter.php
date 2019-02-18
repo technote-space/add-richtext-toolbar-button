@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Configs Filter
  *
- * @version 0.0.16
+ * @version 0.0.17
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -42,6 +42,7 @@ return [
 		],
 		'save_post'                    => [
 			'save_post',
+			'untrash_post',
 		],
 		'wp_trash_post'                => [
 			'wp_trash_post',
