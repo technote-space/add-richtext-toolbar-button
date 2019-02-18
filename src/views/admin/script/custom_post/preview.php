@@ -1,7 +1,8 @@
 <?php
 /**
- * @version 0.0.1
+ * @version 1.0.0
  * @author technote-space
+ * @since 1.0.0
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -17,7 +18,7 @@ $instance->add_script_view( 'admin/script/icon' );
 <script>
     (function ($) {
         $(function () {
-            $('.display-icon').each(function(){
+            $('.display-icon').each(function () {
                 const icon = artbGetIcon($(this).val());
                 if (!icon) return;
                 $(this).closest('.icon-wrapper').append(icon);
