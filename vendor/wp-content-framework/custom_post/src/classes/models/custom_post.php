@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.16
+ * @version 0.0.17
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -265,6 +265,20 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 						],
 					];
 				}
+			}
+		}
+	}
+
+	/**
+	 * @param int $post_id
+	 * @param \WP_Post $post
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function untrash_post( $post_id, \WP_Post $post ) {
+		if ( $this->is_valid_update( $post->post_status, $post->post_type, true ) ) {
+			$custom_post = $this->get_custom_post_type( $post->post_type );
+			if ( ! empty( $custom_post ) ) {
+				$custom_post->untrash_post( $post_id, $post );
 			}
 		}
 	}
@@ -568,10 +582,11 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	/**
 	 * @param string $post_status
 	 * @param string $post_type
+	 * @param bool $untrash
 	 *
 	 * @return bool
 	 */
-	private function is_valid_update( $post_status, $post_type ) {
+	private function is_valid_update( $post_status, $post_type, $untrash = false ) {
 		return ! $this->app->utility->defined( 'DOING_AUTOSAVE' ) && in_array( $post_status, [
 				'publish',
 				'future',
@@ -579,7 +594,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 				'draft',
 				'pending',
 				'private',
-			] ) && $this->is_valid_custom_post_type( $post_type ) && 'untrash' !== $this->app->input->get( 'action' );
+			] ) && $this->is_valid_custom_post_type( $post_type ) && ( $untrash || 'untrash' !== $this->app->input->get( 'action' ) );
 	}
 
 	/**

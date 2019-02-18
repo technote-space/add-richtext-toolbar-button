@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.2
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.2 Fixed: ゴミ箱から復元したときにデザインが適用されない (#25)
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -350,6 +351,14 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @param array $data
 	 */
 	public function data_inserted( $post_id, \WP_Post $post, array $data ) {
+		$this->clear_cache_file();
+	}
+
+	/**
+	 * @param int $post_id
+	 * @param \WP_Post $post
+	 */
+	public function untrash_post( $post_id, \WP_Post $post ) {
 		$this->clear_cache_file();
 	}
 
