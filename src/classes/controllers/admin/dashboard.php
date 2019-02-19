@@ -99,12 +99,14 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 		$detail          = $this->app->setting->get_setting( $name, true );
 		$detail['id']    = str_replace( '/', '-', $detail['name'] );
 		$detail['form']  = $this->get_form_by_type( $detail['type'], false );
+		$detail['title'] = $this->translate( $detail['label'] );
 		$detail['label'] = $this->translate( $detail['label'] );
 		if ( $this->app->utility->array_get( $detail, 'type' ) === 'bool' ) {
 			if ( $detail['value'] ) {
 				$detail['checked'] = true;
 			}
 			$detail['value'] = 1;
+			$detail['label'] = $this->translate( 'Valid' );
 		}
 		if ( $this->app->utility->ends_with( $name, '_icon' ) ) {
 			$detail['form_type'] = 'icon';
