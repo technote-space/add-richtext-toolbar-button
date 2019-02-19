@@ -22,11 +22,18 @@ $instance->add_script_view( 'admin/script/icon' );
         $(function () {
             // tagName
             (function () {
-                //preview-item
                 const $target = $('#<?php $instance->h( $name_prefix );?>tag_name');
                 $target.on('input', function () {
                     const original = $(this).val();
-                    const replaced = $(this).val().replace(/[^a-zA-Z]/g, '');
+                    const replaced = $(this).val()
+                        .replace(/あ/, 'a')
+                        .replace(/い/, 'i')
+                        .replace(/う/, 'u')
+                        .replace(/え/, 'e')
+                        .replace(/お/, 'o')
+                        .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+                            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+                        }).replace(/[^a-zA-Z]/g, '');
                     if (original !== replaced) {
                         $target.val(replaced);
                     }
