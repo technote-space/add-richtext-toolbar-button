@@ -15,6 +15,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $name_prefix */
 /** @var array $groups */
 $instance->add_script_view( 'admin/script/icon' );
+$phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
 
 <script>
@@ -33,8 +34,8 @@ $instance->add_script_view( 'admin/script/icon' );
 
                     const tag = replaced || 'span';
                     if (tag) {
-                        console.log(tag);
-                        const html = '<' + tag + ' class="preview-item">' + '<?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) ); ?>' + '</' + tag + '>';
+                        const phrase = $('.multiple-lines').prop('checked') ? '<?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?>' : '<?php $instance->h( $phrase ); ?>';
+                        const html = '<' + tag + ' class="preview-item">' + phrase + '</' + tag + '>';
                         $('.preview-item-wrap').html(html);
                     }
                 }).trigger('input');
@@ -194,6 +195,9 @@ $instance->add_script_view( 'admin/script/icon' );
                         $target.removeClass('auxiliary-line');
                     }
                 }).trigger('change');
+                $('.multiple-lines').on('change', function () {
+                    $('#<?php $instance->h( $name_prefix );?>tag_name').trigger('input');
+                });
             })();
         });
     })(jQuery);

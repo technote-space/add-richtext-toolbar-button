@@ -89,7 +89,11 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         vertical-align: bottom;
     }
 
-    .display-auxiliary-line-wrap {
+    .display-preview-settings-wrap {
         text-align: right;
+    }
+
+    .display-preview-settings-wrap input {
+        margin-left: 10px;
     }
 </style>
