@@ -21,7 +21,7 @@ return [
 	'main_menu_title'                => 'Add RichText Toolbar Button',
 
 	// db version
-	'db_version'                     => '0.0.5',
+	'db_version'                     => '0.0.6',
 
 	// menu image url
 	'menu_image'                     => 'icon-24x24.png',

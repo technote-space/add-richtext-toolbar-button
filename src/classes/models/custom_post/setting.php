@@ -131,17 +131,17 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	private function get_setting_list() {
 		return [
-			'tag_name'           => [],
-			'class_name'         => [],
-			'group_name'         => [
+			'tag_name'                => [],
+			'class_name'              => [],
+			'group_name'              => [
 				'default' => $this->apply_filters( 'default_group' ),
 			],
-			'icon'               => [
+			'icon'                    => [
 				'args' => [
 					'form_type' => 'icon',
 				],
 			],
-			'style'              => [
+			'style'                   => [
 				'args' => [
 					'target'    => [
 						'setting',
@@ -151,14 +151,14 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'preset'    => $this->get_preset(),
 				],
 			],
-			'styles'             => [
+			'styles'                  => [
 				'args' => [
 					'target' => [
 						'front',
 					],
 				],
 			],
-			'test'               => [
+			'test'                    => [
 				'args' => [
 					'target'    => [
 						'setting',
@@ -166,12 +166,21 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'form_type' => 'test',
 				],
 			],
-			'exclude_post_types' => [
+			'exclude_post_types'      => [
 				'args' => [
 					'form_type' => 'exclude_post_types',
 				],
 			],
-			'priority'           => [
+			'is_valid_toolbar_button' => [
+				'args' => [
+					'target' => [
+						'setting',
+						'front',
+						'editor',
+					],
+				],
+			],
+			'priority'                => [
 				'args' => [
 					'target' => [
 						'setting',
@@ -256,7 +265,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	protected function get_manage_posts_columns() {
 		return [
-			'preview'  => [
+			'preview'                 => [
 				'name'     => $this->translate( 'preview' ),
 				'callback' => function (
 					/** @noinspection PhpUnusedParameterInspection */
@@ -281,7 +290,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				},
 				'unescape' => true,
 			],
-			'display'  => [
+			'display'                 => [
 				'name'     => $this->translate( 'display' ),
 				'callback' => function (
 					/** @noinspection PhpUnusedParameterInspection */
@@ -315,11 +324,22 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				},
 				'unescape' => true,
 			],
-			'priority' => [
-				'name'         => $this->translate( 'priority' ),
-				'value'        => '',
-				'sortable'     => true,
-				'default_sort' => true,
+			'is_valid_toolbar_button' => [
+				'name'                  => $this->translate( 'validity of toolbar button' ),
+				'callback'              => function ( $value ) {
+					return ! empty( $value ) ? $this->translate( 'Valid' ) : $this->translate( 'Invalid' );
+				},
+				'sortable'              => true,
+				'default_sort'          => true,
+				'default_sort_priority' => 1,
+				'desc'                  => true,
+			],
+			'priority'                => [
+				'name'                  => $this->translate( 'priority' ),
+				'value'                 => '',
+				'sortable'              => true,
+				'default_sort'          => true,
+				'default_sort_priority' => 5,
 			],
 		];
 	}
@@ -398,13 +418,16 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	public function get_settings( $target, $post_type = null ) {
 		if ( ! isset( $this->_cache_settings[ $target ][ $post_type ] ) ) {
-			$setting_details = $this->get_setting_details( $target );
-			$settings        = $this->get_default_buttons( $target );
-			$direction       = 'front' === $target ? 'DESC' : 'ASC';
+			$setting_details      = $this->get_setting_details( $target );
+			$settings             = $this->get_default_buttons( $target );
+			$priority_direction   = 'front' === $target ? 'DESC' : 'ASC';
+			$group_name_direction = 'front' === $target ? 'DESC' : 'ASC';
+			$updated_at_direction = 'front' === $target ? 'ASC' : 'DESC';
 			foreach (
 				$this->list_data( true, null, 1, null, [
-					'priority'   => $direction,
-					'group_name' => $direction,
+					'priority'   => $priority_direction,
+					'updated_at' => $updated_at_direction,
+					'group_name' => $group_name_direction,
 				] )['data'] as $data
 			) {
 				if ( ! empty( $post_type ) && in_array( $post_type, $data['exclude_post_types'] ) ) {
@@ -431,6 +454,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'id'      => $post->ID,
 					'options' => $options,
 					'title'   => $post->post_title,
+					'hide'    => ! $options['is_valid_toolbar_button'],
 				];
 			}
 			$this->_cache_settings[ $target ][ $post_type ] = $settings;
@@ -571,8 +595,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		array $errors, array $post_array
 	) {
 		$class_name = trim( $this->get_post_field( 'class_name' ) );
-		if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
-			$errors['class_name'][] = $this->translate( 'The value is unusable.' );
+			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
+				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
 		} elseif ( '' !== $class_name ) {
 			if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'Invalid format.' );
