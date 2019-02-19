@@ -228,13 +228,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'data-default' => $value,
 				],
 				'detail'     => $detail,
+				'type'       => $this->app->utility->parse_db_type( $this->app->utility->array_get( $detail, 'type' ) ),
 			];
 			if ( is_array( $setting ) ) {
 				$ret = array_replace_recursive( $ret, isset( $setting['args'] ) && is_array( $setting['args'] ) ? $setting['args'] : [] );
 			}
-			if ( $this->app->utility->array_get( $detail, 'type' ) === 'bool' ) {
+			if ( 'bool' === $ret['type'] ) {
 				$ret['value'] = 1;
 				! empty( $value ) and $ret['attributes']['checked'] = 'checked';
+				$ret['label'] = $this->translate( 'Valid' );
 			}
 			$this->_cache_setting[ $name ] = $ret;
 		}
@@ -765,6 +767,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				'[before] margin-right: .2em;',
 				'[before] color: #9cf;',
 				'[before] border-right: 1px solid #acf;',
+				'[before] vertical-align: middle;',
 			],
 			'tab'              => [
 				'display: block;',
