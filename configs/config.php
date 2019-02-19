@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.3 #28
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -21,7 +22,7 @@ return [
 	'main_menu_title'                => 'Add RichText Toolbar Button',
 
 	// db version
-	'db_version'                     => '0.0.5',
+	'db_version'                     => '0.0.6',
 
 	// menu image url
 	'menu_image'                     => 'icon-24x24.png',

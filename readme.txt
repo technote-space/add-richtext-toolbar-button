@@ -1,10 +1,10 @@
 === Add RichText Toolbar Button ===
 Contributors: technote0space
-Tags: Gutenberg, Toolbar Button, RichText, Formatting, ツールバー, リッチテキスト
+Tags: Gutenberg, RichText, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,7 +36,22 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.0.3 =
+* ツールバーボタンが有効かどうかの設定追加(デザインは適用させたままボタンを消すことが可能)
+* サイドバーの動作改善
+
 == Changelog ==
+
+= 1.0.3 (2019/2/20) =
+
+* Added: [Setting to hide button while style is valid](https://github.com/technote-space/add-richtext-toolbar-button/issues/28)
+* Added: [Multiple line preview](https://github.com/technote-space/add-richtext-toolbar-button/issues/29)
+* Added: [Line height preset](https://github.com/technote-space/add-richtext-toolbar-button/issues/30)
+* Added: [Warning box preset](https://github.com/technote-space/add-richtext-toolbar-button/issues/33)
+* Improved: [Behavior of input tag name in Japanese](https://github.com/technote-space/add-richtext-toolbar-button/issues/31)
+* Improved: [Behavior of sidebar](https://github.com/technote-space/add-richtext-toolbar-button/issues/32)
+* Improved: [Add link to setting list page after update setting](https://github.com/wp-content-framework/custom_post/issues/35)
+* Improved: [Setting list order](https://github.com/wp-content-framework/custom_post/issues/36)
 
 = 1.0.2 (2019/2/19) =
 

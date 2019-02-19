@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.3 #34
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -99,12 +100,14 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 		$detail          = $this->app->setting->get_setting( $name, true );
 		$detail['id']    = str_replace( '/', '-', $detail['name'] );
 		$detail['form']  = $this->get_form_by_type( $detail['type'], false );
+		$detail['title'] = $this->translate( $detail['label'] );
 		$detail['label'] = $this->translate( $detail['label'] );
 		if ( $this->app->utility->array_get( $detail, 'type' ) === 'bool' ) {
 			if ( $detail['value'] ) {
 				$detail['checked'] = true;
 			}
 			$detail['value'] = 1;
+			$detail['label'] = $this->translate( 'Valid' );
 		}
 		if ( $this->app->utility->ends_with( $name, '_icon' ) ) {
 			$detail['form_type'] = 'icon';

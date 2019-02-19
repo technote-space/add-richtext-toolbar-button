@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.3 #34
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -19,11 +20,11 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 <?php $instance->form( 'open', $args ); ?>
 <div id="<?php $instance->id(); ?>-dashboard" class="wrap narrow">
     <div id="<?php $instance->id(); ?>-content-wrap">
-        <table class="form-table">
+        <table class="widefat striped">
 			<?php foreach ( $settings as $k => $v ) : ?>
                 <tr>
                     <th>
-                        <label for="<?php $instance->h( $v['id'] ); ?>"><?php $instance->h( $v['label'] ); ?></label>
+                        <label for="<?php $instance->h( $v['id'] ); ?>"><?php $instance->h( $v['title'] ); ?></label>
                     </th>
                     <td>
 						<?php if ( ! empty( $v['form_type'] ) ) : ?>

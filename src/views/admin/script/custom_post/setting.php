@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.3 #29, #31
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -15,6 +16,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $name_prefix */
 /** @var array $groups */
 $instance->add_script_view( 'admin/script/icon' );
+$phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
 
 <script>
@@ -22,19 +24,26 @@ $instance->add_script_view( 'admin/script/icon' );
         $(function () {
             // tagName
             (function () {
-                //preview-item
                 const $target = $('#<?php $instance->h( $name_prefix );?>tag_name');
                 $target.on('input', function () {
                     const original = $(this).val();
-                    const replaced = $(this).val().replace(/[^a-zA-Z]/g, '');
+                    const replaced = $(this).val()
+                        .replace(/あ/g, 'a')
+                        .replace(/い/g, 'i')
+                        .replace(/う/g, 'u')
+                        .replace(/え/g, 'e')
+                        .replace(/お/g, 'o')
+                        .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+                            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+                        }).replace(/[^a-zA-Z]/g, '');
                     if (original !== replaced) {
                         $target.val(replaced);
                     }
 
                     const tag = replaced || 'span';
                     if (tag) {
-                        console.log(tag);
-                        const html = '<' + tag + ' class="preview-item">' + '<?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) ); ?>' + '</' + tag + '>';
+                        const phrase = $('.multiple-lines').prop('checked') ? '<?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?>' : '<?php $instance->h( $phrase ); ?>';
+                        const html = '<' + tag + ' class="preview-item">' + phrase + '</' + tag + '>';
                         $('.preview-item-wrap').html(html);
                     }
                 }).trigger('input');
@@ -194,6 +203,9 @@ $instance->add_script_view( 'admin/script/icon' );
                         $target.removeClass('auxiliary-line');
                     }
                 }).trigger('change');
+                $('.multiple-lines').on('change', function () {
+                    $('#<?php $instance->h( $name_prefix );?>tag_name').trigger('input');
+                });
             })();
         });
     })(jQuery);

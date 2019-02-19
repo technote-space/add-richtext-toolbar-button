@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.17
+ * @version 0.0.18
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -273,6 +273,11 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return array
 	 */
 	public function get_error_messages( $key, array $errors );
+
+	/**
+	 * @return string
+	 */
+	public function get_post_type_link();
 
 	/**
 	 * @param int $post_id

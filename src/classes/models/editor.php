@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.3 #32
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -63,6 +64,9 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'settings'        => $setting->get_settings( 'editor', $post_type ),
 			'default_icon'    => $this->apply_filters( 'default_icon' ),
 			'inspector_title' => $this->translate( 'Inline Text Settings' ),
+			'translate'       => [
+				'Please select text' => $this->translate( 'Please select text' ),
+			],
 		];
 	}
 }

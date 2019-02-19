@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.3 #35
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -25,7 +26,7 @@ return [
 				'is_valid_font_color'       => [
 					'label'   => 'font color button validity',
 					'type'    => 'bool',
-					'default' => false,
+					'default' => true,
 				],
 				'font_color_icon'           => [
 					'label'   => 'font color button icon',
@@ -34,7 +35,7 @@ return [
 				'is_valid_background_color' => [
 					'label'   => 'background color button validity',
 					'type'    => 'bool',
-					'default' => false,
+					'default' => true,
 				],
 				'background_color_icon'     => [
 					'label'   => 'background color button icon',
@@ -43,7 +44,7 @@ return [
 				'is_valid_font_size'        => [
 					'label'   => 'font size button validity',
 					'type'    => 'bool',
-					'default' => false,
+					'default' => true,
 				],
 				'font_size_icon'            => [
 					'label'   => 'font size button icon',
