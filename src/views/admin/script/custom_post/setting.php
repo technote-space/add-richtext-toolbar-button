@@ -26,11 +26,11 @@ $instance->add_script_view( 'admin/script/icon' );
                 $target.on('input', function () {
                     const original = $(this).val();
                     const replaced = $(this).val()
-                        .replace(/あ/, 'a')
-                        .replace(/い/, 'i')
-                        .replace(/う/, 'u')
-                        .replace(/え/, 'e')
-                        .replace(/お/, 'o')
+                        .replace(/あ/g, 'a')
+                        .replace(/い/g, 'i')
+                        .replace(/う/g, 'u')
+                        .replace(/え/g, 'e')
+                        .replace(/お/g, 'o')
                         .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
                             return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
                         }).replace(/[^a-zA-Z]/g, '');
