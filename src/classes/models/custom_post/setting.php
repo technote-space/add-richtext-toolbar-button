@@ -323,7 +323,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				'unescape' => true,
 			],
 			'is_valid_toolbar_button' => [
-				'name'                  => $this->translate( 'display' ),
+				'name'                  => $this->translate( 'validity of toolbar button' ),
 				'callback'              => function ( $value ) {
 					return ! empty( $value ) ? $this->translate( 'Valid' ) : $this->translate( 'Invalid' );
 				},
