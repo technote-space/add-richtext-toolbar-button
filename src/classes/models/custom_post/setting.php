@@ -810,6 +810,22 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				'[before] line-height: 1.6em;',
 				'[before] white-space: pre;',
 			],
+			'warning'          => [
+				'display: block;',
+				'position: relative;',
+				'padding: 1em;',
+				'background-color: #fbeaea;',
+				'border-width: 0 0 0 5px;',
+				'border-style: solid;',
+				'border-color: #dc3232;',
+				"[before] font-family: {$font_family};",
+				'[before] content: "\f057";',
+				'[before] color: #dc3232;',
+				'[before] font-weight: 900;',
+				'[before] font-size: 2em;',
+				'[before] vertical-align: middle;',
+				'[before] padding-right: .3em;',
+			],
 		] );
 	}
 
