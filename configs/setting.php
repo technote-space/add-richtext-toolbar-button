@@ -25,7 +25,7 @@ return [
 				'is_valid_font_color'       => [
 					'label'   => 'font color button validity',
 					'type'    => 'bool',
-					'default' => false,
+					'default' => true,
 				],
 				'font_color_icon'           => [
 					'label'   => 'font color button icon',
@@ -34,7 +34,7 @@ return [
 				'is_valid_background_color' => [
 					'label'   => 'background color button validity',
 					'type'    => 'bool',
-					'default' => false,
+					'default' => true,
 				],
 				'background_color_icon'     => [
 					'label'   => 'background color button icon',
@@ -43,7 +43,7 @@ return [
 				'is_valid_font_size'        => [
 					'label'   => 'font size button validity',
 					'type'    => 'bool',
-					'default' => false,
+					'default' => true,
 				],
 				'font_size_icon'            => [
 					'label'   => 'font size button icon',
