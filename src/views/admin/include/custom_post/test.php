@@ -19,12 +19,19 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
         <span class="preview-item-wrap"/>
     </div>
 </fieldset>
-<div class="display-auxiliary-line-wrap">
+<div class="display-preview-settings-wrap">
 	<?php $instance->form( 'input/checkbox', [
 		'value'   => 1,
 		'name'    => '',
 		'label'   => 'Display auxiliary line',
 		'checked' => true,
 		'class'   => 'display-auxiliary-line',
+	] ); ?>
+	<?php $instance->form( 'input/checkbox', [
+		'value'   => 1,
+		'name'    => '',
+		'label'   => 'Multiple lines',
+		'checked' => false,
+		'class'   => 'multiple-lines',
 	] ); ?>
 </div>

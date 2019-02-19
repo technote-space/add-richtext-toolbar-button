@@ -216,6 +216,9 @@ msgstr "registerFormatType のチェック動作"
 msgid "Display auxiliary line"
 msgstr "補助線を表示"
 
+msgid "Multiple lines"
+msgstr "複数行表示"
+
 msgid "Inline Text Settings"
 msgstr "インラインテキスト設定"
 
