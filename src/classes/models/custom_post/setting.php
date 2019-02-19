@@ -595,12 +595,12 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		array $errors, array $post_array
 	) {
 		$class_name = trim( $this->get_post_field( 'class_name' ) );
+		if ( '' !== $class_name ) {
 			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
-		} elseif ( '' !== $class_name ) {
-			if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
+			} elseif ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'Invalid format.' );
-				$errors['class_name'][] = sprintf( $this->translate( 'detail: [%s](%s)' ), 'https://github.com/WordPress/gutenberg/blob/01be7ac89b97b76c490d57a15c16466657240770/packages/rich-text/src/register-format-type.js#L82', $this->translate( 'registerFormatType\'s check' ) );
+				$errors['class_name'][] = sprintf( $this->translate( 'detail: [%s](%s)' ), $this->translate( 'registerFormatType\'s check' ), 'https://github.com/WordPress/gutenberg/blob/01be7ac89b97b76c490d57a15c16466657240770/packages/rich-text/src/register-format-type.js#L82' );
 			} elseif ( '' !== $class_name && $this->app->db->select_count( $this->get_related_table_name(), '*', [
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
