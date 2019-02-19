@@ -2,7 +2,7 @@
 /**
  * WP_Framework
  *
- * @version 0.0.35
+ * @version 0.0.36
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -418,12 +418,20 @@ class WP_Framework {
 	 */
 	public static function wp_die( $message, $file, $line, $title = '', $output_file_info = true ) {
 		! is_array( $message ) and $message = [ '[wp content framework]', $message ];
-		if ( $output_file_info && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $output_file_info ) {
 			$message[] = 'File: ' . $file;
 			$message[] = 'Line: ' . $line;
 		}
-		$message = '<ul><li>' . implode( '</li><li>', $message ) . '</li></ul>';
-		wp_die( $message, $title );
+
+		if ( is_admin() || ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY ) ) {
+			$message = '<ul><li>' . implode( '</li><li>', $message ) . '</li></ul>';
+			wp_die( $message, $title );
+		} else {
+			if ( $title ) {
+				error_log( $title );
+			}
+			error_log( print_r( $message, true ) );
+		}
 		exit;
 	}
 
