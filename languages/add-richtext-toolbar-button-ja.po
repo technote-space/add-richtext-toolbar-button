@@ -242,3 +242,6 @@ msgstr "蛍光ペン(青)"
 
 msgid "Highlighter(Yellow)"
 msgstr "蛍光ペン(黄色)"
+
+msgid "Please select text"
+msgstr "文字を選択してください"
