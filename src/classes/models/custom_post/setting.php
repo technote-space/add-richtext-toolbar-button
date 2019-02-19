@@ -744,6 +744,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'bold'             => 'font-weight: bold;',
 			'font color'       => 'color: #f00;',
 			'font size'        => 'font-size: 1.5em;',
+			'line height'      => 'line-height: 1.5;',
 			'background color' => 'background-color: #9ff;',
 			'border'           => 'border: solid 2px #f9f;',
 			'border radius'    => 'border-radius: 5px;',
