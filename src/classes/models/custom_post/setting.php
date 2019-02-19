@@ -131,17 +131,17 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	private function get_setting_list() {
 		return [
-			'tag_name'           => [],
-			'class_name'         => [],
-			'group_name'         => [
+			'tag_name'                => [],
+			'class_name'              => [],
+			'group_name'              => [
 				'default' => $this->apply_filters( 'default_group' ),
 			],
-			'icon'               => [
+			'icon'                    => [
 				'args' => [
 					'form_type' => 'icon',
 				],
 			],
-			'style'              => [
+			'style'                   => [
 				'args' => [
 					'target'    => [
 						'setting',
@@ -151,14 +151,14 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'preset'    => $this->get_preset(),
 				],
 			],
-			'styles'             => [
+			'styles'                  => [
 				'args' => [
 					'target' => [
 						'front',
 					],
 				],
 			],
-			'test'               => [
+			'test'                    => [
 				'args' => [
 					'target'    => [
 						'setting',
@@ -166,7 +166,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'form_type' => 'test',
 				],
 			],
-			'exclude_post_types' => [
+			'exclude_post_types'      => [
 				'args' => [
 					'form_type' => 'exclude_post_types',
 				],
@@ -180,7 +180,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					],
 				],
 			],
-			'priority'           => [
+			'priority'                => [
 				'args' => [
 					'target' => [
 						'setting',
@@ -237,13 +237,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'data-default' => $value,
 				],
 				'detail'     => $detail,
+				'type'       => $this->app->utility->parse_db_type( $this->app->utility->array_get( $detail, 'type' ) ),
 			];
 			if ( is_array( $setting ) ) {
 				$ret = array_replace_recursive( $ret, isset( $setting['args'] ) && is_array( $setting['args'] ) ? $setting['args'] : [] );
 			}
-			if ( $this->app->utility->array_get( $detail, 'type' ) === 'bool' ) {
+			if ( 'bool' === $ret['type'] ) {
 				$ret['value'] = 1;
 				! empty( $value ) and $ret['attributes']['checked'] = 'checked';
+				$ret['label'] = $this->translate( 'Valid' );
 			}
 			$this->_cache_setting[ $name ] = $ret;
 		}
@@ -263,7 +265,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	protected function get_manage_posts_columns() {
 		return [
-			'preview'  => [
+			'preview'                 => [
 				'name'     => $this->translate( 'preview' ),
 				'callback' => function (
 					/** @noinspection PhpUnusedParameterInspection */
@@ -288,7 +290,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				},
 				'unescape' => true,
 			],
-			'display'  => [
+			'display'                 => [
 				'name'     => $this->translate( 'display' ),
 				'callback' => function (
 					/** @noinspection PhpUnusedParameterInspection */
@@ -332,11 +334,11 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				'default_sort_priority' => 1,
 				'desc'                  => true,
 			],
-			'priority' => [
-				'name'         => $this->translate( 'priority' ),
-				'value'        => '',
-				'sortable'     => true,
-				'default_sort' => true,
+			'priority'                => [
+				'name'                  => $this->translate( 'priority' ),
+				'value'                 => '',
+				'sortable'              => true,
+				'default_sort'          => true,
 				'default_sort_priority' => 5,
 			],
 		];
@@ -416,8 +418,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	public function get_settings( $target, $post_type = null ) {
 		if ( ! isset( $this->_cache_settings[ $target ][ $post_type ] ) ) {
-			$setting_details = $this->get_setting_details( $target );
-			$settings        = $this->get_default_buttons( $target );
+			$setting_details      = $this->get_setting_details( $target );
+			$settings             = $this->get_default_buttons( $target );
 			$priority_direction   = 'front' === $target ? 'DESC' : 'ASC';
 			$group_name_direction = 'front' === $target ? 'DESC' : 'ASC';
 			$updated_at_direction = 'front' === $target ? 'ASC' : 'DESC';
@@ -593,8 +595,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		array $errors, array $post_array
 	) {
 		$class_name = trim( $this->get_post_field( 'class_name' ) );
-		if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
-			$errors['class_name'][] = $this->translate( 'The value is unusable.' );
+			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
+				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
 		} elseif ( '' !== $class_name ) {
 			if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'Invalid format.' );
@@ -768,6 +770,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'bold'             => 'font-weight: bold;',
 			'font color'       => 'color: #f00;',
 			'font size'        => 'font-size: 1.5em;',
+			'line height'      => 'line-height: 1.5;',
 			'background color' => 'background-color: #9ff;',
 			'border'           => 'border: solid 2px #f9f;',
 			'border radius'    => 'border-radius: 5px;',
@@ -789,6 +792,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				'[before] margin-right: .2em;',
 				'[before] color: #9cf;',
 				'[before] border-right: 1px solid #acf;',
+				'[before] vertical-align: middle;',
 			],
 			'tab'              => [
 				'display: block;',
@@ -832,6 +836,22 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				'[before] color: white;',
 				'[before] line-height: 1.6em;',
 				'[before] white-space: pre;',
+			],
+			'warning'          => [
+				'display: block;',
+				'position: relative;',
+				'padding: 1em;',
+				'background-color: #fbeaea;',
+				'border-width: 0 0 0 5px;',
+				'border-style: solid;',
+				'border-color: #dc3232;',
+				"[before] font-family: {$font_family};",
+				'[before] content: "\f057";',
+				'[before] color: #dc3232;',
+				'[before] font-weight: 900;',
+				'[before] font-size: 2em;',
+				'[before] vertical-align: middle;',
+				'[before] padding-right: .3em;',
 			],
 		] );
 	}

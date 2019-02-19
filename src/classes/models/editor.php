@@ -63,6 +63,9 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'settings'        => $setting->get_settings( 'editor', $post_type ),
 			'default_icon'    => $this->apply_filters( 'default_icon' ),
 			'inspector_title' => $this->translate( 'Inline Text Settings' ),
+			'translate'       => [
+				'Please select text' => $this->translate( 'Please select text' ),
+			],
 		];
 	}
 }
