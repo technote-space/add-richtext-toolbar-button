@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.17
+ * @version 0.0.18
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -413,8 +413,10 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 			$this->app->set_session( $this->get_old_post_session_key(), $this->app->input->post(), 60 );
 		} else {
 			global $typenow;
-			$post_type = get_post_type_object( $typenow );
-			$this->app->set_session( 'updated_message', sprintf( $this->translate( 'Updated %s data.' ), $post_type->labels->singular_name ), 60 );
+			if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+				$custom_post = $this->get_custom_post_type( $typenow );
+				$this->app->set_session( 'updated_message', sprintf( $this->translate( 'Updated %s data.<br>[Back to list page](%s)' ), $custom_post->get_post_type_single_name(), $custom_post->get_post_type_link() ), 60 );
+			}
 		}
 
 		return $location;
@@ -456,7 +458,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 						}
 					}
 					if ( ! empty( $updated_message ) ) {
-						$this->app->add_message( $updated_message, 'updated' );
+						$this->app->add_message( $updated_message, 'updated', false, false );
 					}
 				}
 			}
