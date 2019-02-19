@@ -198,6 +198,9 @@ msgstr "ブロック"
 msgid "inline block"
 msgstr "インラインブロック"
 
+msgid "warning"
+msgstr "警告"
+
 msgid "default icon"
 msgstr "デフォルトアイコン"
 
