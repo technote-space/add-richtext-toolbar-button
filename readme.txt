@@ -4,7 +4,7 @@ Tags: Gutenberg, RichText, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,11 +36,22 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.0.5 =
+* `disable-custom-font-sizes` の設定が反映されるように改善
+
+= 1.0.4 =
+* `disable-custom-colors` の設定が反映されるように改善
+
 = 1.0.3 =
 * ツールバーボタンが有効かどうかの設定追加(デザインは適用させたままボタンを消すことが可能)
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.5 (2019/2/20) =
+
+* Improved: [Reflect the `disable-custom-font-sizes` setting](https://github.com/technote-space/add-richtext-toolbar-button/issues/54)
+* Fixed: [Validity of toolbar button preset settings](https://github.com/technote-space/add-richtext-toolbar-button/issues/52)
 
 = 1.0.4 (2019/2/20) =
 
