@@ -38,29 +38,10 @@
     margin-right: 20px
 }
 
-.components-tooltip .components-popover__content span.artb-font-color {
-    display: inline-block;
-    background-color: white;
-    color: #ff2020;
-    font-weight: bold;
-}
-
 .add-richtext-toolbar-button-artb-font-color {
     color: #ff2020;
 }
 
-.components-tooltip .components-popover__content span.artb-background-color {
-    display: inline-block;
-    background-color: #fcb900;
-    font-weight: bold;
-}
-
 .add-richtext-toolbar-button-artb-background-color {
     background-color: #fcb900;
-}
-
-.components-tooltip .components-popover__content span.artb-font-size {
-    display: inline-block;
-    background-color: white;
-    font-weight: bold;
 }
