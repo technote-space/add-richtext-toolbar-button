@@ -14,8 +14,8 @@ This plugin makes it easy to add RichText toolbar button.
 
 This plugin makes it easy to add RichText toolbar button.
 [日本語の説明](https://technote.space/add-richtext-toolbar-button "Documentation in Japanese")
-[GitHub](https://github.com/technote-space/add-richtext-toolbar-button)
-[Issues](https://github.com/technote-space/add-richtext-toolbar-button/issues)
+[GitHub (More details)](https://github.com/technote-space/add-richtext-toolbar-button)
+[Issues (Reporting Bugs or New features)](https://github.com/technote-space/add-richtext-toolbar-button/issues)
 
 This plugin needs PHP5.6 or higher.
 
