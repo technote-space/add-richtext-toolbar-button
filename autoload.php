@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Add RichText Toolbar Button
-Plugin URI: https://github.com/technote-space/add-richtext-toolbar-button
+Plugin URI: https://wordpress.org/plugins/add-richtext-toolbar-button
 Description: This plugin makes it easy to add RichText toolbar button.
 Author: technote
 Version: 1.0.3
