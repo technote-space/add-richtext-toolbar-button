@@ -4,7 +4,7 @@ Tags: Gutenberg, RichText, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,8 +14,8 @@ This plugin makes it easy to add RichText toolbar button.
 
 This plugin makes it easy to add RichText toolbar button.
 [日本語の説明](https://technote.space/add-richtext-toolbar-button "Documentation in Japanese")
-[GitHub](https://github.com/technote-space/add-richtext-toolbar-button)
-[Issues](https://github.com/technote-space/add-richtext-toolbar-button/issues)
+[GitHub (More details)](https://github.com/technote-space/add-richtext-toolbar-button)
+[Issues (Reporting Bugs or New features)](https://github.com/technote-space/add-richtext-toolbar-button/issues)
 
 This plugin needs PHP5.6 or higher.
 
@@ -41,6 +41,10 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.4 (2019/2/20) =
+
+* Improved: [Reflect the `disable-custom-colors` setting](https://github.com/technote-space/add-richtext-toolbar-button/issues/46)
 
 = 1.0.3 (2019/2/20) =
 
