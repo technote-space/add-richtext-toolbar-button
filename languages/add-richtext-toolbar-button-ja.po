@@ -257,3 +257,6 @@ msgstr "文字を選択してください"
 
 msgid "validity of toolbar button"
 msgstr "ツールバーボタンが有効かどうか"
+
+msgid "This tag name is unusable."
+msgstr "このタグ名は使用できません。"

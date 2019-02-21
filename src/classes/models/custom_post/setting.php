@@ -613,7 +613,9 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 		$tag_name = trim( $this->get_post_field( 'tag_name' ) );
 		if ( '' !== $tag_name ) {
-			if ( ! preg_match( '/\A[a-zA-Z]+\z/', $tag_name ) ) {
+			if ( 'div' === strtolower( $tag_name ) ) {
+				$errors['tag_name'][] = $this->translate( 'This tag name is unusable.' );
+			} elseif ( ! preg_match( '/\A[a-zA-Z]+\z/', $tag_name ) ) {
 				$errors['tag_name'][] = $this->translate( 'Invalid format.' );
 			}
 		}
