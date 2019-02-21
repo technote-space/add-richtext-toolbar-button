@@ -36,6 +36,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$handle = 'add-richtext-toolbar-button-editor';
 		$this->enqueue_style( $handle, 'gutenberg.css' );
 		$this->enqueue_script( $handle, 'add-richtext-toolbar-button-gutenberg.min.js', [
+			'wp-editor',
 			'wp-data',
 			'wp-element',
 			'wp-rich-text',
@@ -61,10 +62,11 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'        => $setting->get_settings( 'editor', $post_type ),
-			'default_icon'    => $this->apply_filters( 'default_icon' ),
-			'inspector_title' => $this->translate( 'Inline Text Settings' ),
-			'translate'       => [
+			'settings'                  => $setting->get_settings( 'editor', $post_type ),
+			'default_icon'              => $this->apply_filters( 'default_icon' ),
+			'is_valid_contrast_checker' => $this->apply_filters( 'is_valid_contrast_checker' ),
+			'inspector_title'           => $this->translate( 'Inline Text Settings' ),
+			'translate'                 => [
 				'Please select text' => $this->translate( 'Please select text' ),
 			],
 		];

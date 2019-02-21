@@ -24,7 +24,7 @@ return [
 					'default' => true,
 				],
 				'is_valid_font_color'       => [
-					'label'   => 'font color button validity',
+					'label'   => 'validity of font color button',
 					'type'    => 'bool',
 					'default' => true,
 				],
@@ -33,7 +33,7 @@ return [
 					'default' => 'dashicons-editor-textcolor',
 				],
 				'is_valid_background_color' => [
-					'label'   => 'background color button validity',
+					'label'   => 'validity of background color button',
 					'type'    => 'bool',
 					'default' => true,
 				],
@@ -42,7 +42,7 @@ return [
 					'default' => 'dashicons-editor-textcolor',
 				],
 				'is_valid_font_size'        => [
-					'label'   => 'font size button validity',
+					'label'   => 'validity of font size button',
 					'type'    => 'bool',
 					'default' => true,
 				],
@@ -61,6 +61,11 @@ return [
 				],
 				'default_group'             => [
 					'label' => 'default group',
+				],
+				'is_valid_contrast_checker' => [
+					'label'   => 'validity of ContrastChecker',
+					'type'    => 'bool',
+					'default' => false,
 				],
 			],
 		],
