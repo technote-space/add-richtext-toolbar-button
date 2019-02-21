@@ -63,14 +63,17 @@ msgstr "優先度"
 msgid "validity"
 msgstr "有効かどうか"
 
-msgid "font color button validity"
+msgid "validity of font color button"
 msgstr "文字色ボタンが有効かどうか"
 
-msgid "background color button validity"
+msgid "validity of background color button"
 msgstr "背景色ボタンが有効かどうか"
 
-msgid "font size button validity"
+msgid "validity of font size button"
 msgstr "文字サイズボタンが有効かどうか"
+
+msgid "validity of ContrastChecker"
+msgstr "ContrastCheckerが有効かどうか"
 
 msgid "font color button icon"
 msgstr "文字色ボタンのアイコン"
