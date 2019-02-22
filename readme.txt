@@ -1,10 +1,10 @@
 === Add RichText Toolbar Button ===
 Contributors: technote0space
-Tags: Gutenberg, RichText, Formatting, ツールバー, リッチテキスト
+Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
-Tested up to: 5.0.3
+Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,9 +15,13 @@ This plugin makes it easy to add RichText toolbar button.
 This plugin makes it easy to add RichText toolbar button.
 [日本語の説明](https://technote.space/add-richtext-toolbar-button "Documentation in Japanese")
 [GitHub (More details)](https://github.com/technote-space/add-richtext-toolbar-button)
-[Issues (Reporting Bugs or New features)](https://github.com/technote-space/add-richtext-toolbar-button/issues)
+[Issues (Reporting a new bug or feature request)](https://github.com/technote-space/add-richtext-toolbar-button/issues)
 
 This plugin needs PHP5.6 or higher.
+
+* Any tag name and class name formatting button can be added to the rich text toolbar.
+* You can make some groups to add dropdown list instead of button.
+* You can use not only inline text and background color panel but also inline font size panel.
 
 == Installation ==
 
@@ -50,6 +54,10 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.8 (2019/2/22) =
+
+* Tested: Against WordPress v5.1.0
 
 = 1.0.7 (2019/2/22) =
 
