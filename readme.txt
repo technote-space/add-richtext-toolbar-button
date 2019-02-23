@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ This plugin needs PHP5.6 or higher.
 5. Dashboard
 
 == Upgrade Notice ==
+
+= 1.0.9 =
+* Fatal error が起こる場合があるのを修正しました。
 
 = 1.0.7 =
 * `ContrastChecker` の導入(使用するには『詳細設定』から設定値を `true` にする必要があります)
