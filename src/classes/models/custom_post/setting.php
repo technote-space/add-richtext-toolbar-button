@@ -1,12 +1,13 @@
 <?php
 /**
- * @version 1.0.7
+ * @version 1.0.10
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.2 #25
  * @since 1.0.3 #28, #30, #33, #34
  * @since 1.0.5 #52
  * @since 1.0.7 #60
+ * @since 1.0.10 trivial change
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -47,7 +48,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$this->app->option->set( 'has_inserted_presets', true );
 
 		foreach ( $this->apply_filters( 'get_setting_presets', $this->app->get_config( 'preset' ) ) as $item ) {
-			$item['post_title'] = $this->translate( $this->app->utility->array_get( $item, 'name', $this->app->utility->array_get( $item, 'class_name', $item['tag_name'] ) ) );
+			$item['post_title'] = $this->translate( $this->app->utility->array_get( $item, 'name', $this->app->utility->array_get( $item, 'class_name', $this->app->utility->array_get( $item, 'tag_name', '' ) ) ) );
 			unset( $item['name'] );
 			! empty( $item['group_name'] ) and $item['group_name'] = $this->translate( $item['group_name'] );
 			$this->insert( $item );
