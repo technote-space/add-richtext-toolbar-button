@@ -2,7 +2,7 @@
 /**
  * WP_Framework
  *
- * @version 0.0.36
+ * @version 0.0.38
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -62,7 +62,7 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
  * @method mixed set_session( string $key, mixed $value, int | null $duration = null )
  * @method bool user_can( null | string | false $capability = null )
  * @method void log( mixed $message, mixed $context = null, string $level = '' )
- * @method void add_message( string $message, string $group = '', bool $error = false, bool $escape = true )
+ * @method void add_message( string $message, string $group = '', bool $error = false, bool $escape = true, null | array $override_allowed_html = null )
  * @method string get_page_slug( string $file )
  * @method mixed get_shared_object( string $key, string | null $target = null )
  * @method void set_shared_object( string $key, mixed $object, string | null $target = null )

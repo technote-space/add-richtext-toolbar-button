@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.19
+ * @version 0.0.20
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -391,7 +391,11 @@ trait Custom_Post {
 	/**
 	 * @param \WP_Query $wp_query
 	 */
-	public function pre_get_posts( $wp_query ) {
+	public function setup_posts_orderby( $wp_query ) {
+		if ( method_exists( $this, 'pre_get_posts' ) ) {
+			return;
+		}
+
 		$orderby = $wp_query->get( 'orderby' );
 		$table   = $this->app->db->get_table( $this->get_related_table_name() );
 

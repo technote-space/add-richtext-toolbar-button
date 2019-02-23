@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.18
+ * @version 0.0.20
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -160,7 +160,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 * @param \WP_Query $wp_query
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function pre_get_posts( $wp_query ) {
+	private function setup_posts_orderby( $wp_query ) {
 		if ( ! $wp_query->is_admin ) {
 			return;
 		}
@@ -175,7 +175,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 			return;
 		}
 
-		$custom_post->pre_get_posts( $wp_query );
+		$custom_post->setup_posts_orderby( $wp_query );
 	}
 
 	/**

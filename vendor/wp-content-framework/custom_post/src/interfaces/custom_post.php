@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.18
+ * @version 0.0.20
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -126,7 +126,7 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	/**
 	 * @param \WP_Query $wp_query
 	 */
-	public function pre_get_posts( $wp_query );
+	public function setup_posts_orderby( $wp_query );
 
 	/**
 	 * @param array $columns

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Update Classes Models Update
  *
- * @version 0.0.2
+ * @version 0.0.3
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -28,13 +28,6 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_update() {
-		$this->show_plugin_update_notices();
-	}
-
-	/**
-	 * show plugin upgrade notices
-	 */
-	private function show_plugin_update_notices() {
 		add_action( 'in_plugin_update_message-' . $this->app->define->plugin_base_name, function ( $data, $r ) {
 			$new_version = $r->new_version;
 			$url         = $this->app->utility->array_get( $data, 'PluginURI' );
@@ -76,13 +69,13 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
-	 * @param string $slug
+	 * @param string|false $slug
 	 *
-	 * @return string
+	 * @return string|false
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function get_trunk_readme_url( $slug ) {
-		return $this->apply_filters( 'trunk_readme_url', 'https://plugins.svn.wordpress.org/' . $slug . '/trunk/readme.txt', $slug );
+		return $slug ? $this->apply_filters( 'trunk_readme_url', 'https://plugins.svn.wordpress.org/' . $slug . '/trunk/readme.txt', $slug ) : false;
 	}
 
 	/**
@@ -103,9 +96,12 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				'get_trunk_readme_url',
 			] as $method
 		) {
-			$response = wp_safe_remote_get( $this->$method( $slug ) );
-			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
-				return $this->parse_update_notice( $response['body'] );
+			$url = $this->$method( $slug );
+			if ( $url ) {
+				$response = wp_safe_remote_get( $url );
+				if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
+					return $this->parse_update_notice( $response['body'] );
+				}
 			}
 		}
 
@@ -119,18 +115,17 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return bool|mixed
 	 */
 	private function get_upgrade_notices( $version, $url ) {
-		$slug = $this->get_plugin_slug( $url );
-		if ( empty( $slug ) ) {
-			return false;
-		}
-
-		$transient_name = 'upgrade_notice-' . $slug . '_' . $version;
+		$slug           = $this->get_plugin_slug( $url );
+		$hash           = $this->app->utility->create_hash( $this->app->plugin_name . '/' . $version, 'upgrade' );
+		$transient_name = 'upgrade_notice-' . $hash;
 		$upgrade_notice = get_transient( $transient_name );
 
 		if ( false === $upgrade_notice ) {
 			$upgrade_notice = $this->get_upgrade_notice( $slug );
 			if ( $upgrade_notice ) {
-				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
+				set_transient( $transient_name, $upgrade_notice, $this->app->get_config( 'config', 'upgrade_notice_cache_duration' ) );
+			} else {
+				set_transient( $transient_name, '', $this->app->get_config( 'config', 'upgrade_notice_empty_cache_duration' ) );
 			}
 		}
 
