@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.35
+ * @version 0.0.38
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -394,12 +394,13 @@ class Main {
 	 * @param string $group
 	 * @param bool $error
 	 * @param bool $escape
+	 * @param null|array $override_allowed_html
 	 */
-	public function add_message( $message, $group = '', $error = false, $escape = true ) {
+	public function add_message( $message, $group = '', $error = false, $escape = true, $override_allowed_html = null ) {
 		if ( ! $this->app->is_valid_package( 'admin' ) ) {
 			return;
 		}
-		$this->admin->add_message( $message, $group, $error, $escape );
+		$this->admin->add_message( $message, $group, $error, $escape, $override_allowed_html );
 	}
 
 	/**

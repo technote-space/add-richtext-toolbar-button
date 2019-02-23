@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,10 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.11 (2019/2/24) =
+
+* Fixed: [minor bug fix](https://github.com/technote-space/add-richtext-toolbar-button/issues/72)
 
 = 1.0.10 (2019/2/23) =
 
