@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.12
+ * @version 0.0.13
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -333,27 +333,10 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	 */
 	public function add_message( $message, $group = '', $error = false, $escape = true, $override_allowed_html = null ) {
 		if ( ! $escape ) {
-			$message      = preg_replace_callback( '#\[([^()]+?)\]\s*\((https?://([\w-]+\.)+[\w-]+(/[\w-./?%&=\#]*)?)\)#', function ( $matches ) {
+			$message = preg_replace_callback( '#\[([^()]+?)\]\s*\((https?://([\w-]+\.)+[\w-]+(/[\w-./?%&=\#]*)?)\)#', function ( $matches ) {
 				return $this->url( $matches[2], $matches[1], false, ! $this->app->utility->is_admin_url( $matches[2] ), [], false );
 			}, $message );
-			$allowed_html = $this->apply_filters( 'add_message_allowed_html', [
-				'a'      => [ 'href' => true, 'target' => true, 'rel' => true ],
-				'b'      => [],
-				'br'     => [],
-				'sub'    => [],
-				'sup'    => [],
-				'strong' => [],
-				'h1'     => [],
-				'h2'     => [],
-				'h3'     => [],
-				'h4'     => [],
-				'h5'     => [],
-				'h6'     => [],
-			] );
-			if ( ! empty( $override_allowed_html ) && is_array( $override_allowed_html ) ) {
-				$allowed_html = array_replace_recursive( $allowed_html, $override_allowed_html );
-			}
-			$message = wp_kses( $message, $allowed_html );
+			$message = $this->app->utility->strip_tags( $message, $override_allowed_html );
 		}
 		$this->_messages[ $group ][ $error ? 'error' : 'updated' ][] = [ $message, $escape ];
 	}

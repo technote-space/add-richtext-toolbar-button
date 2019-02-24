@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Utility
  *
- * @version 0.0.21
+ * @version 0.0.23
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -730,5 +730,36 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param string $message
+	 * @param null|array $override_allowed_html
+	 *
+	 * @return string
+	 */
+	public function strip_tags( $message, $override_allowed_html = null ) {
+		$allowed_html = [
+			'a'      => [ 'href' => true, 'target' => true, 'rel' => true ],
+			'b'      => [],
+			'br'     => [],
+			'sub'    => [],
+			'sup'    => [],
+			'strong' => [],
+			's'      => [],
+			'u'      => [],
+			'em'     => [],
+			'h1'     => [],
+			'h2'     => [],
+			'h3'     => [],
+			'h4'     => [],
+			'h5'     => [],
+			'h6'     => [],
+		];
+		if ( ! empty( $override_allowed_html ) && is_array( $override_allowed_html ) ) {
+			$allowed_html = array_replace_recursive( $allowed_html, $override_allowed_html );
+		}
+
+		return wp_kses( $message, $allowed_html );
 	}
 }

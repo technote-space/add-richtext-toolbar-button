@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Update Classes Models Update
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -89,6 +89,19 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return $notice;
 		}
 
+		$plugin_version = $this->app->get_plugin_version();
+		if ( $this->app->get_config( 'config', 'local_test_upgrade_notice' ) ) {
+			$readme = $this->app->define->plugin_dir . DS . 'readme.txt';
+			if ( is_readable( $readme ) ) {
+				$test_version   = $this->app->get_config( 'config', 'local_test_upgrade_version' );
+				$plugin_version = $test_version ? $test_version : $plugin_version;
+
+				return $this->parse_update_notice( file_get_contents( $readme ), $plugin_version );
+			}
+
+			return false;
+		}
+
 		foreach (
 			[
 				'get_config_readme_url',
@@ -100,7 +113,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			if ( $url ) {
 				$response = wp_safe_remote_get( $url );
 				if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
-					return $this->parse_update_notice( $response['body'] );
+					return $this->parse_update_notice( $response['body'], $plugin_version );
 				}
 			}
 		}
@@ -115,7 +128,11 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return bool|mixed
 	 */
 	private function get_upgrade_notices( $version, $url ) {
-		$slug           = $this->get_plugin_slug( $url );
+		$slug = $this->get_plugin_slug( $url );
+		if ( $this->app->get_config( 'config', 'local_test_upgrade_notice' ) ) {
+			return $this->get_upgrade_notice( $slug );
+		}
+
 		$hash           = $this->app->utility->create_hash( $this->app->plugin_name . '/' . $version, 'upgrade' );
 		$transient_name = 'upgrade_notice-' . $hash;
 		$upgrade_notice = get_transient( $transient_name );
@@ -147,28 +164,36 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 
 	/**
 	 * @param string $content
+	 * @param string $plugin_version
 	 *
 	 * @return array
 	 */
-	private function parse_update_notice( $content ) {
+	private function parse_update_notice( $content, $plugin_version ) {
 		$notices         = [];
 		$version_notices = [];
 		if ( preg_match( '#==\s*Upgrade Notice\s*==([\s\S]+?)==#', $content, $matches ) ) {
 			$version = false;
 			foreach ( (array) preg_split( '~[\r\n]+~', trim( $matches[1] ) ) as $line ) {
+				$line = preg_replace( '~\[\[([^\]]*)\]\]\(([^\)]*)\)~', '<span style="${2}">${1}</span>', $line );
 				/** @noinspection HtmlUnknownTarget */
 				$line = preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
 				$line = preg_replace( '#\A\s*\*+\s*#', '', $line );
+				$line = preg_replace( '#\*\*\s*([^*]+)\s*\*\*#', '<b>${1}</b>', $line );
+				$line = preg_replace( '#`\s*(.+)\s*`#', '<code>${1}</code>', $line );
+				$line = preg_replace( '#~~\s*(.+)\s*~~#', '<s>${1}</s>', $line );
 				if ( preg_match( '#\A\s*=\s*([^\s]+)\s*=\s*\z#', $line, $m1 ) && preg_match( '#\s*(v\.?)?(\d+[\d.]*)*\s*#', $m1[1], $m2 ) ) {
 					$version = $m2[2];
 					continue;
 				}
-				if ( $version && version_compare( $version, $this->app->get_plugin_version(), '<=' ) ) {
+				if ( $version && version_compare( $version, $plugin_version, '<=' ) ) {
 					continue;
 				}
 				$line = preg_replace( '#\A\s*=\s*([^\s]+)\s*=\s*\z#', '[ $1 ]', $line );
 				$line = trim( $line );
 				if ( '' !== $line ) {
+					$line = $this->app->utility->strip_tags( $line, [
+						'span' => [ 'style' => true ],
+					] );
 					if ( $version ) {
 						$version_notices[ $version ][] = $line;
 					} else {
@@ -177,7 +202,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				}
 			}
 			if ( ! empty( $version_notices ) ) {
-				ksort( $version_notices );
+				uksort( $version_notices, function ( $a, $b ) {
+					return version_compare( $a, $b );
+				} );
 				foreach ( $version_notices as $version => $items ) {
 					$notices[ $version ] = $items;
 				}
