@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 4.7.0
 Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.11
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,12 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.0.12 =
+* 複数のクラスの設定に対応しました（スペース区切りで複数のクラス名を指定できます）
+* 　すでに投稿で使用している場合に クラス名 や タグ名 の設定を変更しても投稿に付与したクラス名などは変わりません。
+* 　その影響で『エディタ』では 他のフォーマット(文字色など)が適用されているような挙動 になったりします。
+* 　不要になった設定は『ツールバーボタンが有効かどうか』を外してそのまま残しておくことをお勧めします。
+
 = 1.0.9 =
 * Fatal error が起こる場合があるのを修正しました。
 
@@ -57,6 +63,10 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.12 (2019/2/24) =
+
+* Improved: [Multiple class name](https://github.com/technote-space/add-richtext-toolbar-button/issues/74)
 
 = 1.0.11 (2019/2/24) =
 
