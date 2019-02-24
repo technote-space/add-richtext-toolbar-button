@@ -20,7 +20,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 <style>
 <?php foreach ($settings as $setting):?>
 <?php if (!empty($setting['options']['styles']) || !empty($pre_style)):?>
-<?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['tag_name'] . '.' . $setting['options']['class_name'];?>
+<?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['selector'];?>
 <?php if (empty($setting['options']['styles'])):?>
 <?php $instance->h($selector);?> {
 <?php foreach ($pre_style as $style):?>
