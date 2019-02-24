@@ -454,6 +454,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				$options['class_name'] = $this->_get_class_name( $options, $post );
 				$options['title']      = $post->post_title;
 				$options['group_name'] = $this->_get_group_name( $options, $post );
+				$options['selector']   = $this->get_selector( $options );
 				$settings[]            = [
 					'id'      => $post->ID,
 					'options' => $options,
@@ -572,6 +573,18 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
+	 * @param array $options
+	 *
+	 * @return string
+	 */
+	private function get_selector( array $options ) {
+		$class_names = $this->app->utility->explode( $options['class_name'], ' ' );
+		$class_names = '.' . implode( '.', $class_names );
+
+		return $this->apply_filters( 'get_selector', $options['tag_name'] . $class_names, $options['tag_name'], $options['class_name'], $options );
+	}
+
+	/**
 	 * @param array $setting
 	 * @param string $key
 	 *
@@ -602,9 +615,9 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		if ( '' !== $class_name ) {
 			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
-			} elseif ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
+			} elseif ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'Invalid format.' );
-				$errors['class_name'][] = sprintf( $this->translate( 'detail: [%s](%s)' ), $this->translate( 'registerFormatType\'s check' ), 'https://github.com/WordPress/gutenberg/blob/01be7ac89b97b76c490d57a15c16466657240770/packages/rich-text/src/register-format-type.js#L82' );
+				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
 			} elseif ( '' !== $class_name && $this->app->db->select_count( $this->get_related_table_name(), '*', [
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
