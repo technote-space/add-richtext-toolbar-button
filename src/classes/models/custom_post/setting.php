@@ -621,7 +621,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
 				] ) > 0 ) {
-				$errors['class_name'][] = $this->translate( 'The value is already being used.' );
+				$errors['class_name'][] = $this->translate( 'The value has already been used.' );
 			} else {
 				global $wp_version;
 				if ( version_compare( $wp_version, '5.1', '>=' ) ) {
