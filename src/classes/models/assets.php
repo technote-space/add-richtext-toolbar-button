@@ -1,9 +1,10 @@
 <?php
 /**
- * @version 1.0.9
+ * @version 1.0.13
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.9 #69
+ * @since 1.0.13 #83
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -98,6 +99,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			if ( $editor ) {
 				$params['wrap']      = $this->apply_filters( 'editor_wrap_selector', '.components-tooltip .components-popover__content' );
 				$params['pre_style'] = $this->get_pre_style_for_editor();
+				$params['is_editor'] = true;
 				$style               .= $this->get_view( 'front/style', $params );
 			}
 

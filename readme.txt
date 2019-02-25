@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0.3
 Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,11 @@ This plugin needs PHP5.6 or higher.
 
 == Changelog ==
 
-= 1.0.12 (2019/2/24) =
+= 1.0.13 (2019/2/25) =
+
+* Fixed: [minor bug fix](https://github.com/technote-space/add-richtext-toolbar-button/issues/73)
+
+= 1.0.12 (2019/2/25) =
 
 * Improved: [Multiple class name](https://github.com/technote-space/add-richtext-toolbar-button/issues/74)
 * Added: [Button to remove all formatting](https://github.com/technote-space/add-richtext-toolbar-button/issues/77)
