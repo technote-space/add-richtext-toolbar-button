@@ -16,11 +16,12 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var array $settings */
 /** @var string $wrap */
 /** @var array|null $pre_style */
+/** @var bool|null $is_editor */
 !isset($pre_style) and $pre_style = [];
 ?>
 <style>
 <?php foreach ($settings as $setting):?>
-<?php if (!empty($setting['options']['styles'])):?>
+<?php if (!empty($setting['options']['styles']) || !empty($is_editor)):?>
 <?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['selector'];?>
 <?php if (empty($setting['options']['styles'])):?>
 <?php $instance->h($selector);?> {

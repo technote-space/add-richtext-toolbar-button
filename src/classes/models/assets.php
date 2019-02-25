@@ -98,6 +98,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			if ( $editor ) {
 				$params['wrap']      = $this->apply_filters( 'editor_wrap_selector', '.components-tooltip .components-popover__content' );
 				$params['pre_style'] = $this->get_pre_style_for_editor();
+				$params['is_editor'] = true;
 				$style               .= $this->get_view( 'front/style', $params );
 			}
 
