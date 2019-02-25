@@ -63,12 +63,14 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'                  => $setting->get_settings( 'editor', $post_type ),
-			'default_icon'              => $this->apply_filters( 'default_icon' ),
-			'is_valid_contrast_checker' => $this->apply_filters( 'is_valid_contrast_checker' ),
-			'inspector_title'           => $this->translate( 'Inline Text Settings' ),
-			'translate'                 => [
-				'Please select text' => $this->translate( 'Please select text' ),
+			'settings'                   => $setting->get_settings( 'editor', $post_type ),
+			'default_icon'               => $this->apply_filters( 'default_icon' ),
+			'is_valid_contrast_checker'  => $this->apply_filters( 'is_valid_contrast_checker' ),
+			'is_valid_remove_formatting' => $this->apply_filters( 'is_valid_remove_formatting' ),
+			'inspector_title'            => $this->translate( 'Inline Text Settings' ),
+			'translate'                  => [
+				'Please select text'    => $this->translate( 'Please select text' ),
+				'Remove All formatting' => $this->translate( 'Remove All formatting' ),
 			],
 		];
 	}
