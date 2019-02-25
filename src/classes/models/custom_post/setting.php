@@ -613,17 +613,28 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		array $errors, array $post_array
 	) {
 		$class_name = trim( $this->get_post_field( 'class_name' ) );
+		$class_name = preg_replace( '/\s{2,}/', ' ', $class_name );
 		if ( '' !== $class_name ) {
 			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
-			} elseif ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
-				$errors['class_name'][] = $this->translate( 'Invalid format.' );
-				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-			} elseif ( '' !== $class_name && $this->app->db->select_count( $this->get_related_table_name(), '*', [
+			} elseif ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
 				] ) > 0 ) {
 				$errors['class_name'][] = $this->translate( 'The value is already being used.' );
+			} else {
+				global $wp_version;
+				if ( version_compare( $wp_version, '5.1', '>=' ) ) {
+					if ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
+						$errors['class_name'][] = $this->translate( 'Invalid format.' );
+						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
+					}
+				} else {
+					if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
+						$errors['class_name'][] = $this->translate( 'Invalid format.' );
+						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
+					}
+				}
 			}
 		}
 
@@ -658,6 +669,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			return $this->encode_exclude_post_types( $value );
 		} elseif ( 'group_name' === $key ) {
 			return preg_replace( '/[\x00-\x1F\x7F]/', '', $value );
+		} elseif ( 'class_name' === $key ) {
+			return preg_replace( '/\s{2,}/', ' ', $value );
 		}
 
 		return $value;
