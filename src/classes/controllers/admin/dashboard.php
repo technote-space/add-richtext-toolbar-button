@@ -85,6 +85,7 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 			'background_color_icon',
 			'is_valid_font_size',
 			'font_size_icon',
+			'is_valid_remove_formatting',
 			'default_icon',
 			'default_group',
 			'test_phrase',
