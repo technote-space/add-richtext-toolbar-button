@@ -1,9 +1,10 @@
 <?php
 /**
- * @version 1.0.3
+ * @version 1.0.12
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.3 #28
+ * @since 1.0.12 changed required wordpress version (4.7.0 ⇒ 5.0.3)
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -16,7 +17,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 return [
 
 	// required wordpress version
-	'required_wordpress_version'     => '4.7.0',
+	'required_wordpress_version'     => '5.0.3',
 
 	// main menu title
 	'main_menu_title'                => 'Add RichText Toolbar Button',

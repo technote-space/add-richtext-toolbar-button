@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-02-22 03:19+0900\n"
+"PO-Revision-Date: 2019-02-25 18:51+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,9 +20,7 @@ msgid "Richtext_Toolbar_Button"
 msgstr "Add RichText Toolbar Button"
 
 msgid "This plugin makes it easy to add RichText toolbar button."
-msgstr ""
-"このプラグインは RichText のツールバーへのボタンを追加を容易に"
-"します。"
+msgstr "このプラグインは RichText のツールバーへのボタンを追加を容易にします。"
 
 msgid "Dashboard"
 msgstr "ダッシュボード"
@@ -126,7 +124,7 @@ msgstr "その他"
 msgid "Hello world!"
 msgstr "こんにちは世界！"
 
-msgid "The value is already being used."
+msgid "The value has already been used."
 msgstr "その値は既に使用されています。"
 
 msgid "The value is unusable."
@@ -261,5 +259,14 @@ msgstr "文字を選択してください"
 msgid "validity of toolbar button"
 msgstr "ツールバーボタンが有効かどうか"
 
+msgid "validity of remove formatting button"
+msgstr "全てのフォーマットを外すボタンが有効かどうか"
+
 msgid "This tag name is unusable."
 msgstr "このタグ名は使用できません。"
+
+msgid "A class name must begin with a letter, followed by any number of hyphens, letters, or numbers."
+msgstr "クラス名は英字から始まり、ハイフン・英字・数字が続かなければなりません。"
+
+msgid "Remove All formatting"
+msgstr "全てのフォーマットを外す"

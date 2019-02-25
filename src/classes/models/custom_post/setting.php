@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.10
+ * @version 1.0.12
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.2 #25
@@ -8,6 +8,7 @@
  * @since 1.0.5 #52
  * @since 1.0.7 #60
  * @since 1.0.10 trivial change
+ * @since 1.0.12 #74
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -454,6 +455,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				$options['class_name'] = $this->_get_class_name( $options, $post );
 				$options['title']      = $post->post_title;
 				$options['group_name'] = $this->_get_group_name( $options, $post );
+				$options['selector']   = $this->get_selector( $options );
 				$settings[]            = [
 					'id'      => $post->ID,
 					'options' => $options,
@@ -572,6 +574,18 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
+	 * @param array $options
+	 *
+	 * @return string
+	 */
+	private function get_selector( array $options ) {
+		$class_names = $this->app->utility->explode( $options['class_name'], ' ' );
+		$class_names = '.' . implode( '.', $class_names );
+
+		return $this->apply_filters( 'get_selector', $options['tag_name'] . $class_names, $options['tag_name'], $options['class_name'], $options );
+	}
+
+	/**
 	 * @param array $setting
 	 * @param string $key
 	 *
@@ -599,17 +613,28 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		array $errors, array $post_array
 	) {
 		$class_name = trim( $this->get_post_field( 'class_name' ) );
+		$class_name = preg_replace( '/\s{2,}/', ' ', $class_name );
 		if ( '' !== $class_name ) {
 			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
-			} elseif ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
-				$errors['class_name'][] = $this->translate( 'Invalid format.' );
-				$errors['class_name'][] = sprintf( $this->translate( 'detail: [%s](%s)' ), $this->translate( 'registerFormatType\'s check' ), 'https://github.com/WordPress/gutenberg/blob/01be7ac89b97b76c490d57a15c16466657240770/packages/rich-text/src/register-format-type.js#L82' );
-			} elseif ( '' !== $class_name && $this->app->db->select_count( $this->get_related_table_name(), '*', [
+			} elseif ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
 				] ) > 0 ) {
-				$errors['class_name'][] = $this->translate( 'The value is already being used.' );
+				$errors['class_name'][] = $this->translate( 'The value has already been used.' );
+			} else {
+				global $wp_version;
+				if ( version_compare( $wp_version, '5.1', '>=' ) ) {
+					if ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
+						$errors['class_name'][] = $this->translate( 'Invalid format.' );
+						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
+					}
+				} else {
+					if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
+						$errors['class_name'][] = $this->translate( 'Invalid format.' );
+						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
+					}
+				}
 			}
 		}
 
@@ -644,6 +669,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			return $this->encode_exclude_post_types( $value );
 		} elseif ( 'group_name' === $key ) {
 			return preg_replace( '/[\x00-\x1F\x7F]/', '', $value );
+		} elseif ( 'class_name' === $key ) {
+			return preg_replace( '/\s{2,}/', ' ', $value );
 		}
 
 		return $value;

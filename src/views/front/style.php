@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.12
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.12 #74, #78
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -19,8 +20,8 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 ?>
 <style>
 <?php foreach ($settings as $setting):?>
-<?php if (!empty($setting['options']['styles']) || !empty($pre_style)):?>
-<?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['tag_name'] . '.' . $setting['options']['class_name'];?>
+<?php if (!empty($setting['options']['styles'])):?>
+<?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['selector'];?>
 <?php if (empty($setting['options']['styles'])):?>
 <?php $instance->h($selector);?> {
 <?php foreach ($pre_style as $style):?>

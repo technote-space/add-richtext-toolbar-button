@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Update Configs Config
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -14,6 +14,12 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 return [
+
+	// local test upgrade notice
+	'local_test_upgrade_notice'           => false,
+
+	// local test upgrade version
+	'local_test_upgrade_version'          => null,
 
 	// readme
 	'readme_file_check_url'               => '',

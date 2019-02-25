@@ -1,9 +1,10 @@
 <?php
 /**
- * @version 1.0.3
+ * @version 1.0.12
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.3 #34
+ * @since 1.0.12 #77
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -85,6 +86,7 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 			'background_color_icon',
 			'is_valid_font_size',
 			'font_size_icon',
+			'is_valid_remove_formatting',
 			'default_icon',
 			'default_group',
 			'test_phrase',
