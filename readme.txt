@@ -1,7 +1,7 @@
 === Add RichText Toolbar Button ===
 Contributors: technote0space
 Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
-Requires at least: 4.7.0
+Requires at least: 5.0.3
 Tested up to: 5.1.0
 Requires PHP: 5.6
 Stable tag: 1.0.10
