@@ -70,7 +70,7 @@ This plugin needs PHP5.6 or higher.
 
 = 1.0.14 (2019/2/28) =
 
-* Improved: [Load theme style](https://github.com/technote-space/add-richtext-toolbar-button/issues/82)
+* Improved: [Reflect theme style on setting preview](https://github.com/technote-space/add-richtext-toolbar-button/issues/82)
 * Improved: [Class name check](https://github.com/technote-space/add-richtext-toolbar-button/issues/87)
 
 = 1.0.13 (2019/2/25) =
