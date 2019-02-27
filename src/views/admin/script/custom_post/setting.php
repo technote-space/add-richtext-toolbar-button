@@ -15,6 +15,9 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
 /** @var string $name_prefix */
 /** @var array $groups */
+/** @var string $fontawesome_handle */
+/** @var string $theme_style */
+/** @var string|false $chile_theme_style */
 $instance->add_script_view( 'admin/script/icon' );
 $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
@@ -22,10 +25,27 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 <script>
     (function ($) {
         $(function () {
-            // tagName
+            const $preview = $('.preview-item-wrap').contents();
+            $preview.find('html').css('height', 'max-content');
+            $preview.find('body').css('height', 'max-content');
+
+            const controlHeight = function () {
+                $('.preview-item-wrap').height($preview.find('html').outerHeight());
+            };
+
+            // tagName, className
             (function () {
-                const $target = $('#<?php $instance->h( $name_prefix );?>tag_name');
-                $target.on('input', function () {
+                const $tagName = $('#<?php $instance->h( $name_prefix );?>tag_name');
+                const $className = $('#<?php $instance->h( $name_prefix );?>class_name');
+                const setPreviewItem = function () {
+                    const tagName = $tagName.val() || 'span', className = $className.val() + ' preview-item';
+                    const phrase = $('.multiple-lines').prop('checked') ? '<?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?>' : '<?php $instance->h( $phrase ); ?>';
+                    const html = '<' + tagName + ' class="' + className + '">' + phrase + '</' + tagName + '>';
+                    $preview.find('body').html('<div id="preview-wrap">' + html + '</div>');
+                    controlHeight();
+                };
+
+                $tagName.on('input', function () {
                     const original = $(this).val();
                     const replaced = $(this).val()
                         .replace(/あ/g, 'a')
@@ -33,35 +53,76 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
                         .replace(/う/g, 'u')
                         .replace(/え/g, 'e')
                         .replace(/お/g, 'o')
+                        .replace(/　/g, ' ')
                         .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
                             return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
                         }).replace(/[^a-zA-Z]/g, '');
                     if (original !== replaced) {
-                        $target.val(replaced);
+                        $tagName.val(replaced);
                     }
+                    setPreviewItem();
+                }).trigger('input');
 
-                    const tag = replaced || 'span';
-                    if (tag) {
-                        const phrase = $('.multiple-lines').prop('checked') ? '<?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?><br><?php $instance->h( $phrase ); ?>' : '<?php $instance->h( $phrase ); ?>';
-                        const html = '<' + tag + ' class="preview-item">' + phrase + '</' + tag + '>';
-                        $('.preview-item-wrap').html(html);
+                $className.on('input', function () {
+                    const original = $(this).val();
+                    const replaced = $(this).val()
+                        .replace(/あ/g, 'a')
+                        .replace(/い/g, 'i')
+                        .replace(/う/g, 'u')
+                        .replace(/え/g, 'e')
+                        .replace(/お/g, 'o')
+                        .replace(/　/g, ' ')
+                        .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+                            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+                        }).replace(/[^_a-zA-Z0-9-\s]/g, '');
+                    if (original !== replaced) {
+                        $className.val(replaced);
                     }
+                    setPreviewItem();
                 }).trigger('input');
             })();
 
             // style
             (function () {
-                const applyStyles = function (style) {
-                    const selector = '.setting-preview .preview-item-wrap .preview-item';
-                    const previewStyleId = 'setting-preview-style';
-                    {
-                        $('#' + previewStyleId).remove();
-                    }
+                const fontawesome_css = $('#<?php $instance->h( $fontawesome_handle );?>-css');
+                $preview.find('head').append($('<style>', {
+                    type: 'text/css',
+                    text: 'body{font-size: 15px; line-height: 1; margin: 0} #preview-wrap{margin: 15px} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
+                }));
+                const themeStyle = $('<link>', {
+                    rel: 'stylesheet',
+                    type: 'text/css',
+                    media: 'all',
+                    href: '<?php $instance->h( $theme_style );?>'
+                });
+                themeStyle.load(function () {
+                    controlHeight();
+                });
+                $preview.find('head').append(themeStyle);
+				<?php if ($chile_theme_style) :?>
+                const childThemeStyle = $('<link>', {
+                    rel: 'stylesheet',
+                    type: 'text/css',
+                    media: 'all',
+                    href: '<?php $instance->h( $chile_theme_style );?>'
+                });
+                childThemeStyle.load(function () {
+                    controlHeight();
+                });
+                $preview.find('head').append(childThemeStyle);
+				<?php endif;?>
+                $preview.find('head').append(fontawesome_css.clone());
 
-                    {
-                        $('<style type="text/css" id="' + previewStyleId + '"/>').appendTo('head');
-                        applyStyle(style, selector, $('#' + previewStyleId));
-                    }
+                const applyStyles = function (style) {
+                    const selector = '.preview-item';
+                    const previewStyleId = 'setting-preview-style';
+                    $preview.find('#' + previewStyleId).remove();
+                    $preview.find('head').append($('<style>', {
+                        type: 'text/css',
+                        id: previewStyleId
+                    }));
+                    applyStyle(style, selector, $preview.find('#' + previewStyleId));
+                    controlHeight();
                 };
 
                 const applyStyle = function (style, selector, $elem) {
@@ -196,11 +257,10 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
             // preview
             (function () {
                 $('.display-auxiliary-line').on('change', function () {
-                    const $target = $('.setting-preview');
                     if ($(this).prop('checked')) {
-                        $target.addClass('auxiliary-line');
+                        $preview.find('body').addClass('auxiliary-line');
                     } else {
-                        $target.removeClass('auxiliary-line');
+                        $preview.find('body').removeClass('auxiliary-line');
                     }
                 }).trigger('change');
                 $('.multiple-lines').on('change', function () {
