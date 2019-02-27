@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-02-25 18:51+0900\n"
+"PO-Revision-Date: 2019-02-27 18:18+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -267,6 +267,9 @@ msgstr "このタグ名は使用できません。"
 
 msgid "A class name must begin with a letter, followed by any number of hyphens, letters, or numbers."
 msgstr "クラス名は英字から始まり、ハイフン・英字・数字が続かなければなりません。"
+
+msgid "The value is included in the class name of other settings."
+msgstr "他の設定のクラス名が含まれているため使用できません。<br>優先度の数値を下げたりクラスの順番を変えると使用できる場合があります。"
 
 msgid "Remove All formatting"
 msgstr "全てのフォーマットを外す"

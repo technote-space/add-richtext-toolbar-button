@@ -617,23 +617,24 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		if ( '' !== $class_name ) {
 			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
+			} elseif ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
+				$errors['class_name'][] = $this->translate( 'Invalid format.' );
+				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
 			} elseif ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
 				] ) > 0 ) {
 				$errors['class_name'][] = $this->translate( 'The value has already been used.' );
 			} else {
-				global $wp_version;
-				if ( version_compare( $wp_version, '5.1', '>=' ) ) {
-					if ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
-						$errors['class_name'][] = $this->translate( 'Invalid format.' );
-						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-					}
-				} else {
-					if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
-						$errors['class_name'][] = $this->translate( 'Invalid format.' );
-						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-					}
+				// この時点で $class_name は 英数及びアンダーバー、ハイフン、スーペースのみ
+				$priority = $this->get_post_field( 'priority', 10 ) - 0;
+				$replace  = " {$class_name} ";
+				if ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
+						'post_id'              => [ '<>', $post_array['ID'] ],
+						"LENGTH('{$replace}')" => [ '<>', "LENGTH(REPLACE('{$replace}', CONCAT(' ', class_name, ' '), ''))", true ],
+						'priority'             => [ '<=', $priority ],
+					] ) > 0 ) {
+					$errors['class_name'][] = $this->translate( 'The value is included in the class name of other settings.' );
 				}
 			}
 		}
