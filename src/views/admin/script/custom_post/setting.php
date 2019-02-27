@@ -1,9 +1,10 @@
 <?php
 /**
- * @version 1.0.3
+ * @version 1.0.14
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.3 #29, #31
+ * @since 1.0.14 #82
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -89,7 +90,7 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
                 const fontawesome_css = $('#<?php $instance->h( $fontawesome_handle );?>-css');
                 $preview.find('head').append($('<style>', {
                     type: 'text/css',
-                    text: 'body{font-size: 15px; line-height: 1; margin: 0} #preview-wrap{margin: 15px} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
+                    text: 'body{font-size: 15px; line-height: 1; margin: 0} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
                 }));
                 const themeStyle = $('<link>', {
                     rel: 'stylesheet',

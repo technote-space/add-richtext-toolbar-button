@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.14
  * @author technote-space
  * @since 1.0.0
+ * @since 1.0.14 #82
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -39,7 +40,7 @@ $instance->add_script_view( 'admin/script/icon' );
                 $(this).contents().find('#preview-wrap').append(elem);
                 $(this).contents().find('head').append($('<style>', {
                     type: 'text/css',
-                    text: 'body{font-size: 13px; margin: 0} #preview-wrap{margin: 6px}'
+                    text: 'body{font-size: 13px; margin: 0} #preview-wrap{margin: 1em}'
                 }));
                 $(this).contents().find('head').append($('<link>', {
                     rel: 'stylesheet',
