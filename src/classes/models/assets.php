@@ -1,10 +1,11 @@
 <?php
 /**
- * @version 1.0.13
+ * @version 1.0.14
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.9 #69
  * @since 1.0.13 #83
+ * @since 1.0.14 #82
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -87,7 +88,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @param bool $editor
 	 */
 	public function enqueue_plugin_assets( $post_type, $editor = false ) {
-		$this->enqueue_upload_style( $this->get_slug( 'css-handle', '-css' ), $this->get_cache_file_name( $post_type, $editor ), function () use ( $post_type, $editor ) {
+		$this->enqueue_upload_style( $this->get_css_handle(), $this->get_cache_file_name( $post_type, $editor ), function () use ( $post_type, $editor ) {
 			/** @var Custom_Post\Setting $setting */
 			$setting = Custom_Post\Setting::get_instance( $this->app );
 			$params  = [
@@ -106,6 +107,13 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return $style;
 		} );
 		$this->setup_fontawesome();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_css_handle() {
+		return $this->get_slug( 'css-handle', '-css' );
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.12
+ * @version 1.0.14
  * @author technote-space
  * @since 1.0.0
  * @since 1.0.2 #25
@@ -9,6 +9,7 @@
  * @since 1.0.7 #60
  * @since 1.0.10 trivial change
  * @since 1.0.12 #74
+ * @since 1.0.14 #82, #87
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -69,7 +70,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		/** @var \Richtext_Toolbar_Button\Classes\Models\Assets $assets */
 		$assets = \Richtext_Toolbar_Button\Classes\Models\Assets::get_instance( $this->app );
 		$assets->enqueue_plugin_assets( null );
-		$this->add_script_view( 'admin/script/custom_post/preview' );
+		$this->add_script_view( 'admin/script/custom_post/preview', [
+			'css_handle'         => $assets->get_css_handle(),
+			'fontawesome_handle' => $this->app->get_config( 'config', 'fontawesome_handle' ),
+			'theme_style'        => get_template_directory_uri() . '/style.css',
+			'chile_theme_style'  => is_child_theme() ? get_stylesheet_uri() : false,
+		] );
+		$this->add_style_view( 'admin/style/custom_post/preview', [
+			'post_type' => $this->get_post_type(),
+		] );
 	}
 
 	/**
@@ -115,6 +124,10 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$params['columns']['exclude_post_types']['post_types']                 = $this->get_valid_post_types();
 		$params['name_prefix']                                                 = $this->get_post_field_name_prefix();
 		$params['groups']                                                      = $this->get_groups();
+
+		$params['fontawesome_handle'] = $this->app->get_config( 'config', 'fontawesome_handle' );
+		$params['theme_style']        = get_template_directory_uri() . '/style.css';
+		$params['chile_theme_style']  = is_child_theme() ? get_stylesheet_uri() : false;
 
 		return $params;
 	}
@@ -617,23 +630,24 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		if ( '' !== $class_name ) {
 			if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'The value is unusable.' );
+			} elseif ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
+				$errors['class_name'][] = $this->translate( 'Invalid format.' );
+				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
 			} elseif ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
 					'post_id'    => [ '<>', $post_array['ID'] ],
 					'class_name' => $class_name,
 				] ) > 0 ) {
 				$errors['class_name'][] = $this->translate( 'The value has already been used.' );
 			} else {
-				global $wp_version;
-				if ( version_compare( $wp_version, '5.1', '>=' ) ) {
-					if ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
-						$errors['class_name'][] = $this->translate( 'Invalid format.' );
-						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-					}
-				} else {
-					if ( ! preg_match( '/\A[_a-zA-Z]+[a-zA-Z0-9-]*\z/', $class_name ) ) {
-						$errors['class_name'][] = $this->translate( 'Invalid format.' );
-						$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-					}
+				// この時点で $class_name は 英数及びアンダーバー、ハイフン、スーペースのみ
+				$priority = $this->get_post_field( 'priority', 10 ) - 0;
+				$replace  = " {$class_name} ";
+				if ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
+						'post_id'              => [ '<>', $post_array['ID'] ],
+						"LENGTH('{$replace}')" => [ '<>', "LENGTH(REPLACE('{$replace}', CONCAT(' ', class_name, ' '), ''))", true ],
+						'priority'             => [ '<=', $priority ],
+					] ) > 0 ) {
+					$errors['class_name'][] = $this->translate( 'The value is included in the class name of other settings.' );
 				}
 			}
 		}
