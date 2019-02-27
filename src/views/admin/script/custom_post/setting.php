@@ -72,6 +72,8 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
                         .replace(/え/g, 'e')
                         .replace(/お/g, 'o')
                         .replace(/　/g, ' ')
+                        .replace(/ー/g, '-')
+                        .replace(/＿/g, '_')
                         .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
                             return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
                         }).replace(/[^_a-zA-Z0-9-\s]/g, '');
