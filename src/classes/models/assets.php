@@ -87,7 +87,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @param bool $editor
 	 */
 	public function enqueue_plugin_assets( $post_type, $editor = false ) {
-		$this->enqueue_upload_style( $this->get_slug( 'css-handle', '-css' ), $this->get_cache_file_name( $post_type, $editor ), function () use ( $post_type, $editor ) {
+		$this->enqueue_upload_style( $this->get_css_handle(), $this->get_cache_file_name( $post_type, $editor ), function () use ( $post_type, $editor ) {
 			/** @var Custom_Post\Setting $setting */
 			$setting = Custom_Post\Setting::get_instance( $this->app );
 			$params  = [
@@ -106,6 +106,13 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return $style;
 		} );
 		$this->setup_fontawesome();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_css_handle() {
+		return $this->get_slug( 'css-handle', '-css' );
 	}
 
 	/**

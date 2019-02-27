@@ -17,17 +17,8 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 ?>
 
 <style>
-    .setting-preview {
-        font-size: 1.3em;
-        line-height: 1;
-    }
-
-    .setting-preview.auxiliary-line {
-        border: dashed #ddd 2px;
-    }
-
-    .setting-preview.auxiliary-line .preview-item {
-        border: dotted #666 1px;
+    .preview-item-wrap {
+        width: 100%;
     }
 
     .display-area {

@@ -69,7 +69,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		/** @var \Richtext_Toolbar_Button\Classes\Models\Assets $assets */
 		$assets = \Richtext_Toolbar_Button\Classes\Models\Assets::get_instance( $this->app );
 		$assets->enqueue_plugin_assets( null );
-		$this->add_script_view( 'admin/script/custom_post/preview' );
+		$this->add_script_view( 'admin/script/custom_post/preview', [
+			'css_handle'         => $assets->get_css_handle(),
+			'fontawesome_handle' => $this->app->get_config( 'config', 'fontawesome_handle' ),
+			'theme_style'        => get_template_directory_uri() . '/style.css',
+			'chile_theme_style'  => is_child_theme() ? get_stylesheet_uri() : false,
+		] );
+		$this->add_style_view( 'admin/style/custom_post/preview', [
+			'post_type' => $this->get_post_type(),
+		] );
 	}
 
 	/**
@@ -115,6 +123,10 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$params['columns']['exclude_post_types']['post_types']                 = $this->get_valid_post_types();
 		$params['name_prefix']                                                 = $this->get_post_field_name_prefix();
 		$params['groups']                                                      = $this->get_groups();
+
+		$params['fontawesome_handle'] = $this->app->get_config( 'config', 'fontawesome_handle' );
+		$params['theme_style']        = get_template_directory_uri() . '/style.css';
+		$params['chile_theme_style']  = is_child_theme() ? get_stylesheet_uri() : false;
 
 		return $params;
 	}

@@ -17,7 +17,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 <fieldset>
     <legend><?php $instance->h( 'preview', true ); ?></legend>
     <div class="setting-preview">
-        <span class="preview-item-wrap"/>
+        <iframe class="preview-item-wrap"></iframe>
     </div>
 </fieldset>
 <div class="display-preview-settings-wrap">
