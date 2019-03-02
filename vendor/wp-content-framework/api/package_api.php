@@ -1,8 +1,8 @@
 <?php
 /**
- * WP_Framework Package Custom_Post
+ * WP_Framework Package Api
  *
- * @version 0.0.21
+ * @version 0.0.8
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -16,29 +16,22 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 /**
- * Class Package_Custom_Post
+ * Class Package_Api
  * @package WP_Framework
  */
-class Package_Custom_Post extends Package_Base {
+class Package_Api extends Package_Base {
 
 	/**
 	 * @return int
 	 */
 	public function get_priority() {
-		return 120;
+		return 10;
 	}
 
 	/**
 	 * @return bool
 	 */
 	protected function is_valid_view() {
-		return true;
-	}
-
-	/**
-	 * @return bool
-	 */
-	protected function is_valid_translate() {
 		return true;
 	}
 
@@ -57,6 +50,7 @@ class Package_Custom_Post extends Package_Base {
 			'config',
 			'filter',
 			'map',
+			'setting',
 			'slug',
 		];
 	}

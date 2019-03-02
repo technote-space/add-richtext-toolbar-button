@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Configs Filter
  *
- * @version 0.0.20
+ * @version 0.0.21
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -26,7 +26,7 @@ return [
 			'manage_posts_custom_column',
 		],
 		'post_row_actions'             => [
-			'delete_edit_links',
+			'post_row_actions',
 		],
 		'wp_count_posts'               => [
 			'wp_count_posts',
@@ -64,6 +64,9 @@ return [
 		],
 		'redirect_post_location'       => [
 			'redirect_post_location',
+		],
+		'load-edit.php'                => [
+			'setup_list',
 		],
 		'load-post.php'                => [
 			'setup_page',

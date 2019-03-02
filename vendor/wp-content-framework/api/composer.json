@@ -1,5 +1,5 @@
 {
-    "name": "wp-content-framework/custom_post",
+    "name": "wp-content-framework/api",
     "type": "library",
     "description": "Wordpress content framework",
     "homepage": "https://github.com/wp-content-framework",
@@ -13,10 +13,7 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "wp-content-framework/db": "~0.0.1",
-        "wp-content-framework/session": "~0.0.1",
-        "wp-content-framework/admin": "~0.0.1",
-        "wp-content-framework/api": "~0.0.1"
+        "wp-content-framework/controller": "~0.0.1"
     },
     "autoload": {
     },

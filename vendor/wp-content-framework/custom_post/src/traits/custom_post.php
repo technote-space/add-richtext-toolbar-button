@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.20
+ * @version 0.0.21
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -70,16 +70,14 @@ trait Custom_Post {
 			return;
 		}
 		add_filter( "views_edit-{$post_type}", function ( $views ) {
-			unset( $views['mine'] );
-			unset( $views['publish'] );
-
-			return $views;
+			return $this->view_edit( $views );
 		} );
 		add_filter( "bulk_actions-edit-{$post_type}", function ( $actions ) {
-			unset( $actions['edit'] );
-
-			return $actions;
+			return $this->bulk_actions( $actions );
 		} );
+		add_filter( "handle_bulk_actions-edit-{$post_type}", function ( $sendback, $doaction, $post_ids ) {
+			return $this->handle_bulk_actions( $sendback, $doaction, (array) $post_ids );
+		}, 10, 3 );
 		add_filter( "manage_edit-{$post_type}_sortable_columns", function ( $sortable_columns ) {
 			return $this->manage_posts_columns( $sortable_columns, true );
 		} );
@@ -96,6 +94,7 @@ trait Custom_Post {
 		$_data['post_type']    = $this->get_post_type();
 		$_data['post_title']   = $this->app->utility->array_get( $data, 'post_title', '' );
 		$_data['post_content'] = $this->app->utility->array_get( $data, 'post_content', '' );
+		$_data['post_excerpt'] = $this->app->utility->array_get( $data, 'post_excerpt', '' );
 		$_data['post_status']  = $this->app->utility->array_get( $data, 'post_status', 'publish' );
 		unset( $data['post_type'] );
 		unset( $data['post_title'] );
@@ -157,6 +156,37 @@ trait Custom_Post {
 		}
 
 		return wp_update_post( $_data );
+	}
+
+	/**
+	 * @param array $data
+	 * @param bool $convert_name
+	 *
+	 * @return array
+	 */
+	public function validate_insert( array $data, $convert_name = true ) {
+		$_data                 = [];
+		$_data['post_type']    = $this->get_post_type();
+		$_data['post_title']   = $this->app->utility->array_get( $data, 'post_title', '' );
+		$_data['post_content'] = $this->app->utility->array_get( $data, 'post_content', '' );
+		$_data['post_excerpt'] = $this->app->utility->array_get( $data, 'post_excerpt', '' );
+		$_data['post_status']  = $this->app->utility->array_get( $data, 'post_status', 'publish' );
+		unset( $data['post_type'] );
+		unset( $data['post_title'] );
+		unset( $data['post_content'] );
+		unset( $data['post_status'] );
+
+		foreach ( $this->get_data_field_settings() as $k => $v ) {
+			$name = $convert_name ? $this->get_post_field_name( $k ) : $k;
+			$this->app->input->delete_post( $name );
+		}
+		foreach ( $data as $k => $v ) {
+			$name           = $convert_name ? $this->get_post_field_name( $k ) : $k;
+			$_data[ $name ] = $v;
+			$this->app->input->set_post( $name, $v );
+		}
+
+		return $this->validate_input( $_data );
 	}
 
 	/**
@@ -456,6 +486,201 @@ trait Custom_Post {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function is_support_io() {
+		return ! empty( $this->app->get_config( 'io', $this->get_post_type_slug() ) ) && $this->user_can( 'edit_others_posts' );
+	}
+
+	/**
+	 * @param array $actions
+	 * @param \WP_Post $post
+	 *
+	 * @return array
+	 */
+	public function post_row_actions( array $actions, \WP_Post $post ) {
+		unset( $actions['inline hide-if-no-js'] );
+		unset( $actions['edit'] );
+		unset( $actions['clone'] );
+		unset( $actions['edit_as_new_draft'] );
+		if ( ! $this->user_can( 'delete_posts' ) ) {
+			unset( $actions['trash'] );
+		}
+
+		$row_actions = $this->get_post_row_actions();
+		if ( $this->is_support_io() ) {
+			$row_actions['export'] = 'Export as JSON';
+		}
+		foreach ( $row_actions as $key => $value ) {
+			$actions[ $key ] = $this->url( wp_nonce_url( add_query_arg( [
+				'action'    => $key,
+				'post_type' => $this->get_post_type(),
+				'ids'       => $post->ID,
+			], admin_url( 'edit.php' ) ), 'bulk-posts' ), $value, true, false, [], false );
+		}
+
+		return $this->filter_post_row_actions( $actions, $post );
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function get_post_row_actions() {
+		return [];
+	}
+
+	/**
+	 * @param array $actions
+	 * @param \WP_Post $post
+	 *
+	 * @return array
+	 */
+	protected function filter_post_row_actions(
+		/** @noinspection PhpUnusedParameterInspection */
+		array $actions, \WP_Post $post
+	) {
+		return $actions;
+	}
+
+	/**
+	 * @param array $views
+	 *
+	 * @return array
+	 */
+	protected function view_edit( array $views ) {
+		unset( $views['mine'] );
+		unset( $views['publish'] );
+
+		return $this->filter_view_edit( $views );
+	}
+
+	/**
+	 * @param array $views
+	 *
+	 * @return array
+	 */
+	protected function filter_view_edit( array $views ) {
+		return $views;
+	}
+
+	/**
+	 * @param array $actions
+	 *
+	 * @return array
+	 */
+	protected function bulk_actions( array $actions ) {
+		unset( $actions['edit'] );
+		if ( $this->is_support_io() ) {
+			$actions['export'] = $this->translate( 'Export as JSON' );
+		}
+
+		return $this->filter_bulk_actions( $actions );
+	}
+
+	/**
+	 * @param array $actions
+	 *
+	 * @return array
+	 */
+	protected function filter_bulk_actions( array $actions ) {
+		return $actions;
+	}
+
+	/**
+	 * @param string $sendback
+	 * @param string $doaction
+	 * @param array $post_ids
+	 *
+	 * @return string
+	 */
+	protected function handle_bulk_actions(
+		/** @noinspection PhpUnusedParameterInspection */
+		$sendback, $doaction, array $post_ids
+	) {
+		if ( ! empty( $post_ids ) && 'export' === $doaction && $this->is_support_io() ) {
+			$this->export( $post_ids );
+		}
+
+		return $this->filter_handle_bulk_actions( $sendback, $doaction, $post_ids );
+	}
+
+	/**
+	 * @param string $sendback
+	 * @param string $doaction
+	 * @param array $post_ids
+	 *
+	 * @return string
+	 */
+	protected function filter_handle_bulk_actions(
+		/** @noinspection PhpUnusedParameterInspection */
+		$sendback, $doaction, array $post_ids
+	) {
+		return $sendback;
+	}
+
+	/**
+	 * @param array $post_ids
+	 */
+	private function export( $post_ids ) {
+		$export_data = [];
+		$setting     = $this->app->get_config( 'io', $this->get_post_type_slug() );
+		foreach (
+			$this->list_data( false, null, 1, [
+				'p.ID' => [ 'IN', $post_ids ],
+			] )['data'] as $d
+		) {
+			$data = [];
+			if ( in_array( 'title', $this->get_post_type_supports() ) ) {
+				$data['post_title'] = $d['post']->post_title;
+			}
+			if ( in_array( 'editor', $this->get_post_type_supports() ) ) {
+				$data['post_content'] = $d['post']->post_content;
+			}
+			if ( in_array( 'excerpt', $this->get_post_type_supports() ) ) {
+				$data['post_excerpt'] = $d['post']->post_excerpt;
+			}
+			foreach ( $setting as $k => $v ) {
+				if ( ! is_array( $v ) ) {
+					$k = $v;
+					$v = [];
+				}
+				if ( ! array_key_exists( $k, $d ) ) {
+					continue;
+				}
+				if ( isset( $v['export'] ) && is_callable( $v['export'] ) ) {
+					$data[ $k ] = ( $v['export'] )( $d[ $k ] );
+				} else {
+					$data[ $k ] = $d[ $k ];
+				}
+			}
+			$export_data[] = $data;
+		}
+
+		$this->output_json_file( $export_data );
+		exit;
+	}
+
+	/**
+	 * @param array $data
+	 */
+	private function output_json_file( $data ) {
+		$json = @json_encode( $data );
+		header( 'Content-Type: application/json' );
+		header( 'Content-Length: ' . strlen( $json ) );
+		header( 'Content-Disposition: attachment; filename="' . $this->get_export_filename() . '"' );
+		header( 'Pragma: no-cache' );
+		header( 'Cache-Control: no-cache' );
+		echo $json;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_export_filename() {
+		return $this->app->utility->replace_time( $this->apply_filters( 'export_filename', 'export${Y}${m}${d}${H}${i}${s}' ) ) . '.json';
+	}
+
+	/**
 	 * @param array $columns
 	 * @param bool $sortable
 	 *
@@ -720,8 +945,9 @@ trait Custom_Post {
 
 		$post_ids = $this->app->utility->array_pluck( $list, 'post_id' );
 		$posts    = get_posts( [
-			'include'   => $post_ids,
-			'post_type' => $this->get_post_type(),
+			'include'     => $post_ids,
+			'post_type'   => $this->get_post_type(),
+			'post_status' => 'any',
 		] );
 		$posts    = $this->app->utility->array_combine( $posts, 'ID' );
 
@@ -1108,6 +1334,13 @@ trait Custom_Post {
 		array $data, array $post_array
 	) {
 		return $data;
+	}
+
+	/**
+	 * setup list
+	 */
+	public function setup_list() {
+
 	}
 
 	/**

@@ -154,6 +154,46 @@
         ]
     },
     {
+        "name": "wp-content-framework/api",
+        "version": "v0.0.10",
+        "version_normalized": "0.0.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wp-content-framework/api.git",
+            "reference": "e5236bd289f9e3cffc2b7c8c3ffdbb4731518d73"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/wp-content-framework/api/zipball/e5236bd289f9e3cffc2b7c8c3ffdbb4731518d73",
+            "reference": "e5236bd289f9e3cffc2b7c8c3ffdbb4731518d73",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0",
+            "wp-content-framework/controller": "~0.0.1"
+        },
+        "time": "2019-03-02T09:56:57+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "technote",
+                "email": "technote.space@gmail.com",
+                "homepage": "https://technote.space"
+            }
+        ],
+        "description": "Wordpress content framework",
+        "homepage": "https://github.com/wp-content-framework",
+        "keywords": [
+            "framework",
+            "wordpress"
+        ]
+    },
+    {
         "name": "wp-content-framework/common",
         "version": "v0.0.23",
         "version_normalized": "0.0.23.0",
@@ -287,26 +327,27 @@
     },
     {
         "name": "wp-content-framework/custom_post",
-        "version": "v0.0.20",
-        "version_normalized": "0.0.20.0",
+        "version": "v0.0.21",
+        "version_normalized": "0.0.21.0",
         "source": {
             "type": "git",
             "url": "https://github.com/wp-content-framework/custom_post.git",
-            "reference": "05df68f16813bf81f0cc8eb88389482cc29a05ab"
+            "reference": "6b26d266daea75880321f5192c8e7935aea70e62"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/wp-content-framework/custom_post/zipball/05df68f16813bf81f0cc8eb88389482cc29a05ab",
-            "reference": "05df68f16813bf81f0cc8eb88389482cc29a05ab",
+            "url": "https://api.github.com/repos/wp-content-framework/custom_post/zipball/6b26d266daea75880321f5192c8e7935aea70e62",
+            "reference": "6b26d266daea75880321f5192c8e7935aea70e62",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6.0",
             "wp-content-framework/admin": "~0.0.1",
+            "wp-content-framework/api": "~0.0.1",
             "wp-content-framework/db": "~0.0.1",
             "wp-content-framework/session": "~0.0.1"
         },
-        "time": "2019-02-23T16:09:42+00:00",
+        "time": "2019-03-02T10:33:30+00:00",
         "type": "library",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",

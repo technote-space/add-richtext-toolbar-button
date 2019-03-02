@@ -1,8 +1,8 @@
 <?php
 /**
- * WP_Framework_Core Views Admin Include Custom Post Input Text
+ * WP_Framework_Custom_Post Views Admin Include Custom Post Input Text
  *
- * @version 0.0.14
+ * @version 0.0.21
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2

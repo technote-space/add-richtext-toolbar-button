@@ -1,0 +1,147 @@
+<?php
+/**
+ * WP_Framework_Custom_Post Classes Controller Api Custom Post Import
+ *
+ * @version 0.0.21
+ * @author technote-space
+ * @copyright technote-space All Rights Reserved
+ * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
+ * @link https://technote.space
+ */
+
+namespace WP_Framework_Custom_Post\Classes\Controllers\Api\Custom_Post;
+
+if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
+	exit;
+}
+
+/**
+ * Class Import
+ * @package WP_Framework_Custom_Post\Classes\Controllers\Api\Custom_Post
+ */
+class Import extends \WP_Framework_Api\Classes\Controllers\Api\Base {
+
+	/**
+	 * @return string
+	 */
+	public function get_endpoint() {
+		return 'import_custom_post';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_call_function_name() {
+		return 'import_custom_post';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_method() {
+		return 'post';
+	}
+
+	/**
+	 * @return null|string|false
+	 */
+	public function get_capability() {
+		if ( ! is_user_logged_in() ) {
+			return '';
+		}
+
+		if ( empty( $_FILES['import']['tmp_name'] ) || ! is_uploaded_file( $_FILES['import']['tmp_name'] ) ) {
+			return '';
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_args_setting() {
+		return [
+			'post_type' => [
+				'required'          => true,
+				'description'       => 'post type',
+				'validate_callback' => function ( $var ) {
+					/** @var \WP_Framework_Custom_Post\Classes\Models\Custom_Post $_custom_post */
+					$_custom_post = \WP_Framework_Custom_Post\Classes\Models\Custom_Post::get_instance( $this->app );
+					if ( ! $_custom_post->is_valid_custom_post_type( $var ) ) {
+						return false;
+					}
+
+					/** @var \WP_Framework_Custom_Post\Interfaces\Custom_Post $custom_post */
+					$custom_post = $_custom_post->get_custom_post_type( $var );
+					if ( empty( $custom_post ) ) {
+						return false;
+					}
+
+					if ( ! $custom_post->is_support_io() ) {
+						return false;
+					}
+
+					return true;
+				},
+			],
+		];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_only_admin() {
+		return true;
+	}
+
+	/**
+	 * @param \WP_REST_Request|array $params
+	 *
+	 * @return int|\WP_Error|\WP_REST_Response
+	 */
+	public function callback( $params ) {
+		$data    = @file_get_contents( $_FILES['import']['tmp_name'] );
+		$result  = 0;
+		$success = 0;
+		$fail    = 0;
+		if ( ! empty( $data ) ) {
+			$json = @json_decode( $data, true );
+			if ( ! empty( $json ) ) {
+				/** @var \WP_Framework_Custom_Post\Classes\Models\Custom_Post $_custom_post */
+				$_custom_post = \WP_Framework_Custom_Post\Classes\Models\Custom_Post::get_instance( $this->app );
+				/** @var \WP_Framework_Custom_Post\Interfaces\Custom_Post $custom_post */
+				$custom_post = $_custom_post->get_custom_post_type( $params['post_type'] );
+
+				$failed = [];
+				foreach ( $json as $item ) {
+					$validation = $custom_post->validate_insert( $item );
+					if ( empty( $validation ) ) {
+						$custom_post->insert( $item );
+						$success ++;
+					} else {
+						$failed[] = [ $item, $validation ];
+					}
+				}
+				$fail    = count( $failed );
+				$message = $_custom_post->get_import_result( [
+					'total'   => $success + $fail,
+					'success' => $success,
+					'failed'  => $failed,
+				] );
+				$result  = 1;
+			} else {
+				$message = $this->translate( 'Invalid JSON file' );
+			}
+		} else {
+			$message = $this->translate( 'Invalid JSON file' );
+		}
+
+		return new \WP_REST_Response( [
+			'result'  => $result,
+			'message' => $message,
+			'success' => $success,
+			'fail'    => $fail,
+		] );
+	}
+}
