@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0.3
 Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,9 +19,9 @@ This plugin makes it easy to add RichText toolbar button.
 
 This plugin needs PHP5.6 or higher.
 
-* Any tag name and class name formatting button can be added to the rich text toolbar.
+* You can add formatting buttons which have any tag name and class name to the rich text toolbar as many as you like.
 * You can make some groups to add dropdown list instead of button.
-* You can use not only inline text and background color panel but also inline font size panel.
+* You can use not only inline text and background color panels but also inline font size panel.
 
 == Installation ==
 
@@ -39,6 +39,9 @@ This plugin needs PHP5.6 or higher.
 5. Dashboard
 
 == Upgrade Notice ==
+
+= 1.0.15 =
+* 設定のエクスポート及びインポートが可能になります。
 
 = 1.0.14 =
 * テーマのスタイルが設定プレビューに反映されるようになります。
@@ -67,6 +70,11 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.15 (2019/3/4) =
+
+* Added: [Export and import settings](https://github.com/technote-space/add-richtext-toolbar-button/issues/17)
+* Improved: [Cache control of gutenberg's js file](https://github.com/technote-space/add-richtext-toolbar-button/issues/91)
 
 = 1.0.14 (2019/2/28) =
 
