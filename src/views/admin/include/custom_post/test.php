@@ -1,11 +1,11 @@
 <?php
 /**
  * @version 1.0.14
- * @author technote-space
+ * @author Technote
  * @since 1.0.0
  * @since 1.0.3 #29
  * @since 1.0.14 #82
- * @copyright technote-space All Rights Reserved
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
  */
