@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.21
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.22
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -148,6 +148,18 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return array
 	 */
 	public function post_row_actions( array $actions, \WP_Post $post );
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return array {
+	 *  int $result
+	 *  string $message
+	 *  int $success
+	 *  int $fail
+	 * }
+	 */
+	public function import( $data );
 
 	/**
 	 * @param array $columns

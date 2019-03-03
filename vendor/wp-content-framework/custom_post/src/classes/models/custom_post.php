@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.21
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.22
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -623,15 +623,6 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 */
 	public function get_validation_errors() {
 		return $this->_validation_errors;
-	}
-
-	/**
-	 * @param array $data
-	 *
-	 * @return string
-	 */
-	public function get_import_result( array $data ) {
-		return $this->get_view( 'admin/import_custom_post', $data );
 	}
 
 	/**

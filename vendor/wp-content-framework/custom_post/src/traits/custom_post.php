@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.21
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.22
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -656,7 +656,11 @@ trait Custom_Post {
 			$export_data[] = $data;
 		}
 
-		$this->output_json_file( $export_data );
+		$this->output_json_file( [
+			'plugin' => $this->app->plugin_name,
+			'table'  => $this->get_related_table_name(),
+			'data'   => $export_data,
+		] );
 		exit;
 	}
 
@@ -678,6 +682,64 @@ trait Custom_Post {
 	 */
 	private function get_export_filename() {
 		return $this->app->utility->replace_time( $this->apply_filters( 'export_filename', 'export${Y}${m}${d}${H}${i}${s}' ) ) . '.json';
+	}
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return array {
+	 *  int $result
+	 *  string $message
+	 *  int $success
+	 *  int $fail
+	 * }
+	 */
+	public function import( $data ) {
+		if ( empty( $data ) ) {
+			return [ 0, $this->translate( 'Invalid JSON file' ), 0, 0 ];
+		}
+
+		$json = @json_decode( $data, true );
+		if ( empty( $json ) || empty( $json['plugin'] ) || empty( $json['table'] ) || ! isset( $json['data'] ) || ! is_array( $json['data'] ) ) {
+			return [ 0, $this->translate( 'Invalid JSON file' ), 0, 0 ];
+		}
+
+		if ( $json['plugin'] !== $this->app->plugin_name || $json['table'] !== $this->get_related_table_name() ) {
+			return [ 0, $this->translate( 'Invalid JSON file' ), 0, 0 ];
+		}
+
+		$success = 0;
+		$failed  = [];
+		foreach ( $json['data'] as $item ) {
+			$validation = $this->validate_insert( $item );
+			if ( empty( $validation ) ) {
+				$this->insert( $item );
+				$success ++;
+			} else {
+				$failed[] = [ $item, $validation ];
+			}
+		}
+		$fail = count( $failed );
+
+		return [
+			1,
+			$this->get_import_result( [
+				'total'   => $success + $fail,
+				'success' => $success,
+				'failed'  => $failed,
+			] ),
+			$success,
+			$fail,
+		];
+	}
+
+	/**
+	 * @param array $data
+	 *
+	 * @return string
+	 */
+	private function get_import_result( array $data ) {
+		return $this->get_view( 'admin/import_custom_post', $data );
 	}
 
 	/**
