@@ -15,7 +15,8 @@
         "php": ">=5.6.0",
         "wp-content-framework/db": "~0.0.1",
         "wp-content-framework/session": "~0.0.1",
-        "wp-content-framework/admin": "~0.0.1"
+        "wp-content-framework/admin": "~0.0.1",
+        "wp-content-framework/api": "~0.0.1"
     },
     "autoload": {
     },

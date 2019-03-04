@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.20
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.22
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -37,6 +37,14 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return array|bool|int
 	 */
 	public function update( array $data, array $where, $convert_name = true );
+
+	/**
+	 * @param array $data
+	 * @param bool $convert_name
+	 *
+	 * @return array
+	 */
+	public function validate_insert( array $data, $convert_name = true );
 
 	/**
 	 * @return string
@@ -127,6 +135,31 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @param \WP_Query $wp_query
 	 */
 	public function setup_posts_orderby( $wp_query );
+
+	/**
+	 * @return bool
+	 */
+	public function is_support_io();
+
+	/**
+	 * @param array $actions
+	 * @param \WP_Post $post
+	 *
+	 * @return array
+	 */
+	public function post_row_actions( array $actions, \WP_Post $post );
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return array {
+	 *  int $result
+	 *  string $message
+	 *  int $success
+	 *  int $fail
+	 * }
+	 */
+	public function import( $data );
 
 	/**
 	 * @param array $columns
@@ -260,6 +293,11 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return array
 	 */
 	public function filter_post_data( array $data, array $post_array );
+
+	/**
+	 * setup list
+	 */
+	public function setup_list();
 
 	/**
 	 * setup page

@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.20
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.22
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -91,16 +91,11 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 * @return array
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function delete_edit_links( array $actions, \WP_Post $post ) {
+	private function post_row_actions( array $actions, \WP_Post $post ) {
 		if ( $this->is_valid_custom_post_type( $post->post_type ) ) {
 			$custom_post = $this->get_custom_post_type( $post->post_type );
-			unset( $actions['inline hide-if-no-js'] );
-			unset( $actions['edit'] );
-			unset( $actions['clone'] );
-			unset( $actions['edit_as_new_draft'] );
-			if ( ! $custom_post->user_can( 'delete_posts' ) ) {
-				unset( $actions['trash'] );
-			}
+
+			return $custom_post->post_row_actions( $actions, $post );
 		}
 
 		return $actions;
@@ -423,6 +418,26 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	}
 
 	/**
+	 * setup list
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function setup_list() {
+		global $typenow;
+		if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+			$custom_post = $this->get_custom_post_type( $typenow );
+			if ( ! empty( $custom_post ) ) {
+				if ( $custom_post->is_support_io() ) {
+					$this->add_style_view( 'admin/style/import_custom_post' );
+					$this->add_script_view( 'admin/script/import_custom_post', [ 'post_type' => $custom_post->get_post_type() ] );
+					$this->setup_modal();
+					$this->app->api->add_use_api_name( 'import_custom_post' );
+				}
+				$custom_post->setup_list();
+			}
+		}
+	}
+
+	/**
 	 * setup page
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
@@ -556,18 +571,22 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	}
 
 	/**
-	 * @param string $post_type
+	 * @param string|array $post_type
 	 *
 	 * @return bool
 	 */
 	public function is_valid_custom_post_type( $post_type ) {
+		if ( is_array( $post_type ) ) {
+			return false;
+		}
+
 		$custom_posts = $this->get_custom_posts();
 
 		return isset( $custom_posts[ $post_type ] );
 	}
 
 	/**
-	 * @param string $post_type
+	 * @param string|array $post_type
 	 *
 	 * @return \WP_Framework_Custom_Post\Interfaces\Custom_Post|null
 	 */

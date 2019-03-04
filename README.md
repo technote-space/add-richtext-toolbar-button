@@ -195,8 +195,8 @@ add_filter( 'artb/default_class_name', function ( $value, $post_id ) {
 ```
 
 ## Author
-[GitHub (technote-space)](https://github.com/technote-space)  
-[homepage](https://technote.space)
+[GitHub (Technote)](https://github.com/technote-space)  
+[Blog](https://technote.space)
 
 ## プラグイン作成用フレームワーク
 [WP Content Framework](https://github.com/wp-content-framework/core)

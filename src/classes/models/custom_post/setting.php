@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 1.0.14
- * @author technote-space
+ * @version 1.0.15
+ * @author Technote
  * @since 1.0.0
  * @since 1.0.2 #25
  * @since 1.0.3 #28, #30, #33, #34
@@ -10,7 +10,8 @@
  * @since 1.0.10 trivial change
  * @since 1.0.12 #74
  * @since 1.0.14 #82, #87
- * @copyright technote-space All Rights Reserved
+ * @since 1.0.15 #17
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
  */
@@ -633,21 +634,24 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			} elseif ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
 				$errors['class_name'][] = $this->translate( 'Invalid format.' );
 				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-			} elseif ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
-					'post_id'    => [ '<>', $post_array['ID'] ],
-					'class_name' => $class_name,
-				] ) > 0 ) {
-				$errors['class_name'][] = $this->translate( 'The value has already been used.' );
 			} else {
-				// この時点で $class_name は 英数及びアンダーバー、ハイフン、スーペースのみ
-				$priority = $this->get_post_field( 'priority', 10 ) - 0;
-				$replace  = " {$class_name} ";
+				! isset( $post_array['ID'] ) and $post_array['ID'] = - 1;
 				if ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
-						'post_id'              => [ '<>', $post_array['ID'] ],
-						"LENGTH('{$replace}')" => [ '<>', "LENGTH(REPLACE('{$replace}', CONCAT(' ', class_name, ' '), ''))", true ],
-						'priority'             => [ '<=', $priority ],
+						'post_id'    => [ '<>', $post_array['ID'] ],
+						'class_name' => $class_name,
 					] ) > 0 ) {
-					$errors['class_name'][] = $this->translate( 'The value is included in the class name of other settings.' );
+					$errors['class_name'][] = $this->translate( 'The value has already been used.' );
+				} else {
+					// この時点で $class_name は 英数及びアンダーバー、ハイフン、スーペースのみ
+					$priority = $this->get_post_field( 'priority', 10 ) - 0;
+					$replace  = " {$class_name} ";
+					if ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
+							'post_id'              => [ '<>', $post_array['ID'] ],
+							"LENGTH('{$replace}')" => [ '<>', "LENGTH(REPLACE('{$replace}', CONCAT(' ', class_name, ' '), ''))", true ],
+							'priority'             => [ '<=', $priority ],
+						] ) > 0 ) {
+						$errors['class_name'][] = $this->translate( 'The value is included in the class name of other settings.' );
+					}
 				}
 			}
 		}

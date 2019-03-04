@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-framework-custom_post\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-02-20 00:16+0900\n"
+"PO-Revision-Date: 2019-03-02 19:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,3 +36,24 @@ msgstr "%sが見つかりません。"
 
 msgid "No %s found in Trash."
 msgstr "ゴミ箱に%sが見つかりません。"
+
+msgid "Export as JSON"
+msgstr "JSON 形式でエクスポート"
+
+msgid "Import from JSON"
+msgstr "JSON からインポート"
+
+msgid "Invalid JSON file"
+msgstr "無効な JSON ファイル"
+
+msgid "importing"
+msgstr "インポート中"
+
+msgid "Total"
+msgstr "合計"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "Fail"
+msgstr "失敗"

@@ -1,12 +1,13 @@
 <?php
 /**
- * @version 1.0.12
- * @author technote-space
+ * @version 1.0.15
+ * @author Technote
  * @since 1.0.0
  * @since 1.0.3 #32
  * @since 1.0.7 #61
  * @since 1.0.12 #77
- * @copyright technote-space All Rights Reserved
+ * @since 1.0.15 #91
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
  */
@@ -36,7 +37,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 
 		global $post;
 		$handle = 'add-richtext-toolbar-button-editor';
-		$this->enqueue_style( $handle, 'gutenberg.css' );
+		$this->enqueue_style( $handle, 'gutenberg.css', [], $this->app->get_plugin_version() );
 		$this->enqueue_script( $handle, 'add-richtext-toolbar-button-gutenberg.min.js', [
 			'wp-editor',
 			'wp-data',
@@ -46,7 +47,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'wp-url',
 			'wp-i18n',
 			'lodash',
-		] );
+		], $this->app->get_plugin_version() );
 		$this->localize_script( $handle, 'artb_params', $this->get_editor_params( $post->post_type ) );
 
 		/** @var Assets $assets */
