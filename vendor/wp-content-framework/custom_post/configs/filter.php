@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Configs Filter
  *
- * @version 0.0.21
+ * @version 0.0.23
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -26,6 +26,9 @@ return [
 			'manage_posts_custom_column',
 		],
 		'post_row_actions'             => [
+			'post_row_actions',
+		],
+		'page_row_actions'             => [
 			'post_row_actions',
 		],
 		'wp_count_posts'               => [

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.22
+ * @version 0.0.23
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -489,7 +489,9 @@ trait Custom_Post {
 	 * @return bool
 	 */
 	public function is_support_io() {
-		return ! empty( $this->app->get_config( 'io', $this->get_post_type_slug() ) ) && $this->user_can( 'edit_others_posts' );
+		global $wp_version;
+
+		return version_compare( $wp_version, '4.7', '>=' ) && ! empty( $this->app->get_config( 'io', $this->get_post_type_slug() ) ) && $this->user_can( 'edit_others_posts' );
 	}
 
 	/**
