@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0.3
 Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.0.15
+Stable tag: 1.0.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,11 +32,12 @@ This plugin needs PHP5.6 or higher.
 
 == Screenshots ==
 
-1. Gutenberg editor (Toolbar buttons)
-2. Gutenberg editor (Sidebar settings)
-3. Add button setting
-4. Button setting list
-5. Dashboard
+1. Gutenberg editor
+2. Gutenberg editor (Toolbar buttons)
+3. Gutenberg editor (Sidebar settings)
+4. Add button setting
+5. Button setting list
+6. Dashboard
 
 == Upgrade Notice ==
 
@@ -70,6 +71,11 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.0.16 (2019/3/7) =
+* Fixed: [Not load unrelated json file](https://github.com/wp-content-framework/custom_post/issues/60)
+* Fixed: [Regular expression of admin message](https://github.com/wp-content-framework/admin/issues/16)
+* Improved: [for Gutenberg v5.2](https://github.com/technote-space/add-richtext-toolbar-button/issues/95)
 
 = 1.0.15 (2019/3/4) =
 
