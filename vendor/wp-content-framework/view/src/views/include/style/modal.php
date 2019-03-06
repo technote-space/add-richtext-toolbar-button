@@ -2,9 +2,9 @@
 /**
  * WP_Framework_View Views Include Style Modal
  *
- * @version 0.0.3
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.6
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -18,7 +18,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 <style>
     .<?php $instance->id();?>-loading {
         background-size: contain;
-        background: url(<?php echo $instance->get_img_url('loading.gif');?>) no-repeat;
+        background: url(<?php $instance->h($instance->get_img_url('loading.gif'));?>) no-repeat;
         text-align: center;
         margin: 0 auto;
         height: 30px;
@@ -28,7 +28,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
     }
 
     #<?php $instance->id();?>-modal {
-        background: url(<?php echo $instance->get_img_url('back.png');?>);
+        background: url(<?php $instance->h($instance->get_img_url('back.png'));?>);
         background-size: cover;
         position: fixed;
         top: 0;

@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Presenter Classes Models Minify
  *
- * @version 0.0.7
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.15
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -19,9 +19,9 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Class Minify
  * @package WP_Framework_Presenter\Classes\Models
  */
-class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook {
+class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Presenter\Interfaces\Presenter {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Package;
+	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Presenter\Traits\Package;
 
 	/**
 	 * @var array $_script
@@ -146,7 +146,7 @@ class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return implode( "\n", $s );
 		}, $this->_script ) );
 
-		echo $this->minify_js( $script );
+		$this->h( $this->minify_js( $script ), false, true, false );
 		$this->_script            = [];
 		$this->_has_output_script = true;
 	}
@@ -223,7 +223,7 @@ class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return implode( "\n", $s );
 		}, $this->_css ) );
 
-		echo $this->minify_css( $css );
+		$this->h( $this->minify_css( $css ), false, true, false );
 		$this->_css = [];
 	}
 

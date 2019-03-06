@@ -11,6 +11,10 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 [WordPress公式ディレクトリ](https://ja.wordpress.org/plugins/add-richtext-toolbar-button/)
 
 ## スクリーンショット
+### 動作
+
+![動作](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201903070308.gif)
+
 ### ツールバー
 
 ![ツールバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902150444.png)

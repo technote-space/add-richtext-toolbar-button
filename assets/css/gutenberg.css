@@ -1,8 +1,9 @@
 /**
- * @version 1.0.5
+ * @version 1.0.16
  * @author Technote
  * @since 1.0.0
  * @since 1.0.5 trivial change
+ * @since 1.0.16 #95
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -36,7 +37,7 @@
 
 .color-palette-control__popover .components-color-palette .components-color-palette__close {
     float: right;
-    margin-right: 20px
+    margin-right: 8px
 }
 
 .add-richtext-toolbar-button-artb-font-color {
@@ -45,4 +46,14 @@
 
 .add-richtext-toolbar-button-artb-background-color {
     background-color: #fcb900;
+}
+
+.components-color-palette .components-color-palette__custom-clear-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: calc(100% - 14px);
+}
+
+.components-color-palette__custom-color {
+    margin-right: 16px;
 }
