@@ -2,9 +2,9 @@
 /**
  * WP_Framework_View Views Include Img
  *
- * @version 0.0.5
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.6
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -29,5 +29,5 @@ isset( $target ) and '_blank' === $target and $attributes['rel'] = 'noopener nor
 ! isset( $contents ) and $contents = '';
 ?>
 <a <?php $instance->get_view( 'include/attributes', array_merge( $args, [ 'attributes' => $attributes ] ), true ); ?> >
-	<?php echo $contents ?>
+	<?php $instance->h( $contents, false, true, false ) ?>
 </a>

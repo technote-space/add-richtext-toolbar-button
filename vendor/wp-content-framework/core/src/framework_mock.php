@@ -2,9 +2,9 @@
 /**
  * WP_Framework mock
  *
- * @version 0.0.1
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.39
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -16,13 +16,6 @@ define( 'WP_FRAMEWORK_IS_MOCK', true );
 
 /**
  * Class WP_Framework
- * @property string $original_plugin_name
- * @property string $plugin_name
- * @property string $plugin_file
- * @property string $plugin_dir
- * @property string $plugin_configs_dir
- * @property string $textdomain
- * @property array $plugin_data
  */
 class WP_Framework {
 
@@ -32,39 +25,44 @@ class WP_Framework {
 	private static $_instances = array();
 
 	/**
+     * @var bool $_framework_textdomain_loaded
+     */
+	private static $_framework_textdomain_loaded = false;
+
+	/**
      * @var string $original_plugin_name
      */
-	public $original_plugin_name;
+	private $original_plugin_name;
 
 	/**
      * @var string $plugin_name
      */
-	public $plugin_name;
+	private $plugin_name;
 
 	/**
      * @var string $plugin_file
      */
-	public $plugin_file;
+	private $plugin_file;
 
 	/**
      * @var string $plugin_dir
      */
-	public $plugin_dir;
+	private $plugin_dir;
 
 	/**
      * @var string $plugin_configs_dir
      */
-	public $plugin_configs_dir;
+	private $plugin_configs_dir;
 
 	/** 
      * @var string $textdomain
      */
-	public $textdomain;
+	private $textdomain;
 
 	/** 
      * @var array $plugin_data
      */
-	public $plugin_data;
+	private $plugin_data;
 
 	/**
 	 * @return mixed
@@ -116,8 +114,11 @@ class WP_Framework {
 				$plugin_languages_rel_path = ltrim( str_replace( WP_PLUGIN_DIR, '', $this->plugin_dir . DS . $domain_path ), DS );
 			}
 
-			$framework_languages_rel_path = ltrim( str_replace( WP_PLUGIN_DIR, '', dirname( WP_FRAMEWORK_BOOTSTRAP ) . DS . 'languages' ), DS );
-			load_plugin_textdomain( WP_CONTENT_FRAMEWORK, false, $framework_languages_rel_path );
+			if ( ! self::$_framework_textdomain_loaded ) {
+				self::$_framework_textdomain_loaded = true;
+				$framework_languages_rel_path       = ltrim( str_replace( WP_PLUGIN_DIR, '', dirname( WP_FRAMEWORK_BOOTSTRAP, 2 ) . DS . 'common' . DS . 'languages' ), DS );
+				load_plugin_textdomain( 'wp_framework-common', false, $framework_languages_rel_path );
+			}
 			if ( ! empty( $this->textdomain ) ) {
 				load_plugin_textdomain( $this->textdomain, false, $plugin_languages_rel_path );
 			}
@@ -140,7 +141,7 @@ class WP_Framework {
 			}
 		}
 
-		return __( $value, WP_CONTENT_FRAMEWORK );
+		return __( $value, 'wp_framework-common' );
 	}
 
 	/**

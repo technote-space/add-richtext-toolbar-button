@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.23
+ * @version 0.0.24
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -676,7 +676,7 @@ trait Custom_Post {
 		header( 'Content-Disposition: attachment; filename="' . $this->get_export_filename() . '"' );
 		header( 'Pragma: no-cache' );
 		header( 'Cache-Control: no-cache' );
-		echo $json;
+		$this->h( $json, false, true, false );
 	}
 
 	/**

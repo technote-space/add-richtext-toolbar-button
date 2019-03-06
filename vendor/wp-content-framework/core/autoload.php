@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2019 technote-space (email : technote.space@gmail.com)
+/*  Copyright 2019 Technote (email : technote.space@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -18,8 +18,8 @@
  * WP_Framework autoload
  *
  * @version 0.0.1
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */

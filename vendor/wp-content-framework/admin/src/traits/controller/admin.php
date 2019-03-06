@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Admin Traits Controller Admin
  *
- * @version 0.0.1
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.14
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -97,15 +97,14 @@ trait Admin {
 	}
 
 	/**
-	 * @return string
+	 * presenter
 	 */
 	public function presenter() {
 		$args = $this->get_view_args();
 		$slug = $this->get_page_slug();
 		$this->add_style_view( 'admin/style/' . $slug, $args );
 		$this->add_script_view( 'admin/script/' . $slug, $args );
-
-		return $this->get_view( 'admin/' . $this->get_page_slug(), $args );
+		$this->get_view( 'admin/' . $this->get_page_slug(), $args, true );
 	}
 
 	/**
