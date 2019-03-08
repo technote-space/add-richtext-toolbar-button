@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Utility
  *
- * @version 0.0.24
+ * @version 0.0.25
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -770,5 +770,14 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 		}
 
 		return wp_kses( $message, $allowed_html );
+	}
+
+	/**
+	 * @param string $plugin
+	 *
+	 * @return bool
+	 */
+	public function is_active_plugin( $plugin ) {
+		return in_array( $plugin, (array) get_option( 'active_plugins', [] ) ) || ( is_multisite() && ( $plugins = get_site_option( 'active_sitewide_plugins' ) ) && isset( $plugins[ $plugin ] ) );
 	}
 }

@@ -117,16 +117,16 @@
         },
         {
             "name": "wp-content-framework/admin",
-            "version": "v0.0.14",
+            "version": "v0.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/admin.git",
-                "reference": "0bcd8b03c80d44afc38d7e9d5f2ba079395b5037"
+                "reference": "f9c58559d39e174c7305895c67cc31615a788742"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/0bcd8b03c80d44afc38d7e9d5f2ba079395b5037",
-                "reference": "0bcd8b03c80d44afc38d7e9d5f2ba079395b5037",
+                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/f9c58559d39e174c7305895c67cc31615a788742",
+                "reference": "f9c58559d39e174c7305895c67cc31615a788742",
                 "shasum": ""
             },
             "require": {
@@ -152,7 +152,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-03-06T13:53:28+00:00"
+            "time": "2019-03-08T13:40:18+00:00"
         },
         {
             "name": "wp-content-framework/api",
@@ -194,16 +194,16 @@
         },
         {
             "name": "wp-content-framework/common",
-            "version": "v0.0.24",
+            "version": "v0.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/common.git",
-                "reference": "4ee6528029f46b0522034dac6e20c62e791fd557"
+                "reference": "e3c9788f1fd415d7db18029a80603cc2bdd408b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/common/zipball/4ee6528029f46b0522034dac6e20c62e791fd557",
-                "reference": "4ee6528029f46b0522034dac6e20c62e791fd557",
+                "url": "https://api.github.com/repos/wp-content-framework/common/zipball/e3c9788f1fd415d7db18029a80603cc2bdd408b4",
+                "reference": "e3c9788f1fd415d7db18029a80603cc2bdd408b4",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +231,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-03-04T14:09:06+00:00"
+            "time": "2019-03-08T13:25:08+00:00"
         },
         {
             "name": "wp-content-framework/controller",
