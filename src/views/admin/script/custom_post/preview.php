@@ -40,7 +40,7 @@ $instance->add_script_view( 'admin/script/icon' );
                 $(this).contents().find('#preview-wrap').append(elem);
                 $(this).contents().find('head').append($('<style>', {
                     type: 'text/css',
-                    text: 'body{font-size: 13px; margin: 0} #preview-wrap{margin: 1em}'
+                    text: 'body{font-size: 13px; margin: 0; background: transparent!important} #preview-wrap{margin: 1em}'
                 }));
                 $(this).contents().find('head').append($('<link>', {
                     rel: 'stylesheet',
