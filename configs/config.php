@@ -39,4 +39,13 @@ return [
 
 	// setting page slug
 	'setting_page_slug'              => 'dashboard',
+
+	// detail url
+	'detail_url'                     => 'https://technote.space/add-richtext-toolbar-button',
+
+	// twitter
+	'twitter'                        => 'technote15',
+
+	// github repo
+	'github_repo'                    => 'technote-space/add-richtext-toolbar-button',
 ];

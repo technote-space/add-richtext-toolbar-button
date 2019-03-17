@@ -40,17 +40,17 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	 * post
 	 */
 	protected function post_action() {
-		if ( $this->app->input->post( 'reset' ) ) {
+		if ( $this->app->input->post( 'update' ) ) {
+			foreach ( $this->get_setting_list() as $name ) {
+				$this->update_setting( $name );
+			}
+			$this->app->add_message( 'Settings have been updated.', 'setting' );
+		} else {
 			foreach ( $this->get_setting_list() as $name ) {
 				$this->app->option->delete( $this->get_filter_prefix() . $name );
 				$this->delete_hook_cache( $name );
 			}
 			$this->app->add_message( 'Settings have been reset.', 'setting' );
-		} elseif ( $this->app->input->post( 'update' ) ) {
-			foreach ( $this->get_setting_list() as $name ) {
-				$this->update_setting( $name );
-			}
-			$this->app->add_message( 'Settings have been updated.', 'setting' );
 		}
 	}
 
@@ -103,15 +103,15 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 		$detail['id']    = str_replace( '/', '-', $detail['name'] );
 		$detail['form']  = $this->get_form_by_type( $detail['type'], false );
 		$detail['title'] = $this->translate( $detail['label'] );
-		$detail['label'] = $this->translate( $detail['label'] );
-		if ( $this->app->utility->array_get( $detail, 'type' ) === 'bool' ) {
+		$detail['label'] = $detail['title'];
+		if ( $this->app->array->get( $detail, 'type' ) === 'bool' ) {
 			if ( $detail['value'] ) {
 				$detail['checked'] = true;
 			}
 			$detail['value'] = 1;
 			$detail['label'] = $this->translate( 'Valid' );
 		}
-		if ( $this->app->utility->ends_with( $name, '_icon' ) ) {
+		if ( $this->app->string->ends_with( $name, '_icon' ) ) {
 			$detail['form_type'] = 'icon';
 		}
 
@@ -126,7 +126,7 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	private function update_setting( $name ) {
 		$detail  = $this->app->setting->get_setting( $name, true );
 		$default = null;
-		if ( $this->app->utility->array_get( $detail, 'type' ) === 'bool' ) {
+		if ( $this->app->array->get( $detail, 'type' ) === 'bool' ) {
 			$default = 0;
 		}
 

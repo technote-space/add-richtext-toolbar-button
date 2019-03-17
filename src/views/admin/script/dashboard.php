@@ -44,8 +44,11 @@ foreach ( $settings as $k => $v ) {
                 });
             })();
 
-            $('input[name="reset"][type="submit"]').on('click', function () {
-                return window.confirm('<?php $instance->h( 'Are you sure to reset settings?', true );?>');
+            $('.form-buttons input[name="reset"]').on('click', function () {
+                if (window.confirm('<?php $instance->h( 'Are you sure to reset settings?', true );?>')) {
+                    $(this).closest('form').submit();
+                }
+                return false;
             });
         });
     })(jQuery);
