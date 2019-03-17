@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.29
+ * @version 0.0.30
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -985,6 +985,10 @@ trait Custom_Post {
 		$query = $this->query( 't' )->alias_join_wp( 'posts', 'p', 'p.ID', 't.post_id' );
 		if ( $is_valid ) {
 			$query->where( 'p.post_status', 'publish' );
+		}
+		$exclude = get_post_stati( [ 'exclude_from_search' => true ] );
+		if ( ! empty( $exclude ) ) {
+			$query->where_not_in( 'p.post_status', $exclude );
 		}
 		$this->call_if_closure( $callback, $query );
 		$total      = $query->count();
