@@ -2,7 +2,7 @@
 /**
  * WP_Framework Package Base
  *
- * @version 0.0.32
+ * @version 0.0.47
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -294,6 +294,13 @@ abstract class Package_Base {
 	}
 
 	/**
+	 * @return bool
+	 */
+	protected function is_valid_cron() {
+		return false;
+	}
+
+	/**
 	 * @param string $name
 	 *
 	 * @return array
@@ -429,6 +436,23 @@ abstract class Package_Base {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function get_cron_namespaces() {
+		return $this->get_settings_common( '', 'cron_namespace', function () {
+			return [ $this->get_cron_namespace() ];
+		}, 'get_cron_namespaces', 'is_valid_cron', function ( $default ) {
+			$namespaces   = [];
+			$namespaces[] = $this->get_cron_namespace();
+			foreach ( $default as $dir ) {
+				$namespaces[] = $dir;
+			}
+
+			return $namespaces;
+		} );
+	}
+
+	/**
 	 * @param string $default_package
 	 * @param string $cache_key
 	 * @param callable $get_default
@@ -506,5 +530,12 @@ abstract class Package_Base {
 	 */
 	protected function get_api_namespace() {
 		return $this->get_namespace() . '\\Classes\\Controllers\\Api\\';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_cron_namespace() {
+		return $this->get_namespace() . '\\Classes\\Crons\\';
 	}
 }

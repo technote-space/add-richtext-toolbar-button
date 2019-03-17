@@ -2,9 +2,9 @@
 /**
  * WP_Framework_Update Classes Models Update
  *
- * @version 0.0.4
- * @author technote-space
- * @copyright technote-space All Rights Reserved
+ * @version 0.0.6
+ * @author Technote
+ * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
@@ -30,7 +30,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	private function setup_update() {
 		add_action( 'in_plugin_update_message-' . $this->app->define->plugin_base_name, function ( $data, $r ) {
 			$new_version = $r->new_version;
-			$url         = $this->app->utility->array_get( $data, 'PluginURI' );
+			$url         = $this->app->array->get( $data, 'PluginURI' );
 			$notices     = $this->get_upgrade_notices( $new_version, $url );
 			if ( ! empty( $notices ) ) {
 				$this->get_view( 'admin/include/update', [
@@ -155,7 +155,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return false|string
 	 */
 	private function get_plugin_slug( $url ) {
-		if ( $this->app->utility->starts_with( $url, 'https://wordpress.org/plugins/' ) ) {
+		if ( $this->app->string->starts_with( $url, 'https://wordpress.org/plugins/' ) ) {
 			return trim( str_replace( 'https://wordpress.org/plugins/', '', $url ), '/' );
 		}
 
@@ -176,7 +176,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			foreach ( (array) preg_split( '~[\r\n]+~', trim( $matches[1] ) ) as $line ) {
 				$line = preg_replace( '~\[\[([^\]]*)\]\]\(([^\)]*)\)~', '<span style="${2}">${1}</span>', $line );
 				/** @noinspection HtmlUnknownTarget */
-				$line = preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
+				$line = preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}" target="_blank" rel="noopener noreferrer">${1}</a>', $line );
 				$line = preg_replace( '#\A\s*\*+\s*#', '', $line );
 				$line = preg_replace( '#\*\*\s*([^*]+)\s*\*\*#', '<b>${1}</b>', $line );
 				$line = preg_replace( '#`\s*(.+)\s*`#', '<code>${1}</code>', $line );
@@ -191,7 +191,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				$line = preg_replace( '#\A\s*=\s*([^\s]+)\s*=\s*\z#', '[ $1 ]', $line );
 				$line = trim( $line );
 				if ( '' !== $line ) {
-					$line = $this->app->utility->strip_tags( $line, [
+					$line = $this->app->string->strip_tags( $line, [
 						'span' => [ 'style' => true ],
 					] );
 					if ( $version ) {

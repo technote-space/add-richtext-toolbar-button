@@ -2,7 +2,7 @@
 /**
  * WP_Framework
  *
- * @version 0.0.38
+ * @version 0.0.42
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -31,9 +31,13 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
  * @property \WP_Framework_Common\Classes\Models\Filter $filter
  * @property \WP_Framework_Common\Classes\Models\Uninstall $uninstall
  * @property \WP_Framework_Common\Classes\Models\Utility $utility
+ * @property \WP_Framework_Common\Classes\Models\Array_Utility $array
+ * @property \WP_Framework_Common\Classes\Models\String_Utility $string
+ * @property \WP_Framework_Common\Classes\Models\File_Utility $file
  * @property \WP_Framework_Common\Classes\Models\Option $option
  * @property \WP_Framework_Common\Classes\Models\User $user
  * @property \WP_Framework_Common\Classes\Models\Input $input
+ * @property \WP_Framework_Common\Classes\Models\Deprecated $deprecated
  * @property \WP_Framework_Db\Classes\Models\Db $db
  * @property \WP_Framework_Log\Classes\Models\Log $log
  * @property \WP_Framework_Admin\Classes\Models\Admin $admin
@@ -51,6 +55,7 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
  * @property \WP_Framework_Update\Classes\Models\Update $update
  * @property \WP_Framework_Update_Check\Classes\Models\Update_Check $update_check
  * @property \WP_Framework_Upgrade\Classes\Models\Upgrade $upgrade
+ * @property \WP_Framework_Cache\Classes\Models\Cache $cache
  *
  * @method void main_init()
  * @method bool has_initialized()
@@ -104,6 +109,18 @@ class WP_Framework {
 	 * @var \WP_Framework\Package_Base[]
 	 */
 	private static $_packages = [];
+
+	/**
+	 * for debug
+	 * @var float $_started
+	 */
+	private static $_started_at;
+
+	/**
+	 * for debug
+	 * @var float $_elapsed
+	 */
+	private static $_elapsed = 0.0;
 
 	/**
 	 * @var array $_package_versions (package => version)
@@ -282,6 +299,7 @@ class WP_Framework {
 	 * @return WP_Framework
 	 */
 	public static function get_instance( $plugin_name, $plugin_file = null, $slug_name = null, $relative = null, $package = null ) {
+		self::report_performance();
 		if ( ! isset( self::$_instances[ $plugin_name ] ) ) {
 			if ( empty( $plugin_file ) ) {
 				self::wp_die( '$plugin_file is required.', __FILE__, __LINE__ );
@@ -292,6 +310,70 @@ class WP_Framework {
 		}
 
 		return self::$_instances[ $plugin_name ];
+	}
+
+	/**
+	 * for debug
+	 */
+	private static function report_performance() {
+		if ( ! isset( self::$_started_at ) ) {
+			self::$_started_at = false;
+			if ( defined( 'WP_FRAMEWORK_PERFORMANCE_REPORT' ) && ! defined( 'PHPUNIT_COMPOSER_INSTALL' ) ) {
+				self::$_started_at = microtime( true ) * 1000;
+
+				add_action( 'shutdown', function () {
+					if ( ! did_action( 'wp_loaded' ) ) {
+						return;
+					}
+					if ( defined( 'WP_UNINSTALL_PLUGIN' ) && WP_UNINSTALL_PLUGIN ) {
+						return;
+					}
+					if ( defined( 'WP_FRAMEWORK_PERFORMANCE_REPORT_EXCLUDE_AJAX' ) ) {
+						if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+							return;
+						}
+						if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+							return;
+						}
+					}
+					if ( defined( 'WP_FRAMEWORK_PERFORMANCE_REPORT_EXCLUDE_CRON' ) && defined( 'DOING_CRON' ) && DOING_CRON ) {
+						return;
+					}
+					if ( defined( 'WP_FRAMEWORK_SUSPEND_PERFORMANCE_REPORT' ) ) {
+						return;
+					}
+
+					error_log( '' );
+					error_log( '' );
+					$total = 0;
+					foreach ( self::$_instances as $instance ) {
+						if ( ! $instance->framework_initialized() ) {
+							continue;
+						}
+						$total += $instance->filter->get_elapsed();
+					}
+					$total  += self::$_elapsed;
+					$global = microtime( true ) * 1000 - self::$_started_at;
+					error_log( sprintf( 'shutdown framework: %12.8fms (%12.8fms) / %12.8fms (%.2f%%)', $total, self::$_elapsed, $global, ( $total / $global ) * 100 ) );
+
+					foreach ( self::$_instances as $instance ) {
+						if ( ! $instance->framework_initialized() ) {
+							continue;
+						}
+						$elapsed = $instance->filter->get_elapsed();
+						error_log( sprintf( '  %12.8fms (%5.2f%% / %5.2f%%) : %s', $elapsed, ( $elapsed / $global ) * 100, ( $elapsed / $total ) * 100, $instance->plugin_name ) );
+						if ( defined( 'WP_FRAMEWORK_DETAIL_REPORT' ) ) {
+							foreach ( $instance->filter->get_elapsed_details() as $detail ) {
+								error_log( '     - ' . $detail );
+							}
+						}
+						if ( $instance->is_valid_package( 'db' ) ) {
+							$instance->db->performance_report();
+						}
+					}
+				}, 1 );
+			}
+		}
 	}
 
 	/**
@@ -316,7 +398,7 @@ class WP_Framework {
 	 */
 	public function get_package_names() {
 		if ( ! $this->_framework_initialized ) {
-			self::wp_die( 'framework is not ready.', __FILE__, __LINE__ );
+			self::wp_die( [ 'framework is not ready.', '<pre>' . wp_debug_backtrace_summary() . '</pre>' ], __FILE__, __LINE__ );
 		}
 
 		return array_keys( $this->_package_versions );
@@ -379,7 +461,7 @@ class WP_Framework {
 	 */
 	public function get_package_version( $package = 'core' ) {
 		if ( ! $this->_framework_initialized ) {
-			self::wp_die( 'framework is not ready.', __FILE__, __LINE__ );
+			self::wp_die( [ 'framework is not ready.', '<pre>' . wp_debug_backtrace_summary() . '</pre>' ], __FILE__, __LINE__ );
 		}
 		if ( ! isset( $this->_package_versions[ $package ] ) ) {
 			self::wp_die( [ 'package is not available.', 'package name: ' . $package ], __FILE__, __LINE__ );
@@ -440,7 +522,7 @@ class WP_Framework {
 	 */
 	public function get_instances() {
 		if ( ! $this->_framework_initialized ) {
-			self::wp_die( 'framework is not ready.', __FILE__, __LINE__ );
+			self::wp_die( [ 'framework is not ready.', '<pre>' . wp_debug_backtrace_summary() . '</pre>' ], __FILE__, __LINE__ );
 		}
 
 		return array_filter( self::$_instances, function ( $instance ) {
@@ -454,7 +536,7 @@ class WP_Framework {
 	 */
 	private function get_main() {
 		if ( ! $this->_framework_initialized ) {
-			self::wp_die( 'framework is not ready.', __FILE__, __LINE__ );
+			self::wp_die( [ 'framework is not ready.', '<pre>' . wp_debug_backtrace_summary() . '</pre>' ], __FILE__, __LINE__ );
 		}
 		if ( ! isset( $this->_main ) ) {
 			if ( ! class_exists( '\WP_Framework_Core\Classes\Main' ) ) {
@@ -583,11 +665,25 @@ class WP_Framework {
 	}
 
 	/**
+	 * for debug
+	 *
+	 * @param callable $callback
+	 */
+	private function run( $callback ) {
+		$start = microtime( true ) * 1000;
+		$callback();
+		$elapsed          = microtime( true ) * 1000 - $start;
+		static::$_elapsed += $elapsed;
+	}
+
+	/**
 	 * setup actions
 	 */
 	private function setup_actions() {
 		add_action( 'after_setup_theme', function () {
-			$this->initialize_framework();
+			self::run( function () {
+				$this->initialize_framework();
+			} );
 		} );
 
 		if ( $this->is_theme ) {
@@ -644,6 +740,13 @@ class WP_Framework {
 
 		$this->check_required_version();
 		$this->load_setup();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function framework_initialized() {
+		return $this->_framework_initialized;
 	}
 
 	/**

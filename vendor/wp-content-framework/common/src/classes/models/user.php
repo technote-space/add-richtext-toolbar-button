@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models User
  *
- * @version 0.0.1
+ * @version 0.0.31
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -196,18 +196,16 @@ class User implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Cor
 	 * @param string $value
 	 */
 	public function set_all( $key, $value ) {
-		global $wpdb;
-		$query = $wpdb->prepare( "UPDATE $wpdb->usermeta SET meta_value = %s WHERE meta_key LIKE %s", $value, $this->get_meta_key( $key ) );
-		$wpdb->query( $query );
+		$query = $this->wpdb()->prepare( "UPDATE {$this->get_wp_table('usermeta')} SET meta_value = %s WHERE meta_key LIKE %s", $value, $this->get_meta_key( $key ) );
+		$this->wpdb()->query( $query );
 	}
 
 	/**
 	 * @param string $key
 	 */
 	public function delete_all( $key ) {
-		global $wpdb;
-		$query = $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE %s", $this->get_meta_key( $key ) );
-		$wpdb->query( $query );
+		$query = $this->wpdb()->prepare( "DELETE FROM {$this->get_wp_table('usermeta')} WHERE meta_key LIKE %s", $this->get_meta_key( $key ) );
+		$this->wpdb()->query( $query );
 	}
 
 	/**
@@ -235,15 +233,14 @@ class User implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Cor
 	 * @return array
 	 */
 	public function find( $key, $value ) {
-		global $wpdb;
 		$query   = <<< SQL
-			SELECT * FROM {$wpdb->usermeta}
+			SELECT * FROM {$this->get_wp_table('usermeta')}
 			WHERE meta_key LIKE %s
 			AND   meta_value LIKE %s
 SQL;
-		$results = $wpdb->get_results( $wpdb->prepare( $query, $this->get_meta_key( $key ), $value ) );
+		$results = $this->wpdb()->get_results( $this->wpdb()->prepare( $query, $this->get_meta_key( $key ), $value ) );
 
-		return $this->apply_filters( 'find_user_meta', $this->app->utility->array_pluck( $results, 'user_id' ), $key, $value );
+		return $this->apply_filters( 'find_user_meta', $this->app->array->pluck( $results, 'user_id' ), $key, $value );
 	}
 
 	/**
@@ -267,14 +264,13 @@ SQL;
 	 * @return array
 	 */
 	public function get_meta_user_ids( $key ) {
-		global $wpdb;
 		$query   = <<< SQL
-		SELECT user_id FROM {$wpdb->usermeta}
+		SELECT user_id FROM {$this->get_wp_table('usermeta')}
 		WHERE meta_key LIKE %s
 SQL;
-		$results = $wpdb->get_results( $wpdb->prepare( $query, $this->get_meta_key( $key ) ) );
+		$results = $this->wpdb()->get_results( $this->wpdb()->prepare( $query, $this->get_meta_key( $key ) ) );
 
-		return $this->apply_filters( 'get_meta_user_ids', $this->app->utility->array_pluck( $results, 'user_id' ), $key );
+		return $this->apply_filters( 'get_meta_user_ids', $this->app->array->pluck( $results, 'user_id' ), $key );
 	}
 
 	/**
@@ -309,9 +305,8 @@ SQL;
 	 * uninstall
 	 */
 	public function uninstall() {
-		global $wpdb;
-		$query = $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE %s", $this->get_user_prefix() . '%' );
-		$wpdb->query( $query );
+		$query = $this->wpdb()->prepare( "DELETE FROM {$this->get_wp_table('usermeta')} WHERE meta_key LIKE %s", $this->get_user_prefix() . '%' );
+		$this->wpdb()->query( $query );
 	}
 
 	/**

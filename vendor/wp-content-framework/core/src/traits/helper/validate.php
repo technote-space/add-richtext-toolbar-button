@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Helper Validate
  *
- * @version 0.0.1
+ * @version 0.0.41
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -19,9 +19,23 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Trait Validate
  * @package WP_Framework_Core\Traits\Helper
  * @property \WP_Framework $app
- * @mixin \WP_Framework_Core\Traits\Translate
+ * @mixin \WP_Framework_Core\Traits\Singleton
  */
 trait Validate {
+
+	/**
+	 * @param mixed $var
+	 * @param bool $ignore_empty
+	 *
+	 * @return bool
+	 */
+	private function is_ignore_empty( $var, $ignore_empty ) {
+		if ( ! $ignore_empty ) {
+			return false;
+		}
+
+		return is_null( $var ) || ( is_string( $var ) && '' === $var );
+	}
 
 	/**
 	 * @param mixed $var
@@ -43,10 +57,14 @@ trait Validate {
 
 	/**
 	 * @param mixed $var
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_kana( $var ) {
+	protected function validate_kana( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( is_string( $var ) && preg_match( '#\A[ァ-ヴ][ァ-ヴー・]*\z#u', $var ) > 0 ) {
 			return true;
 		}
@@ -56,10 +74,14 @@ trait Validate {
 
 	/**
 	 * @param mixed $var
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_date( $var ) {
+	protected function validate_date( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( is_string( $var ) && preg_match( '#\A\d{4}[/-]\d{1,2}[/-]\d{1,2}\z#', $var ) > 0 ) {
 			return true;
 		}
@@ -69,10 +91,14 @@ trait Validate {
 
 	/**
 	 * @param mixed $var
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_time( $var ) {
+	protected function validate_time( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( is_string( $var ) && preg_match( '#\A\d{1,2}:\d{1,2}(:\d{1,2})?\z#', $var ) > 0 ) {
 			return true;
 		}
@@ -82,10 +108,14 @@ trait Validate {
 
 	/**
 	 * @param mixed $var
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_email( $var ) {
+	protected function validate_email( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( is_string( $var ) && is_email( $var ) ) {
 			return true;
 		}
@@ -95,10 +125,14 @@ trait Validate {
 
 	/**
 	 * @param mixed $var
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_phone( $var ) {
+	protected function validate_phone( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( is_string( $var ) && preg_match( '#\A\d{2,3}-?\d{3,4}-?\d{4,5}\z#', $var ) > 0 ) {
 			return true;
 		}
@@ -260,19 +294,17 @@ trait Validate {
 	 * @param mixed $var
 	 * @param string $table
 	 * @param string $id
-	 * @param string $field
+	 * @param string $column
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_exists( $var, $table, $id = 'id', $field = '*' ) {
+	protected function validate_exists( $var, $table, $id = 'id', $column = '*' ) {
 		if ( ! $this->app->is_valid_package( 'db' ) ) {
 			return new \WP_Error( 400, $this->translate( 'DB module is not available.' ) );
 		}
 		$validate = $this->validate_positive_int( $var );
 		if ( true === $validate ) {
-			if ( $this->app->db->select_count( $table, $field, [
-					$id => $var,
-				] ) <= 0 ) {
+			if ( $this->table( $table )->select( $column )->where( $id, $var )->doesnt_exist() ) {
 				return new \WP_Error( 400, $this->translate( 'Data does not exist.' ) );
 			}
 		}
@@ -315,10 +347,14 @@ trait Validate {
 	/**
 	 * @param mixed $var
 	 * @param string $pattern
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_regex( $var, $pattern ) {
+	protected function validate_regex( $var, $pattern, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( is_string( $var ) && preg_match( $pattern, $var ) > 0 ) {
 			return true;
 		}
@@ -329,10 +365,14 @@ trait Validate {
 	/**
 	 * @param mixed $var
 	 * @param int $len
+	 * @param bool $ignore_empty
 	 *
 	 * @return bool|\WP_Error
 	 */
-	protected function validate_string_length( $var, $len ) {
+	protected function validate_string_length( $var, $len, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
 		if ( ! is_string( $var ) ) {
 			return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
 		}

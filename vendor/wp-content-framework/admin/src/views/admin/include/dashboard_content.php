@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Views Admin Include Dashboard_content
  *
- * @version 0.0.15
+ * @version 0.0.17
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -24,7 +24,7 @@ $instance->add_style_view( 'admin/style/dashboard_content' );
 			<?php foreach ( $settings as $k => $v ) : ?>
                 <tr>
                     <th>
-                        <label for="<?php $instance->h( $v['id'] ); ?>"><?php $instance->h( $instance->app->utility->array_get( $v, 'title', $v['label'] ) ); ?></label>
+                        <label for="<?php $instance->h( $v['id'] ); ?>"><?php $instance->h( $instance->app->array->search( $v, 'title', 'label', '' ) ); ?></label>
                     </th>
                     <td>
 						<?php if ( ! empty( $v['form_type'] ) ) : ?>

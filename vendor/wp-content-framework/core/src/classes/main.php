@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.38
+ * @version 0.0.46
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -24,9 +24,13 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * @property \WP_Framework_Common\Classes\Models\Filter $filter
  * @property \WP_Framework_Common\Classes\Models\Uninstall $uninstall
  * @property \WP_Framework_Common\Classes\Models\Utility $utility
+ * @property \WP_Framework_Common\Classes\Models\Array_Utility $array
+ * @property \WP_Framework_Common\Classes\Models\String_Utility $string
+ * @property \WP_Framework_Common\Classes\Models\File_Utility $file
  * @property \WP_Framework_Common\Classes\Models\Option $option
  * @property \WP_Framework_Common\Classes\Models\User $user
  * @property \WP_Framework_Common\Classes\Models\Input $input
+ * @property \WP_Framework_Common\Classes\Models\Deprecated $deprecated
  * @property \WP_Framework_Db\Classes\Models\Db $db
  * @property \WP_Framework_Log\Classes\Models\Log $log
  * @property \WP_Framework_Admin\Classes\Models\Admin $admin
@@ -44,6 +48,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * @property \WP_Framework_Update\Classes\Models\Update $update
  * @property \WP_Framework_Update_Check\Classes\Models\Update_Check $update_check
  * @property \WP_Framework_Upgrade\Classes\Models\Upgrade $upgrade
+ * @property \WP_Framework_Cache\Classes\Models\Cache $cache
  */
 class Main {
 
@@ -91,6 +96,11 @@ class Main {
 	 * @var array $_namespace_target_package
 	 */
 	private $_namespace_target_package;
+
+	/**
+	 * @var \WP_Framework|null[] $_alternative_instances
+	 */
+	private $_alternative_instances;
 
 	/**
 	 * @var array $_property_instances
@@ -148,16 +158,19 @@ class Main {
 		$this->_properties               = [];
 		$this->_class_target_package     = [];
 		$this->_namespace_target_package = [];
+		$this->_alternative_instances    = [];
 		$this->_class_map                = [];
 		foreach ( $this->app->get_packages() as $package ) {
 			$map = $package->get_config( 'map', $this->app );
 			foreach ( $map as $name => $class ) {
 				if ( is_array( $class ) ) {
 					foreach ( $class as $k => $v ) {
-						$k                                 = ltrim( $k, '\\' );
-						$v                                 = ltrim( $v, '\\' );
-						$this->_class_map [ $k ]           = $v;
-						$this->_class_target_package[ $v ] = $package->get_package();
+						$class                                 = ltrim( $v, '\\' );
+						$this->_properties[ $k ]               = $class;
+						$this->_class_target_package[ $class ] = $name;
+						if ( ! $this->app->is_valid_package( $name ) ) {
+							$this->_alternative_instances[ $class ] = $this->get_alternative_instance( $name );
+						}
 					}
 				} else {
 					$class                                 = ltrim( $class, '\\' );
@@ -165,8 +178,32 @@ class Main {
 					$this->_class_target_package[ $class ] = $package->get_package();
 				}
 			}
+			$map = $package->get_config( 'class_map', $this->app );
+			foreach ( $map as $class_map ) {
+				foreach ( $class_map as $from => $to ) {
+					$from                               = ltrim( $from, '\\' );
+					$to                                 = ltrim( $to, '\\' );
+					$this->_class_map [ $from ]         = $to;
+					$this->_class_target_package[ $to ] = $package->get_package();
+				}
+			}
 			$this->_namespace_target_package[ $package->get_namespace() ] = $package->get_package();
 		}
+	}
+
+	/**
+	 * @param string $package
+	 *
+	 * @return \WP_Framework|null
+	 */
+	private function get_alternative_instance( $package ) {
+		foreach ( $this->app->get_instances() as $instance ) {
+			if ( $instance->is_valid_package( $package ) ) {
+				return $instance;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -205,7 +242,18 @@ class Main {
 			$class = preg_replace( "#\A{$this->define->plugin_namespace}#", '', $class );
 			$dirs  = $this->define->plugin_src_dir;
 		} elseif ( isset( $this->_class_target_package[ $class ] ) ) {
-			if ( $this->app->get_package_instance( $this->_class_target_package[ $class ] )->load_class( $class ) ) {
+			if ( array_key_exists( $class, $this->_alternative_instances ) ) {
+				if ( ! isset( $this->_alternative_instances[ $class ] ) ) {
+					$this->_alternative_instances[ $class ] = $this->get_alternative_instance( $this->_class_target_package[ $class ] );
+					if ( ! isset( $this->_alternative_instances[ $class ] ) ) {
+						$this->_alternative_instances[ $class ] = $this->app;
+					}
+				}
+				$instance = $this->_alternative_instances[ $class ];
+			} else {
+				$instance = $this->app;
+			}
+			if ( $instance->get_package_instance( $this->_class_target_package[ $class ] )->load_class( $class ) ) {
 				return true;
 			}
 		} elseif ( preg_match( '#\A(\w+)\\\\#', $class, $matches ) && isset( $this->_namespace_target_package[ $matches[1] ] ) ) {

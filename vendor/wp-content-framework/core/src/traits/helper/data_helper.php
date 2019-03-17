@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Helper Data Helper
  *
- * @version 0.0.1
+ * @version 0.0.41
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -44,10 +44,15 @@ trait Data_Helper {
 	/**
 	 * @param mixed $param
 	 * @param string $type
+	 * @param bool $check_null
 	 *
 	 * @return mixed
 	 */
-	protected function sanitize_input( $param, $type ) {
+	protected function sanitize_input( $param, $type, $check_null = false ) {
+		if ( $check_null && is_null( $param ) ) {
+			return null;
+		}
+
 		switch ( $type ) {
 			case 'int':
 				if ( ! is_int( $param ) && ! ctype_digit( ltrim( $param, '-' ) ) ) {

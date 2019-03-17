@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Setting
  *
- * @version 0.0.11
+ * @version 0.0.29
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -53,8 +53,17 @@ class Setting implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_
 			foreach ( $groups as $group => $setting_set ) {
 				ksort( $setting_set );
 
-				$this->_groups[ $group_priority ][ $group ] = [];
-				$this->_group_priority[ $group ]            = $group_priority;
+				if ( isset( $this->_group_priority[ $group ] ) ) {
+					$_group_priority                            = $this->_group_priority[ $group ];
+					$this->_groups[ $group_priority ][ $group ] = $this->_groups[ $_group_priority ][ $group ];
+					unset( $this->_groups[ $_group_priority ][ $group ] );
+					if ( empty( $this->_groups[ $_group_priority ] ) ) {
+						unset( $this->_groups[ $_group_priority ] );
+					}
+				} else {
+					$this->_groups[ $group_priority ][ $group ] = [];
+				}
+				$this->_group_priority[ $group ] = $group_priority;
 				foreach ( $setting_set as $setting_priority => $settings ) {
 
 					$this->_groups[ $group_priority ][ $group ] = array_merge( $this->_groups[ $group_priority ][ $group ], array_keys( $settings ) );
@@ -65,6 +74,7 @@ class Setting implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_
 				}
 			}
 		}
+		asort( $this->_group_priority );
 	}
 
 	/**
@@ -161,11 +171,9 @@ class Setting implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_
 	 */
 	private function get_detail_setting( $setting, array $data ) {
 		$data['key'] = $setting;
-		$type        = $this->app->utility->array_get( $data, 'type', '' );
-		$default     = $this->app->utility->array_get( $data, 'default', '' );
-		if ( is_callable( $default ) ) {
-			$default = $default( $this->app );
-		}
+		$type        = $this->app->array->get( $data, 'type', '' );
+		$default     = $this->app->array->get( $data, 'default', '' );
+		$this->call_if_closure_with_result( $default, $default, $this->app );
 		$default = $this->get_expression( $default, $type );
 		if ( ! empty( $data['translate'] ) ) {
 			$default = $this->translate( $default );

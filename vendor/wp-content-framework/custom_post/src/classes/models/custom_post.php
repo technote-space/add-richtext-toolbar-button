@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.22
+ * @version 0.0.28
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -74,13 +74,11 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function manage_posts_custom_column( $column_name, $post_id ) {
-		$post      = get_post( $post_id );
-		$post_type = $post->post_type;
-		if ( $this->is_valid_custom_post_type( $post_type ) ) {
-			$custom_post = $this->get_custom_post_type( $post_type );
-			if ( ! empty( $custom_post ) ) {
-				$custom_post->manage_posts_custom_column( $column_name, $post );
-			}
+		$post        = get_post( $post_id );
+		$post_type   = $post->post_type;
+		$custom_post = $this->get_custom_post_type( $post_type );
+		if ( ! empty( $custom_post ) ) {
+			$custom_post->manage_posts_custom_column( $column_name, $post );
 		}
 	}
 
@@ -198,12 +196,12 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 			return $cached;
 		}
 
-		global $wpdb;
-		$query = "SELECT post_status, COUNT( * ) AS num_posts FROM {$wpdb->posts} ";
+		/** @noinspection SqlResolve */
+		$query = "SELECT post_status, COUNT( * ) AS num_posts FROM {$this->get_wp_table('posts')} ";
 		$query .= $this->posts_join( '', $type );
 		$query .= ' WHERE post_type = %s GROUP BY post_status';
 
-		$results = (array) $wpdb->get_results( $wpdb->prepare( $query, $type ), ARRAY_A );
+		$results = (array) $this->wpdb()->get_results( $this->wpdb()->prepare( $query, $type ), ARRAY_A );
 		$counts  = array_fill_keys( get_post_stati(), 0 );
 		foreach ( $results as $row ) {
 			$counts[ $row['post_status'] ] = $row['num_posts'];
@@ -283,13 +281,11 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function wp_trash_post( $post_id ) {
-		$post      = get_post( $post_id );
-		$post_type = $post->post_type;
-		if ( $this->is_valid_custom_post_type( $post_type ) ) {
-			$custom_post = $this->get_custom_post_type( $post_type );
-			if ( ! empty( $custom_post ) ) {
-				$custom_post->trash_post( $post_id );
-			}
+		$post        = get_post( $post_id );
+		$post_type   = $post->post_type;
+		$custom_post = $this->get_custom_post_type( $post_type );
+		if ( ! empty( $custom_post ) ) {
+			$custom_post->trash_post( $post_id );
 		}
 	}
 
@@ -298,13 +294,11 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function delete_post( $post_id ) {
-		$post      = get_post( $post_id );
-		$post_type = $post->post_type;
-		if ( $this->is_valid_custom_post_type( $post_type ) ) {
-			$custom_post = $this->get_custom_post_type( $post_type );
-			if ( ! empty( $custom_post ) ) {
-				$custom_post->delete_data( $post_id );
-			}
+		$post        = get_post( $post_id );
+		$post_type   = $post->post_type;
+		$custom_post = $this->get_custom_post_type( $post_type );
+		if ( ! empty( $custom_post ) ) {
+			$custom_post->delete_data( $post_id );
 		}
 	}
 
@@ -364,7 +358,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 		$result, array $user, array $userdata
 	) {
 		global $typenow;
-		if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+		if ( $this->is_valid_custom_post_type( $typenow ) ) {
 			return false;
 		}
 
@@ -384,7 +378,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 		$result, array $user, array $userdata
 	) {
 		global $typenow;
-		if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+		if ( $this->is_valid_custom_post_type( $typenow ) ) {
 			return false;
 		}
 
@@ -408,7 +402,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 			$this->app->set_session( $this->get_old_post_session_key(), $this->app->input->post(), 60 );
 		} else {
 			global $typenow;
-			if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+			if ( $this->is_valid_custom_post_type( $typenow ) ) {
 				$custom_post = $this->get_custom_post_type( $typenow );
 				$this->app->set_session( 'updated_message', sprintf( $this->translate( 'Updated %s data.<br>[Back to list page](%s)' ), $custom_post->get_post_type_single_name(), $custom_post->get_post_type_link() ), 60 );
 			}
@@ -423,17 +417,15 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_list() {
 		global $typenow;
-		if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
-			$custom_post = $this->get_custom_post_type( $typenow );
-			if ( ! empty( $custom_post ) ) {
-				if ( $custom_post->is_support_io() ) {
-					$this->add_style_view( 'admin/style/import_custom_post' );
-					$this->add_script_view( 'admin/script/import_custom_post', [ 'post_type' => $custom_post->get_post_type() ] );
-					$this->setup_modal();
-					$this->app->api->add_use_api_name( 'import_custom_post' );
-				}
-				$custom_post->setup_list();
+		$custom_post = $this->get_custom_post_type( $typenow );
+		if ( ! empty( $custom_post ) ) {
+			if ( $custom_post->is_support_io() ) {
+				$this->add_style_view( 'admin/style/import_custom_post' );
+				$this->add_script_view( 'admin/script/import_custom_post', [ 'post_type' => $custom_post->get_post_type() ] );
+				$this->setup_modal();
+				$this->app->api->add_use_api_name( 'import_custom_post' );
 			}
+			$custom_post->setup_list();
 		}
 	}
 
@@ -443,7 +435,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_page() {
 		global $typenow;
-		if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+		if ( $this->is_valid_custom_post_type( $typenow ) ) {
 			$custom_post = $this->get_custom_post_type( $typenow );
 			if ( ! empty( $custom_post ) ) {
 				$custom_post->setup_page();
@@ -457,7 +449,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function set_admin_notices() {
 		global $typenow;
-		if ( ! empty( $typenow ) && $this->is_valid_custom_post_type( $typenow ) ) {
+		if ( $this->is_valid_custom_post_type( $typenow ) ) {
 			$validation_errors = $this->app->get_session( 'validation_errors' );
 			$updated_message   = $this->app->get_session( 'updated_message' );
 			if ( ! empty( $validation_errors ) || ! empty( $updated_message ) ) {
@@ -576,7 +568,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 * @return bool
 	 */
 	public function is_valid_custom_post_type( $post_type ) {
-		if ( is_array( $post_type ) ) {
+		if ( empty( $post_type ) || is_array( $post_type ) ) {
 			return false;
 		}
 
@@ -608,10 +600,9 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 * @return bool
 	 */
 	private function is_valid_update( $post_status, $post_type, $untrash = false ) {
-		return ! $this->app->utility->defined( 'DOING_AUTOSAVE' ) && in_array( $post_status, [
+		return ! $this->app->utility->is_autosave() && in_array( $post_status, [
 				'publish',
 				'future',
-				'draft',
 				'draft',
 				'pending',
 				'private',
@@ -629,17 +620,12 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 * delete posts
 	 */
 	public function uninstall() {
-		/** @var \wpdb $wpdb */
-		global $wpdb;
 		foreach ( $this->get_custom_post_types() as $post_type ) {
-			$posts = $this->app->db->select( $wpdb->posts, [
-				'post_type' => $post_type,
-			] );
-			if ( ! empty( $posts ) ) {
+			$this->wp_table( 'posts' )->where( 'post_type', $post_type )->chunk_for_delete( 1000, function ( $posts ) {
 				foreach ( $posts as $post ) {
-					wp_delete_post( $post['id'] );
+					wp_delete_post( $post['ID'] );
 				}
-			}
+			} );
 		}
 	}
 }

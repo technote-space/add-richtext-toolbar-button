@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Singleton
  *
- * @version 0.0.24
+ * @version 0.0.42
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -22,7 +22,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 trait Singleton {
 
-	use Readonly, Translate, Package;
+	use Readonly, Translate, Utility, Package;
 
 	/**
 	 * @var Singleton[] $_instances
@@ -53,6 +53,11 @@ trait Singleton {
 	 * @var string $_class_name
 	 */
 	private $_class_name;
+
+	/**
+	 * @var string $_class_name_slug
+	 */
+	private $_class_name_slug;
 
 	/**
 	 * @var \ReflectionClass $_reflection
@@ -94,7 +99,9 @@ trait Singleton {
 				} else {
 					$instance = new static( $app, $reflection );
 					if ( $app->is_uninstall() && $instance instanceof \WP_Framework_Common\Interfaces\Uninstall ) {
-						$app->uninstall->add_uninstall( [ $instance, 'uninstall' ], $instance->get_uninstall_priority() );
+						$app->uninstall->add_uninstall( function () use ( $instance ) {
+							$instance->uninstall();
+						}, $instance->get_uninstall_priority() );
 					}
 					self::$_instances[ $key ][ $class ] = $instance;
 					$instance->call_initialize();
@@ -205,7 +212,7 @@ trait Singleton {
 	 * @return bool
 	 */
 	public function is_filter_callable( $method ) {
-		return method_exists( $this, $method ) && is_callable( [ $this, $method ] );
+		return $this->is_method_callable( $method );
 	}
 
 	/**
@@ -237,9 +244,28 @@ trait Singleton {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function get_class_name_slug() {
+		! isset( $this->_class_name_slug ) and $this->_class_name_slug = strtolower( str_replace( [ '_', '\\' ], [ '-', '_' ], $this->get_class_name() ) );
+
+		return $this->_class_name_slug;
+	}
+
+	/**
 	 * @return \ReflectionClass
 	 */
 	public function get_reflection() {
 		return $this->_reflection;
+	}
+
+	/**
+	 * @param string $name
+	 * @param array $args
+	 *
+	 * @return mixed
+	 */
+	public function __call( $name, array $args ) {
+		return $this->app->deprecated->call( static::class, $this, $name, $args );
 	}
 }

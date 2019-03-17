@@ -2,7 +2,7 @@
 /**
  * WP_Framework Package Common
  *
- * @version 0.0.1
+ * @version 0.0.34
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -35,8 +35,8 @@ class Package_Common extends Package_Base {
 		return [
 			'capability',
 			'config',
+			'deprecated',
 			'filter',
-			'map',
 			'slug',
 		];
 	}

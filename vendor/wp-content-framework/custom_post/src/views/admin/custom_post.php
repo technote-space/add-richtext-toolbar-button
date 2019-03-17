@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Views Admin Custom Post
  *
- * @version 0.0.21
+ * @version 0.0.26
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -24,7 +24,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 			<?php if ( empty( $column['is_user_defined'] ) || 'post_id' === $column['name'] ): continue; endif; ?>
             <dt>
                 <label for="<?php $instance->h( $prefix . $name ); ?>">
-					<?php $instance->h( $instance->app->utility->array_get( $column, 'comment', $column['name'] ) ); ?>
+					<?php $instance->h( $instance->app->array->search( $column, 'comment', 'name', '' ) ); ?>
 					<?php if ( ! empty( $column['required'] ) ): ?><span class="required">*</span><?php endif; ?>
                 </label>
             </dt>

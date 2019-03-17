@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Api Classes Models Api
  *
- * @version 0.0.9
+ * @version 0.0.12
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -66,6 +66,9 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_settings() {
+		if ( ! is_admin() ) {
+			return;
+		}
 		if ( $this->app->utility->definedv( 'WP_FRAMEWORK_MOCK_REST_REQUEST' ) ) {
 			$this->app->setting->remove_setting( 'use_admin_ajax' );
 		}
@@ -143,7 +146,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 		if ( ! empty( $this->_use_apis ) ) {
 			$this->_use_apis['get_nonce'] = true;
 		}
-		/** @var \WP_Framework_Api\Traits\Controller\Api $api */
+		/** @var \WP_Framework_Api\Classes\Controllers\Api\Base $api */
 		foreach ( $this->get_api_controllers() as $api ) {
 			$name = $api->get_call_function_name();
 			if ( ! $this->_use_all_api && empty( $this->_use_apis[ $name ] ) ) {
@@ -376,7 +379,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 
 		$api_controllers = $this->get_class_list();
 		if ( ! $this->app->utility->doing_ajax() ) {
-			/** @var \WP_Framework_Api\Traits\Controller\Api $class */
+			/** @var \WP_Framework_Api\Classes\Controllers\Api\Base $class */
 			foreach ( $api_controllers as $name => $class ) {
 				if ( ! $class->is_valid() || ( is_admin() && $class->is_only_front() ) || ( ! is_admin() && $class->is_only_admin() ) ) {
 					unset( $api_controllers[ $name ] );
@@ -429,6 +432,15 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	 */
 	public function is_empty() {
 		// 1 は nonce 更新用のライブラリ提供のAPI
-		return $this->get_loaded_count( false ) <= 1;
+
+		$cache = $this->cache_get( 'is_empty' );
+		if ( isset( $cache ) ) {
+			return $cache;
+		}
+
+		$result = $this->get_loaded_count() <= 1;
+		$this->cache_set( 'is_empty', $result );
+
+		return $result;
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.22
+ * @version 0.0.26
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -24,10 +24,11 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	/**
 	 * @param array $data
 	 * @param bool $convert_name
+	 * @param bool $wp_error
 	 *
 	 * @return array|bool|int
 	 */
-	public function insert( array $data, $convert_name = true );
+	public function insert( array $data, $convert_name = true, $wp_error = false );
 
 	/**
 	 * @param array $data
@@ -191,15 +192,24 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	public function get_data( $id, $is_valid = true );
 
 	/**
+	 * @param \Closure|null $callback
 	 * @param bool $is_valid
 	 * @param int|null $per_page
 	 * @param int $page
-	 * @param array|null $where
-	 * @param array|null $orderby
 	 *
 	 * @return array
 	 */
-	public function list_data( $is_valid = true, $per_page = null, $page = 1, $where = null, $orderby = null );
+	public function get_list_data( $callback = null, $is_valid = true, $per_page = null, $page = 1 );
+
+	/**
+	 * @param int $per_page
+	 * @param int $page
+	 * @param \Closure|null $callback
+	 * @param bool $is_valid
+	 *
+	 * @return array
+	 */
+	public function pagination( $per_page, $page, $callback = null, $is_valid = true );
 
 	/**
 	 * @param array $params
