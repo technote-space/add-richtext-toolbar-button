@@ -1,11 +1,12 @@
 <?php
 /**
- * @version 1.0.14
+ * @version 1.1.0
  * @author Technote
  * @since 1.0.0
  * @since 1.0.9 #69
  * @since 1.0.13 #83
  * @since 1.0.14 #82
+ * @since 1.1.0 wp-content-framework/common#57
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
