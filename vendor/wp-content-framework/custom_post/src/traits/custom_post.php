@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.28
+ * @version 0.0.29
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -70,8 +70,7 @@ trait Custom_Post {
 			return;
 		}
 
-		global $typenow;
-		if ( $post_type === $typenow ) {
+		if ( isset( $_REQUEST['post_type'] ) && $_REQUEST['post_type'] === $post_type ) {
 			add_filter( "views_edit-{$post_type}", function ( $views ) {
 				return $this->view_edit( $views );
 			} );
@@ -88,10 +87,12 @@ trait Custom_Post {
 	}
 
 	/**
+	 * @param string|null $as
+	 *
 	 * @return \WP_Framework_Db\Classes\Models\Query\Builder
 	 */
-	protected function query() {
-		return $this->table( $this->get_related_table_name() );
+	protected function query( $as = null ) {
+		return $this->table( $this->get_related_table_name(), $as );
 	}
 
 	/**
@@ -980,10 +981,8 @@ trait Custom_Post {
 	 * @return array
 	 */
 	public function get_list_data( $callback = null, $is_valid = true, $per_page = null, $page = 1 ) {
-		$table = $this->get_related_table_name();
 		$page  = max( 1, $page );
-
-		$query = $this->table( $table, 't' )->alias_join_wp( 'posts', 'p', 'p.ID', 't.post_id' );
+		$query = $this->query( 't' )->alias_join_wp( 'posts', 'p', 'p.ID', 't.post_id' );
 		if ( $is_valid ) {
 			$query->where( 'p.post_status', 'publish' );
 		}
@@ -1037,6 +1036,34 @@ trait Custom_Post {
 	 */
 	public function pagination( $per_page, $page, $callback = null, $is_valid = true ) {
 		return $this->get_list_data( $callback, $is_valid, $per_page, $page );
+	}
+
+	/**
+	 * @param bool $only_publish
+	 *
+	 * @return int
+	 */
+	public function count( $only_publish = false ) {
+		$query = $this->query( 't' )->alias_join_wp( 'posts', 'p', 'p.ID', 't.post_id' );
+		if ( $only_publish ) {
+			$query->where( 'p.post_status', 'publish' );
+		}
+
+		return $query->count();
+	}
+
+	/**
+	 * @param bool $only_publish
+	 *
+	 * @return bool
+	 */
+	public function is_empty( $only_publish = false ) {
+		$query = $this->query( 't' )->alias_join_wp( 'posts', 'p', 'p.ID', 't.post_id' );
+		if ( $only_publish ) {
+			$query->where( 'p.post_status', 'publish' );
+		}
+
+		return ! $query->exists();
 	}
 
 	/**

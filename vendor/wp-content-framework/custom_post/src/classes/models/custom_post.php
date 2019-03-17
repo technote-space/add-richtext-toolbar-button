@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.28
+ * @version 0.0.29
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -404,7 +404,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 			global $typenow;
 			if ( $this->is_valid_custom_post_type( $typenow ) ) {
 				$custom_post = $this->get_custom_post_type( $typenow );
-				$this->app->set_session( 'updated_message', sprintf( $this->translate( 'Updated %s data.<br>[Back to list page](%s)' ), $custom_post->get_post_type_single_name(), $custom_post->get_post_type_link() ), 60 );
+				$this->app->set_session( 'updated_message', sprintf( $this->translate( 'Updated %s data.<br>[Back to list page](%s)' ), $this->translate( $custom_post->get_post_type_single_name() ), $custom_post->get_post_type_link() ), 60 );
 			}
 		}
 

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.26
+ * @version 0.0.29
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -210,6 +210,20 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return array
 	 */
 	public function pagination( $per_page, $page, $callback = null, $is_valid = true );
+
+	/**
+	 * @param bool $only_publish
+	 *
+	 * @return int
+	 */
+	public function count( $only_publish = false );
+
+	/**
+	 * @param bool $only_publish
+	 *
+	 * @return bool
+	 */
+	public function is_empty( $only_publish = false );
 
 	/**
 	 * @param array $params

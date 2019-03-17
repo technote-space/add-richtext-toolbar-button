@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Deprecated Traits Custom Post
  *
- * @version 0.0.28
+ * @version 0.0.29
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -50,13 +50,13 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Singleton {
 			],
 		];
 		empty( $where ) and $where = [];
+		if ( $is_valid ) {
+			$where['p.post_status'] = 'publish';
+		}
 		$total      = $this->app->db->select_count( $table, null, $where );
 		$total_page = isset( $per_page ) ? ceil( $total / $per_page ) : 1;
 		$page       = min( $total_page, $page );
 		$offset     = isset( $per_page ) && isset( $page ) ? $per_page * ( $page - 1 ) : null;
-		if ( $is_valid ) {
-			$where['p.post_status'] = 'publish';
-		}
 
 		$list = $this->app->db->select( $table, $where, null, $limit, $offset, $orderby );
 		if ( empty( $list ) ) {
