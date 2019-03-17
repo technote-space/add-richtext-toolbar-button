@@ -78,7 +78,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function changed_option( $key ) {
-		if ( $this->app->utility->starts_with( $key, $this->get_filter_prefix() ) ) {
+		if ( $this->app->string->starts_with( $key, $this->get_filter_prefix() ) ) {
 			$this->clear_cache_file();
 		}
 	}
@@ -140,7 +140,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return string
 	 */
 	private function get_front_cache_file_name( $post_type, $suffix ) {
-		return $this->apply_filters( 'cache_front_file_name', $this->app->utility->replace( $this->get_front_cache_file_base_name(), [
+		return $this->apply_filters( 'cache_front_file_name', $this->app->string->replace( $this->get_front_cache_file_base_name(), [
 			'post_type' => $post_type,
 			'suffix'    => $suffix,
 		] ), $post_type );
@@ -160,7 +160,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return string
 	 */
 	private function get_editor_cache_file_name( $post_type, $suffix ) {
-		return $this->apply_filters( 'cache_editor_file_name', $this->app->utility->replace( $this->get_editor_cache_file_base_name(), [
+		return $this->apply_filters( 'cache_editor_file_name', $this->app->string->replace( $this->get_editor_cache_file_base_name(), [
 			'post_type' => $post_type,
 			'suffix'    => $suffix,
 		] ), $post_type );
@@ -206,9 +206,9 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 		$deleted = false;
 		foreach ( [ true, false ] as $item ) {
-			$deleted |= $this->app->utility->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( null, $item ) );
+			$deleted |= $this->app->file->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( null, $item ) );
 			foreach ( $setting->get_valid_post_types() as $post_type ) {
-				$deleted |= $this->app->utility->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( $post_type, $item ) );
+				$deleted |= $this->app->file->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( $post_type, $item ) );
 			}
 		}
 		$this->_cleared_cache_file = $deleted;

@@ -15,7 +15,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 $instance->add_script_view( 'admin/script/icon' );
 $target = [];
 foreach ( $settings as $k => $v ) {
-	if ( $instance->app->utility->ends_with( $k, '_icon' ) ) {
+	if ( $instance->app->string->ends_with( $k, '_icon' ) ) {
 		$target[] = '#' . preg_replace( '#/#', '\\\\/', $v['name'] );
 	}
 }

@@ -23,7 +23,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 					<?php if ( ! empty( $value['form_type'] ) ) : ?>
 						<?php $instance->get_view( 'admin/custom_post/setting/preview/' . $value['form_type'], $value, true, false ); ?>
 					<?php else: ?>
-						<?php $instance->h( $instance->app->utility->array_get( $value, 'value' ) ); ?>
+						<?php $instance->h( $instance->app->array->get( $value, 'value' ) ); ?>
 					<?php endif; ?>
 				<?php else: ?>
 					<?php $instance->h( $value ); ?>

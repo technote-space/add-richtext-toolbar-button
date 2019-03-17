@@ -51,7 +51,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$this->app->option->set( 'has_inserted_presets', true );
 
 		foreach ( $this->apply_filters( 'get_setting_presets', $this->app->get_config( 'preset' ) ) as $item ) {
-			$item['post_title'] = $this->translate( $this->app->utility->array_get( $item, 'name', $this->app->utility->array_get( $item, 'class_name', $this->app->utility->array_get( $item, 'tag_name', '' ) ) ) );
+			$item['post_title'] = $this->translate( $this->app->array->search( $item, 'name', 'class_name', 'tag_name', '' ) );
 			unset( $item['name'] );
 			! empty( $item['group_name'] ) and $item['group_name'] = $this->translate( $item['group_name'] );
 			$this->insert( $item );
@@ -102,7 +102,9 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$setting_details = $this->get_setting_details( 'setting' );
 		$columns         = [];
 		foreach ( $setting_details as $key => $args ) {
-			$column         = $this->app->utility->array_get( $params['columns'], $key, $this->app->utility->array_get( $args, 'detail', [] ) );
+			$column         = $this->app->array->get( $params['columns'], $key, function () use ( $args ) {
+				return $this->app->array->get( $args, 'detail', [] );
+			} );
 			$column['args'] = $args;
 			unset( $column['args']['name'] );
 			unset( $column['args']['value'] );
@@ -243,20 +245,24 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	private function get_setting( $name, $setting ) {
 		if ( ! isset( $this->_cache_setting[ $name ] ) ) {
 			$columns = $this->app->db->get_columns( $this->get_related_table_name() );
-			$detail  = $this->app->utility->array_get( is_array( $setting ) ? $setting : [], 'detail', $this->app->utility->array_get( $columns, $name, [] ) );
-			$value   = $this->app->utility->array_get( is_array( $setting ) ? $setting : [], 'default', $this->app->utility->array_get( $detail, 'default' ) );
+			$detail  = $this->app->array->get( is_array( $setting ) ? $setting : [], 'detail', function () use ( $columns, $name ) {
+				return $this->app->array->get( $columns, $name, [] );
+			} );
+			$value   = $this->app->array->get( is_array( $setting ) ? $setting : [], 'default', function () use ( $detail ) {
+				return $this->app->array->get( $detail, 'default' );
+			} );
 			$ret     = [
 				'id'         => $this->get_id_prefix() . $name,
 				'class'      => 'add-richtext-toolbar-option',
 				'name'       => $this->get_post_field_name_prefix() . $name,
 				'value'      => $value,
-				'label'      => $this->translate( $this->app->utility->array_get( $detail, 'comment', $name ) ),
+				'label'      => $this->translate( $this->app->array->get( $detail, 'comment', $name ) ),
 				'attributes' => [
 					'data-value'   => $value,
 					'data-default' => $value,
 				],
 				'detail'     => $detail,
-				'type'       => $this->app->utility->parse_db_type( $this->app->utility->array_get( $detail, 'type' ) ),
+				'type'       => $this->app->utility->parse_db_type( $this->app->array->get( $detail, 'type' ) ),
 			];
 			if ( is_array( $setting ) ) {
 				$ret = array_replace_recursive( $ret, isset( $setting['args'] ) && is_array( $setting['args'] ) ? $setting['args'] : [] );
@@ -293,7 +299,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					$setting_details    = $this->get_setting_details( 'list' );
 					$data['class_name'] = $this->_get_class_name( $data, $post );
 					foreach ( [ 'class_name', 'tag_name' ] as $key ) {
-						$setting = $this->app->utility->array_get( $setting_details, $key );
+						$setting = $this->app->array->get( $setting_details, $key );
 						if ( empty( $setting ) ) {
 							continue;
 						}
@@ -319,7 +325,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					$details            = [];
 					$data['class_name'] = $this->_get_class_name( $data, $post );
 					foreach ( $this->get_setting_list() as $key => $item ) {
-						$setting = $this->app->utility->array_get( $setting_details, $key );
+						$setting = $this->app->array->get( $setting_details, $key );
 						if ( empty( $setting ) ) {
 							continue;
 						}
@@ -443,18 +449,19 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			$group_name_direction = 'front' === $target ? 'DESC' : 'ASC';
 			$updated_at_direction = 'front' === $target ? 'ASC' : 'DESC';
 			foreach (
-				$this->list_data( true, null, 1, null, [
-					'priority'   => $priority_direction,
-					'updated_at' => $updated_at_direction,
-					'group_name' => $group_name_direction,
-				] )['data'] as $data
+				$this->get_list_data( function ( $query ) use ( $priority_direction, $updated_at_direction, $group_name_direction ) {
+					/** @var \WP_Framework_Db\Classes\Models\Query\Builder $query */
+					$query->order_by( 'priority', $priority_direction )
+					      ->order_by( 'updated_at', $updated_at_direction )
+					      ->order_by( 'group_name', $group_name_direction );
+				} )['data'] as $data
 			) {
 				if ( ! empty( $post_type ) && in_array( $post_type, $data['exclude_post_types'] ) ) {
 					continue;
 				}
 				$options = [];
 				foreach ( $this->get_setting_list() as $key => $item ) {
-					$setting = $this->app->utility->array_get( $setting_details, $key );
+					$setting = $this->app->array->get( $setting_details, $key );
 					if ( empty( $setting ) ) {
 						continue;
 					}
@@ -593,7 +600,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return string
 	 */
 	private function get_selector( array $options ) {
-		$class_names = $this->app->utility->explode( $options['class_name'], ' ' );
+		$class_names = $this->app->string->explode( $options['class_name'], ' ' );
 		$class_names = '.' . implode( '.', $class_names );
 
 		return $this->apply_filters( 'get_selector', $options['tag_name'] . $class_names, $options['tag_name'], $options['class_name'], $options );
@@ -636,20 +643,22 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
 			} else {
 				! isset( $post_array['ID'] ) and $post_array['ID'] = - 1;
-				if ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
-						'post_id'    => [ '<>', $post_array['ID'] ],
-						'class_name' => $class_name,
-					] ) > 0 ) {
+				if ( $this->app->db->builder()
+				                   ->from( $this->get_related_table_name() )
+				                   ->where( 'post_id', '<>', $post_array['ID'] )
+				                   ->where( 'class_name', $class_name )
+				                   ->exists() ) {
 					$errors['class_name'][] = $this->translate( 'The value has already been used.' );
 				} else {
 					// この時点で $class_name は 英数及びアンダーバー、ハイフン、スーペースのみ
-					$priority = $this->get_post_field( 'priority', 10 ) - 0;
+					$priority = (int) $this->get_post_field( 'priority', 10 );
 					$replace  = " {$class_name} ";
-					if ( $this->app->db->select_count( $this->get_related_table_name(), '*', [
-							'post_id'              => [ '<>', $post_array['ID'] ],
-							"LENGTH('{$replace}')" => [ '<>', "LENGTH(REPLACE('{$replace}', CONCAT(' ', class_name, ' '), ''))", true ],
-							'priority'             => [ '<=', $priority ],
-						] ) > 0 ) {
+					if ( $this->app->db->builder()
+					                   ->from( $this->get_related_table_name() )
+					                   ->where( 'post_id', '<>', $post_array['ID'] )
+					                   ->where( 'priority', '<=', $priority )
+					                   ->where_raw( "LENGTH(%s) <> LENGTH(REPLACE(%s, CONCAT(' ', class_name, ' '), ''))", [ $replace, $replace ] )
+					                   ->exists() ) {
 						$errors['class_name'][] = $this->translate( 'The value is included in the class name of other settings.' );
 					}
 				}
@@ -800,7 +809,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return array
 	 */
 	private function get_groups() {
-		$groups  = array_filter( $this->app->utility->array_pluck_unique( $this->app->utility->array_get( $this->list_data(), 'data', [] ), 'group_name' ), function ( $d ) {
+		$groups  = array_filter( $this->app->array->pluck_unique( $this->app->array->get( $this->get_list_data( null, false ), 'data', [] ), 'group_name' ), function ( $d ) {
 			return '' !== $d;
 		} );
 		$default = $this->apply_filters( 'default_group' );
@@ -808,7 +817,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			$groups[] = $default;
 		}
 
-		return $this->apply_filters( 'get_groups', $this->app->utility->array_combine( $groups, null ) );
+		return $this->apply_filters( 'get_groups', $this->app->array->combine( $groups, null ) );
 	}
 
 	/**
@@ -911,7 +920,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return array
 	 */
 	public function get_valid_post_types() {
-		return $this->app->utility->array_combine( array_intersect( get_post_types_by_support( 'editor' ), get_post_types( [
+		return $this->app->array->combine( array_intersect( get_post_types_by_support( 'editor' ), get_post_types( [
 			'show_in_rest' => true,
 		] ) ), null );
 	}

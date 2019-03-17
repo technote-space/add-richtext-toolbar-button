@@ -16,7 +16,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var array $column */
 /** @var string $name */
 /** @var string $prefix */
-$post_types = $instance->app->utility->array_get( $column, 'post_types' );
+$post_types = $instance->app->array->get( $column, 'post_types' );
 $val        = $instance->old( $prefix . $name, $data, $name );
 ?>
 <?php if ( ! empty( $post_types ) ): ?>

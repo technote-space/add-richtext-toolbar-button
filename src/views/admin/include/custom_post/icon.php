@@ -26,7 +26,7 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 			'name'  => $prefix . $name,
 			'id'    => $prefix . $name,
 			'value' => $val,
-		], $instance->app->utility->array_get( $column, 'args', [] ) ); ?>
+		], $instance->app->array->get( $column, 'args', [] ) ); ?>
 
 		<?php $instance->form( 'dashicon', [
 			'target' => $target,
@@ -44,7 +44,7 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 			'class'      => 'button-primary reset-icon',
 			'attributes' => [
 				'data-target' => $target,
-				'data-value'  => $instance->app->utility->array_get( $data, $name ),
+				'data-value'  => $instance->app->array->get( $data, $name ),
 			],
 		] ); ?>
     </div>
