@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Utility
  *
- * @version 0.0.24
+ * @version 0.0.35
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -24,9 +24,24 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Common\Traits\Package;
 
 	/**
-	 * @var string[] $_replace_time
+	 * @var float $_tick
 	 */
-	private $_replace_time;
+	private $_tick;
+
+	/**
+	 * @var array $_active_plugins
+	 */
+	private $_active_plugins;
+
+	/**
+	 * @var string $_active_plugins_hash
+	 */
+	private $_active_plugins_hash;
+
+	/**
+	 * @var string $_framework_plugin_hash
+	 */
+	private $_framework_plugin_hash;
 
 	/**
 	 * @return bool
@@ -36,22 +51,12 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	}
 
 	/**
-	 * @param array $array
-	 * @param bool $preserve_keys
+	 * @param mixed $value
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	public function flatten( array $array, $preserve_keys = false ) {
-		$return = [];
-		array_walk_recursive( $array, function ( $v, $k ) use ( &$return, $preserve_keys ) {
-			if ( $preserve_keys ) {
-				$return[ $k ] = $v;
-			} else {
-				$return[] = $v;
-			}
-		} );
-
-		return $return;
+	public function value( $value ) {
+		return $value instanceof \Closure ? $value( $this->app ) : $value;
 	}
 
 	/**
@@ -95,172 +100,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 			return $const;
 		}
 
-		return $default;
-	}
-
-	/**
-	 * @param array|object $obj
-	 *
-	 * @return array
-	 */
-	private function get_array_value( $obj ) {
-		if ( $obj instanceof \stdClass ) {
-			$obj = get_object_vars( $obj );
-		} elseif ( ! is_array( $obj ) ) {
-			if ( method_exists( $obj, 'to_array' ) ) {
-				$obj = $obj->to_array();
-			}
-		}
-		if ( ! is_array( $obj ) || empty( $obj ) ) {
-			return [];
-		}
-
-		return $obj;
-	}
-
-	/**
-	 * @param array|object $array
-	 * @param string $key
-	 * @param mixed $default
-	 *
-	 * @return mixed
-	 */
-	public function array_get( $array, $key, $default = null ) {
-		$array = $this->get_array_value( $array );
-		if ( array_key_exists( $key, $array ) ) {
-			return $array[ $key ];
-		}
-
-		return $default;
-	}
-
-	/**
-	 * @param array $array
-	 * @param string $key
-	 * @param mixed $value
-	 */
-	public function array_set( array &$array, $key, $value ) {
-		$array[ $key ] = $value;
-	}
-
-	/**
-	 * @param array|object $array
-	 * @param string $key
-	 * @param mixed $default
-	 * @param bool $filter
-	 *
-	 * @return array
-	 */
-	public function array_pluck( $array, $key, $default = null, $filter = false ) {
-		$array = $this->get_array_value( $array );
-
-		return array_map( function ( $d ) use ( $key, $default ) {
-			is_object( $d ) and $d = (array) $d;
-
-			return is_array( $d ) && array_key_exists( $key, $d ) ? $d[ $key ] : $default;
-		}, $filter ? array_filter( $array, function ( $d ) use ( $key ) {
-			is_object( $d ) and $d = (array) $d;
-
-			return is_array( $d ) && array_key_exists( $key, $d );
-		} ) : $array );
-	}
-
-	/**
-	 * @param array|object $array
-	 * @param string|callable $callback
-	 *
-	 * @return array
-	 */
-	public function array_map( $array, $callback ) {
-		$array = $this->get_array_value( $array );
-
-		return array_map( function ( $d ) use ( $callback ) {
-			return is_callable( $callback ) ? $callback( $d ) : ( is_string( $callback ) && method_exists( $d, $callback ) ? $d->$callback() : null );
-		}, $array );
-	}
-
-	/**
-	 * @param array|object $array
-	 * @param string $key
-	 *
-	 * @return array
-	 */
-	public function array_pluck_unique( $array, $key ) {
-		return array_unique( $this->array_pluck( $array, $key, null, true ) );
-	}
-
-	/**
-	 * @param array $array
-	 * @param string|null $key
-	 * @param string|null $value
-	 *
-	 * @return array
-	 */
-	public function array_combine( array $array, $key, $value = null ) {
-		if ( isset( $key ) ) {
-			$keys   = $this->array_pluck( $array, $key );
-			$values = empty( $value ) ? $array : $this->array_pluck( $array, $value );
-		} else {
-			$keys   = array_unique( $array );
-			$values = $keys;
-		}
-
-		return array_combine( $keys, $values );
-	}
-
-	/**
-	 * @param string $string
-	 * @param array $data
-	 *
-	 * @return string
-	 */
-	public function replace( $string, array $data ) {
-		foreach ( $data as $k => $v ) {
-			$string = str_replace( '${' . $k . '}', $v, $string );
-		}
-
-		return $string;
-	}
-
-	/**
-	 * @param string $string
-	 *
-	 * @return string
-	 */
-	public function replace_time( $string ) {
-		if ( ! isset( $this->_replace_time ) ) {
-			$this->_replace_time = [];
-			foreach (
-				[
-					'Y',
-					'y',
-					'M',
-					'm',
-					'n',
-					'D',
-					'd',
-					'H',
-					'h',
-					'i',
-					'j',
-					's',
-				] as $t
-			) {
-				$this->_replace_time[ $t ] = date_i18n( $t );
-			}
-		}
-
-		return $this->replace( $string, $this->_replace_time );
-	}
-
-	/**
-	 * @param string $string
-	 * @param string $delimiter
-	 *
-	 * @return array
-	 */
-	public function explode( $string, $delimiter = ',' ) {
-		return array_filter( array_unique( array_map( 'trim', explode( $delimiter, $string ) ) ) );
+		return $this->value( $default );
 	}
 
 	/**
@@ -271,40 +111,6 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 */
 	public function create_hash( $data, $key ) {
 		return hash_hmac( function_exists( 'hash' ) ? 'sha256' : 'sha1', $data, $key );
-	}
-
-	/**
-	 * @param string $haystack
-	 * @param string $needle
-	 *
-	 * @return bool
-	 */
-	public function starts_with( $haystack, $needle ) {
-		if ( '' === $haystack || '' === $needle ) {
-			return false;
-		}
-		if ( $haystack === $needle ) {
-			return true;
-		}
-
-		return strncmp( $haystack, $needle, strlen( $needle ) ) === 0;
-	}
-
-	/**
-	 * @param string $haystack
-	 * @param string $needle
-	 *
-	 * @return bool
-	 */
-	public function ends_with( $haystack, $needle ) {
-		if ( '' === $haystack || '' === $needle ) {
-			return false;
-		}
-		if ( $haystack === $needle ) {
-			return true;
-		}
-
-		return substr_compare( $haystack, $needle, - strlen( $needle ) ) === 0;
 	}
 
 	/**
@@ -319,7 +125,21 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 			return wp_doing_ajax();
 		}
 
-		return $this->definedv( 'DOING_AJAX' );
+		return ! ! $this->definedv( 'DOING_AJAX' );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function doing_cron() {
+		return ! ! $this->definedv( 'DOING_CRON' );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_autosave() {
+		return ! ! $this->definedv( 'DOING_AUTOSAVE' );
 	}
 
 	/**
@@ -344,7 +164,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return bool
 	 */
 	public function is_admin_url( $url ) {
-		return $this->starts_with( $url, admin_url() );
+		return $this->app->string->starts_with( $url, admin_url() );
 	}
 
 	/**
@@ -394,7 +214,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return array
 	 */
 	private function parse_backtrace_args( array $args ) {
-		return $this->array_map( $args, function ( $d ) {
+		return $this->app->array->map( $args, function ( $d ) {
 			$type = gettype( $d );
 			if ( 'array' === $type ) {
 				return $this->parse_backtrace_args( $d );
@@ -430,9 +250,9 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
 				$path = rtrim( $dir, DS ) . DS . $file;
 				if ( is_file( $path ) ) {
-					if ( $this->ends_with( $file, '.php' ) ) {
+					if ( $this->app->string->ends_with( $file, '.php' ) ) {
 						if ( $split ) {
-							$list[] = [ $relative, ucfirst( $this->app->get_page_slug( $file ) ) ];
+							$list[] = [ $relative, ucfirst( $this->app->get_page_slug( $file ) ), $path ];
 						} else {
 							$list[] = $relative . ucfirst( $this->app->get_page_slug( $file ) );
 						}
@@ -506,18 +326,14 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return bool
 	 */
 	public function is_valid_tinymce_color_picker() {
-		global $wp_version;
-
-		return version_compare( $wp_version, '4.0.0', '>=' );
+		return $this->compare_wp_version( '4.0.0', '>=' );
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function can_use_block_editor() {
-		global $wp_version;
-
-		return version_compare( $wp_version, '5.0.0', '>=' );
+		return $this->compare_wp_version( '5.0.0', '>=' );
 	}
 
 	/**
@@ -543,232 +359,110 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	public function lock_process( \WP_Framework $app, $name, callable $func, $timeout = 60 ) {
 		$name         .= '__LOCK_PROCESS__';
 		$timeout_name = $name . 'TIMEOUT__';
-		$app->option->reload_options();
-		$check = $app->get_option( $name );
+		$option       = $app->option;
+		$option->flush();
+		$check = $option->get( $name );
 		if ( ! empty( $check ) ) {
-			$expired = $app->get_option( $timeout_name, 0 ) < time();
+			$expired = $option->get( $timeout_name, 0 ) < time();
 			if ( ! $expired ) {
 				return false;
 			}
 		}
 		$rand = md5( uniqid() );
-		$app->option->set( $name, $rand );
-		$app->option->reload_options();
-		if ( $app->get_option( $name ) != $rand ) {
+		$option->set( $name, $rand );
+		$option->flush();
+		if ( $option->get( $name ) != $rand ) {
 			return false;
 		}
-		$app->option->set( $timeout_name, time() + $timeout );
+		$option->set( $timeout_name, time() + $timeout );
 		try {
 			$func();
 		} catch ( \Exception $e ) {
 			$app->log( $e );
 		} finally {
-			$app->option->delete( $name );
-			$app->option->delete( $timeout_name );
+			$option->delete( $name );
+			$option->delete( $timeout_name );
 		}
 
 		return true;
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param bool $combine
 	 *
-	 * @return bool
+	 * @return array
 	 */
-	public function delete_upload_dir( \WP_Framework $app ) {
-		return $this->delete_dir( $app->define->upload_dir );
-	}
-
-	/**
-	 * @see https://qiita.com/algo13/items/34bb9750f0e450109a03
-	 *
-	 * @param $dir
-	 *
-	 * @return bool
-	 */
-	private function delete_dir( $dir ) {
-		clearstatcache( true, $dir );
-		if ( is_file( $dir ) ) {
-			return @unlink( $dir );
-		} elseif ( is_link( $dir ) ) {
-			return @unlink( $dir ) || ( '\\' === DS && @rmdir( $dir ) );
-		} elseif ( $this->is_junction( $dir ) ) {
-			return @rmdir( $dir );
-		} elseif ( is_dir( $dir ) ) {
-			$failed = false;
-			foreach ( new \FilesystemIterator( $dir ) as $file ) {
-				/** @var \DirectoryIterator $file */
-				if ( ! $this->delete_dir( $file->getPathname() ) ) {
-					$failed = true;
-				}
+	public function get_active_plugins( $combine = true ) {
+		if ( ! isset( $this->_active_plugins ) ) {
+			$option = get_option( 'active_plugins', [] );
+			if ( is_multisite() ) {
+				$option = array_merge( $option, array_keys( get_site_option( 'active_sitewide_plugins' ) ) );
+				$option = array_unique( $option );
 			}
-
-			return ! $failed && @rmdir( $dir );
+			$this->_active_plugins = $combine ? $this->app->array->combine( $option, null ) : array_values( $option );
 		}
 
-		return true;
+		return $this->_active_plugins;
 	}
 
 	/**
-	 * @param string $check
-	 *
-	 * @return bool
-	 */
-	private function is_junction( $check ) {
-		if ( '\\' !== DS ) {
-			return false;
-		}
-
-		$stat = @lstat( $check );
-
-		return $stat !== false && ! ( $stat['mode'] & 0xC000 );
-	}
-
-	/**
-	 * @param string $path
-	 *
-	 * @return bool
-	 */
-	public function file_exists( $path ) {
-		return file_exists( $path );
-	}
-
-	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 *
 	 * @return string
 	 */
-	private function get_upload_file_path( \WP_Framework $app, $path ) {
-		return $app->define->upload_dir . DS . ltrim( str_replace( '/', DS, $path ), DS );
+	public function get_active_plugins_hash() {
+		! isset( $this->_active_plugins_hash ) and $this->_active_plugins_hash = sha1( json_encode( $this->get_active_plugins( false ) ) );
+
+		return $this->_active_plugins_hash;
 	}
 
 	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 *
+	 * @return array
+	 */
+	private function get_framework_plugins() {
+		return $this->app->array->map( $this->app->get_instances(), function ( $instance ) {
+			/** @var \WP_Framework $instance */
+			return $instance->plugin_name . '/' . $instance->get_plugin_version();
+		} );
+	}
+
+	/**
 	 * @return string
 	 */
-	private function get_upload_file_link( \WP_Framework $app, $path ) {
-		return $app->define->upload_url . '/' . ltrim( str_replace( DS, '/', $path ), '/' );
+	public function get_framework_plugins_hash() {
+		! isset( $this->_framework_plugin_hash ) and $this->_framework_plugin_hash = sha1( json_encode( $this->get_framework_plugins() ) );
+
+		return $this->_framework_plugin_hash;
 	}
 
 	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
+	 * @param string $plugin
 	 *
 	 * @return bool
 	 */
-	public function upload_file_exists( \WP_Framework $app, $path ) {
-		return $this->file_exists( $this->get_upload_file_path( $app, $path ) );
+	public function is_active_plugin( $plugin ) {
+		return in_array( $plugin, $this->get_active_plugins( false ) );
 	}
 
 	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 * @param mixed $data
-	 *
-	 * @throws \Exception
+	 * for debug
 	 */
-	public function create_upload_file( \WP_Framework $app, $path, $data ) {
-		$path = $this->get_upload_file_path( $app, $path );
-		@mkdir( dirname( $path ), 0700, true );
-		if ( false === @file_put_contents( $path, $data, 0644 ) ) {
-			throw new \Exception( 'Failed to create .htaccess file.' );
+	public function timer_start() {
+		$this->_tick = microtime( true ) * 1000;
+	}
+
+	/**
+	 * for debug
+	 *
+	 * @param string $format
+	 */
+	public function timer_tick( $format = '%12.8f' ) {
+		if ( ! isset( $this->_tick ) ) {
+			$this->timer_start();
+
+			return;
 		}
-	}
-
-	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 * @param callable $generator
-	 *
-	 * @return bool
-	 */
-	public function create_upload_file_if_not_exists( \WP_Framework $app, $path, $generator ) {
-		if ( ! $this->upload_file_exists( $app, $path ) ) {
-			if ( isset( $generator ) && is_callable( $generator ) ) {
-				try {
-					$this->create_upload_file( $app, $path, $generator() );
-				} catch ( \Exception $e ) {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 *
-	 * @return bool
-	 */
-	public function delete_upload_file( \WP_Framework $app, $path ) {
-		return @unlink( $this->get_upload_file_path( $app, $path ) );
-	}
-
-	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 * @param callable|null $generator
-	 *
-	 * @return bool|string
-	 */
-	public function get_upload_file_contents( \WP_Framework $app, $path, $generator = null ) {
-		if ( $this->create_upload_file_if_not_exists( $app, $path, $generator ) ) {
-			return @file_get_contents( $this->get_upload_file_path( $app, $path ) );
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param \WP_Framework $app
-	 * @param string $path
-	 * @param callable|null $generator
-	 *
-	 * @return string|false
-	 */
-	public function get_upload_file_url( \WP_Framework $app, $path, $generator = null ) {
-		if ( $this->create_upload_file_if_not_exists( $app, $path, $generator ) ) {
-			return $this->get_upload_file_link( $app, $path );
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param string $message
-	 * @param null|array $override_allowed_html
-	 *
-	 * @return string
-	 */
-	public function strip_tags( $message, $override_allowed_html = null ) {
-		$allowed_html = [
-			'a'      => [ 'href' => true, 'target' => true, 'rel' => true ],
-			'b'      => [],
-			'br'     => [],
-			'sub'    => [],
-			'sup'    => [],
-			'strong' => [],
-			's'      => [],
-			'u'      => [],
-			'em'     => [],
-			'h1'     => [],
-			'h2'     => [],
-			'h3'     => [],
-			'h4'     => [],
-			'h5'     => [],
-			'h6'     => [],
-		];
-		if ( ! empty( $override_allowed_html ) && is_array( $override_allowed_html ) ) {
-			$allowed_html = array_replace_recursive( $allowed_html, $override_allowed_html );
-		}
-
-		return wp_kses( $message, $allowed_html );
+		$now     = microtime( true ) * 1000;
+		$elapsed = $now - $this->_tick;
+		error_log( sprintf( $format, $elapsed ) );
+		$this->_tick = $now;
 	}
 }

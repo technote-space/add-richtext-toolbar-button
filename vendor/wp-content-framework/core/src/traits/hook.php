@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Hook
  *
- * @version 0.0.37
+ * @version 0.0.41
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -19,6 +19,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Trait Hook
  * @package WP_Framework_Core\Traits
  * @property \WP_Framework $app
+ * @mixin Utility
  */
 trait Hook {
 
@@ -134,25 +135,26 @@ trait Hook {
 		$args[0] = $prefix . $key;
 		if ( count( $args ) < 2 ) {
 			$args[] = null;
-		} elseif ( ! is_string( $args[1] ) && is_callable( $args[1] ) ) {
-			$args[1] = ( $args[1] )( $this->app );
+		} else {
+			$this->call_if_closure_with_result( $args[1], $args[1], $this->app );
 		}
 		$default = call_user_func_array( 'apply_filters', $args );
 
 		if ( ! empty( $this->app->setting ) && $this->app->setting->is_setting( $key ) ) {
 			$setting = $this->app->setting->get_setting( $key );
-			$default = $this->app->utility->array_get( $setting, 'default', $default );
-			if ( is_callable( $default ) ) {
-				$default = $default( $this->app );
-			}
+			$default = $this->app->array->get( $setting, 'default', $default );
+			$this->call_if_closure_with_result( $default, $default, $this->app );
 			$value = $this->app->get_option( $args[0], null );
 			if ( ! isset( $value ) || $value === '' ) {
 				$value = $default;
 			}
 
-			$type = $this->app->utility->array_get( $setting, 'type', '' );
-			if ( is_callable( [ $this, 'get_' . $type . '_value' ] ) ) {
-				$value = call_user_func( [ $this, 'get_' . $type . '_value' ], $value, $default, $setting );
+			$type = $this->app->array->get( $setting, 'type', '' );
+			if ( $type ) {
+				$method = 'get_' . $type . '_value';
+				if ( $this->is_method_callable( $method ) ) {
+					$value = call_user_func( [ $this, $method ], $value, $default, $setting );
+				}
 			}
 			if ( ! empty( $setting['translate'] ) && $value === $default ) {
 				$value = $this->translate( $value );

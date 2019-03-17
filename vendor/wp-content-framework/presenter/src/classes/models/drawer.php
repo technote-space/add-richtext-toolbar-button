@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Presenter Classes Models Drawer
  *
- * @version 0.0.13
+ * @version 0.0.16
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -79,6 +79,6 @@ class Drawer implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * uninstall
 	 */
 	public function uninstall() {
-		$this->app->utility->delete_upload_dir( $this->app );
+		$this->app->file->delete_upload_dir( $this->app );
 	}
 }

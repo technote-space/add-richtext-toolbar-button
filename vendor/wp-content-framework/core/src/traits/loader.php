@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Loader
  *
- * @version 0.0.32
+ * @version 0.0.42
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -28,12 +28,6 @@ trait Loader {
 	 * @var array $_list
 	 */
 	private $_list = null;
-
-	/**
-	 * @var array $_cache
-	 */
-	private $_cache = [];
-
 	/**
 	 * @var int $_count
 	 */
@@ -91,32 +85,51 @@ trait Loader {
 	public function get_class_list() {
 		if ( ! isset( $this->_list ) ) {
 			$this->_list = [];
-			$sort        = [];
-			/** @var \WP_Framework_Core\Traits\Singleton $class */
-			foreach ( $this->_get_namespaces() as $namespace ) {
-				foreach ( $this->get_classes( $this->namespace_to_dir( $namespace ), $this->get_instanceof() ) as $class ) {
+			$cache       = $this->cache_get( 'class_settings' );
+			if ( is_array( $cache ) ) {
+				/** @var \WP_Framework_Core\Traits\Singleton $class */
+				foreach ( $this->get_class_instances( $cache, $this->get_instanceof() ) as list( $class ) ) {
 					$slug = $class->get_class_name();
 					if ( ! isset( $this->_list[ $slug ] ) ) {
 						$this->_list[ $slug ] = $class;
-						if ( method_exists( $class, 'get_load_priority' ) ) {
-							$sort[ $slug ] = $class->get_load_priority();
-							if ( $sort[ $slug ] < 0 ) {
-								unset( $this->_list[ $slug ] );
-								unset( $sort[ $slug ] );
+					}
+				}
+			} else {
+				$sort    = [];
+				$classes = [];
+				foreach ( $this->_get_namespaces() as $namespace ) {
+					/** @var \WP_Framework_Core\Traits\Singleton $class */
+					foreach ( $this->get_classes( $this->namespace_to_dir( $namespace ), $this->get_instanceof() ) as list( $class, $setting ) ) {
+						$slug = $class->get_class_name();
+						if ( ! isset( $classes[ $slug ] ) ) {
+							$classes[ $slug ] = [ $class, $setting ];
+							if ( method_exists( $class, 'get_load_priority' ) ) {
+								$sort[ $slug ] = $class->get_load_priority();
+								if ( $sort[ $slug ] < 0 ) {
+									unset( $classes[ $slug ] );
+									unset( $sort[ $slug ] );
+								}
 							}
 						}
 					}
 				}
-			}
-			if ( ! empty( $sort ) ) {
-				uasort( $this->_list, function ( $a, $b ) use ( $sort ) {
-					/** @var \WP_Framework_Core\Traits\Singleton $a */
-					/** @var \WP_Framework_Core\Traits\Singleton $b */
-					$pa = isset( $sort[ $a->get_class_name() ] ) ? $sort[ $a->get_class_name() ] : 10;
-					$pb = isset( $sort[ $b->get_class_name() ] ) ? $sort[ $b->get_class_name() ] : 10;
+				if ( ! empty( $sort ) ) {
+					uasort( $classes, function ( $a, $b ) use ( $sort ) {
+						/** @var \WP_Framework_Core\Traits\Singleton[] $a */
+						/** @var \WP_Framework_Core\Traits\Singleton[] $b */
+						$pa = isset( $sort[ $a[0]->get_class_name() ] ) ? $sort[ $a[0]->get_class_name() ] : 10;
+						$pb = isset( $sort[ $b[0]->get_class_name() ] ) ? $sort[ $b[0]->get_class_name() ] : 10;
 
-					return $pa == $pb ? 0 : ( $pa < $pb ? - 1 : 1 );
+						return $pa == $pb ? 0 : ( $pa < $pb ? - 1 : 1 );
+					} );
+				}
+				$this->_list = $this->app->array->map( $classes, function ( $item ) {
+					return $item[0];
 				} );
+				$settings    = $this->app->array->map( $classes, function ( $item ) {
+					return $item[1];
+				} );
+				$this->cache_set( 'class_settings', $settings );
 			}
 		}
 
@@ -124,22 +137,9 @@ trait Loader {
 	}
 
 	/**
-	 * @param bool $exact
-	 *
 	 * @return int
 	 */
-	public function get_loaded_count( $exact = true ) {
-		if ( ! $exact && ! isset( $this->_list ) ) {
-			if ( ! isset( $this->_count ) ) {
-				$this->_count = 0;
-				foreach ( $this->_get_namespaces() as $namespace ) {
-					$this->_count += count( $this->app->utility->scan_dir_namespace_class( $this->namespace_to_dir( $namespace ) ) );
-				}
-			}
-
-			return $this->_count;
-		}
-
+	public function get_loaded_count() {
 		return count( $this->get_class_list() );
 	}
 
@@ -149,27 +149,38 @@ trait Loader {
 	 * @return \Generator
 	 */
 	protected function get_class_settings( $dir ) {
-		foreach ( $this->app->utility->scan_dir_namespace_class( $dir, true ) as list( $namespace, $class ) ) {
-			yield $this->get_class_setting( $class, $namespace );
+		foreach ( $this->app->utility->scan_dir_namespace_class( $dir, true ) as list( $namespace, $class, $path ) ) {
+			$setting = $this->get_class_setting( $class, $namespace );
+			if ( is_array( $setting ) ) {
+				$setting[] = $path;
+			}
+			yield $setting;
 		}
 	}
 
 	/**
 	 * @param string $dir
 	 * @param string $instanceof
-	 * @param bool $return_instance
 	 *
 	 * @return \Generator
 	 */
-	protected function get_classes( $dir, $instanceof, $return_instance = true ) {
-		foreach ( $this->get_class_settings( $dir ) as $class_setting ) {
-			$instance = $this->get_class_instance( $class_setting, $instanceof );
+	protected function get_classes( $dir, $instanceof ) {
+		foreach ( $this->get_class_instances( $this->get_class_settings( $dir ), $instanceof ) as list( $instance, $setting ) ) {
+			yield [ $instance, $setting ];
+		}
+	}
+
+	/**
+	 * @param iterable $settings
+	 * @param string $instanceof
+	 *
+	 * @return \Generator
+	 */
+	protected function get_class_instances( $settings, $instanceof ) {
+		foreach ( $settings as $setting ) {
+			$instance = $this->get_class_instance( $setting, $instanceof );
 			if ( false !== $instance ) {
-				if ( $return_instance ) {
-					yield $instance;
-				} else {
-					yield $class_setting;
-				}
+				yield [ $instance, $setting ];
 			}
 		}
 	}
@@ -181,17 +192,12 @@ trait Loader {
 	 * @return false|array
 	 */
 	protected function get_class_setting( $class_name, $add_namespace = '' ) {
-		if ( isset( $this->_cache[ $add_namespace . $class_name ] ) ) {
-			return $this->_cache[ $add_namespace . $class_name ];
-		}
 		$namespaces = $this->_get_namespaces();
 		if ( ! empty( $namespaces ) ) {
 			foreach ( $namespaces as $namespace ) {
 				$class = rtrim( $namespace, '\\' ) . '\\' . $add_namespace . $class_name;
 				if ( class_exists( $class ) ) {
-					$this->_cache[ $add_namespace . $class_name ] = [ $class, $add_namespace ];
-
-					return $this->_cache[ $add_namespace . $class_name ];
+					return [ $class, $add_namespace ];
 				}
 			}
 		}
@@ -200,19 +206,27 @@ trait Loader {
 	}
 
 	/**
-	 * @param array|false $class_setting
+	 * @param array|false $setting
 	 * @param string $instanceof
 	 *
 	 * @return bool|Singleton
 	 */
-	protected function get_class_instance( $class_setting, $instanceof ) {
-		if ( false !== $class_setting && class_exists( $class_setting[0] ) && is_subclass_of( $class_setting[0], '\WP_Framework_Core\Interfaces\Singleton' ) ) {
+	protected function get_class_instance( $setting, $instanceof ) {
+		if ( false === $setting ) {
+			return false;
+		}
+
+		if ( count( $setting ) >= 3 ) {
+			/** @noinspection PhpIncludeInspection */
+			require_once $setting[2];
+		}
+		if ( class_exists( $setting[0] ) && is_subclass_of( $setting[0], '\WP_Framework_Core\Interfaces\Singleton' ) ) {
 			try {
-				/** @var Singleton[] $class_setting */
-				$instance = $class_setting[0]::get_instance( $this->app );
+				/** @var \WP_Framework_Core\Interfaces\Singleton[] $setting */
+				$instance = $setting[0]::get_instance( $this->app );
 				if ( $instance instanceof $instanceof ) {
-					if ( interface_exists( '\WP_Framework_Admin\Interfaces\Controller\Admin' ) && $instance instanceof \WP_Framework_Admin\Interfaces\Controller\Admin ) {
-						$instance->set_relative_namespace( $class_setting[1] );
+					if ( class_exists( '\WP_Framework_Admin\Classes\Controllers\Admin\Base' ) && $instance instanceof \WP_Framework_Admin\Classes\Controllers\Admin\Base ) {
+						$instance->set_relative_namespace( $setting[1] );
 					}
 
 					return $instance;
@@ -233,9 +247,7 @@ trait Loader {
 	 * @return array
 	 */
 	private function _get_namespaces() {
-		if ( ! isset( $this->_namespaces ) ) {
-			$this->_namespaces = $this->get_namespaces();
-		}
+		! isset( $this->_namespaces ) and $this->_namespaces = $this->get_namespaces();
 
 		return $this->_namespaces;
 	}

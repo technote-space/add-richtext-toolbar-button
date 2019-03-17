@@ -1,10 +1,11 @@
 <?php
 /**
- * @version 1.0.12
+ * @version 1.1.0
  * @author Technote
  * @since 1.0.0
  * @since 1.0.3 #28
  * @since 1.0.12 changed required wordpress version (4.7.0 ⇒ 5.0.3)
+ * @since 1.1.0 wp-content-framework/admin#20
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -39,4 +40,13 @@ return [
 
 	// setting page slug
 	'setting_page_slug'              => 'dashboard',
+
+	// detail url
+	'detail_url'                     => 'https://technote.space/add-richtext-toolbar-button',
+
+	// twitter
+	'twitter'                        => 'technote15',
+
+	// github repo
+	'github_repo'                    => 'technote-space/add-richtext-toolbar-button',
 ];

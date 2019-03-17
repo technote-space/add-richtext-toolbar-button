@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.0
  * @author Technote
  * @since 1.0.0
+ * @since 1.1.0 wp-content-framework/common#57
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -26,7 +27,7 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 			'name'  => $prefix . $name,
 			'id'    => $prefix . $name,
 			'value' => $val,
-		], $instance->app->utility->array_get( $column, 'args', [] ) ); ?>
+		], $instance->app->array->get( $column, 'args', [] ) ); ?>
 
 		<?php $instance->form( 'dashicon', [
 			'target' => $target,
@@ -44,7 +45,7 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 			'class'      => 'button-primary reset-icon',
 			'attributes' => [
 				'data-target' => $target,
-				'data-value'  => $instance->app->utility->array_get( $data, $name ),
+				'data-value'  => $instance->app->array->get( $data, $name ),
 			],
 		] ); ?>
     </div>

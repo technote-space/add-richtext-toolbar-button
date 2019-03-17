@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Presenter Traits Presenter
  *
- * @version 0.0.15
+ * @version 0.0.16
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -113,7 +113,7 @@ trait Presenter {
 	 * @return array
 	 */
 	private function get_presenter_args( array $args ) {
-		$args['field'] = array_merge( $this->app->utility->array_get( $args, 'field', [] ), $this->app->input->all() );
+		$args['field'] = array_merge( $this->app->array->get( $args, 'field', [] ), $this->app->input->all() );
 		if ( $this instanceof \WP_Framework_Core\Interfaces\Nonce ) {
 			$args['nonce_key']   = $this->get_nonce_key();
 			$args['nonce_value'] = $this->create_nonce();
@@ -160,7 +160,7 @@ trait Presenter {
 	 */
 	public function old( $name, $data, $key = null, $default = '', $checkbox = false ) {
 		if ( is_array( $data ) ) {
-			$default = $this->app->utility->array_get( $data, $key, $default );
+			$default = $this->app->array->get( $data, $key, $default );
 		} elseif ( $data instanceof \stdClass ) {
 			$default = property_exists( $data, $key ) ? $data->$key : $default;
 		} elseif ( ! isset( $key ) ) {
@@ -179,7 +179,7 @@ trait Presenter {
 			$default = false;
 		}
 
-		return $this->app->utility->array_get( self::$_prev_post, $name, $default );
+		return $this->app->array->get( self::$_prev_post, $name, $default );
 	}
 
 	/**
@@ -610,7 +610,7 @@ trait Presenter {
 	 * @return bool
 	 */
 	public function enqueue_upload_style( $handle, $file, $generator, array $depends = [], $ver = false, $media = 'all', $dir = 'css' ) {
-		$this->app->utility->create_upload_file_if_not_exists( $this->app, $dir . DS . $file, function () use ( $generator ) {
+		$this->app->file->create_upload_file_if_not_exists( $this->app, $dir . DS . $file, function () use ( $generator ) {
 			return $this->app->minify->minify_css( $generator(), false );
 		} );
 
@@ -647,7 +647,7 @@ trait Presenter {
 	 * @return bool
 	 */
 	public function enqueue_upload_script( $handle, $file, $generator, array $depends = [], $ver = false, $in_footer = true, $dir = 'js' ) {
-		$this->app->utility->create_upload_file_if_not_exists( $this->app, $dir . DS . $file, function () use ( $generator ) {
+		$this->app->file->create_upload_file_if_not_exists( $this->app, $dir . DS . $file, function () use ( $generator ) {
 			return $this->app->minify->minify_js( $generator(), false );
 		} );
 

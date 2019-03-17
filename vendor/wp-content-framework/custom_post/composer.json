@@ -18,6 +18,10 @@
         "wp-content-framework/admin": "~0.0.1",
         "wp-content-framework/api": "~0.0.1"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~5.7",
+        "phake/phake": "~2.0"
+    },
     "autoload": {
     },
     "license": "GPL-2.0+"

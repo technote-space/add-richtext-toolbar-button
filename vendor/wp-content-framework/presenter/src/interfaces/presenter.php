@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Presenter Interfaces Presenter
  *
- * @version 0.0.11
+ * @version 0.0.16
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -19,6 +19,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Interface Presenter
  * @package WP_Framework_Presenter\Interfaces
  * @property \WP_Framework $app
+ * @mixin \WP_Framework_Core\Traits\Translate
  */
 interface Presenter {
 

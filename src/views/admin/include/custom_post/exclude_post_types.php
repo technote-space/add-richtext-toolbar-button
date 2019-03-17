@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.0
  * @author Technote
  * @since 1.0.0
+ * @since 1.1.0 wp-content-framework/common#57
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -16,7 +17,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var array $column */
 /** @var string $name */
 /** @var string $prefix */
-$post_types = $instance->app->utility->array_get( $column, 'post_types' );
+$post_types = $instance->app->array->get( $column, 'post_types' );
 $val        = $instance->old( $prefix . $name, $data, $name );
 ?>
 <?php if ( ! empty( $post_types ) ): ?>
