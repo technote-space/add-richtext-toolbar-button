@@ -20,59 +20,64 @@ return [
 	9 => [
 		'Main Setting' => [
 			10 => [
-				'is_valid'                   => [
+				'is_valid'                    => [
 					'label'   => 'validity',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'is_valid_font_color'        => [
+				'is_valid_font_color'         => [
 					'label'   => 'validity of font color button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'font_color_icon'            => [
+				'font_color_icon'             => [
 					'label'   => 'font color button icon',
 					'default' => 'dashicons-editor-textcolor',
 				],
-				'is_valid_background_color'  => [
+				'is_valid_background_color'   => [
 					'label'   => 'validity of background color button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'background_color_icon'      => [
+				'background_color_icon'       => [
 					'label'   => 'background color button icon',
 					'default' => 'dashicons-editor-textcolor',
 				],
-				'is_valid_font_size'         => [
+				'is_valid_font_size'          => [
 					'label'   => 'validity of font size button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'font_size_icon'             => [
+				'font_size_icon'              => [
 					'label'   => 'font size button icon',
 					'default' => 'dashicons-editor-textcolor',
 				],
-				'test_phrase'                => [
+				'test_phrase'                 => [
 					'label'     => 'test phrase',
 					'default'   => 'Hello world!',
 					'translate' => true,
 				],
-				'default_icon'               => [
+				'default_icon'                => [
 					'label'   => 'default icon',
 					'default' => 'dashicons-edit',
 				],
-				'default_group'              => [
+				'default_group'               => [
 					'label' => 'default group',
 				],
-				'is_valid_contrast_checker'  => [
+				'is_valid_contrast_checker'   => [
 					'label'   => 'validity of ContrastChecker',
 					'type'    => 'bool',
 					'default' => false,
 				],
-				'is_valid_remove_formatting' => [
+				'is_valid_remove_formatting'  => [
 					'label'   => 'validity of remove formatting button',
 					'type'    => 'bool',
 					'default' => true,
+				],
+				'support_block_editor_styles' => [
+					'label'   => 'whether to support block editor styles if theme does not support them',
+					'type'    => 'bool',
+					'default' => false,
 				],
 			],
 		],

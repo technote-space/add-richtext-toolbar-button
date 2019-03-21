@@ -75,8 +75,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$this->add_script_view( 'admin/script/custom_post/preview', [
 			'css_handle'         => $assets->get_css_handle(),
 			'fontawesome_handle' => $this->app->get_config( 'config', 'fontawesome_handle' ),
-			'theme_style'        => get_template_directory_uri() . '/style.css',
-			'chile_theme_style'  => is_child_theme() ? get_stylesheet_uri() : false,
+			'editor_styles'      => $this->get_block_editor_styles(),
 		] );
 		$this->add_style_view( 'admin/style/custom_post/preview', [
 			'post_type' => $this->get_post_type(),
@@ -130,10 +129,148 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$params['groups']                                                      = $this->get_groups();
 
 		$params['fontawesome_handle'] = $this->app->get_config( 'config', 'fontawesome_handle' );
-		$params['theme_style']        = get_template_directory_uri() . '/style.css';
-		$params['chile_theme_style']  = is_child_theme() ? get_stylesheet_uri() : false;
+		$params['editor_styles']      = $this->get_block_editor_styles();
 
 		return $params;
+	}
+
+	/**
+	 * @param bool $editor
+	 *
+	 * @return string
+	 */
+	public function get_block_editor_styles( $editor = false ) {
+		if ( $this->is_support_gutenberg() ) {
+			if ( $editor ) {
+				return '';
+			}
+		} elseif ( ! $this->apply_filters( 'support_block_editor_styles' ) ) {
+			return '';
+		}
+
+		$styles = [];
+		global $editor_styles;
+		$_editor_styles = $editor_styles;
+		if ( empty( $_editor_styles ) ) {
+			$_editor_styles = [];
+			if ( ! current_theme_supports( 'editor-styles' ) ) {
+				$_editor_styles[] = get_template_directory_uri() . '/style.css';
+				if ( is_child_theme() ) {
+					$_editor_styles[] = get_stylesheet_uri();
+				}
+			}
+		}
+
+		foreach ( $_editor_styles as $style ) {
+			if ( preg_match( '~^(https?:)?//~', $style ) ) {
+				$response = wp_remote_get( $style, [ 'sslverify' => false ] );
+				if ( ! is_wp_error( $response ) ) {
+					$styles[] = [
+						'css' => wp_remote_retrieve_body( $response ),
+					];
+				}
+			} else {
+				$file = get_theme_file_path( $style );
+				if ( file_exists( $file ) ) {
+					$css = file_get_contents( $file );
+
+					// urlの相対パス⇒絶対パス置換（管理画面から読み込むため）
+					$base   = dirname( get_theme_file_uri( $style ) );
+					$parent = dirname( $base );
+					$css    = preg_replace( "#url\([\"']?(\./)?(\w[^\"']+?)[\"']\)#", "url({$base}/$2)", $css );
+					$css    = preg_replace( "#url\([\"']?(\../)?([^\"']+?)[\"']\)#", "url({$parent}/$2)", $css );
+
+					// importの解析(面倒なので再帰的には読みこまない)
+					if ( preg_match_all( '#@import\s*url\(["\']?((https?:)?//([\w\-]+\.)+[\w\-]+(/[\w\-\./\?%&=\#]*)?)["\']?\);?#', $css, $matches, PREG_SET_ORDER ) > 0 ) {
+						foreach ( $matches as $match ) {
+							$css      = str_replace( $match[0], '', $css );
+							$response = wp_remote_get( $match[1], [ 'sslverify' => false ] );
+							if ( ! is_wp_error( $response ) ) {
+								$styles[] = [
+									'css' => wp_remote_retrieve_body( $response ),
+								];
+							}
+						}
+					}
+
+					$styles[] = [
+						'css' => $css,
+					];
+				}
+			}
+		}
+
+		$editor_settings = [
+			'alignWide'              => true,
+			'availableTemplates'     => [],
+			'allowedBlockTypes'      => true,
+			'disableCustomColors'    => false,
+			'disableCustomFontSizes' => false,
+			'disablePostFormats'     => true,
+			'titlePlaceholder'       => '',
+			'bodyPlaceholder'        => '',
+			'isRTL'                  => false,
+			'autosaveInterval'       => 60,
+			'maxUploadFileSize'      => 2097152,
+			'allowedMimeTypes'       => [],
+			'styles'                 => $styles,
+			'imageSizes'             => [],
+			'richEditingEnabled'     => true,
+			'postLock'               => [],
+			'postLockUtils'          => [],
+			'enableCustomFields'     => false,
+		];
+		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
+			remove_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
+		}
+		$editor_settings = apply_filters( 'block_editor_settings', $editor_settings, is_singular() ? get_post() : new \stdClass() );
+		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
+			add_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
+		}
+
+		$css = implode( ' ', $this->app->array->pluck_unique( $editor_settings['styles'], 'css' ) );
+		$css = preg_replace( '/\/\*[\s\S]*?\*\//', '', $css );
+		$css = str_replace( [ "\r", "\n" ], " ", $css );
+		$css = str_replace( '\\\'', '\'', $css );
+		$css = str_replace( '\'', '\\\'', $css );
+
+		return $css;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_support_gutenberg() {
+		if ( current_theme_supports( 'editor-styles' ) ) {
+			return true;
+		}
+
+		$editor_settings = [
+			'alignWide'              => true,
+			'availableTemplates'     => [],
+			'allowedBlockTypes'      => true,
+			'disableCustomColors'    => false,
+			'disableCustomFontSizes' => false,
+			'disablePostFormats'     => true,
+			'titlePlaceholder'       => '',
+			'bodyPlaceholder'        => '',
+			'isRTL'                  => false,
+			'autosaveInterval'       => 60,
+			'maxUploadFileSize'      => 2097152,
+			'allowedMimeTypes'       => [],
+			'styles'                 => [],
+			'imageSizes'             => [],
+			'richEditingEnabled'     => true,
+			'postLock'               => [],
+			'postLockUtils'          => [],
+			'enableCustomFields'     => false,
+		];
+		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
+			remove_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
+		}
+		$editor_settings = apply_filters( 'block_editor_settings', $editor_settings, is_singular() ? get_post() : new \stdClass() );
+
+		return [] != $editor_settings['styles'];
 	}
 
 	/**

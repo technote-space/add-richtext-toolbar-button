@@ -17,8 +17,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $name_prefix */
 /** @var array $groups */
 /** @var string $fontawesome_handle */
-/** @var string $theme_style */
-/** @var string|false $chile_theme_style */
+/** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
@@ -88,32 +87,16 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
             // style
             (function () {
                 const fontawesome_css = $('#<?php $instance->h( $fontawesome_handle );?>-css');
+				<?php if ($editor_styles) :?>
+                $preview.find('head').append($('<style>', {
+                    type: 'text/css',
+                    text: '<?php $instance->h( $editor_styles, false, true, false );?>'
+                }));
+				<?php endif;?>
                 $preview.find('head').append($('<style>', {
                     type: 'text/css',
                     text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
                 }));
-                const themeStyle = $('<link>', {
-                    rel: 'stylesheet',
-                    type: 'text/css',
-                    media: 'all',
-                    href: '<?php $instance->h( $theme_style );?>'
-                });
-                themeStyle.load(function () {
-                    controlHeight();
-                });
-                $preview.find('head').append(themeStyle);
-				<?php if ($chile_theme_style) :?>
-                const childThemeStyle = $('<link>', {
-                    rel: 'stylesheet',
-                    type: 'text/css',
-                    media: 'all',
-                    href: '<?php $instance->h( $chile_theme_style );?>'
-                });
-                childThemeStyle.load(function () {
-                    controlHeight();
-                });
-                $preview.find('head').append(childThemeStyle);
-				<?php endif;?>
                 $preview.find('head').append(fontawesome_css.clone());
 
                 const applyStyles = function (style) {

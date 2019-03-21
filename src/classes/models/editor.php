@@ -27,6 +27,11 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Common\Traits\Package;
 
 	/**
+	 * @var bool $_doing_action
+	 */
+	private $_doing_action = false;
+
+	/**
 	 * enqueue css for gutenberg
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
@@ -53,6 +58,29 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		/** @var Assets $assets */
 		$assets = Assets::get_instance( $this->app );
 		$assets->enqueue_plugin_assets( $post->post_type, true );
+	}
+
+	/**
+	 * @param array $editor_settings
+	 *
+	 * @return array
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function block_editor_settings( $editor_settings ) {
+		if ( $this->_doing_action ) {
+			return $editor_settings;
+		}
+		$this->_doing_action = true;
+
+		/** @var Custom_Post\Setting $setting */
+		$setting = Custom_Post\Setting::get_instance( $this->app );
+		$styles  = $setting->get_block_editor_styles( true );
+		if ( $styles ) {
+			$editor_settings['styles'][] = [ 'css' => $styles ];
+		}
+		$this->_doing_action = false;
+
+		return $editor_settings;
 	}
 
 	/**

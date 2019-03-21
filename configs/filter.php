@@ -36,6 +36,9 @@ return [
 		'enqueue_block_editor_assets' => [
 			'enqueue_block_editor_assets',
 		],
+		'block_editor_settings'       => [
+			'block_editor_settings' => 999,
+		],
 	],
 
 	'\Richtext_Toolbar_Button\Classes\Models\Custom_Post\Setting' => [

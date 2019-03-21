@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-02-27 18:18+0900\n"
+"PO-Revision-Date: 2019-03-21 17:28+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -258,3 +258,6 @@ msgstr "他の設定のクラス名が含まれているため使用できませ
 
 msgid "Remove All formatting"
 msgstr "全てのフォーマットを外す"
+
+msgid "whether to support block editor styles if theme does not support them"
+msgstr "テーマがブロックエディタをサポートしていない場合にできるだけスタイルを適用するようにプラグインでサポートするかどうか"
