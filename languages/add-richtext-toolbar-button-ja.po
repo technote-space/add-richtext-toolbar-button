@@ -22,23 +22,8 @@ msgstr "Add RichText Toolbar Button"
 msgid "This plugin makes it easy to add RichText toolbar button."
 msgstr "このプラグインは RichText のツールバーへのボタンを追加を容易にします。"
 
-msgid "Dashboard"
-msgstr "ダッシュボード"
-
 msgid "Detail Settings"
 msgstr "詳細設定"
-
-msgid "Settings have been updated."
-msgstr "設定を更新しました。"
-
-msgid "Settings have been reset."
-msgstr "設定をリセットしました。"
-
-msgid "Are you sure to reset settings?"
-msgstr "設定をリセットしてもよろしいですか？"
-
-msgid "Reset"
-msgstr "リセット"
 
 msgid "post id"
 msgstr "投稿ID"
