@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-framework-common\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-03-13 02:19+0900\n"
+"PO-Revision-Date: 2019-03-19 01:19+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -85,14 +85,26 @@ msgstr "ラベル"
 msgid "Settings updated."
 msgstr "設定を更新しました。"
 
+msgid "Are you sure to reset settings?"
+msgstr "設定をリセットしてもよろしいですか？"
+
+msgid "Settings have been updated."
+msgstr "設定を更新しました。"
+
+msgid "Settings have been reset."
+msgstr "設定をリセットしました。"
+
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+msgid "Reset"
+msgstr "リセット"
+
 msgid "Update"
 msgstr "更新"
 
 msgid "Delete"
 msgstr "削除"
-
-msgid "Dashboard"
-msgstr "ダッシュボード"
 
 msgid "Open"
 msgstr "開く"
@@ -214,8 +226,8 @@ msgstr "生成されるCSSを圧縮するかどうか"
 msgid "Assets Version"
 msgstr "CSSやJS等に付与するバージョン(キャッシュ制御)"
 
-msgid "Cache validity"
-msgstr "キャッシュ機能が有効かどうか"
+msgid "Cache type (option or file)"
+msgstr "キャッシュタイプ（option または file）"
 
 msgid "Plugin details in Japanese:"
 msgstr "プラグインの詳細な説明："

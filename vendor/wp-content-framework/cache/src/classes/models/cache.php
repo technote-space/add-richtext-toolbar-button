@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Classes Models Cache
  *
- * @version 0.0.5
+ * @version 0.0.7
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -33,11 +33,20 @@ class Cache implements \WP_Framework_Cache\Interfaces\Cache, \WP_Framework_Commo
 	 */
 	protected function initialized() {
 		$cache_class = '\WP_Framework_Cache\Classes\Models\Cache\Option';
-		if ( ( $cache_type = $this->app->get_config( 'config', 'cache_type' ) ) && 'option' !== $cache_type ) {
-			$cache_class = $cache_type;
-			if ( ! class_exists( $cache_class ) || ! is_subclass_of( $cache_class, '\WP_Framework_Cache\Interfaces\Cache' ) ) {
-				$cache_class = '\WP_Framework_Cache\Classes\Models\Cache\Option';
+		$cache_type  = $this->app->get_config( 'config', 'cache_type' );
+		if ( $cache_type ) {
+			if ( 'option' !== $cache_type ) {
+				if ( 'file' === $cache_type ) {
+					$cache_class = '\WP_Framework_Cache\Classes\Models\Cache\File';
+				} else {
+					$cache_class = $cache_type;
+					if ( ! class_exists( $cache_class ) || ! is_subclass_of( $cache_class, '\WP_Framework_Cache\Interfaces\Cache' ) ) {
+						$cache_class = '\WP_Framework_Cache\Classes\Models\Cache\Option';
+					}
+				}
 			}
+		} elseif ( 'file' === $this->apply_filters( 'cache_type' ) ) {
+			$cache_class = '\WP_Framework_Cache\Classes\Models\Cache\File';
 		}
 		/** @var \WP_Framework_Core\Traits\Singleton $cache_class */
 		$this->_cache = $cache_class::get_instance( $this->app );

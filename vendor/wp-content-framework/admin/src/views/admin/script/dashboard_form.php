@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Views Admin Script Dashboard_form
  *
- * @version 0.0.15
+ * @version 0.0.19
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -12,6 +12,7 @@
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	return;
 }
+/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
 ?>
 <script>
     (function ($) {
@@ -25,6 +26,16 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
                 });
                 return true;
             });
+
+            const $reset = $('.form-buttons input[name="reset"]');
+            if (!$._data($reset.get(0), 'events')) {
+                $reset.on('click', function () {
+                    if (window.confirm('<?php $instance->h( 'Are you sure to reset settings?', true );?>')) {
+                        $(this).closest('form').submit();
+                    }
+                    return false;
+                });
+            }
         });
     })(jQuery);
 </script>

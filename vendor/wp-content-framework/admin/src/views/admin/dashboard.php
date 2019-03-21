@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Views Admin Dashboard
  *
- * @version 0.0.15
+ * @version 0.0.19
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -14,7 +14,6 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 /** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
 /** @var array $args */
-$instance->add_style_view( 'admin/style/dashboard' );
 $instance->add_script_view( 'admin/script/dashboard_form' );
 ?>
 <?php $instance->form( 'open', $args ); ?>

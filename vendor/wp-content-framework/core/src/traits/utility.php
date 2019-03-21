@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Utility
  *
- * @version 0.0.46
+ * @version 0.0.48
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -177,7 +177,7 @@ trait Utility {
 					$this->app->get_config( 'config', 'db_version', '0.0.0' ),
 					$this->app->utility->get_framework_plugins_hash(),
 				];
-				$cache    = $this->app->string->implode( $versions, '/' );
+				$cache    = sha1( json_encode( $versions ) );
 				$this->app->set_shared_object( '_cache_version', $cache );
 			}
 			$this->_cache_version = $cache;

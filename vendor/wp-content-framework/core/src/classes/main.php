@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.46
+ * @version 0.0.48
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -71,11 +71,6 @@ class Main {
 	 * @var bool $_initialized
 	 */
 	private $_initialized = false;
-
-	/**
-	 * @var array $_plugin_data
-	 */
-	private $_plugin_data;
 
 	/**
 	 * @var array $_properties
@@ -151,10 +146,6 @@ class Main {
 	 * initialize
 	 */
 	protected function initialize() {
-		if ( ! function_exists( 'get_plugin_data' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-		$this->_plugin_data              = $this->app->is_theme ? wp_get_theme() : get_plugin_data( $this->app->plugin_file, false, false );
 		$this->_properties               = [];
 		$this->_class_target_package     = [];
 		$this->_namespace_target_package = [];
@@ -339,19 +330,11 @@ class Main {
 	}
 
 	/**
-	 * @param string|null $key
-	 *
-	 * @return array|string
-	 */
-	public function get_plugin_data( $key = null ) {
-		return empty( $key ) ? $this->_plugin_data : $this->_plugin_data[ $key ];
-	}
-
-	/**
+	 * @deprecated
 	 * @return string
 	 */
-	public function get_plugin_version() {
-		return $this->get_plugin_data( 'Version' );
+	public function get_plugin_uri() {
+		return $this->app->get_plugin_data( $this->app->is_theme ? 'ThemeURI' : 'PluginURI' );
 	}
 
 	/**
