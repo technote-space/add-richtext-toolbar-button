@@ -9,6 +9,10 @@
  * @link https://technote.space/
  */
 
+.add-richtext-toolbar-button-nav.editor-styles-wrapper {
+    background: white;
+}
+
 .add-richtext-toolbar-button-is-active.components-dropdown-menu .components-dropdown-menu__toggle {
     box-shadow: none;
     background-color: #555d66;

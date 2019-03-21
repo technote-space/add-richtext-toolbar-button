@@ -46,6 +46,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'wp-components',
 			'wp-url',
 			'wp-i18n',
+			'wp-hooks',
 			'lodash',
 		], $this->app->get_plugin_version() );
 		$this->localize_script( $handle, 'artb_params', $this->get_editor_params( $post->post_type ) );
