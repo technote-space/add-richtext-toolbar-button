@@ -48,7 +48,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return;
 		}
 
-		if ( ! is_singular() ) {
+		if ( ! is_single() && ! is_page() ) {
 			return;
 		}
 
