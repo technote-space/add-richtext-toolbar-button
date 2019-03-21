@@ -32,6 +32,14 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	private $_cleared_cache_file = null;
 
 	/**
+	 * remove setting
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function remove_setting() {
+		$this->app->setting->remove_setting('assets_version');
+	}
+
+	/**
 	 * setup assets
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */

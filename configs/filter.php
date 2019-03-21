@@ -15,6 +15,9 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 return [
 
 	'\Richtext_Toolbar_Button\Classes\Models\Assets' => [
+		'${prefix}app_initialize'   => [
+			'remove_setting',
+		],
 		'wp_head'                   => [
 			'setup_assets',
 		],

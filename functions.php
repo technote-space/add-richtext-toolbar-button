@@ -11,8 +11,3 @@
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	return;
 }
-
-add_action( 'artb/app_initialize', function ( $app ) {
-	/** @var \WP_Framework $app */
-	$app->setting->remove_setting( 'assets_version' );
-} );
