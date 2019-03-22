@@ -26,7 +26,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 		'value'   => 1,
 		'name'    => '',
 		'label'   => 'Display auxiliary line',
-		'checked' => true,
+		'checked' => false,
 		'class'   => 'display-auxiliary-line',
 	] ); ?>
 	<?php $instance->form( 'input/checkbox', [
