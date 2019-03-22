@@ -56,6 +56,27 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
+	 * @param array $editor_settings
+	 *
+	 * @return array
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function block_editor_settings( $editor_settings ) {
+		if ( $this->app->isset_shared_object( '__is_doing_block_editor_settings' ) ) {
+			return $editor_settings;
+		}
+
+		/** @var Custom_Post\Setting $setting */
+		$setting = Custom_Post\Setting::get_instance( $this->app );
+		$styles  = $setting->get_block_editor_styles( true );
+		if ( $styles ) {
+			$editor_settings['styles'][] = [ 'css' => $styles ];
+		}
+
+		return $editor_settings;
+	}
+
+	/**
 	 * @param string $post_type
 	 *
 	 * @return array
