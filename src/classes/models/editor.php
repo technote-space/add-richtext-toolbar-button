@@ -71,6 +71,10 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$styles  = $setting->get_block_editor_styles( true );
 		if ( $styles ) {
 			$editor_settings['styles'][] = [ 'css' => $styles ];
+			$width                       = $this->apply_filters( 'block_width' );
+			if ( $width > 0 ) {
+				$editor_settings['styles'][] = [ 'css' => '.wp-block { max-width: ' . $width . 'px }' ];
+			}
 		}
 
 		return $editor_settings;
