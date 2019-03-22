@@ -15,19 +15,19 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 return [
 
 	'\Richtext_Toolbar_Button\Classes\Models\Assets' => [
-		'${prefix}app_initialize'   => [
+		'${prefix}post_load_admin_page' => [
 			'remove_setting',
 		],
-		'wp_head'                   => [
+		'wp_head'                       => [
 			'setup_assets',
 		],
-		'${prefix}changed_option'   => [
+		'${prefix}changed_option'       => [
 			'changed_option',
 		],
-		'${prefix}app_activated'    => [
+		'${prefix}app_activated'        => [
 			'clear_cache_file',
 		],
-		'upgrader_process_complete' => [
+		'upgrader_process_complete'     => [
 			'clear_cache_file',
 		],
 	],
