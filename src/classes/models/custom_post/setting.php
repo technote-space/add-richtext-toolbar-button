@@ -42,6 +42,11 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	private $_cache_settings = [];
 
 	/**
+	 * @var string $_theme_key_cache
+	 */
+	private $_theme_key_cache;
+
+	/**
 	 * insert presets
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
@@ -220,19 +225,14 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'postLockUtils'          => [],
 			'enableCustomFields'     => false,
 		];
-		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
-			remove_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
-		}
-		$editor_settings = apply_filters( 'block_editor_settings', $editor_settings, is_singular() ? get_post() : new \stdClass() );
-		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
-			add_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
-		}
 
-		$css = implode( ' ', $this->app->array->pluck_unique( $editor_settings['styles'], 'css' ) );
-		$css = preg_replace( '/\/\*[\s\S]*?\*\//', '', $css );
-		$css = str_replace( [ "\r", "\n" ], " ", $css );
-		$css = str_replace( '\\\'', '\'', $css );
-		$css = str_replace( '\'', '\\\'', $css );
+		$editor_settings = $this->apply_block_editor_settings( $editor_settings );
+		$css             = implode( ' ', $this->app->array->pluck_unique( $editor_settings['styles'], 'css' ) );
+		$css             = preg_replace( '/\/\*[\s\S]*?\*\//', '', $css );
+		$css             = str_replace( [ "\r", "\n" ], " ", $css );
+		if ( ! $editor ) {
+			$css = addslashes( $css );
+		}
 
 		return $css;
 	}
@@ -241,6 +241,26 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return bool
 	 */
 	public function is_support_gutenberg() {
+		if ( ! isset( $this->_theme_key_cache ) ) {
+			$theme                  = wp_get_theme();
+			$this->_theme_key_cache = $theme['Name'] . '/' . $theme['Version'];
+		}
+
+		$cache = $this->cache_get( 'is_support_gutenberg', null, $this->_theme_key_cache );
+		if ( isset( $cache ) ) {
+			return $cache;
+		}
+
+		$result = $this->check_support_gutenberg();
+		$this->cache_set( 'is_support_gutenberg', $result, $this->_theme_key_cache );
+
+		return $result;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function check_support_gutenberg() {
 		if ( current_theme_supports( 'editor-styles' ) ) {
 			return true;
 		}
@@ -265,12 +285,29 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'postLockUtils'          => [],
 			'enableCustomFields'     => false,
 		];
+
+		$editor_settings = $this->apply_block_editor_settings( $editor_settings );
+
+		return [] != $editor_settings['styles'];
+	}
+
+	/**
+	 * @param array $editor_settings
+	 *
+	 * @return array
+	 */
+	private function apply_block_editor_settings( $editor_settings ) {
+		$this->app->set_shared_object( '__is_doing_block_editor_settings', true );
 		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
 			remove_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
 		}
 		$editor_settings = apply_filters( 'block_editor_settings', $editor_settings, is_singular() ? get_post() : new \stdClass() );
+		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
+			add_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
+		}
+		$this->app->delete_shared_object( '__is_doing_block_editor_settings' );
 
-		return [] != $editor_settings['styles'];
+		return $editor_settings;
 	}
 
 	/**

@@ -90,7 +90,7 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 				<?php if ($editor_styles) :?>
                 $preview.find('head').append($('<style>', {
                     type: 'text/css',
-                    text: '<?php $instance->h( $editor_styles, false, true, false );?>'
+                    text: "<?php $instance->h( $editor_styles, false, true, false );?>"
                 }));
 				<?php endif;?>
                 $preview.find('head').append($('<style>', {

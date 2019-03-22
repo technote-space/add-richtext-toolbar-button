@@ -42,7 +42,7 @@ $instance->add_script_view( 'admin/script/icon' );
 				<?php if ($editor_styles) :?>
                 $(this).contents().find('head').append($('<style>', {
                     type: 'text/css',
-                    text: '<?php $instance->h( $editor_styles, false, true, false );?>'
+                    text: "<?php $instance->h( $editor_styles, false, true, false );?>"
                 }));
 				<?php endif;?>
                 $(this).contents().find('head').append($('<style>', {
