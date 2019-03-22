@@ -9,6 +9,10 @@
  * @link https://technote.space/
  */
 
+.add-richtext-toolbar-button-nav.editor-styles-wrapper {
+    background: white;
+}
+
 .add-richtext-toolbar-button-is-active.components-dropdown-menu .components-dropdown-menu__toggle {
     box-shadow: none;
     background-color: #555d66;
@@ -40,11 +44,11 @@
     margin-right: 8px
 }
 
-.add-richtext-toolbar-button-artb-font-color {
+.add-richtext-toolbar-button-icon-artb-font-color {
     color: #ff2020;
 }
 
-.add-richtext-toolbar-button-artb-background-color {
+.add-richtext-toolbar-button-icon-artb-background-color {
     background-color: #fcb900;
 }
 
