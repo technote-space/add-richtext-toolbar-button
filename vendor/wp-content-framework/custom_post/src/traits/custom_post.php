@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.30
+ * @version 0.0.31
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -257,7 +257,7 @@ trait Custom_Post {
 	public function get_post_type_args( $capabilities = null ) {
 		$save = false;
 		if ( ! isset( $capabilities ) ) {
-			$cache = $this->cache_get( 'post_type_args' );
+			$cache = $this->cache_get_common( 'post_type_args' );
 			if ( is_array( $cache ) ) {
 				return $cache;
 			}
@@ -285,7 +285,7 @@ trait Custom_Post {
 		] );
 
 		if ( $save ) {
-			$this->cache_set( 'post_type_args', $args );
+			$this->cache_set_common( 'post_type_args', $args );
 		}
 
 		return $args;

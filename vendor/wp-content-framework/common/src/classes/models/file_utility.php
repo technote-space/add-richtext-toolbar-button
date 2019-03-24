@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models File Utility
  *
- * @version 0.0.36
+ * @version 0.0.39
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -18,16 +18,179 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Class File_Utility
  * @package WP_Framework_Common\Classes\Models
+ * @method string|false find_folder( string $folder )
+ * @method string|false search_for_folder( string $folder, string $base = '.', bool $loop = false )
+ * @method bool is_binary( string $text )
+ * @method bool chown( string $file, mixed $owner, bool $recursive = false )
+ * @method mixed|false get_contents( string $file )
+ * @method array|false get_contents_array( string $file )
+ * @method bool put_contents( string $file, string $contents, bool | int $mode = false )
+ * @method bool|string chmod( string $file, false | int $mode = false, bool $recursive = false )
+ * @method bool copy( string $source, string $destination, bool $overwrite = false, false | int $mode = false )
+ * @method bool move( string $source, string $destination, bool $overwrite = false )
+ * @method bool delete( string $file, bool $recursive = false, bool $type = false )
+ * @method bool exists( string $file )
+ * @method bool is_file( string $file )
+ * @method bool is_dir( string $file )
+ * @method bool is_readable( string $file )
+ * @method bool is_writable( string $file )
+ * @method int|bool atime( string $file )
+ * @method int|bool mtime( string $file )
+ * @method int|bool size( string $file )
+ * @method bool touch( string $file, int $time = 0, int $atime = 0 )
+ * @method bool mkdir( string $path, false | int $chmod = false, false | int $chown = false, false | int $chgrp = false )
+ * @method bool rmdir( string $path, bool $recursive = false )
+ * @method array|bool dirlist( string $path, bool $include_hidden = true, bool $recursive = false )
  */
-class File_Utility implements \WP_Framework_Core\Interfaces\Singleton {
+class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Common\Traits\Package;
+	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Common\Traits\Package;
 
 	/**
-	 * @return bool
+	 * @var array $_fs_methods
 	 */
-	protected static function is_shared_class() {
-		return true;
+	private static $_fs_methods = [
+		'find_folder',
+		'search_for_folder',
+		'is_binary',
+		'chown',
+		'get_contents',
+		'get_contents_array',
+		'put_contents',
+		'chmod',
+		'copy',
+		'move',
+		'delete',
+		'exists',
+		'is_file',
+		'is_dir',
+		'is_readable',
+		'is_writable',
+		'atime',
+		'mtime',
+		'size',
+		'touch',
+		'mkdir',
+		'rmdir',
+		'dirlist',
+	];
+
+	/**
+	 * @var bool $_fs_initialized
+	 */
+	private static $_fs_initialized = false;
+
+	/**
+	 * @var mixed $_fs_credentials
+	 */
+	private static $_fs_credentials;
+
+	/**
+	 * @var \WP_Filesystem_Base[] $_fs_cache
+	 */
+	private static $_fs_cache = [];
+
+	/**
+	 * @param string $name
+	 * @param array $args
+	 *
+	 * @return mixed
+	 */
+	public function __call( $name, array $args ) {
+		if ( in_array( $name, self::$_fs_methods ) ) {
+			return $this->fs()->$name( ...$args );
+		}
+
+		\WP_Framework::wp_die( sprintf( 'you cannot access file->%s', $name ), __FILE__, __LINE__ );
+
+		return null;
+	}
+
+	/**
+	 * @return \WP_Filesystem_Base
+	 */
+	private function fs() {
+		if ( isset( self::$_fs_cache[ $this->app->plugin_name ] ) ) {
+			return self::$_fs_cache[ $this->app->plugin_name ];
+		}
+
+		if ( ! self::$_fs_initialized ) {
+			if ( ! class_exists( "\WP_Filesystem_Base" ) ) {
+				require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+			}
+			if ( ! class_exists( "\WP_Filesystem_Direct" ) ) {
+				require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+			}
+
+			// ABSPATH . 'wp-admin/includes/file.php' WP_Filesystem
+			if ( ! defined( 'FS_CHMOD_DIR' ) ) {
+				define( 'FS_CHMOD_DIR', ( fileperms( ABSPATH ) & 0777 | 0755 ) );
+			}
+			if ( ! defined( 'FS_CHMOD_FILE' ) ) {
+				define( 'FS_CHMOD_FILE', ( fileperms( ABSPATH . 'index.php' ) & 0777 | 0644 ) );
+			}
+			self::$_fs_initialized = true;
+		}
+
+		if ( $this->apply_filters( 'use_filesystem_credentials' ) ) {
+			return $this->fs_with_credentials();
+		}
+
+		self::$_fs_cache[ $this->app->plugin_name ] = $this->fs_direct();
+
+		return self::$_fs_cache[ $this->app->plugin_name ];
+	}
+
+	/**
+	 * @return \WP_Filesystem_Base
+	 */
+	private function fs_with_credentials() {
+		if ( ! isset( self::$_fs_credentials ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			self::$_fs_credentials = request_filesystem_credentials( '', '', false, false, null );
+		}
+
+		if ( \WP_Filesystem( self::$_fs_credentials ) ) {
+			global $wp_filesystem;
+			if ( $wp_filesystem instanceof \WP_Filesystem_Direct ) {
+				self::$_fs_cache[ $this->app->plugin_name ] = $wp_filesystem;
+			}
+
+			return $wp_filesystem;
+		}
+
+		self::$_fs_cache[ $this->app->plugin_name ] = $this->fs_direct();
+
+		return self::$_fs_cache[ $this->app->plugin_name ];
+	}
+
+	/**
+	 * setup \WP_Filesystem_Direct
+	 */
+	private function fs_direct() {
+		return new \WP_Filesystem_Direct( false );
+	}
+
+	/**
+	 * @return int
+	 */
+	private function get_dir_mode() {
+		if ( ! self::$_fs_initialized ) {
+			$this->fs();
+		}
+
+		return empty( self::$_fs_cache [ $this->app->plugin_name ] ) ? 0777 : FS_CHMOD_DIR;
+	}
+
+	/**
+	 * @return int
+	 */
+	private function get_file_mode() {
+		if ( ! self::$_fs_initialized ) {
+			$this->fs();
+		}
+
+		return empty( self::$_fs_cache [ $this->app->plugin_name ] ) ? FS_CHMOD_FILE | 0666 : FS_CHMOD_FILE;
 	}
 
 	/**
@@ -50,57 +213,59 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	}
 
 	/**
-	 * @see https://qiita.com/algo13/items/34bb9750f0e450109a03
-	 *
 	 * @param $dir
 	 *
 	 * @return bool
 	 */
 	private function delete_dir( $dir ) {
-		clearstatcache( true, $dir );
-		if ( is_file( $dir ) ) {
-			return @unlink( $dir );
-		} elseif ( is_link( $dir ) ) {
-			return @unlink( $dir ) || ( '\\' === DS && @rmdir( $dir ) );
-		} elseif ( $this->is_junction( $dir ) ) {
-			return @rmdir( $dir );
-		} elseif ( is_dir( $dir ) ) {
-			$failed = false;
-			foreach ( new \FilesystemIterator( $dir ) as $file ) {
-				/** @var \DirectoryIterator $file */
-				if ( ! $this->delete_dir( $file->getPathname() ) ) {
-					$failed = true;
+		return $this->delete( $dir, true );
+	}
+
+	/**
+	 * @param string $path
+	 * @param bool|int $chmod
+	 * @param bool|int $chown
+	 * @param bool|int $chgrp
+	 *
+	 * @return bool
+	 */
+	public function mkdir_recursive( $path, $chmod = false, $chown = false, $chgrp = false ) {
+		if ( empty( $path ) ) {
+			return false;
+		}
+		if ( $this->exists( $path ) ) {
+			return true;
+		}
+
+		$path     = str_replace( '\\', '/', $path );
+		$segments = explode( '/', $path );
+		$dir      = '/';
+		foreach ( $segments as $segment ) {
+			$dir .= $segment;
+			if ( ! $this->is_dir( $dir ) ) {
+				if ( $this->is_file( $dir ) ) {
+					break;
+				}
+				if ( ! $this->mkdir( $dir, $chmod || $chown || $chgrp ? $chmod : $this->get_dir_mode(), $chown, $chgrp ) ) {
+					return false;
 				}
 			}
-
-			return ! $failed && @rmdir( $dir );
+			$dir .= '/';
 		}
 
 		return true;
 	}
 
 	/**
-	 * @param string $check
+	 * @param string $file
+	 * @param string $contents
+	 * @param bool|int $mode
+	 * @param bool|int $dir_mode
 	 *
 	 * @return bool
 	 */
-	private function is_junction( $check ) {
-		if ( '\\' !== DS ) {
-			return false;
-		}
-
-		$stat = @lstat( $check );
-
-		return $stat !== false && ! ( $stat['mode'] & 0xC000 );
-	}
-
-	/**
-	 * @param string $path
-	 *
-	 * @return bool
-	 */
-	public function exists( $path ) {
-		return file_exists( $path );
+	public function put_contents_recursive( $file, $contents, $mode = false, $dir_mode = false ) {
+		return $this->mkdir_recursive( dirname( $file ), $dir_mode ? $dir_mode : $this->get_dir_mode() ) && $this->put_contents( $file, $contents, $mode ? $mode : $this->get_file_mode() );
 	}
 
 	/**
@@ -142,9 +307,8 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 */
 	public function create_upload_file( \WP_Framework $app, $path, $data ) {
 		$path = $this->get_upload_file_path( $app, $path );
-		@mkdir( dirname( $path ), 0700, true );
-		if ( false === @file_put_contents( $path, $data, 0644 ) ) {
-			throw new \Exception( 'Failed to create .htaccess file.' );
+		if ( false === $this->mkdir_recursive( dirname( $path ), $this->get_dir_mode() ) || false === $this->put_contents( $path, $data, $this->get_file_mode() ) ) {
+			throw new \Exception( 'Failed to create file.' );
 		}
 	}
 
@@ -178,7 +342,7 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return bool
 	 */
 	public function delete_upload_file( \WP_Framework $app, $path ) {
-		return @unlink( $this->get_upload_file_path( $app, $path ) );
+		return $this->delete( $this->get_upload_file_path( $app, $path ) );
 	}
 
 	/**
@@ -190,7 +354,7 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 */
 	public function get_upload_file_contents( \WP_Framework $app, $path, $generator = null ) {
 		if ( $this->create_upload_file_if_not_exists( $app, $path, $generator ) ) {
-			return @file_get_contents( $this->get_upload_file_path( $app, $path ) );
+			return $this->get_contents( $this->get_upload_file_path( $app, $path ) );
 		}
 
 		return false;
