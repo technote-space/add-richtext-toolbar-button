@@ -19,10 +19,11 @@
     color: #fff;
 }
 
-.components-tooltip .components-popover__content .add-richtext-toolbar-button-nav-item-title {
-    color: black;
+.add-richtext-toolbar-button-nav-item-title-wrapper > * {
+    display: inline-block;
+    background-color: white;
     padding: 3px;
-    font-size: 1em !important;
+    color: black;
 }
 
 .add-richtext-toolbar-button-nav-item-title-wrapper {

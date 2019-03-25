@@ -205,10 +205,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return array
 	 */
 	private function get_pre_style_for_editor() {
-		return $this->apply_filters( 'pre_style_for_editor', [
-			'display: inline-block;',
-			'background-color: white;',
-		] );
+		return $this->apply_filters( 'pre_style_for_editor', [] );
 	}
 
 	/**
