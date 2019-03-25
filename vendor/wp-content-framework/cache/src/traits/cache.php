@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Traits Cache
  *
- * @version 0.0.1
+ * @version 0.0.8
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -22,58 +22,63 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 trait Cache {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, Package;
+	use Package;
 
 	/**
 	 * @param string $key
 	 * @param string $group
+	 * @param bool $common
 	 *
 	 * @return bool
 	 */
-	public abstract function exists( $key, $group = 'default' );
+	public abstract function exists( $key, $group = 'default', $common = false );
 
 	/**
 	 * @param string $key
 	 * @param string $group
+	 * @param bool $common
 	 * @param mixed $default
 	 *
 	 * @return mixed
 	 */
-	public abstract function get( $key, $group = 'default', $default = null );
+	public abstract function get( $key, $group = 'default', $common = false, $default = null );
 
 	/**
 	 * @param string $key
 	 * @param mixed $value
 	 * @param string $group
+	 * @param bool $common
 	 * @param null|int $expire
 	 *
 	 * @return bool
 	 */
-	public abstract function set( $key, $value, $group = 'default', $expire = null );
+	public abstract function set( $key, $value, $group = 'default', $common = false, $expire = null );
 
 	/**
 	 * @param string $key
 	 * @param mixed $value
 	 * @param string $group
+	 * @param bool $common
 	 * @param null|int $expire
 	 *
 	 * @return bool
 	 */
-	public function replace( $key, $value, $group = 'default', $expire = null ) {
-		if ( ! $this->exists( $key, $group ) ) {
+	public function replace( $key, $value, $group = 'default', $common = false, $expire = null ) {
+		if ( ! $this->exists( $key, $group, $common ) ) {
 			return false;
 		}
 
-		return $this->set( $key, $value, $group, $expire );
+		return $this->set( $key, $value, $group, $common, $expire );
 	}
 
 	/**
 	 * @param string $key
 	 * @param string $group
+	 * @param bool $common
 	 *
 	 * @return bool
 	 */
-	public abstract function delete( $key, $group = 'default' );
+	public abstract function delete( $key, $group = 'default', $common = false );
 
 	/**
 	 * @return bool
@@ -89,4 +94,10 @@ trait Cache {
 		return true;
 	}
 
+	/**
+	 * switch blog
+	 */
+	public function switch_blog() {
+
+	}
 }

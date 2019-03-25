@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.29
+ * @version 0.0.31
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -510,6 +510,13 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 		return [
 			$this->app->define->plugin_namespace . '\\Classes\\Models\\Custom_Post',
 		];
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function is_common_cache_class_settings() {
+		return true;
 	}
 
 	/**

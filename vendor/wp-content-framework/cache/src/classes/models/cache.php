@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Classes Models Cache
  *
- * @version 0.0.7
+ * @version 0.0.8
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -19,9 +19,9 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Class Cache
  * @package WP_Framework_Cache\Classes\Models
  */
-class Cache implements \WP_Framework_Cache\Interfaces\Cache, \WP_Framework_Common\Interfaces\Uninstall {
+class Cache implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Cache\Interfaces\Cache, \WP_Framework_Common\Interfaces\Uninstall {
 
-	use \WP_Framework_Cache\Traits\Cache, \WP_Framework_Common\Traits\Uninstall;
+	use \WP_Framework_Core\Traits\Loader, \WP_Framework_Cache\Traits\Cache, \WP_Framework_Common\Traits\Uninstall;
 
 	/**
 	 * @var \WP_Framework_Cache\Interfaces\Cache $_cache
@@ -55,64 +55,71 @@ class Cache implements \WP_Framework_Cache\Interfaces\Cache, \WP_Framework_Commo
 	/**
 	 * clear cache
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function clear_cache() {
-		$this->flush();
+		foreach ( $this->get_class_list() as $class ) {
+			/** @var \WP_Framework_Cache\Interfaces\Cache $class */
+			$class->flush();
+		}
 	}
 
 	/**
 	 * @param string $key
 	 * @param string $group
+	 * @param bool $common
 	 *
 	 * @return bool
 	 */
-	public function exists( $key, $group = 'default' ) {
-		return $this->_cache->exists( $key, $group );
+	public function exists( $key, $group = 'default', $common = false ) {
+		return $this->_cache->exists( $key, $group, $common );
 	}
 
 	/**
 	 * @param string $key
 	 * @param string $group
+	 * @param bool $common
 	 * @param mixed $default
 	 *
 	 * @return mixed
 	 */
-	public function get( $key, $group = 'default', $default = null ) {
-		return $this->_cache->get( $key, $group, $default );
+	public function get( $key, $group = 'default', $common = false, $default = null ) {
+		return $this->_cache->get( $key, $group, $common, $default );
 	}
 
 	/**
 	 * @param string $key
 	 * @param mixed $value
 	 * @param string $group
+	 * @param bool $common
 	 * @param null|int $expire
 	 *
 	 * @return bool
 	 */
-	public function set( $key, $value, $group = 'default', $expire = null ) {
-		return $this->_cache->set( $key, $value, $group, $expire );
+	public function set( $key, $value, $group = 'default', $common = false, $expire = null ) {
+		return $this->_cache->set( $key, $value, $group, $common, $expire );
 	}
 
 	/**
 	 * @param string $key
 	 * @param mixed $value
 	 * @param string $group
+	 * @param bool $common
 	 * @param null|int $expire
 	 *
 	 * @return bool
 	 */
-	public function replace( $key, $value, $group = 'default', $expire = null ) {
-		return $this->_cache->replace( $key, $value, $group, $expire );
+	public function replace( $key, $value, $group = 'default', $common = false, $expire = null ) {
+		return $this->_cache->replace( $key, $value, $group, $common, $expire );
 	}
 
 	/**
 	 * @param string $key
 	 * @param string $group
+	 * @param bool $common
 	 *
 	 * @return bool
 	 */
-	public function delete( $key, $group = 'default' ) {
-		return $this->_cache->delete( $key, $group );
+	public function delete( $key, $group = 'default', $common = false ) {
+		return $this->_cache->delete( $key, $group, $common );
 	}
 
 	/**
@@ -130,6 +137,13 @@ class Cache implements \WP_Framework_Cache\Interfaces\Cache, \WP_Framework_Commo
 	}
 
 	/**
+	 * switch blog
+	 */
+	public function switch_blog() {
+		$this->_cache->switch_blog();
+	}
+
+	/**
 	 * uninstall
 	 */
 	public function uninstall() {
@@ -141,5 +155,22 @@ class Cache implements \WP_Framework_Cache\Interfaces\Cache, \WP_Framework_Commo
 	 */
 	public function get_uninstall_priority() {
 		return 50;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function get_namespaces() {
+		return [
+			$this->app->define->plugin_namespace . '\\Classes\\Models\\Cache',
+			'\WP_Framework_Cache\\Classes\\Models\\Cache',
+		];
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_instanceof() {
+		return '\WP_Framework_Cache\Interfaces\Cache';
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.48
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -335,6 +335,20 @@ class Main {
 	 */
 	public function get_plugin_uri() {
 		return $this->app->get_plugin_data( $this->app->is_theme ? 'ThemeURI' : 'PluginURI' );
+	}
+
+	/**
+	 * @deprecated
+	 * @return array
+	 */
+	public function get_package_versions() {
+		return $this->app->array->combine( array_map( function ( $package ) {
+			/** @var \WP_Framework\Package_Base $package */
+			return [
+				'version' => $package->get_version(),
+				'package' => $package->get_package(),
+			];
+		}, $this->app->get_packages() ), 'package', 'version' );
 	}
 
 	/**

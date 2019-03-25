@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Utility
  *
- * @version 0.0.48
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -25,7 +25,12 @@ trait Utility {
 	/**
 	 * @var string $_cache_version
 	 */
-	private $_cache_version;
+	private static $_cache_version;
+
+	/**
+	 * @var string[] $_common_cache_version
+	 */
+	private static $_common_cache_version = [];
 
 	/**
 	 * @return \wpdb
@@ -164,26 +169,32 @@ trait Utility {
 	}
 
 	/**
+	 * @param bool $common
+	 *
 	 * @return string
 	 */
-	private function get_cache_version() {
-		if ( ! isset( $this->_cache_version ) ) {
-			$cache = $this->app->get_shared_object( '_cache_version' );
-			if ( ! isset( $cache ) ) {
-				$versions = [
+	private function get_cache_version( $common ) {
+		if ( $common ) {
+			if ( ! isset( self::$_common_cache_version[ $this->app->plugin_name ] ) ) {
+				$versions                                               = [
 					$this->wp_version(),
-					$this->app->get_framework_version(),
 					$this->app->get_plugin_version(),
-					$this->app->get_config( 'config', 'db_version', '0.0.0' ),
-					$this->app->utility->get_framework_plugins_hash(),
 				];
-				$cache    = sha1( json_encode( $versions ) );
-				$this->app->set_shared_object( '_cache_version', $cache );
+				self::$_common_cache_version[ $this->app->plugin_name ] = sha1( json_encode( $versions ) );
 			}
-			$this->_cache_version = $cache;
+
+			return self::$_common_cache_version[ $this->app->plugin_name ];
 		}
 
-		return $this->_cache_version;
+		if ( ! isset( self::$_cache_version ) ) {
+			$versions             = [
+				$this->wp_version(),
+				$this->app->utility->get_framework_plugins_hash(),
+			];
+			self::$_cache_version = sha1( json_encode( $versions ) );
+		}
+
+		return self::$_cache_version;
 	}
 
 	/**
@@ -194,16 +205,28 @@ trait Utility {
 	 * @return mixed
 	 */
 	public function cache_get( $key, $default = null, $check_version = false ) {
-		$cache = $this->app->cache->get( $key, $this->get_class_name_slug() );
+		return $this->cache_get_common( $key, $default, $check_version, false );
+	}
+
+	/**
+	 * @param string $key
+	 * @param mixed $default
+	 * @param false|null|string $check_version
+	 * @param bool $common
+	 *
+	 * @return mixed
+	 */
+	public function cache_get_common( $key, $default = null, $check_version = false, $common = true ) {
+		$cache = $this->app->cache->get( $key, $this->get_class_name_slug(), $common );
 		if ( ! is_array( $cache ) || count( $cache ) !== 2 ) {
 			return $default;
 		}
 
 		list( $data, $version ) = $cache;
 		if ( isset( $check_version ) ) {
-			false === $check_version and $check_version = $this->get_cache_version();
+			false === $check_version and $check_version = $this->get_cache_version( $common );
 			if ( $version !== $check_version ) {
-				$this->app->cache->delete( $key, $this->get_class_name_slug() );
+				$this->app->cache->delete( $key, $this->get_class_name_slug(), $common );
 
 				return $default;
 			}
@@ -221,12 +244,25 @@ trait Utility {
 	 * @return bool
 	 */
 	public function cache_set( $key, $value, $check_version = false, $expire = null ) {
-		false === $check_version and $check_version = $this->get_cache_version();
+		return $this->cache_set_common( $key, $value, $check_version, $expire, false );
+	}
+
+	/**
+	 * @param string $key
+	 * @param mixed $value
+	 * @param false|null|string $check_version
+	 * @param null|int $expire
+	 * @param bool $common
+	 *
+	 * @return bool
+	 */
+	public function cache_set_common( $key, $value, $check_version = false, $expire = null, $common = true ) {
+		false === $check_version and $check_version = $this->get_cache_version( $common );
 
 		return $this->app->cache->set( $key, [
 			$value,
 			$check_version,
-		], $this->get_class_name_slug(), $expire );
+		], $this->get_class_name_slug(), $common, $expire );
 	}
 
 	/**

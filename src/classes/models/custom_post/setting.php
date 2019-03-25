@@ -176,8 +176,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				}
 			} else {
 				$file = get_theme_file_path( $style );
-				if ( file_exists( $file ) ) {
-					$css = file_get_contents( $file );
+				if ( @is_file( $file ) ) {
+					$css = @file_get_contents( $file );
 
 					// urlの相対パス⇒絶対パス置換（管理画面から読み込むため）
 					$base   = dirname( get_theme_file_uri( $style ) );
