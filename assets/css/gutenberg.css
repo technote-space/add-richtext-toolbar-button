@@ -61,7 +61,18 @@
 .components-color-palette__custom-color {
     margin-right: 16px;
 }
-.add-richtext-toolbar-button-nav.editor-styles-wrapper::before {
+
+.add-richtext-toolbar-button-nav.editor-styles-wrapper::before,
+.add-richtext-toolbar-button-nav.editor-styles-wrapper::after,
+.add-richtext-toolbar-button-nav-item-title-wrapper.editor-styles-wrapper::before,
+.add-richtext-toolbar-button-nav-item-title-wrapper.editor-styles-wrapper::after,
+.components-toolbar > .editor-styles-wrapper::before,
+.components-toolbar > .editor-styles-wrapper::after {
     content: none;
     display: none;
+}
+
+.add-richtext-toolbar-button-nav-item-title-wrapper.editor-styles-wrapper,
+.components-toolbar > .editor-styles-wrapper {
+    background: transparent !important;
 }

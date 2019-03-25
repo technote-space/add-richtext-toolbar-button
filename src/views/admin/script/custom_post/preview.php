@@ -47,7 +47,7 @@ $instance->add_script_view( 'admin/script/icon' );
 				<?php endif;?>
                 $(this).contents().find('head').append($('<style>', {
                     type: 'text/css',
-                    text: 'body{font-size: 13px; margin: 0; background: transparent!important} #preview-wrap{margin: 1em}'
+                    text: 'body{font-size: 13px; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em}'
                 }));
                 $(this).contents().find('head').append(main_css.clone());
                 $(this).contents().find('head').append(fontawesome_css.clone());

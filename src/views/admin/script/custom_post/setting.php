@@ -95,7 +95,7 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 				<?php endif;?>
                 $preview.find('head').append($('<style>', {
                     type: 'text/css',
-                    text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
+                    text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
                 }));
                 $preview.find('head').append(fontawesome_css.clone());
 
