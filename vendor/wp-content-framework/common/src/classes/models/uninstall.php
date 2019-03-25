@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Uninstall
  *
- * @version 0.0.38
+ * @version 0.0.40
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -80,7 +80,8 @@ class Uninstall implements \WP_Framework_Core\Interfaces\Loader {
 			}
 		} else {
 			$current_blog_id = get_current_blog_id();
-			$blog_ids        = $this->wpdb()->get_col( "SELECT blog_id FROM {$this->get_wp_table('blogs')}" );
+			/** @noinspection SqlResolve */
+			$blog_ids = $this->wpdb()->get_col( "SELECT blog_id FROM {$this->get_wp_table('blogs')}" );
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
 
@@ -89,9 +90,11 @@ class Uninstall implements \WP_Framework_Core\Interfaces\Loader {
 						$this->call_if_closure( $item );
 					}
 				}
+				delete_option( WP_FRAMEWORK_VENDOR_NAME );
 			}
 			switch_to_blog( $current_blog_id );
 		}
+		delete_site_option( WP_FRAMEWORK_VENDOR_NAME );
 	}
 
 	/**
