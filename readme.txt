@@ -91,7 +91,7 @@ This plugin needs PHP5.6 or higher.
 == Changelog ==
 
 = 1.1.3 (2019/3/25) =
-* Fixed: minor bug fix
+* Fixed: minor bug fixes
 
 = 1.1.2 (2019/3/25) =
 * Fixed: [For Gutenberg v5.3](https://github.com/technote-space/add-richtext-toolbar-button/issues/101)
