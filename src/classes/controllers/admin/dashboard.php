@@ -1,11 +1,12 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.0.3 #34
  * @since 1.0.12 #77
  * @since 1.1.0 wp-content-framework/admin#20, wp-content-framework/common#57
+ * @since 1.1.2 trivial change
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -102,7 +103,7 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	private function get_view_setting( $name ) {
 		$detail          = $this->app->setting->get_setting( $name, true );
 		$detail['id']    = str_replace( '/', '-', $detail['name'] );
-		$detail['form']  = $this->get_form_by_type( $detail['type'], false );
+		$detail['form']  = $this->get_form_by_type( $this->app->array->get( $detail, 'type', '' ), false );
 		$detail['title'] = $this->translate( $detail['label'] );
 		$detail['label'] = $detail['title'];
 		if ( $this->app->array->get( $detail, 'type' ) === 'bool' ) {
