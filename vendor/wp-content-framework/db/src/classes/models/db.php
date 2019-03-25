@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Db Classes Models Db
  *
- * @version 0.0.16
+ * @version 0.0.17
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -49,12 +49,21 @@ class Db implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\
 	private $_table_name_cache = [];
 
 	/**
+	 * @var int $_blog_id
+	 */
+	private $_blog_id;
+
+	/**
 	 * initialize
 	 */
 	protected function initialize() {
+		$this->_blog_id = $this->app->define->blog_id;
 		$this->load_table_defines();
 		$this->db_update();
 		$this->setup_wp_table_defines();
+		add_action( 'switch_blog', function ( $new_blog ) {
+			$this->switch_blog( $new_blog );
+		} );
 	}
 
 	/**
@@ -126,16 +135,20 @@ class Db implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\
 	}
 
 	/**
-	 * switch blog
+	 * @param int $new_blog
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function switch_blog() {
+	private function switch_blog( $new_blog ) {
+		if ( $new_blog === $this->_blog_id ) {
+			return;
+		}
+
 		foreach ( $this->table_defines as $table => $table_define ) {
 			if ( ! empty( $table_define['wordpress'] ) ) {
 				unset( $this->table_defines[ $table ] );
 			}
 		}
 		$this->setup_wp_table_defines();
+		$this->_blog_id = $new_blog;
 	}
 
 	/**

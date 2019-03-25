@@ -1,11 +1,12 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.0.9 #69
  * @since 1.0.13 #83
  * @since 1.0.14 #82
+ * @since 1.1.2 trivial change
  * @since 1.1.0 wp-content-framework/common#57
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -32,6 +33,23 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	private $_cleared_cache_file = null;
 
 	/**
+	 * remove setting
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function remove_setting() {
+		$this->app->setting->remove_setting( 'assets_version' );
+
+		/** @var Custom_Post\Setting $setting */
+		$setting = Custom_Post\Setting::get_instance( $this->app );
+		if ( $setting->is_support_gutenberg() ) {
+			$this->app->setting->remove_setting( 'support_block_editor_styles' );
+			$this->app->setting->remove_setting( 'block_width' );
+		} elseif ( ! $this->apply_filters( 'support_block_editor_styles' ) ) {
+			$this->app->setting->remove_setting( 'block_width' );
+		}
+	}
+
+	/**
 	 * setup assets
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
@@ -40,7 +58,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return;
 		}
 
-		if ( ! is_singular() ) {
+		if ( ! is_single() && ! is_page() ) {
 			return;
 		}
 
@@ -188,10 +206,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return array
 	 */
 	private function get_pre_style_for_editor() {
-		return $this->apply_filters( 'pre_style_for_editor', [
-			'display: inline-block;',
-			'background-color: white;',
-		] );
+		return $this->apply_filters( 'pre_style_for_editor', [] );
 	}
 
 	/**

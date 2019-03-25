@@ -1,13 +1,18 @@
 /**
- * @version 1.0.16
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.0.5 trivial change
  * @since 1.0.16 #95
+ * @since 1.1.2 #101
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
  */
+
+.add-richtext-toolbar-button-nav.editor-styles-wrapper {
+    background: white;
+}
 
 .add-richtext-toolbar-button-is-active.components-dropdown-menu .components-dropdown-menu__toggle {
     box-shadow: none;
@@ -15,10 +20,11 @@
     color: #fff;
 }
 
-.components-tooltip .components-popover__content .add-richtext-toolbar-button-nav-item-title {
-    color: black;
+.add-richtext-toolbar-button-nav-item-title-wrapper > * {
+    display: inline-block;
+    background-color: white;
     padding: 3px;
-    font-size: 1em !important;
+    color: black;
 }
 
 .add-richtext-toolbar-button-nav-item-title-wrapper {
@@ -40,11 +46,11 @@
     margin-right: 8px
 }
 
-.add-richtext-toolbar-button-artb-font-color {
+.add-richtext-toolbar-button-icon-artb-font-color {
     color: #ff2020;
 }
 
-.add-richtext-toolbar-button-artb-background-color {
+.add-richtext-toolbar-button-icon-artb-background-color {
     background-color: #fcb900;
 }
 
@@ -56,4 +62,19 @@
 
 .components-color-palette__custom-color {
     margin-right: 16px;
+}
+
+.add-richtext-toolbar-button-nav.editor-styles-wrapper::before,
+.add-richtext-toolbar-button-nav.editor-styles-wrapper::after,
+.add-richtext-toolbar-button-nav-item-title-wrapper.editor-styles-wrapper::before,
+.add-richtext-toolbar-button-nav-item-title-wrapper.editor-styles-wrapper::after,
+.components-toolbar > .editor-styles-wrapper::before,
+.components-toolbar > .editor-styles-wrapper::after {
+    content: none;
+    display: none;
+}
+
+.add-richtext-toolbar-button-nav-item-title-wrapper.editor-styles-wrapper,
+.components-toolbar > .editor-styles-wrapper {
+    background: transparent !important;
 }

@@ -1,10 +1,11 @@
 <?php
 /**
- * @version 1.0.14
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.0.3 #29
  * @since 1.0.14 #82
+ * @since 1.1.2 trivial change
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -26,7 +27,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 		'value'   => 1,
 		'name'    => '',
 		'label'   => 'Display auxiliary line',
-		'checked' => true,
+		'checked' => false,
 		'class'   => 'display-auxiliary-line',
 	] ); ?>
 	<?php $instance->form( 'input/checkbox', [

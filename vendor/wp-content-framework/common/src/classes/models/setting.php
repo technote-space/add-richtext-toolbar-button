@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Setting
  *
- * @version 0.0.29
+ * @version 0.0.37
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -139,6 +139,27 @@ class Setting implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_
 						}
 					}
 					break;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param string $setting
+	 *
+	 * @return bool
+	 */
+	public function is_setting_removed( $setting ) {
+		if ( ! $this->is_setting( $setting ) ) {
+			return true;
+		}
+
+		foreach ( $this->_groups as $group_priority => $groups ) {
+			foreach ( $groups as $group => $settings ) {
+				if ( false !== array_search( $setting, $settings ) ) {
+					return false;
 				}
 			}
 		}

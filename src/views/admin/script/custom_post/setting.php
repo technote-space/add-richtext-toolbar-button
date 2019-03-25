@@ -1,10 +1,11 @@
 <?php
 /**
- * @version 1.1.1
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.0.3 #29, #31
  * @since 1.0.14 #82
+ * @since 1.1.2 #102
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -17,8 +18,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $name_prefix */
 /** @var array $groups */
 /** @var string $fontawesome_handle */
-/** @var string $theme_style */
-/** @var string|false $chile_theme_style */
+/** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
@@ -88,32 +88,16 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
             // style
             (function () {
                 const fontawesome_css = $('#<?php $instance->h( $fontawesome_handle );?>-css');
+				<?php if ($editor_styles) :?>
                 $preview.find('head').append($('<style>', {
                     type: 'text/css',
-                    text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
+                    text: "<?php $instance->h( $editor_styles, false, true, false );?>"
                 }));
-                const themeStyle = $('<link>', {
-                    rel: 'stylesheet',
-                    type: 'text/css',
-                    media: 'all',
-                    href: '<?php $instance->h( $theme_style );?>'
-                });
-                themeStyle.load(function () {
-                    controlHeight();
-                });
-                $preview.find('head').append(themeStyle);
-				<?php if ($chile_theme_style) :?>
-                const childThemeStyle = $('<link>', {
-                    rel: 'stylesheet',
-                    type: 'text/css',
-                    media: 'all',
-                    href: '<?php $instance->h( $chile_theme_style );?>'
-                });
-                childThemeStyle.load(function () {
-                    controlHeight();
-                });
-                $preview.find('head').append(childThemeStyle);
 				<?php endif;?>
+                $preview.find('head').append($('<style>', {
+                    type: 'text/css',
+                    text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}'
+                }));
                 $preview.find('head').append(fontawesome_css.clone());
 
                 const applyStyles = function (style) {

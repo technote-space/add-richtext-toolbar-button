@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Utility
  *
- * @version 0.0.35
+ * @version 0.0.37
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -343,9 +343,12 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 		if ( ! is_admin() ) {
 			return false;
 		}
-		$current_screen = get_current_screen();
 
-		return ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) || ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() );
+		if ( $this->can_use_block_editor() ) {
+			return get_current_screen()->is_block_editor();
+		}
+
+		return function_exists( 'is_gutenberg_page' ) && is_gutenberg_page();
 	}
 
 	/**

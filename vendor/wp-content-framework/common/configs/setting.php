@@ -1,8 +1,8 @@
 <?php
 /**
- * WP_Framework_Db Configs Filter
+ * WP_Framework_Common Configs Setting
  *
- * @version 0.0.1
+ * @version 0.0.39
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -15,9 +15,15 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 
 return [
 
-	'db' => [
-		'switch_blog' => [
-			'switch_blog',
+	'999' => [
+		'Others' => [
+			'10' => [
+				'use_filesystem_credentials' => [
+					'label'   => 'Whether to use filesystem credentials',
+					'type'    => 'bool',
+					'default' => false,
+				],
+			],
 		],
 	],
 

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Define
  *
- * @version 0.0.19
+ * @version 0.0.38
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -39,6 +39,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * @property-read string $child_theme_views_dir
  * @property-read string $upload_dir
  * @property-read string $upload_url
+ * @property-read int $blog_id
  */
 class Define implements \WP_Framework_Core\Interfaces\Singleton {
 
@@ -69,6 +70,7 @@ class Define implements \WP_Framework_Core\Interfaces\Singleton {
 		'child_theme_views_dir',
 		'upload_dir',
 		'upload_url',
+		'blog_id',
 	];
 
 	/**
@@ -109,7 +111,35 @@ class Define implements \WP_Framework_Core\Interfaces\Singleton {
 			$this->plugin_url = plugins_url( '', $this->plugin_file );
 		}
 		$this->plugin_assets_url = $this->plugin_url . '/assets';
-		$this->upload_dir        = WP_CONTENT_DIR . DS . 'uploads' . DS . $this->plugin_name;
-		$this->upload_url        = WP_CONTENT_URL . '/uploads/' . $this->plugin_name;
+
+		$this->blog_id = get_current_blog_id();
+		if ( is_multisite() && defined( 'BLOG_ID_CURRENT_SITE' ) && $this->blog_id != BLOG_ID_CURRENT_SITE ) {
+			$this->upload_dir = WP_CONTENT_DIR . DS . 'uploads' . DS . $this->plugin_name . $this->blog_id;
+			$this->upload_url = WP_CONTENT_URL . '/uploads/' . $this->plugin_name . $this->blog_id;
+		} else {
+			$this->upload_dir = WP_CONTENT_DIR . DS . 'uploads' . DS . $this->plugin_name;
+			$this->upload_url = WP_CONTENT_URL . '/uploads/' . $this->plugin_name;
+		}
+	}
+
+	/**
+	 * @param int $new_blog
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function switch_blog( $new_blog ) {
+		if ( $new_blog === $this->blog_id ) {
+			return;
+		}
+
+		$this->set_allowed_access( true );
+		$this->blog_id = $new_blog;
+		if ( is_multisite() && defined( 'BLOG_ID_CURRENT_SITE' ) && $this->blog_id != BLOG_ID_CURRENT_SITE ) {
+			$this->upload_dir = WP_CONTENT_DIR . DS . 'uploads' . DS . $this->plugin_name . $this->blog_id;
+			$this->upload_url = WP_CONTENT_URL . '/uploads/' . $this->plugin_name . $this->blog_id;
+		} else {
+			$this->upload_dir = WP_CONTENT_DIR . DS . 'uploads' . DS . $this->plugin_name;
+			$this->upload_url = WP_CONTENT_URL . '/uploads/' . $this->plugin_name;
+		}
+		$this->set_allowed_access( false );
 	}
 }

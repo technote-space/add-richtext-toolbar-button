@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Loader
  *
- * @version 0.0.42
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -85,7 +85,7 @@ trait Loader {
 	public function get_class_list() {
 		if ( ! isset( $this->_list ) ) {
 			$this->_list = [];
-			$cache       = $this->cache_get( 'class_settings' );
+			$cache       = $this->cache_get_common( 'class_settings', null, false, $this->is_common_cache_class_settings() );
 			if ( is_array( $cache ) ) {
 				/** @var \WP_Framework_Core\Traits\Singleton $class */
 				foreach ( $this->get_class_instances( $cache, $this->get_instanceof() ) as list( $class ) ) {
@@ -129,7 +129,7 @@ trait Loader {
 				$settings    = $this->app->array->map( $classes, function ( $item ) {
 					return $item[1];
 				} );
-				$this->cache_set( 'class_settings', $settings );
+				$this->cache_set_common( 'class_settings', $settings, false, null, $this->is_common_cache_class_settings() );
 			}
 		}
 
@@ -242,6 +242,13 @@ trait Loader {
 	 * @return array
 	 */
 	protected abstract function get_namespaces();
+
+	/**
+	 * @return bool
+	 */
+	protected function is_common_cache_class_settings() {
+		return false;
+	}
 
 	/**
 	 * @return array

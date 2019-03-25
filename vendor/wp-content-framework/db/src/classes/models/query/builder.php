@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Db Classes Models Query Builder
  *
- * @version 0.0.14
+ * @version 0.0.17
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -2721,7 +2721,9 @@ class Builder {
 			return $this->insert( array_merge( $attributes, $values ) );
 		}
 
-		$this->update( $values );
+		if ( ! empty( $values ) ) {
+			$this->update( $values );
+		}
 
 		return $row['id'];
 	}

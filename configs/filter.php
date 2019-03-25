@@ -1,8 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
+ * @since 1.1.2 #102, #105
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -15,16 +16,19 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 return [
 
 	'\Richtext_Toolbar_Button\Classes\Models\Assets' => [
-		'wp_head'                   => [
+		'${prefix}post_load_admin_page' => [
+			'remove_setting',
+		],
+		'wp_head'                       => [
 			'setup_assets',
 		],
-		'${prefix}changed_option'   => [
+		'${prefix}changed_option'       => [
 			'changed_option',
 		],
-		'${prefix}app_activated'    => [
+		'${prefix}app_activated'        => [
 			'clear_cache_file',
 		],
-		'upgrader_process_complete' => [
+		'upgrader_process_complete'     => [
 			'clear_cache_file',
 		],
 	],
@@ -32,6 +36,9 @@ return [
 	'\Richtext_Toolbar_Button\Classes\Models\Editor' => [
 		'enqueue_block_editor_assets' => [
 			'enqueue_block_editor_assets',
+		],
+		'block_editor_settings'       => [
+			'block_editor_settings' => 999,
 		],
 	],
 

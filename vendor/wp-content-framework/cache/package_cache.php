@@ -2,7 +2,7 @@
 /**
  * WP_Framework Package Cache
  *
- * @version 0.0.6
+ * @version 0.0.7
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -33,8 +33,8 @@ class Package_Cache extends Package_Base {
 	 */
 	public function get_configs() {
 		return [
-			'config',
 			'filter',
+			'setting'
 		];
 	}
 }

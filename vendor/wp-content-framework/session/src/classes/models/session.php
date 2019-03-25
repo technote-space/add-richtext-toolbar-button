@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Session Classes Models Session
  *
- * @version 0.0.1
+ * @version 0.0.7
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -68,7 +68,7 @@ class Session implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_
 	 * check
 	 */
 	private function check_session() {
-		if ( ! isset( $_SESSION ) ) {
+		if ( ! isset( $_SESSION ) && ! headers_sent() ) {
 			@session_start();
 		}
 		if ( isset( $_SESSION ) ) {

@@ -1,10 +1,11 @@
 <?php
 /**
- * @version 1.0.13
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.0.12 #74, #78
  * @since 1.0.13 #83
+ * @since 1.1.2 trivial change
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -25,12 +26,14 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 <?php if (!empty($setting['options']['styles']) || !empty($is_editor)):?>
 <?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['selector'];?>
 <?php if (empty($setting['options']['styles'])):?>
+<?php if (!empty($pre_style)):?>
 <?php $instance->h($selector);?> {
 <?php foreach ($pre_style as $style):?>
     <?php $instance->h($style, false, true, false);?>
 
 <?php endforeach;?>
 }
+<?php endif;?>
 <?php else:?>
 <?php foreach ($setting['options']['styles'] as $pseudo => $styles):?>
 <?php '' !== $pseudo and $selector .= ':' . $pseudo;?>
