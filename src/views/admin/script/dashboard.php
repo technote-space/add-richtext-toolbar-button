@@ -1,9 +1,10 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 1.1.2
  * @author Technote
  * @since 1.0.0
  * @since 1.1.0 wp-content-framework/common#57, wp-content-framework/admin#20
+ * @since 1.1.2 wp-content-framework/admin#26
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/

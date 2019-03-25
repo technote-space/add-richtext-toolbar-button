@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0.3
 Requires PHP: 5.6
 Tested up to: 5.1.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,13 +41,19 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.1.2 =
+* Gutenberg v5.3 への対応 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/101)
+* テーマスタイルの読み込み改善 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/102)
+* マルチサイトへの対応 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/109)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/108)
+
 = 1.1.1 =
 * 細かいバグの修正
-* [差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/100)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/100)
 
 = 1.1.0 =
 * いくつかのパフォーマンスの改善を行いました [詳細](https://github.com/wp-content-framework/core/issues/138)
-* [差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/99)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/99)
 
 = 1.0.15 =
 * 設定のエクスポート及びインポートが可能になります。
@@ -79,6 +85,11 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.1.2 (2019/3/23) =
+* Fixed: [For Gutenberg v5.3](https://github.com/technote-space/add-richtext-toolbar-button/issues/101)
+* Improved: [Load theme styles](https://github.com/technote-space/add-richtext-toolbar-button/issues/102)
+* Fixed: [For multisite](https://github.com/technote-space/add-richtext-toolbar-button/issues/109)
 
 = 1.1.1 (2019/3/18) =
 * Fixed: [Consider exclude_from_search status](https://github.com/wp-content-framework/custom_post/issues/76)
