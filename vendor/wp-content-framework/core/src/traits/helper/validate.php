@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Helper Validate
  *
- * @version 0.0.41
+ * @version 0.0.50
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -39,6 +39,35 @@ trait Validate {
 
 	/**
 	 * @param mixed $var
+	 * @param \Closure $validation
+	 *
+	 * @return bool|\WP_Error
+	 */
+	protected function ignore_empty( $var, $validation ) {
+		if ( $this->is_ignore_empty( $var, true ) ) {
+			return true;
+		}
+
+		return $validation( $var );
+	}
+
+	/**
+	 * @param mixed $var
+	 * @param \Closure $sanitize
+	 * @param mixed $empty
+	 *
+	 * @return mixed
+	 */
+	protected function sanitize_if_not_empty( $var, $sanitize, $empty = null ) {
+		if ( $this->is_ignore_empty( $var, true ) ) {
+			return $empty;
+		}
+
+		return $sanitize( $var );
+	}
+
+	/**
+	 * @param mixed $var
 	 *
 	 * @return bool|\WP_Error
 	 */
@@ -61,11 +90,82 @@ trait Validate {
 	 *
 	 * @return bool|\WP_Error
 	 */
+	protected function validate_string( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
+		if ( is_string( $var ) ) {
+			return true;
+		}
+
+		return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
+	}
+
+	/**
+	 * @param mixed $var
+	 * @param bool $ignore_empty
+	 *
+	 * @return bool|\WP_Error
+	 */
 	protected function validate_kana( $var, $ignore_empty = false ) {
 		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
 			return true;
 		}
 		if ( is_string( $var ) && preg_match( '#\A[ァ-ヴ][ァ-ヴー・]*\z#u', $var ) > 0 ) {
+			return true;
+		}
+
+		return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
+	}
+
+	/**
+	 * @param mixed $var
+	 * @param bool $ignore_empty
+	 *
+	 * @return bool|\WP_Error
+	 */
+	protected function validate_alpha( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
+
+		if ( is_string( $var ) && preg_match( '#\A[a-zA-Z]+\z#', $var ) > 0 ) {
+			return true;
+		}
+
+		return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
+	}
+
+	/**
+	 * @param mixed $var
+	 * @param bool $ignore_empty
+	 *
+	 * @return bool|\WP_Error
+	 */
+	protected function validate_alpha_dash( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
+
+		if ( is_string( $var ) && preg_match( '#\A[\w\-]+\z#', $var ) > 0 ) {
+			return true;
+		}
+
+		return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
+	}
+
+	/**
+	 * @param mixed $var
+	 * @param bool $ignore_empty
+	 *
+	 * @return bool|\WP_Error
+	 */
+	protected function validate_alpha_num( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
+
+		if ( is_string( $var ) && preg_match( '#\A[a-zA-Z0-9]+\z#', $var ) > 0 ) {
 			return true;
 		}
 
@@ -135,6 +235,25 @@ trait Validate {
 		}
 		if ( is_string( $var ) && preg_match( '#\A\d{2,3}-?\d{3,4}-?\d{4,5}\z#', $var ) > 0 ) {
 			return true;
+		}
+
+		return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
+	}
+
+	/**
+	 * @param mixed $var
+	 * @param bool $ignore_empty
+	 *
+	 * @return bool|\WP_Error
+	 */
+	protected function validate_url( $var, $ignore_empty = false ) {
+		if ( $this->is_ignore_empty( $var, $ignore_empty ) ) {
+			return true;
+		}
+		if ( is_string( $var ) && preg_match( '#\A(https?:)?(//.+)\z#', $var, $matches ) ) {
+			if ( false !== filter_var( 'http:' . $matches[2], FILTER_VALIDATE_URL ) ) {
+				return true;
+			}
 		}
 
 		return new \WP_Error( 400, $this->translate( 'Invalid format.' ) );
@@ -302,14 +421,11 @@ trait Validate {
 		if ( ! $this->app->is_valid_package( 'db' ) ) {
 			return new \WP_Error( 400, $this->translate( 'DB module is not available.' ) );
 		}
-		$validate = $this->validate_positive_int( $var );
-		if ( true === $validate ) {
-			if ( $this->table( $table )->select( $column )->where( $id, $var )->doesnt_exist() ) {
-				return new \WP_Error( 400, $this->translate( 'Data does not exist.' ) );
-			}
+		if ( $this->table( $table )->select( $column )->where( $id, $var )->doesnt_exist() ) {
+			return new \WP_Error( 400, $this->translate( 'Data does not exist.' ) );
 		}
 
-		return $validate;
+		return true;
 	}
 
 	/**

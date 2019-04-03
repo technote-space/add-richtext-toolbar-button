@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-framework-common\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-03-25 01:52+0900\n"
+"PO-Revision-Date: 2019-03-29 01:33+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -237,3 +237,15 @@ msgstr "プラグインの詳細な説明："
 
 msgid "Reporting a new bug or feature request:"
 msgstr "バグ報告や機能要望："
+
+msgid "Valid"
+msgstr "有効"
+
+msgid "Invalid"
+msgstr "無効"
+
+msgid "Yes"
+msgstr "はい"
+
+msgid "No"
+msgstr "いいえ"

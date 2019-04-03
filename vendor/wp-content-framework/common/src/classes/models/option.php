@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Option
  *
- * @version 0.0.38
+ * @version 0.0.42
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -352,14 +352,18 @@ class Option implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string|null $group
 	 * @param bool $common
 	 *
 	 * @return bool
 	 */
 	public function delete_grouped( $key, $group, $common = false ) {
-		$options        = $this->reload_options( $group, $common );
+		$options = $this->reload_options( $group, $common );
+		if ( ! isset( $key ) ) {
+			return empty( $options ) ? false : $this->save( $group, [], $common );
+		}
+
 		$suspend_reload = $this->_suspend_reload;
 		if ( $this->exists( $key, $group, $common ) ) {
 			$prev = $options[ $key ];
@@ -371,7 +375,7 @@ class Option implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return $this->save( $group, $options, $common );
 		}
 
-		return true;
+		return false;
 	}
 
 	/**

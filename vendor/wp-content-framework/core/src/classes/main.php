@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.49
+ * @version 0.0.51
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -31,6 +31,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * @property \WP_Framework_Common\Classes\Models\User $user
  * @property \WP_Framework_Common\Classes\Models\Input $input
  * @property \WP_Framework_Common\Classes\Models\Deprecated $deprecated
+ * @property \WP_Framework_Common\Classes\Models\System $system
  * @property \WP_Framework_Db\Classes\Models\Db $db
  * @property \WP_Framework_Log\Classes\Models\Log $log
  * @property \WP_Framework_Admin\Classes\Models\Admin $admin
@@ -281,27 +282,6 @@ class Main {
 		$this->_initialized = true;
 
 		$this->filter->do_action( 'app_initialize', $this );
-		$this->setup_property();
-		$this->filter->do_action( 'app_initialized', $this );
-
-		if ( ! $this->option->is_app_activated() ) {
-			$this->filter->do_action( 'app_activated' );
-		}
-	}
-
-	/**
-	 * setup property
-	 */
-	private function setup_property() {
-		if ( $this->app->is_uninstall() ) {
-			foreach ( $this->_properties as $name => $class ) {
-				if ( ! $this->app->is_valid_package( $name ) ) {
-					continue;
-				}
-				$this->$name;
-			}
-			$this->uninstall->get_class_list();
-		}
 	}
 
 	/**
@@ -629,5 +609,28 @@ class Main {
 	 */
 	public function lock_process( $name, callable $func, $timeout = 60 ) {
 		return $this->utility->lock_process( $this->app, $name, $func, $timeout );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_enough_version() {
+		if ( ! isset( $this->_property_instances[ $this->_properties['system'] ] ) ) {
+			return true;
+		}
+
+		return $this->system->is_enough_version();
+	}
+
+	/**
+	 * load all packages
+	 */
+	public function load_all_packages() {
+		foreach ( $this->_properties as $name => $class ) {
+			if ( ! $this->app->is_valid_package( $name ) ) {
+				continue;
+			}
+			$this->$name;
+		}
 	}
 }

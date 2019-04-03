@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Classes Models Cache File
  *
- * @version 0.0.9
+ * @version 0.0.10
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -73,14 +73,14 @@ class File implements \WP_Framework_Cache\Interfaces\Cache {
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $group
 	 * @param bool $common
 	 *
 	 * @return string
 	 */
 	private function get_cache_path( $key, $group, $common ) {
-		return $this->get_group_dir( $group, $common ) . urlencode( $key ) . '.php';
+		return $this->get_group_dir( $group, $common ) . ( isset( $key ) ? urlencode( $key ) . '.php' : '' );
 	}
 
 	/**
@@ -156,7 +156,7 @@ class File implements \WP_Framework_Cache\Interfaces\Cache {
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $group
 	 * @param bool $common
 	 *
@@ -224,6 +224,18 @@ class File implements \WP_Framework_Cache\Interfaces\Cache {
 		unset( $this->_cache[ $group ][ $key ][ $common ] );
 
 		return $this->delete_cache( $key, $group, $common );
+	}
+
+	/**
+	 * @param string $group
+	 * @param bool $common
+	 *
+	 * @return bool
+	 */
+	public function delete_group( $group, $common = false ) {
+		unset( $this->_cache[ $group ] );
+
+		return $this->delete_cache( null, $group, $common );
 	}
 
 	/**

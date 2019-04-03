@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Traits Cache
  *
- * @version 0.0.8
+ * @version 0.0.10
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -79,6 +79,14 @@ trait Cache {
 	 * @return bool
 	 */
 	public abstract function delete( $key, $group = 'default', $common = false );
+
+	/**
+	 * @param string $group
+	 * @param bool $common
+	 *
+	 * @return bool
+	 */
+	public abstract function delete_group( $group, $common = false );
 
 	/**
 	 * @return bool

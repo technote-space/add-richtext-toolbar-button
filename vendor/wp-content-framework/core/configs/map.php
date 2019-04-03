@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Configs Map
  *
- * @version 0.0.45
+ * @version 0.0.51
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -29,6 +29,7 @@ return [
 		'string'     => '\WP_Framework_Common\Classes\Models\String_Utility',
 		'file'       => '\WP_Framework_Common\Classes\Models\File_Utility',
 		'deprecated' => '\WP_Framework_Common\Classes\Models\Deprecated',
+		'system'     => '\WP_Framework_Common\Classes\Models\System',
 	],
 	'cache'  => [
 		'cache' => '\WP_Framework_Cache\Classes\Models\Cache',

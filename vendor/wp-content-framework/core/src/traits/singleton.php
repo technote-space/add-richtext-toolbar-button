@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Singleton
  *
- * @version 0.0.42
+ * @version 0.0.51
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -166,7 +166,7 @@ trait Singleton {
 	 * call initialize
 	 */
 	private function call_initialize() {
-		if ( $this->_initialize_called || ! $this->app->is_enough_version() ) {
+		if ( $this->_initialize_called ) {
 			return;
 		}
 		$this->_initialize_called = true;
@@ -180,7 +180,7 @@ trait Singleton {
 	 */
 	private function call_initialized() {
 		$this->call_initialize();
-		if ( $this->_initialized_called || ! $this->app->is_enough_version() ) {
+		if ( $this->_initialized_called ) {
 			return;
 		}
 		$this->_initialized_called = true;
