@@ -214,7 +214,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 */
 	public function clear_cache_file() {
 		if ( isset( $this->_cleared_cache_file ) ) {
-			return true;
+			return $this->_cleared_cache_file;
 		}
 		$this->_cleared_cache_file = false;
 
