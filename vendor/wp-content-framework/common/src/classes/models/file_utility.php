@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models File Utility
  *
- * @version 0.0.39
+ * @version 0.0.43
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -373,5 +373,40 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param string $dir
+	 * @param bool $split
+	 * @param string $relative
+	 * @param array $ignore
+	 *
+	 * @return array
+	 */
+	public function scan_dir_namespace_class( $dir, $split = false, $relative = '', array $ignore = [ 'base.php' ] ) {
+		$dir  = rtrim( $dir, DS );
+		$list = [];
+		if ( is_dir( $dir ) ) {
+			foreach ( scandir( $dir ) as $file ) {
+				if ( $file === '.' || $file === '..' || in_array( $file, $ignore ) ) {
+					continue;
+				}
+
+				$path = rtrim( $dir, DS ) . DS . $file;
+				if ( is_file( $path ) ) {
+					if ( $this->app->string->ends_with( $file, '.php' ) ) {
+						if ( $split ) {
+							$list[] = [ $relative, ucfirst( $this->app->get_page_slug( $file ) ), $path ];
+						} else {
+							$list[] = $relative . ucfirst( $this->app->get_page_slug( $file ) );
+						}
+					}
+				} elseif ( is_dir( $path ) ) {
+					$list = array_merge( $list, $this->scan_dir_namespace_class( $path, $split, $relative . ucfirst( $file ) . '\\', $ignore ) );
+				}
+			}
+		}
+
+		return $list;
 	}
 }

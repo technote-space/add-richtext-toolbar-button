@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-framework-common\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-03-29 01:33+0900\n"
+"PO-Revision-Date: 2019-04-04 01:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -231,6 +231,9 @@ msgstr "キャッシュタイプ（option または file）"
 
 msgid "Whether to use filesystem credentials"
 msgstr "ファイルシステム認証を使用するかどうか"
+
+msgid "Delete cache interval"
+msgstr "キャッシュ削除間隔"
 
 msgid "Plugin details in Japanese:"
 msgstr "プラグインの詳細な説明："

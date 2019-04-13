@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Deprecated Classes Models Utility
  *
- * @version 0.0.29
+ * @version 0.0.43
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -67,6 +67,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 			case 'delete_upload_file':
 			case 'get_upload_file_contents':
 			case 'get_upload_file_url':
+			case 'scan_dir_namespace_class':
 				return $this->app->file->{$name}( ...$args );
 			case 'file_exists':
 				return $this->app->file->exists( ...$args );

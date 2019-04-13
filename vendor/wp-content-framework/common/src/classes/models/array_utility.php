@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Array Utility
  *
- * @version 0.0.30
+ * @version 0.0.44
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -39,7 +39,7 @@ class Array_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	public function to_array( $obj, $ignore_value = true ) {
 		if ( $obj instanceof \stdClass ) {
 			$obj = get_object_vars( $obj );
-		} elseif ( $obj instanceof \JsonSerializable ) {
+		} /** @noinspection PhpUndefinedClassInspection */ elseif ( $obj instanceof \JsonSerializable ) {
 			$obj = (array) $obj->jsonSerialize();
 		} elseif ( $obj instanceof \Traversable ) {
 			$obj = iterator_to_array( $obj );
@@ -284,6 +284,24 @@ class Array_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
 		foreach ( $array as $key => $value ) {
 			$array[ $key ] = $this->is_closure( $callback ) ? $this->call_closure( $callback, $value, $key ) : ( is_string( $callback ) && method_exists( $value, $callback ) ? $value->$callback( $key ) : null );
+		}
+
+		return $array;
+	}
+
+	/**
+	 * @param array|object $array
+	 * @param string|callable $callback
+	 *
+	 * @return array
+	 */
+	public function filter( $array, $callback ) {
+		$array = $this->to_array( $array );
+
+		foreach ( $array as $key => $value ) {
+			if ( ! ( $this->is_closure( $callback ) ? $this->call_closure( $callback, $value, $key ) : ( is_string( $callback ) && method_exists( $value, $callback ) ? $value->$callback( $key ) : true ) ) ) {
+				unset( $array[ $key ] );
+			}
 		}
 
 		return $array;

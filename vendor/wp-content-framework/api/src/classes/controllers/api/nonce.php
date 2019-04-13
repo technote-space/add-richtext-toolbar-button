@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Api Classes Controller Api Nonce
  *
- * @version 0.0.10
+ * @version 0.0.13
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -70,6 +70,9 @@ class Nonce extends Base {
 	 * @return int|\WP_Error|\WP_REST_Response
 	 */
 	public function callback( $params ) {
+		global $current_user;
+		$current_user = null;
+
 		/** @var \WP_Framework_Api\Classes\Models\Api $api */
 		$api = \WP_Framework_Api\Classes\Models\Api::get_instance( $this->app );
 

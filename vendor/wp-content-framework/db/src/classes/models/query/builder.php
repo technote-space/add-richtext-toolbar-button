@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Db Classes Models Query Builder
  *
- * @version 0.0.17
+ * @version 0.0.19
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -1102,46 +1102,6 @@ class Builder {
 	 */
 	public function or_where_not_in( $column, $values ) {
 		return $this->where_not_in( $column, $values, 'or' );
-	}
-
-	/**
-	 * Add a where in with a sub-select to the query.
-	 *
-	 * @param  string $column
-	 * @param  \Closure $callback
-	 * @param  string $boolean
-	 * @param  bool $not
-	 *
-	 * @return $this
-	 */
-	protected function where_in_sub( $column, Closure $callback, $boolean, $not ) {
-		$type = $not ? 'not_in_sub' : 'in_sub';
-		// To create the exists sub-select, we will actually create a query and call the
-		// provided callback with the query so the developer may set any of the query
-		// conditions they want for the in clause, then we'll put it in this array.
-		call_user_func( $callback, $query = $this->for_sub_query() );
-		$this->add_where( compact( 'type', 'column', 'query', 'boolean' ) );
-		$this->add_binding( $query->get_bindings(), 'where' );
-
-		return $this;
-	}
-
-	/**
-	 * Add an external sub-select to the query.
-	 *
-	 * @param  string $column
-	 * @param  Builder|static $query
-	 * @param  string $boolean
-	 * @param  bool $not
-	 *
-	 * @return $this
-	 */
-	protected function where_in_existing_query( $column, $query, $boolean, $not ) {
-		$type = $not ? 'not_in_sub' : 'in_sub';
-		$this->add_where( compact( 'type', 'column', 'query', 'boolean' ) );
-		$this->add_binding( $query->get_bindings(), 'where' );
-
-		return $this;
 	}
 
 	/**
@@ -2579,16 +2539,44 @@ class Builder {
 	 * @param callable $callback
 	 * @param string $id
 	 * @param array $columns
+	 *
+	 * @return bool
 	 */
 	public function chunk( $number, $callback, $id = 'id', $columns = [ '*' ] ) {
 		$this->order_by( $id )->limit( $number )->shared_lock();
-		$this->app->db->transaction( function () use ( $number, $callback, $columns ) {
+		$result = true;
+		$this->app->db->transaction( function () use ( $number, $callback, $columns, &$result ) {
 			$offset = 0;
 			while ( $results = $this->offset( $offset )->get( $columns ) ) {
-				$callback( $results );
+				if ( false === $callback( $results ) ) {
+					$result = false;
+					break;
+				}
 				$offset += $number;
 			}
 		} );
+
+		return $result;
+	}
+
+	/**
+	 * @param int $number
+	 * @param callable $callback
+	 * @param string $id
+	 * @param array $columns
+	 *
+	 * @return bool
+	 */
+	public function each( $number, $callback, $id = 'id', $columns = [ '*' ] ) {
+		return $this->chunk( $number, function ( $results ) use ( $callback ) {
+			foreach ( $results as $key => $value ) {
+				if ( false === $callback( $value, $key ) ) {
+					return false;
+				}
+			}
+
+			return true;
+		}, $id, $columns );
 	}
 
 	/**
@@ -2769,7 +2757,7 @@ class Builder {
 	/**
 	 * Delete a record from the database.
 	 *
-	 * @param  mixed $id
+	 * @param  null|int $id
 	 *
 	 * @return int|false
 	 */

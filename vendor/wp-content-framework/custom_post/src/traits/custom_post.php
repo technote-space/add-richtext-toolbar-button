@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.31
+ * @version 0.0.32
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -738,12 +738,15 @@ trait Custom_Post {
 				$failed[] = [ $item, $validation ];
 			}
 		}
-		$fail = count( $failed );
+		$fail  = count( $failed );
+		$total = $success + $fail;
+
+		$this->do_action( 'custom_post_imported', $this->get_post_type(), $total, $success, $fail );
 
 		return [
 			1,
 			$this->get_import_result( [
-				'total'   => $success + $fail,
+				'total'   => $total,
 				'success' => $success,
 				'failed'  => $failed,
 			] ),
