@@ -3,16 +3,6 @@
  * @version 1.1.2
  * @author Technote
  * @since 1.0.0
- * @since 1.0.2 #25
- * @since 1.0.3 #28, #30, #33, #34
- * @since 1.0.5 #52
- * @since 1.0.7 #60
- * @since 1.0.10 trivial change
- * @since 1.0.12 #74
- * @since 1.0.14 #82, #87
- * @since 1.0.15 #17
- * @since 1.1.0 wp-content-framework/common#57, wp-content-framework/db#9
- * @since 1.1.2 #102
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
