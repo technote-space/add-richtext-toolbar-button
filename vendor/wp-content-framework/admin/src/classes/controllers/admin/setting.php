@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Controller Admin Setting
  *
- * @version 0.0.17
+ * @version 0.0.27
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -44,7 +44,7 @@ class Setting extends Base {
 				$this->app->option->set_post_value( $this->app->array->get( $this->app->setting->get_setting( $setting, true ), 'name', '' ) );
 			}
 		}
-		$this->app->add_message( 'Settings updated.', 'setting' );
+		$this->app->add_message( 'Settings have been updated.', 'setting' );
 	}
 
 	/**
