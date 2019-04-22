@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.23
+ * @version 0.0.24
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -290,14 +290,10 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	 * @param \WP_Framework_Admin\Classes\Controllers\Admin\Base $page
 	 */
 	private function load( $page ) {
-		if ( $this->app->user_can( $page->get_capability() ) ) {
-			$this->get_view( 'admin/include/layout', [
-				'page' => $page,
-				'slug' => $page->get_page_slug(),
-			], true );
-		} else {
-			$this->get_view( 'admin/include/error', [ 'message' => 'Forbidden.' ], true );
-		}
+		$this->get_view( 'admin/include/layout', [
+			'page' => $page,
+			'slug' => $page->get_page_slug(),
+		], true );
 	}
 
 	/**

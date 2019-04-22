@@ -16,12 +16,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 ?>
 
 <style>
-    #<?php $instance->id(); ?>-dashboard {
-        display: table;
-        margin: 15px 10px;
-        width: 100%;
-    }
-
     .display-area {
         max-width: 100px;
         max-height: 100px;

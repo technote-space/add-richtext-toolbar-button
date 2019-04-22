@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-framework-common\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-04-04 01:35+0900\n"
+"PO-Revision-Date: 2019-04-18 16:39+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,12 +34,6 @@ msgstr "グループ"
 msgid "Parameter"
 msgstr "パラメータ"
 
-msgid "Saved value"
-msgstr "保存されている値"
-
-msgid "Used value"
-msgstr "使用される値"
-
 msgid "Item not found."
 msgstr "アイテムがありません。"
 
@@ -48,12 +42,6 @@ msgstr "日時"
 
 msgid "Message"
 msgstr "メッセージ"
-
-msgid "Test count: "
-msgstr "テスト数 "
-
-msgid "There is no tests."
-msgstr "テストがありません。"
 
 msgid "Performance"
 msgstr "パフォーマンス"
@@ -81,18 +69,6 @@ msgstr "実行"
 
 msgid "Label"
 msgstr "ラベル"
-
-msgid "Settings updated."
-msgstr "設定を更新しました。"
-
-msgid "Are you sure to reset settings?"
-msgstr "設定をリセットしてもよろしいですか？"
-
-msgid "Settings have been updated."
-msgstr "設定を更新しました。"
-
-msgid "Settings have been reset."
-msgstr "設定をリセットしました。"
 
 msgid "Dashboard"
 msgstr "ダッシュボード"
@@ -129,15 +105,6 @@ msgstr "WordPressのバージョンを上げてください。"
 
 msgid "<strong>%s</strong> requires WordPress version %s or above."
 msgstr "<strong>%s</strong> を使用するためには %s 以上のバージョンが必要です。"
-
-msgid "The procedure for editing the help of dashboard"
-msgstr "ダッシュボードのヘルプの変更手順"
-
-msgid "The procedure for deleting this help if it is not needed"
-msgstr "このヘルプが不要な場合の手順"
-
-msgid "The procedure for editing the sidebar"
-msgstr "サイドバーの変更手順"
 
 msgid "validation error"
 msgstr "バリデーションエラー"
@@ -234,12 +201,6 @@ msgstr "ファイルシステム認証を使用するかどうか"
 
 msgid "Delete cache interval"
 msgstr "キャッシュ削除間隔"
-
-msgid "Plugin details in Japanese:"
-msgstr "プラグインの詳細な説明："
-
-msgid "Reporting a new bug or feature request:"
-msgstr "バグ報告や機能要望："
 
 msgid "Valid"
 msgstr "有効"

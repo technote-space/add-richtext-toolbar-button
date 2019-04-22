@@ -2,7 +2,7 @@
 /**
  * WP_Framework Package Admin
  *
- * @version 0.0.9
+ * @version 0.0.27
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -32,6 +32,13 @@ class Package_Admin extends Package_Base {
 	 * @return bool
 	 */
 	protected function is_valid_view() {
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function is_valid_translate() {
 		return true;
 	}
 
