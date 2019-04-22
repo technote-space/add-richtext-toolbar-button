@@ -24,37 +24,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
  */
 class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 
-	/**
-	 * @return int
-	 */
-	public function get_load_priority() {
-		return 0;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_page_title() {
-		return 'Dashboard';
-	}
-
-	/**
-	 * post
-	 */
-	protected function post_action() {
-		if ( $this->app->input->post( 'update' ) ) {
-			foreach ( $this->get_setting_list() as $name ) {
-				$this->update_setting( $name );
-			}
-			$this->app->add_message( 'Settings have been updated.', 'setting' );
-		} else {
-			foreach ( $this->get_setting_list() as $name ) {
-				$this->app->option->delete( $this->get_filter_prefix() . $name );
-				$this->delete_hook_cache( $name );
-			}
-			$this->app->add_message( 'Settings have been reset.', 'setting' );
-		}
-	}
+	use \WP_Framework_Admin\Traits\Dashboard;
 
 	/**
 	 * common
@@ -67,19 +37,7 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	/**
 	 * @return array
 	 */
-	protected function get_view_args() {
-		$args = [];
-		foreach ( $this->get_setting_list() as $name ) {
-			$args['settings'][ $name ] = $this->get_view_setting( $name );
-		}
-
-		return $args;
-	}
-
-	/**
-	 * @return array
-	 */
-	private function get_setting_list() {
+	protected function get_setting_list() {
 		return [
 			'is_valid',
 			'is_valid_font_color',
@@ -96,42 +54,20 @@ class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
 	}
 
 	/**
+	 * @param array $detail
 	 * @param string $name
+	 * @param array $option
 	 *
 	 * @return array
 	 */
-	private function get_view_setting( $name ) {
-		$detail          = $this->app->setting->get_setting( $name, true );
-		$detail['id']    = str_replace( '/', '-', $detail['name'] );
-		$detail['form']  = $this->get_form_by_type( $this->app->array->get( $detail, 'type', '' ), false );
-		$detail['title'] = $this->translate( $detail['label'] );
-		$detail['label'] = $detail['title'];
-		if ( $this->app->array->get( $detail, 'type' ) === 'bool' ) {
-			if ( $detail['value'] ) {
-				$detail['checked'] = true;
-			}
-			$detail['value'] = 1;
-			$detail['label'] = $this->translate( 'Valid' );
-		}
+	protected function filter_view_setting(
+		/** @noinspection PhpUnusedParameterInspection */
+		array $detail, $name, array $option
+	) {
 		if ( $this->app->string->ends_with( $name, '_icon' ) ) {
 			$detail['form_type'] = 'icon';
 		}
 
 		return $detail;
-	}
-
-	/**
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	private function update_setting( $name ) {
-		$detail  = $this->app->setting->get_setting( $name, true );
-		$default = null;
-		if ( $this->app->array->get( $detail, 'type' ) === 'bool' ) {
-			$default = 0;
-		}
-
-		return $this->app->option->set_post_value( $detail['name'], $default );
 	}
 }
