@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.31
+ * @version 0.0.33
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -613,7 +613,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 				'draft',
 				'pending',
 				'private',
-			] ) && $this->is_valid_custom_post_type( $post_type ) && ( $untrash || 'untrash' !== $this->app->input->get( 'action' ) );
+			] ) && $this->is_valid_custom_post_type( $post_type ) && ( $untrash === ( 'untrash' === $this->app->input->get( 'action' ) ) );
 	}
 
 	/**
