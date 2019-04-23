@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Views Admin Custom Post
  *
- * @version 0.0.26
+ * @version 0.0.32
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -21,7 +21,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 <div class="block form custom-post">
     <dl>
 		<?php foreach ( $columns as $name => $column ): ?>
-			<?php if ( empty( $column['is_user_defined'] ) || 'post_id' === $column['name'] ): continue; endif; ?>
+			<?php if ( empty( $column['is_user_defined'] ) || 'post_id' === $instance->app->array->get( $column, 'name' ) ): continue; endif; ?>
             <dt>
                 <label for="<?php $instance->h( $prefix . $name ); ?>">
 					<?php $instance->h( $instance->app->array->search( $column, 'comment', 'name', '' ) ); ?>

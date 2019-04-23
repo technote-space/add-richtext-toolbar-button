@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-03-22 19:27+0900\n"
+"PO-Revision-Date: 2019-04-23 14:30+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -79,26 +79,11 @@ msgstr "設定"
 msgid "All %s"
 msgstr "%s管理"
 
-msgid "Value is required."
-msgstr "必須項目です。"
-
 msgid "Setting name"
 msgstr "設定名"
 
 msgid "display"
 msgstr "表示"
-
-msgid "Valid"
-msgstr "有効"
-
-msgid "Invalid"
-msgstr "無効"
-
-msgid "Yes"
-msgstr "はい"
-
-msgid "No"
-msgstr "いいえ"
 
 msgid "show"
 msgstr "表示させる"
@@ -120,9 +105,6 @@ msgstr "テスト用文章"
 
 msgid "icon"
 msgstr "アイコン"
-
-msgid "exclude post types"
-msgstr "除外投稿タイプ"
 
 msgid "select icon"
 msgstr "アイコンを選択"

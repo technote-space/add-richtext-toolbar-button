@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Utility
  *
- * @version 0.0.37
+ * @version 0.0.45
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -52,11 +52,12 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
 	/**
 	 * @param mixed $value
+	 * @param array $args
 	 *
 	 * @return mixed
 	 */
-	public function value( $value ) {
-		return $value instanceof \Closure ? $value( $this->app ) : $value;
+	public function value( $value, ...$args ) {
+		return $value instanceof \Closure ? $value( $this->app, ...$args ) : $value;
 	}
 
 	/**
@@ -77,14 +78,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return bool
 	 */
 	public function defined( $c ) {
-		if ( defined( $c ) ) {
-			$const = @constant( $c );
-			if ( $const ) {
-				return true;
-			}
-		}
-
-		return false;
+		return defined( $c ) && ! empty( @constant( $c ) );
 	}
 
 	/**
@@ -117,7 +111,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return bool
 	 */
 	public function doing_ajax() {
-		if ( $this->definedv( 'REST_REQUEST' ) ) {
+		if ( $this->defined( 'REST_REQUEST' ) ) {
 			return true;
 		}
 
@@ -125,21 +119,21 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 			return wp_doing_ajax();
 		}
 
-		return ! ! $this->definedv( 'DOING_AJAX' );
+		return $this->defined( 'DOING_AJAX' );
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function doing_cron() {
-		return ! ! $this->definedv( 'DOING_CRON' );
+		return $this->defined( 'DOING_CRON' );
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_autosave() {
-		return ! ! $this->definedv( 'DOING_AUTOSAVE' );
+		return $this->defined( 'DOING_AUTOSAVE' );
 	}
 
 	/**
@@ -149,6 +143,13 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 */
 	public function is_admin( $except_ajax = true ) {
 		return is_admin() && ( ! $except_ajax || ! $this->doing_ajax() );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_front() {
+		return $this->defined( 'WP_USE_THEMES' );
 	}
 
 	/**
@@ -229,41 +230,6 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
 			return $type;
 		} );
-	}
-
-	/**
-	 * @param string $dir
-	 * @param bool $split
-	 * @param string $relative
-	 * @param array $ignore
-	 *
-	 * @return array
-	 */
-	public function scan_dir_namespace_class( $dir, $split = false, $relative = '', array $ignore = [ 'base.php' ] ) {
-		$dir  = rtrim( $dir, DS );
-		$list = [];
-		if ( is_dir( $dir ) ) {
-			foreach ( scandir( $dir ) as $file ) {
-				if ( $file === '.' || $file === '..' || in_array( $file, $ignore ) ) {
-					continue;
-				}
-
-				$path = rtrim( $dir, DS ) . DS . $file;
-				if ( is_file( $path ) ) {
-					if ( $this->app->string->ends_with( $file, '.php' ) ) {
-						if ( $split ) {
-							$list[] = [ $relative, ucfirst( $this->app->get_page_slug( $file ) ), $path ];
-						} else {
-							$list[] = $relative . ucfirst( $this->app->get_page_slug( $file ) );
-						}
-					}
-				} elseif ( is_dir( $path ) ) {
-					$list = array_merge( $list, $this->scan_dir_namespace_class( $path, $split, $relative . ucfirst( $file ) . '\\', $ignore ) );
-				}
-			}
-		}
-
-		return $list;
 	}
 
 	/**
@@ -348,6 +314,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 			return get_current_screen()->is_block_editor();
 		}
 
+		/** @noinspection PhpDeprecationInspection */
 		return function_exists( 'is_gutenberg_page' ) && is_gutenberg_page();
 	}
 

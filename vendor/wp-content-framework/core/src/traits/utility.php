@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Utility
  *
- * @version 0.0.49
+ * @version 0.0.51
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -266,6 +266,25 @@ trait Utility {
 	}
 
 	/**
+	 * @param string|null $key
+	 *
+	 * @return bool
+	 */
+	public function cache_clear( $key ) {
+		return $this->cache_clear_common( $key, false );
+	}
+
+	/**
+	 * @param string|null $key
+	 * @param bool $common
+	 *
+	 * @return bool
+	 */
+	public function cache_clear_common( $key, $common = true ) {
+		return isset( $key ) ? $this->app->cache->delete( $key, $this->get_class_name_slug(), $common ) : $this->app->cache->delete_group( $this->get_class_name_slug(), $common );
+	}
+
+	/**
 	 * @param bool $check_user
 	 *
 	 * @return string
@@ -341,6 +360,23 @@ trait Utility {
 		$this->do_framework_action( 'verify_nonce_failed', $nonce, $action, $check_user, $uid, $token );
 
 		return false;
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function timestamp() {
+		return current_time( 'timestamp' );
+	}
+
+	/**
+	 * @param string|null $format
+	 * @param int|float $adjust
+	 *
+	 * @return string
+	 */
+	protected function date( $format = null, $adjust = 0 ) {
+		return date_i18n( isset( $format ) ? $format : 'Y-m-d H:i:s', 0 !== $adjust ? $this->timestamp() + (int) $adjust : false );
 	}
 
 	/**

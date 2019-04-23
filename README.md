@@ -37,7 +37,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 ## 要件
 - PHP 5.6 以上
-- WordPress 4.7.0 以上
+- WordPress 5.0.3 以上
 
 ## 導入手順
 1. 管理画面のプラグインから「新規追加」  
@@ -112,9 +112,6 @@ border: 1px solid #acf;
 [before] color: #9cf;
 [before] border-right: 1px solid #acf;
 ```
-
-### 除外投稿タイプ
-このプラグインの機能を使用しない投稿タイプを指定します。
 
 ### ツールバーボタンが有効かどうか
 Gutenbergエディタのツールバーに表示するかどうかを指定します。  

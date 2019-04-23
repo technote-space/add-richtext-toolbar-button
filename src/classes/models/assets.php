@@ -1,13 +1,8 @@
 <?php
 /**
- * @version 1.1.2
+ * @version 1.1.4
  * @author Technote
  * @since 1.0.0
- * @since 1.0.9 #69
- * @since 1.0.13 #83
- * @since 1.0.14 #82
- * @since 1.1.2 trivial change
- * @since 1.1.0 wp-content-framework/common#57
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -57,39 +52,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		if ( ! $this->apply_filters( 'is_valid' ) ) {
 			return;
 		}
-
-		if ( ! is_single() && ! is_page() ) {
-			return;
-		}
-
-		global $post;
-		if ( ! $this->use_block_editor_for_post_type( $post->post_type ) ) {
-			return;
-		}
-
-		$this->enqueue_plugin_assets( $post->post_type );
-	}
-
-	/**
-	 * @param string $post_type
-	 *
-	 * @return bool
-	 */
-	private function use_block_editor_for_post_type( $post_type ) {
-		if ( ! post_type_exists( $post_type ) ) {
-			return false;
-		}
-
-		if ( ! post_type_supports( $post_type, 'editor' ) ) {
-			return false;
-		}
-
-		$post_type_object = get_post_type_object( $post_type );
-		if ( $post_type_object && ! $post_type_object->show_in_rest ) {
-			return false;
-		}
-
-		return true;
+		$this->enqueue_plugin_assets();
 	}
 
 	/**
@@ -103,20 +66,19 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
-	 * @param string|null $post_type
-	 * @param bool $editor
+	 * @param bool $is_editor
 	 */
-	public function enqueue_plugin_assets( $post_type, $editor = false ) {
-		$this->enqueue_upload_style( $this->get_css_handle(), $this->get_cache_file_name( $post_type, $editor ), function () use ( $post_type, $editor ) {
+	public function enqueue_plugin_assets( $is_editor = false ) {
+		$this->enqueue_upload_style( $this->get_css_handle(), $this->get_cache_file_name( $is_editor ), function () use ( $is_editor ) {
 			/** @var Custom_Post\Setting $setting */
 			$setting = Custom_Post\Setting::get_instance( $this->app );
 			$params  = [
-				'settings'  => $setting->get_settings( 'front', $post_type ),
+				'settings'  => $setting->get_settings( 'front' ),
 				'pre_style' => $this->get_pre_style_for_front(),
 			];
 			$style   = $this->get_view( 'front/style', $params );
 
-			if ( $editor ) {
+			if ( $is_editor ) {
 				$params['wrap']      = $this->apply_filters( 'editor_wrap_selector', '.components-tooltip .components-popover__content' );
 				$params['pre_style'] = $this->get_pre_style_for_editor();
 				$params['is_editor'] = true;
@@ -136,60 +98,26 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
-	 * @param string|null $post_type
-	 * @param bool $editor
+	 * @param bool $is_editor
 	 *
 	 * @return string
 	 */
-	private function get_cache_file_name( $post_type, $editor ) {
-		if ( empty( $post_type ) ) {
-			$post_type = 'all';
-			$suffix    = '.';
-		} else {
-			$suffix = '-';
-		}
-
-		return $editor ? $this->get_editor_cache_file_name( $post_type, $suffix ) : $this->get_front_cache_file_name( $post_type, $suffix );
-	}
-
-	/**
-	 * @param string $post_type
-	 * @param string $suffix
-	 *
-	 * @return string
-	 */
-	private function get_front_cache_file_name( $post_type, $suffix ) {
-		return $this->apply_filters( 'cache_front_file_name', $this->app->string->replace( $this->get_front_cache_file_base_name(), [
-			'post_type' => $post_type,
-			'suffix'    => $suffix,
-		] ), $post_type );
+	private function get_cache_file_name( $is_editor ) {
+		return $is_editor ? $this->get_editor_cache_file_name() : $this->get_front_cache_file_name();
 	}
 
 	/**
 	 * @return string
 	 */
-	private function get_front_cache_file_base_name() {
-		return $this->apply_filters( 'cache_front_file_base_name', 'artb${suffix}${post_type}.css' );
-	}
-
-	/**
-	 * @param string $post_type
-	 * @param string $suffix
-	 *
-	 * @return string
-	 */
-	private function get_editor_cache_file_name( $post_type, $suffix ) {
-		return $this->apply_filters( 'cache_editor_file_name', $this->app->string->replace( $this->get_editor_cache_file_base_name(), [
-			'post_type' => $post_type,
-			'suffix'    => $suffix,
-		] ), $post_type );
+	private function get_front_cache_file_name() {
+		return $this->apply_filters( 'cache_front_file_name', 'artb.css' );
 	}
 
 	/**
 	 * @return string
 	 */
-	private function get_editor_cache_file_base_name() {
-		return $this->apply_filters( 'cache_editor_file_base_name', 'artb.editor${suffix}${post_type}.css' );
+	private function get_editor_cache_file_name() {
+		return $this->apply_filters( 'cache_editor_file_name', 'artb.editor.css' );
 	}
 
 	/**
@@ -214,18 +142,13 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 */
 	public function clear_cache_file() {
 		if ( isset( $this->_cleared_cache_file ) ) {
-			return true;
+			return $this->_cleared_cache_file;
 		}
 		$this->_cleared_cache_file = false;
 
-		/** @var Custom_Post\Setting $setting */
-		$setting = Custom_Post\Setting::get_instance( $this->app );
 		$deleted = false;
-		foreach ( [ true, false ] as $item ) {
-			$deleted |= $this->app->file->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( null, $item ) );
-			foreach ( $setting->get_valid_post_types() as $post_type ) {
-				$deleted |= $this->app->file->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( $post_type, $item ) );
-			}
+		foreach ( [ true, false ] as $is_editor ) {
+			$deleted |= $this->app->file->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( $is_editor ) );
 		}
 		$this->_cleared_cache_file = $deleted;
 		$this->app->option->set( $this->get_filter_prefix() . 'assets_version', $this->app->utility->uuid() );

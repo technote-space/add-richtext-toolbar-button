@@ -1,18 +1,8 @@
 <?php
 /**
- * @version 1.1.2
+ * @version 1.1.4
  * @author Technote
  * @since 1.0.0
- * @since 1.0.2 #25
- * @since 1.0.3 #28, #30, #33, #34
- * @since 1.0.5 #52
- * @since 1.0.7 #60
- * @since 1.0.10 trivial change
- * @since 1.0.12 #74
- * @since 1.0.14 #82, #87
- * @since 1.0.15 #17
- * @since 1.1.0 wp-content-framework/common#57, wp-content-framework/db#9
- * @since 1.1.2 #102
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -77,7 +67,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 		/** @var \Richtext_Toolbar_Button\Classes\Models\Assets $assets */
 		$assets = \Richtext_Toolbar_Button\Classes\Models\Assets::get_instance( $this->app );
-		$assets->enqueue_plugin_assets( null );
+		$assets->enqueue_plugin_assets();
 		$this->add_script_view( 'admin/script/custom_post/preview', [
 			'css_handle'         => $assets->get_css_handle(),
 			'fontawesome_handle' => $this->app->get_config( 'config', 'fontawesome_handle' ),
@@ -130,7 +120,6 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$params['columns']                                                     = $columns;
 		$params['columns']['class_name']['args']['attributes']['data-default'] = $this->get_default_class_name( $post->ID );
 		$params['columns']['class_name']['default']                            = $params['columns']['class_name']['args']['attributes']['data-default'];
-		$params['columns']['exclude_post_types']['post_types']                 = $this->get_valid_post_types();
 		$params['name_prefix']                                                 = $this->get_post_field_name_prefix();
 		$params['groups']                                                      = $this->get_groups();
 
@@ -141,13 +130,13 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
-	 * @param bool $editor
+	 * @param bool $is_editor
 	 *
 	 * @return string
 	 */
-	public function get_block_editor_styles( $editor = false ) {
+	public function get_block_editor_styles( $is_editor = false ) {
 		if ( $this->is_support_gutenberg() ) {
-			if ( $editor ) {
+			if ( $is_editor ) {
 				return '';
 			}
 		} elseif ( ! $this->apply_filters( 'support_block_editor_styles' ) ) {
@@ -231,7 +220,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$css             = implode( ' ', $this->app->array->pluck_unique( $editor_settings['styles'], 'css' ) );
 		$css             = preg_replace( '/\/\*[\s\S]*?\*\//', '', $css );
 		$css             = str_replace( [ "\r", "\n" ], " ", $css );
-		if ( ! $editor ) {
+		if ( ! $is_editor ) {
 			$css = addslashes( $css );
 		}
 
@@ -361,11 +350,6 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 						'setting',
 					],
 					'form_type' => 'test',
-				],
-			],
-			'exclude_post_types'      => [
-				'args' => [
-					'form_type' => 'exclude_post_types',
 				],
 			],
 			'is_valid_toolbar_button' => [
@@ -507,9 +491,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 						}
 						$is_default = ! is_array( $data[ $key ] ) && '' === (string) ( $data[ $key ] );
 						$is_default and $data[ $key ] = $setting['value'];
-						if ( 'exclude_post_types' === $key ) {
-							$details[ $setting['label'] ] = implode( ', ', $data[ $key ] );
-						} elseif ( 'icon' === $key ) {
+						if ( 'icon' === $key ) {
 							$details[ $setting['label'] ] = [
 								'value'     => $data[ $key ],
 								'form_type' => 'icon',
@@ -613,12 +595,11 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param string $target
-	 * @param string|null $post_type
 	 *
 	 * @return array
 	 */
-	public function get_settings( $target, $post_type = null ) {
-		if ( ! isset( $this->_cache_settings[ $target ][ $post_type ] ) ) {
+	public function get_settings( $target ) {
+		if ( ! isset( $this->_cache_settings[ $target ] ) ) {
 			$setting_details      = $this->get_setting_details( $target );
 			$settings             = $this->get_default_buttons( $target );
 			$priority_direction   = 'front' === $target ? 'DESC' : 'ASC';
@@ -632,9 +613,6 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					      ->order_by( 'group_name', $group_name_direction );
 				} )['data'] as $data
 			) {
-				if ( ! empty( $post_type ) && in_array( $post_type, $data['exclude_post_types'] ) ) {
-					continue;
-				}
 				$options = [];
 				foreach ( $this->get_setting_list() as $key => $item ) {
 					$setting = $this->app->array->get( $setting_details, $key );
@@ -660,10 +638,10 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					'hide'    => ! $options['is_valid_toolbar_button'],
 				];
 			}
-			$this->_cache_settings[ $target ][ $post_type ] = $settings;
+			$this->_cache_settings[ $target ] = $settings;
 		}
 
-		return $this->_cache_settings[ $target ][ $post_type ];
+		return $this->_cache_settings[ $target ];
 	}
 
 	/**
@@ -818,7 +796,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				$errors['class_name'][] = $this->translate( 'Invalid format.' );
 				$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
 			} else {
-				! isset( $post_array['ID'] ) and $post_array['ID'] = - 1;
+				! isset( $post_array['ID'] ) and $post_array['ID'] = -1;
 				if ( $this->app->db->builder()
 				                   ->from( $this->get_related_table_name() )
 				                   ->where( 'post_id', '<>', $post_array['ID'] )
@@ -868,8 +846,6 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		is_string( $value ) and $value = trim( $value );
 		if ( 'style' === $key ) {
 			return $this->encode_style( $value );
-		} elseif ( 'exclude_post_types' === $key ) {
-			return $this->encode_exclude_post_types( $value );
 		} elseif ( 'group_name' === $key ) {
 			return preg_replace( '/[\x00-\x1F\x7F]/', '', $value );
 		} elseif ( 'class_name' === $key ) {
@@ -885,34 +861,10 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return array
 	 */
 	protected function filter_item( array $d ) {
-		$d['styles']             = $this->decode_style( $d['style'] );
-		$d['style']              = $this->decode_style( $d['style'], true );
-		$d['exclude_post_types'] = $this->decode_exclude_post_types( $d['exclude_post_types'] );
+		$d['styles'] = $this->decode_style( $d['style'] );
+		$d['style']  = $this->decode_style( $d['style'], true );
 
 		return $d;
-	}
-
-	/**
-	 * @param mixed $value
-	 *
-	 * @return string
-	 */
-	private function encode_exclude_post_types( $value ) {
-		! is_array( $value ) and $value = [];
-
-		return json_encode( $value );
-	}
-
-	/**
-	 * @param string $value
-	 *
-	 * @return array
-	 */
-	private function decode_exclude_post_types( $value ) {
-		$value = @json_decode( $value, true );
-		! is_array( $value ) and $value = [];
-
-		return $value;
 	}
 
 	/**
@@ -958,15 +910,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param string $style
-	 * @param bool $editor
+	 * @param bool $is_editor
 	 *
 	 * @return array|string
 	 */
-	private function decode_style( $style, $editor = false ) {
+	private function decode_style( $style, $is_editor = false ) {
 		$styles = @json_decode( $style, true );
 		! is_array( $styles ) and $styles = [];
 
-		if ( ! $editor ) {
+		if ( ! $is_editor ) {
 			return $styles;
 		}
 

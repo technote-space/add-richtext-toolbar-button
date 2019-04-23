@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models User
  *
- * @version 0.0.31
+ * @version 0.0.42
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -264,6 +264,7 @@ SQL;
 	 * @return array
 	 */
 	public function get_meta_user_ids( $key ) {
+		/** @noinspection SqlResolve */
 		$query   = <<< SQL
 		SELECT user_id FROM {$this->get_wp_table('usermeta')}
 		WHERE meta_key LIKE %s

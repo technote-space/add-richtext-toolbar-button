@@ -3,7 +3,6 @@
  * @version 1.0.14
  * @author Technote
  * @since 1.0.0
- * @since 1.0.14 #82
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/

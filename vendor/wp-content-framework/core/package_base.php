@@ -2,7 +2,7 @@
 /**
  * WP_Framework Package Base
  *
- * @version 0.0.47
+ * @version 0.0.53
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -223,8 +223,8 @@ abstract class Package_Base {
 	protected function trim_namespace( $string ) {
 		$namespace = $this->get_namespace();
 		$string    = ltrim( $string, '\\' );
-		if ( preg_match( "#\A{$namespace}\\\\#", $string ) ) {
-			return preg_replace( "#\A{$namespace}\\\\#", '', $string );
+		if ( preg_match( "#\A{$namespace}\\\\(.+)\z#", $string, $matches ) ) {
+			return $matches[1];
 		}
 
 		return false;

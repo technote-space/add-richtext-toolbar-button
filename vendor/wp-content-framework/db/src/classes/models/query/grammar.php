@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Db Classes Models Query Grammar
  *
- * @version 0.0.14
+ * @version 0.0.18
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -318,36 +318,6 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 		}
 
 		return '1 = 1';
-	}
-
-	/**
-	 * Compile a where in sub-select clause.
-	 *
-	 * @param  Builder $query
-	 * @param  array $where
-	 *
-	 * @return string
-	 */
-	protected function where_in_sub(
-		/** @noinspection PhpUnusedParameterInspection */
-		Builder $query, $where
-	) {
-		return $this->wrap( $where['column'] ) . ' in (' . $this->compile_select( $where['query'] ) . ')';
-	}
-
-	/**
-	 * Compile a where not in sub-select clause.
-	 *
-	 * @param  Builder $query
-	 * @param  array $where
-	 *
-	 * @return string
-	 */
-	protected function where_not_in_sub(
-		/** @noinspection PhpUnusedParameterInspection */
-		Builder $query, $where
-	) {
-		return $this->wrap( $where['column'] ) . ' not in (' . $this->compile_select( $where['query'] ) . ')';
 	}
 
 	/**

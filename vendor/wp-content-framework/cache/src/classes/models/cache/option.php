@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Classes Models Cache Option
  *
- * @version 0.0.8
+ * @version 0.0.11
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -52,8 +52,12 @@ class Option implements \WP_Framework_Cache\Interfaces\Cache {
 			return [ false, null ];
 		}
 		list( $value, $time ) = $cache;
+		$is_valid = empty( $time ) || $time >= time();
+		if ( ! $is_valid ) {
+			$this->delete( $key, $group, $common );
+		}
 
-		return [ empty( $time ) || $time >= time(), $value ];
+		return [ $is_valid, $value ];
 	}
 
 	/**
@@ -75,7 +79,7 @@ class Option implements \WP_Framework_Cache\Interfaces\Cache {
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $group
 	 * @param bool $common
 	 *
@@ -131,7 +135,27 @@ class Option implements \WP_Framework_Cache\Interfaces\Cache {
 	 * @return bool
 	 */
 	public function delete( $key, $group = 'default', $common = false ) {
-		return $this->exists( $key, $group ) ? $this->delete_option( $key, $group, $common ) : false;
+		return $this->exists( $key, $group, $common ) ? $this->delete_option( $key, $group, $common ) : false;
+	}
+
+	/**
+	 * @param string $group
+	 * @param bool $common
+	 *
+	 * @return bool
+	 */
+	public function delete_group( $group, $common = false ) {
+		return $this->delete_option( null, $group, $common );
+	}
+
+	/**
+	 * @param string $group
+	 * @param bool $common
+	 *
+	 * @return array
+	 */
+	public function get_cache_list( $group, $common = false ) {
+		return array_keys( $this->app->option->get_grouped( null, $this->get_cache_group( $group ), [], $common ) );
 	}
 
 	/**

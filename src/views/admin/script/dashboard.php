@@ -3,8 +3,6 @@
  * @version 1.1.2
  * @author Technote
  * @since 1.0.0
- * @since 1.1.0 wp-content-framework/common#57, wp-content-framework/admin#20
- * @since 1.1.2 wp-content-framework/admin#26
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -23,28 +21,30 @@ foreach ( $settings as $k => $v ) {
 }
 ?>
 <script>
-    (function ($) {
-        $(function () {
-            // icon
-            (function () {
+	( function( $ ) {
+		$( function() {
+			// icon
+			( function() {
 				<?php $instance->h( 'const target = ' );?><?php $instance->json( $target );?>;
-                Object.keys(target).forEach(function (key) {
-                    const $target = $(target[key]);
-                    $target.on('change', function () {
-                        const icon = artbGetIcon($(this).val().trim());
-                        const $area = $(this).closest('.icon-wrapper').find('.display-area');
-                        $area.html('');
-                        if (!icon) return;
-                        $area.append(icon);
-                    }).trigger('change');
-                });
+				Object.keys( target ).forEach( function( key ) {
+					const $target = $( target[ key ] );
+					$target.on( 'change', function() {
+						const icon = artbGetIcon( $( this ).val().trim() );
+						const $area = $( this ).closest( '.icon-wrapper' ).find( '.display-area' );
+						$area.html( '' );
+						if ( !icon ) {
+							return;
+						}
+						$area.append( icon );
+					} ).trigger( 'change' );
+				} );
 
-                $('.reset-icon').on('click', function () {
-                    const $target = $($(this).data('target'));
-                    $target.val($(this).data('value')).trigger('change');
-                    return false;
-                });
-            })();
-        });
-    })(jQuery);
+				$( '.reset-icon' ).on( 'click', function() {
+					const $target = $( $( this ).data( 'target' ) );
+					$target.val( $( this ).data( 'value' ) ).trigger( 'change' );
+					return false;
+				} );
+			} )();
+		} );
+	} )( jQuery );
 </script>

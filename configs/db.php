@@ -1,9 +1,8 @@
 <?php
 /**
- * @version 1.0.3
+ * @version 1.1.4
  * @author Technote
  * @since 1.0.0
- * @since 1.0.3 #28
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -43,10 +42,6 @@ return [
 			'style'                   => [
 				'type'    => 'TEXT',
 				'comment' => 'style',
-			],
-			'exclude_post_types'      => [
-				'type'    => 'TEXT',
-				'comment' => 'exclude post types',
 			],
 			'priority'                => [
 				'type'     => 'INT(11)',

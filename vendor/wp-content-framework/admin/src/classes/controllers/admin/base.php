@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Controller Admin Base
  *
- * @version 0.0.17
+ * @version 0.0.21
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -79,13 +79,14 @@ abstract class Base extends \WP_Framework_Controller\Classes\Controllers\Base im
 	 * action
 	 */
 	public final function action() {
-		if ( $this->is_post() && $this->nonce_check() ) {
+		$is_valid_update = $this->is_post() && $this->nonce_check();
+		if ( $is_valid_update ) {
 			$this->post_action();
 		} else {
 			$this->get_action();
 		}
 		$this->common_action();
-		$this->do_action( 'controller_action', $this->is_post() && $this->nonce_check() );
+		$this->do_action( 'controller_action', $is_valid_update );
 	}
 
 	/**
@@ -198,7 +199,7 @@ abstract class Base extends \WP_Framework_Controller\Classes\Controllers\Base im
 							'content' => $content,
 						] );
 					}
-					$index ++;
+					$index++;
 				}
 
 				$sidebar = $this->apply_filters( 'get_help_sidebar', $this->get_help_sidebar(), $slug );

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Presenter Interfaces Presenter
  *
- * @version 0.0.16
+ * @version 0.0.19
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -22,6 +22,13 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * @mixin \WP_Framework_Core\Traits\Translate
  */
 interface Presenter {
+
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function view_exists( $name );
 
 	/**
 	 * @param string $name
@@ -199,6 +206,15 @@ interface Presenter {
 	 * @return string
 	 */
 	public function no_img( array $args = [], $echo = true );
+
+	/**
+	 * @param null|int|\WP_Post $post
+	 * @param array $args
+	 * @param string|array $size
+	 *
+	 * @return string
+	 */
+	public function get_thumbnail( $post = null, array $args = [], $size = 'post-thumbnail' );
 
 	/**
 	 * @param string $path

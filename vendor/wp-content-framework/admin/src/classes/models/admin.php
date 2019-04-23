@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.18
+ * @version 0.0.24
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -18,7 +18,6 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Class Admin
  * @package WP_Framework_Admin\Classes\Models
- * @property-read \WP_Framework_Admin\Classes\Controllers\Admin\Base $page
  */
 class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Presenter\Interfaces\Presenter, \WP_Framework_Core\Interfaces\Nonce {
 
@@ -35,69 +34,9 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	private $_pages = [];
 
 	/**
-	 * @var array $readonly_properties
+	 * @var \WP_Framework_Admin\Classes\Controllers\Admin\Base[] $_hooks
 	 */
-	protected $readonly_properties = [
-		'page',
-	];
-
-	/**
-	 * @return string
-	 */
-	protected function get_setting_slug() {
-		return $this->apply_filters( 'get_setting_slug', $this->app->get_config( 'config', 'setting_page_slug' ) );
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_menu_slug() {
-		return $this->get_page_prefix() . $this->apply_filters( 'get_setting_menu_slug', $this->get_setting_slug() );
-	}
-
-	/**
-	 * @return string
-	 */
-	private function get_main_menu_title() {
-		$main_menu_title = $this->app->get_config( 'config', 'main_menu_title' );
-		empty( $main_menu_title ) and $main_menu_title = str_replace( '_', ' ', $this->app->original_plugin_name );
-
-		return $this->apply_filters( 'get_main_menu_title', $this->translate( $main_menu_title ) );
-	}
-
-	/**
-	 * @return \WP_Framework_Admin\Classes\Controllers\Admin\Base|null
-	 */
-	private function load_page() {
-		try {
-			$prefix  = $this->get_page_prefix();
-			$pattern = "#\A{$prefix}(.+)#";
-			$_page   = $this->app->input->get( 'page' );
-			if ( ! empty( $_page ) && is_string( $_page ) && preg_match( $pattern, $_page, $matches ) ) {
-				$page          = $matches[1];
-				$exploded      = explode( '-', $page );
-				$page          = array_pop( $exploded );
-				$add_namespace = implode( '\\', array_map( 'ucfirst', $exploded ) );
-				! empty( $add_namespace ) and $add_namespace .= '\\';
-				$instance = $this->get_class_instance( $this->get_class_setting( $page, $add_namespace ), '\WP_Framework_Admin\Classes\Controllers\Admin\Base' );
-				if ( false !== $instance ) {
-					/** @var \WP_Framework_Admin\Classes\Controllers\Admin\Base $instance */
-					$this->do_action( 'pre_load_admin_page', $instance );
-
-					return $instance;
-				}
-				$this->app->log( sprintf( $this->translate( '%s not found.' ), $_page ), [
-					'$_GET[\'page\']' => $_page,
-					'$page'           => $page,
-					'$add_namespace'  => $add_namespace,
-				] );
-			}
-		} catch ( \Exception $e ) {
-			$this->app->log( $e );
-		}
-
-		return null;
-	}
+	private $_hooks = [];
 
 	/**
 	 * add menu
@@ -107,12 +46,6 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 		$capability = $this->app->get_config( 'capability', 'admin_menu', 'manage_options' );
 		if ( ! $this->app->user_can( $capability ) ) {
 			return;
-		}
-
-		$this->set_readonly_property( 'page', $this->load_page() );
-		if ( isset( $this->page ) && $this->app->user_can( $this->apply_filters( 'admin_menu_capability', $this->page->get_capability(), $this->page ) ) ) {
-			$this->page->action();
-			$this->do_action( 'post_load_admin_page', $this->page );
 		}
 
 		$this->_pages = [];
@@ -125,7 +58,7 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 
 		$title = $this->get_main_menu_title();
 		$slug  = $this->get_menu_slug();
-		$hook  = add_menu_page(
+		add_menu_page(
 			$title,
 			$title,
 			$capability,
@@ -136,49 +69,43 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 			$this->get_admin_menu_position( $slug, $title )
 		);
 
-		if ( isset( $this->page ) && $this->app->user_can( $this->page->get_capability() ) ) {
-			add_action( "load-$hook", function () {
-				$this->page->setup_help();
-			} );
-		}
-
-		if ( ! $this->app->is_theme ) {
-			add_filter( 'plugin_action_links_' . $this->app->define->plugin_base_name, function ( array $actions ) {
-				return $this->plugin_action_links( $actions );
-			} );
-		}
-
-		/** @var \WP_Framework_Admin\Classes\Controllers\Admin\Base $page */
-		foreach ( $this->_pages as $page ) {
-			add_submenu_page(
-				$this->get_menu_slug(),
-				$this->translate( $page->get_page_title() ),
-				$this->translate( $page->get_menu_name() ),
+		/** @var \WP_Framework_Admin\Classes\Controllers\Admin\Base $_page */
+		foreach ( $this->_pages as $_page ) {
+			$hook = add_submenu_page(
+				$slug,
+				$this->translate( $_page->get_page_title() ),
+				$this->translate( $_page->get_menu_name() ),
 				$capability,
-				$this->get_page_prefix() . $page->get_page_slug(),
-				function () {
-					$this->load();
+				$this->get_page_prefix() . $_page->get_page_slug(),
+				function () use ( $_page ) {
+					$this->load( $_page );
 				}
 			);
+			false !== $hook && $this->_hooks[ $hook ] = $_page;
 		}
 	}
 
 	/**
-	 * @param string $menu_slug
-	 * @param string $menu_title
-	 *
-	 * @return float|string
+	 * setup help
 	 */
-	private function get_admin_menu_position( $menu_slug, $menu_title ) {
-		$position = $this->apply_filters( 'admin_menu_position' );
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function setup_help() {
+		global $hook_suffix;
+		isset( $this->_hooks[ $hook_suffix ] ) && $this->_hooks[ $hook_suffix ]->setup_help();
+	}
 
-		global $menu;
-		if ( isset( $menu["$position"] ) && $this->compare_wp_version( '4.4', '<' ) ) {
-			$position = $position + substr( base_convert( md5( $menu_slug . $menu_title ), 16, 10 ), - 5 ) * 0.00001;
-			$position = "$position";
+	/**
+	 * do page action
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function do_page_action() {
+		global $hook_suffix;
+		if ( isset( $this->_hooks[ $hook_suffix ] ) ) {
+			$page = $this->_hooks[ $hook_suffix ];
+			$this->do_action( 'pre_load_admin_page', $page );
+			$page->action();
+			$this->do_action( 'post_load_admin_page', $page );
 		}
-
-		return $position;
 	}
 
 	/**
@@ -241,17 +168,132 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	}
 
 	/**
-	 * @param array $actions
+	 * admin notice
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function admin_notice() {
+		if ( $this->app->user_can( $this->app->get_config( 'capability', 'admin_notice_capability', 'manage_options' ) ) ) {
+			$this->get_view( 'admin/include/notice', [
+				'messages' => $this->_messages,
+			], true );
+		}
+	}
+
+	/**
+	 * @param string[] $actions
+	 * @param string $plugin_file
+	 * @param array $plugin_data
+	 * @param string $context
 	 *
 	 * @return array
 	 */
-	private function plugin_action_links( array $actions ) {
-		$link = $this->get_view( 'admin/include/action_links', [
-			'url' => menu_page_url( $this->get_menu_slug(), false ),
-		] );
-		array_unshift( $actions, $link );
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function plugin_action_links( array $actions, $plugin_file, array $plugin_data, $context ) {
+		if ( $this->app->is_theme || $plugin_file !== $this->app->define->plugin_base_name ) {
+			return $actions;
+		}
 
-		return $actions;
+		$action_links = $this->parse_config_links( $this->app->get_config( 'config', 'action_links' ), $plugin_data, $context );
+		! empty( $action_links ) and $actions = array_merge( $action_links, $actions );
+
+		return $this->apply_filters( 'plugin_action_links', $actions );
+	}
+
+	/**
+	 * @param string[] $plugin_meta
+	 * @param string $plugin_file
+	 * @param array $plugin_data
+	 * @param string $status
+	 *
+	 * @return array
+	 */
+	/** @noinspection PhpUnusedPrivateMethodInspection */
+	private function plugin_row_meta( array $plugin_meta, $plugin_file, array $plugin_data, $status ) {
+		if ( $this->app->is_theme || $plugin_file !== $this->app->define->plugin_base_name ) {
+			return $plugin_meta;
+		}
+
+		$plugin_row_meta = $this->parse_config_links( $this->app->get_config( 'config', 'plugin_row_meta' ), $plugin_data, $status );
+		! empty( $plugin_row_meta ) and $plugin_meta = array_merge( $plugin_meta, $plugin_row_meta );
+
+		return $this->apply_filters( 'plugin_row_meta', $plugin_meta );
+	}
+
+	/**
+	 * @param array $links
+	 * @param $plugin_data
+	 * @param $status
+	 *
+	 * @return array
+	 */
+	private function parse_config_links( array $links, array $plugin_data, $status ) {
+		if ( is_array( $links ) && ! empty( $links ) ) {
+			return array_filter( $this->app->array->map( $links, function ( $setting ) use ( $plugin_data, $status ) {
+				if ( empty( $setting['url'] ) || ! isset( $setting['label'] ) ) {
+					return false;
+				}
+
+				return $this->url(
+					$this->app->utility->value( $setting['url'], $this, $plugin_data, $status ),
+					$this->app->utility->value( $setting['label'], $this, $plugin_data, $status ),
+					true, ! empty( $setting['new_tab'] ), [], false
+				);
+			} ) );
+		}
+
+		return [];
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_setting_slug() {
+		return $this->apply_filters( 'get_setting_slug', $this->app->get_config( 'config', 'setting_page_slug' ) );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_menu_slug() {
+		return $this->get_page_prefix() . $this->apply_filters( 'get_setting_menu_slug', $this->get_setting_slug() );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_main_menu_title() {
+		$main_menu_title = $this->app->get_config( 'config', 'main_menu_title' );
+		empty( $main_menu_title ) and $main_menu_title = str_replace( '_', ' ', $this->app->original_plugin_name );
+
+		return $this->apply_filters( 'get_main_menu_title', $this->translate( $main_menu_title ) );
+	}
+
+	/**
+	 * @param string $menu_slug
+	 * @param string $menu_title
+	 *
+	 * @return float|string
+	 */
+	private function get_admin_menu_position( $menu_slug, $menu_title ) {
+		$position = $this->apply_filters( 'admin_menu_position' );
+
+		global $menu;
+		if ( isset( $menu["$position"] ) && $this->compare_wp_version( '4.4', '<' ) ) {
+			$position = $position + substr( base_convert( md5( $menu_slug . $menu_title ), 16, 10 ), -5 ) * 0.00001;
+			$position = "$position";
+		}
+
+		return $position;
+	}
+
+	/**
+	 * @param \WP_Framework_Admin\Classes\Controllers\Admin\Base $page
+	 */
+	private function load( $page ) {
+		$this->get_view( 'admin/include/layout', [
+			'page' => $page,
+			'slug' => $page->get_page_slug(),
+		], true );
 	}
 
 	/**
@@ -287,36 +329,6 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	 */
 	protected function get_instanceof() {
 		return '\WP_Framework_Admin\Classes\Controllers\Admin\Base';
-	}
-
-	/**
-	 * load
-	 */
-	private function load() {
-		if ( isset( $this->page ) ) {
-			if ( $this->app->user_can( $this->page->get_capability() ) ) {
-				$this->get_view( 'admin/include/layout', [
-					'page' => $this->page,
-					'slug' => $this->page->get_page_slug(),
-				], true );
-			} else {
-				$this->get_view( 'admin/include/error', [ 'message' => 'Forbidden.' ], true );
-			}
-		} else {
-			$this->get_view( 'admin/include/error', [ 'message' => 'Page not found.' ], true );
-		}
-	}
-
-	/**
-	 * admin notice
-	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function admin_notice() {
-		if ( $this->app->user_can( $this->app->get_config( 'capability', 'admin_notice_capability', 'manage_options' ) ) ) {
-			$this->get_view( 'admin/include/notice', [
-				'messages' => $this->_messages,
-			], true );
-		}
 	}
 
 	/**

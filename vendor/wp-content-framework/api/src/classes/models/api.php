@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Api Classes Models Api
  *
- * @version 0.0.12
+ * @version 0.0.13
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -37,7 +37,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	 * @return bool
 	 */
 	private function use_admin_ajax() {
-		return $this->app->utility->definedv( 'WP_FRAMEWORK_MOCK_REST_REQUEST' ) || $this->apply_filters( 'use_admin_ajax' );
+		return $this->app->utility->defined( 'WP_FRAMEWORK_MOCK_REST_REQUEST' ) || $this->apply_filters( 'use_admin_ajax' );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 		if ( ! is_admin() ) {
 			return;
 		}
-		if ( $this->app->utility->definedv( 'WP_FRAMEWORK_MOCK_REST_REQUEST' ) ) {
+		if ( $this->app->utility->defined( 'WP_FRAMEWORK_MOCK_REST_REQUEST' ) ) {
 			$this->app->setting->remove_setting( 'use_admin_ajax' );
 		}
 		if ( $this->is_empty() ) {
@@ -179,7 +179,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 		return $this->register_script_common( function () {
 			return [
 				'endpoint'      => rest_url(),
-				'nonce'         => wp_create_nonce( $this->get_nonce_slug() ),
+				'nonce'         => $this->wp_create_nonce( $this->get_nonce_slug() ),
 				'is_admin_ajax' => false,
 			];
 		} );
@@ -204,7 +204,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	 */
 	public function get_nonce_data() {
 		return [
-			'nonce'         => wp_create_nonce( $this->get_nonce_slug() ),
+			'nonce'         => $this->wp_create_nonce( $this->get_nonce_slug() ),
 			'nonce_key'     => $this->get_nonce_key(),
 			'nonce_value'   => $this->create_nonce(),
 			'is_admin_ajax' => $this->use_admin_ajax(),

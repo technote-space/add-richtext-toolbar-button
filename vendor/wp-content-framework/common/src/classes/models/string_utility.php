@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models String Utility
  *
- * @version 0.0.29
+ * @version 0.0.46
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -97,11 +97,24 @@ class String_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
 	/**
 	 * @param string $string
-	 * @param string $delimiter
+	 * @param string|array $delimiter
 	 *
 	 * @return array
 	 */
 	public function explode( $string, $delimiter = ',' ) {
+		if ( is_array( $delimiter ) ) {
+			$results = [ $string ];
+			foreach ( $delimiter as $d ) {
+				$tmp = [];
+				foreach ( $results as $result ) {
+					$tmp = array_merge( $tmp, $this->explode( $result, $d ) );
+				}
+				$results = $tmp;
+			}
+
+			return array_unique( $results );
+		}
+
 		return array_filter( array_unique( array_map( 'trim', explode( $delimiter, $string ) ) ) );
 	}
 
@@ -146,7 +159,7 @@ class String_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 			return true;
 		}
 
-		return substr_compare( $haystack, $needle, - strlen( $needle ) ) === 0;
+		return substr_compare( $haystack, $needle, -strlen( $needle ) ) === 0;
 	}
 
 	/**

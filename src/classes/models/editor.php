@@ -1,13 +1,8 @@
 <?php
 /**
- * @version 1.1.2
+ * @version 1.1.4
  * @author Technote
  * @since 1.0.0
- * @since 1.0.3 #32
- * @since 1.0.7 #61
- * @since 1.0.12 #77
- * @since 1.0.15 #91
- * @since 1.1.2 #102
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -36,7 +31,6 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return;
 		}
 
-		global $post;
 		$handle = 'add-richtext-toolbar-button-editor';
 		$this->enqueue_style( $handle, 'gutenberg.css', [], $this->app->get_plugin_version() );
 		$this->enqueue_script( $handle, 'add-richtext-toolbar-button-gutenberg.min.js', [
@@ -47,13 +41,14 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'wp-components',
 			'wp-url',
 			'wp-i18n',
+			'wp-format-library',
 			'lodash',
 		], $this->app->get_plugin_version() );
-		$this->localize_script( $handle, 'artb_params', $this->get_editor_params( $post->post_type ) );
+		$this->localize_script( $handle, 'artb_params', $this->get_editor_params() );
 
 		/** @var Assets $assets */
 		$assets = Assets::get_instance( $this->app );
-		$assets->enqueue_plugin_assets( $post->post_type, true );
+		$assets->enqueue_plugin_assets( true );
 	}
 
 	/**
@@ -82,16 +77,14 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
-	 * @param string $post_type
-	 *
 	 * @return array
 	 */
-	private function get_editor_params( $post_type ) {
+	private function get_editor_params() {
 		/** @var Custom_Post\Setting $setting */
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'                   => $setting->get_settings( 'editor', $post_type ),
+			'settings'                   => $setting->get_settings( 'editor' ),
 			'default_icon'               => $this->apply_filters( 'default_icon' ),
 			'is_valid_contrast_checker'  => $this->apply_filters( 'is_valid_contrast_checker' ),
 			'is_valid_remove_formatting' => $this->apply_filters( 'is_valid_remove_formatting' ),

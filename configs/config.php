@@ -1,11 +1,8 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 1.1.4
  * @author Technote
  * @since 1.0.0
- * @since 1.0.3 #28
- * @since 1.0.12 changed required wordpress version (4.7.0 ⇒ 5.0.3)
- * @since 1.1.0 wp-content-framework/admin#20
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -24,7 +21,7 @@ return [
 	'main_menu_title'                => 'Add RichText Toolbar Button',
 
 	// db version
-	'db_version'                     => '0.0.6',
+	'db_version'                     => '0.0.7',
 
 	// menu image url
 	'menu_image'                     => 'icon-24x24.png',
