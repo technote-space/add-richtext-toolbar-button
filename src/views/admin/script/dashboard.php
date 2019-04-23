@@ -21,28 +21,30 @@ foreach ( $settings as $k => $v ) {
 }
 ?>
 <script>
-    (function ($) {
-        $(function () {
-            // icon
-            (function () {
+	( function( $ ) {
+		$( function() {
+			// icon
+			( function() {
 				<?php $instance->h( 'const target = ' );?><?php $instance->json( $target );?>;
-                Object.keys(target).forEach(function (key) {
-                    const $target = $(target[key]);
-                    $target.on('change', function () {
-                        const icon = artbGetIcon($(this).val().trim());
-                        const $area = $(this).closest('.icon-wrapper').find('.display-area');
-                        $area.html('');
-                        if (!icon) return;
-                        $area.append(icon);
-                    }).trigger('change');
-                });
+				Object.keys( target ).forEach( function( key ) {
+					const $target = $( target[ key ] );
+					$target.on( 'change', function() {
+						const icon = artbGetIcon( $( this ).val().trim() );
+						const $area = $( this ).closest( '.icon-wrapper' ).find( '.display-area' );
+						$area.html( '' );
+						if ( !icon ) {
+							return;
+						}
+						$area.append( icon );
+					} ).trigger( 'change' );
+				} );
 
-                $('.reset-icon').on('click', function () {
-                    const $target = $($(this).data('target'));
-                    $target.val($(this).data('value')).trigger('change');
-                    return false;
-                });
-            })();
-        });
-    })(jQuery);
+				$( '.reset-icon' ).on( 'click', function() {
+					const $target = $( $( this ).data( 'target' ) );
+					$target.val( $( this ).data( 'value' ) ).trigger( 'change' );
+					return false;
+				} );
+			} )();
+		} );
+	} )( jQuery );
 </script>
