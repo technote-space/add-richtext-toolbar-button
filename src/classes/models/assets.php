@@ -52,37 +52,7 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		if ( ! $this->apply_filters( 'is_valid' ) ) {
 			return;
 		}
-
-		if ( is_single() || is_page() ) {
-			global $post;
-			if ( $post && ! $this->use_block_editor_for_post_type( $post->post_type ) ) {
-				return;
-			}
-		}
-
 		$this->enqueue_plugin_assets();
-	}
-
-	/**
-	 * @param string $post_type
-	 *
-	 * @return bool
-	 */
-	private function use_block_editor_for_post_type( $post_type ) {
-		if ( ! post_type_exists( $post_type ) ) {
-			return false;
-		}
-
-		if ( ! post_type_supports( $post_type, 'editor' ) ) {
-			return false;
-		}
-
-		$post_type_object = get_post_type_object( $post_type );
-		if ( $post_type_object && ! $post_type_object->show_in_rest ) {
-			return false;
-		}
-
-		return true;
 	}
 
 	/**
