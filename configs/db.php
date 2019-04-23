@@ -43,10 +43,6 @@ return [
 				'type'    => 'TEXT',
 				'comment' => 'style',
 			],
-			'exclude_post_types'      => [
-				'type'    => 'TEXT',
-				'comment' => 'exclude post types',
-			],
 			'priority'                => [
 				'type'     => 'INT(11)',
 				'unsigned' => true,
