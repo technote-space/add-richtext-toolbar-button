@@ -41,6 +41,10 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.1.4 =
+* 除外投稿タイプ設定の削除 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/118)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/120)
+
 = 1.1.3 =
 * 細かいバグの修正
 * [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/111)
@@ -89,6 +93,11 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.1.4 (2019/4/23) =
+* Changed: [Remove `exclude post types` setting](https://github.com/technote-space/add-richtext-toolbar-button/issues/118)
+* Changed: trivial changes
+* Tested: against 5.2
 
 = 1.1.3 (2019/3/25) =
 * Fixed: minor bug fixes
