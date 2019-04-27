@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.30
+ * @version 0.0.31
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -196,7 +196,7 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 		$action_links = $this->parse_config_links( $this->app->get_config( 'config', 'action_links' ), $plugin_data, $context );
 		! empty( $action_links ) and $actions = array_merge( $action_links, $actions );
 
-		return $this->apply_filters( 'plugin_action_links', $actions );
+		return $this->apply_filters( 'plugin_action_links', $actions, $plugin_file, $plugin_data, $context );
 	}
 
 	/**
@@ -216,7 +216,7 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 		$plugin_row_meta = $this->parse_config_links( $this->app->get_config( 'config', 'plugin_row_meta' ), $plugin_data, $status );
 		! empty( $plugin_row_meta ) and $plugin_meta = array_merge( $plugin_meta, $plugin_row_meta );
 
-		return $this->apply_filters( 'plugin_row_meta', $plugin_meta );
+		return $this->apply_filters( 'plugin_row_meta', $plugin_meta, $plugin_file, $plugin_data, $status );
 	}
 
 	/**
