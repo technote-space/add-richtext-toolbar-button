@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Classes Models Admin
  *
- * @version 0.0.24
+ * @version 0.0.30
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -182,13 +182,13 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	/**
 	 * @param string[] $actions
 	 * @param string $plugin_file
-	 * @param array $plugin_data
+	 * @param array|null $plugin_data
 	 * @param string $context
 	 *
 	 * @return array
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function plugin_action_links( array $actions, $plugin_file, array $plugin_data, $context ) {
+	private function plugin_action_links( array $actions, $plugin_file, $plugin_data, $context ) {
 		if ( $this->app->is_theme || $plugin_file !== $this->app->define->plugin_base_name ) {
 			return $actions;
 		}
@@ -202,13 +202,13 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 	/**
 	 * @param string[] $plugin_meta
 	 * @param string $plugin_file
-	 * @param array $plugin_data
+	 * @param array|null $plugin_data
 	 * @param string $status
 	 *
 	 * @return array
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function plugin_row_meta( array $plugin_meta, $plugin_file, array $plugin_data, $status ) {
+	private function plugin_row_meta( array $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( $this->app->is_theme || $plugin_file !== $this->app->define->plugin_base_name ) {
 			return $plugin_meta;
 		}
@@ -221,12 +221,12 @@ class Admin implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Prese
 
 	/**
 	 * @param array $links
-	 * @param $plugin_data
-	 * @param $status
+	 * @param array|null $plugin_data
+	 * @param string $status
 	 *
 	 * @return array
 	 */
-	private function parse_config_links( array $links, array $plugin_data, $status ) {
+	private function parse_config_links( array $links, $plugin_data, $status ) {
 		if ( is_array( $links ) && ! empty( $links ) ) {
 			return array_filter( $this->app->array->map( $links, function ( $setting ) use ( $plugin_data, $status ) {
 				if ( empty( $setting['url'] ) || ! isset( $setting['label'] ) ) {

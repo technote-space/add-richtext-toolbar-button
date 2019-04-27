@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models System
  *
- * @version 0.0.41
+ * @version 0.0.48
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -53,6 +53,9 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$this->not_enough_wordpress_version = empty( $wp_version ) || version_compare( $wp_version, $this->required_wordpress_version, '<' );
 		if ( ! $this->is_enough_version() ) {
 			$this->set_unsupported();
+			if ( $this->app->is_theme ) {
+				$this->deactivate_theme();
+			}
 		} elseif ( ! self::$_setup_initialized_action ) {
 			self::$_setup_initialized_action = true;
 			add_action( 'init', function () {
@@ -76,6 +79,16 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		if ( ! $this->app->option->is_app_activated() ) {
 			$this->do_action( 'app_activated', $this->app );
 		}
+	}
+
+	/**
+	 * deactivate theme
+	 */
+	private function deactivate_theme() {
+		add_action( 'init', function () {
+			switch_theme( WP_DEFAULT_THEME );
+			unset( $_GET['activated'] );
+		}, 999 );
 	}
 
 	/**
@@ -103,10 +116,19 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			?>
             <div class="notice error notice-error">
 				<?php if ( $this->not_enough_php_version ): ?>
-                    <p><?php echo $this->get_unsupported_php_version_message(); ?></p>
+                    <p>
+						<?php $this->e( $this->get_unsupported_php_version_message() ); ?>
+                    </p>
 				<?php endif; ?>
 				<?php if ( $this->not_enough_wordpress_version ): ?>
-                    <p><?php echo $this->get_unsupported_wp_version_message(); ?></p>
+                    <p>
+						<?php $this->e( $this->get_unsupported_wp_version_message() ); ?>
+                    </p>
+				<?php endif; ?>
+				<?php if ( ! $this->app->is_theme ): ?>
+                    <p>
+						<?php $this->e( $this->get_deactivate_message() ); ?>
+                    </p>
 				<?php endif; ?>
             </div>
 			<?php
@@ -136,5 +158,25 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$messages[] = sprintf( $this->translate( '<strong>%s</strong> requires WordPress version %s or above.' ), $this->translate( $this->app->original_plugin_name ), $this->required_wordpress_version );
 
 		return implode( '<br>', $messages );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_deactivate_message() {
+		$url   = wp_nonce_url( add_query_arg( [
+			'action' => 'deactivate',
+			'plugin' => urlencode( $this->app->define->plugin_base_name ),
+		], 'plugins.php' ), 'deactivate-plugin_' . $this->app->define->plugin_base_name );
+		$label = $this->translate( 'Deactivate plugin' );
+
+		return '<a href="' . esc_url( $url ) . '" aria-label="' . esc_attr( $label ) . '">' . $label . '</a>';
+	}
+
+	/**
+	 * @param string $string
+	 */
+	private function e( $string ) {
+		echo $this->app->string->strip_tags( $string );
 	}
 }

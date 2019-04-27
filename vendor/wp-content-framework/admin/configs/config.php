@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Admin Configs Config
  *
- * @version 0.0.22
+ * @version 0.0.30
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -18,15 +18,6 @@ return [
 	// main menu title
 	'main_menu_title'                => '',
 
-	// contact url
-	'contact_url'                    => '',
-
-	// twitter
-	'twitter'                        => '',
-
-	// github
-	'github'                         => '',
-
 	// menu image url
 	'menu_image'                     => '',
 
@@ -41,12 +32,6 @@ return [
 
 	// setting page slug
 	'setting_page_slug'              => 'setting',
-
-	// detail url
-	'detail_url'                     => '',
-
-	// github repo (user/repo)
-	'github_repo'                    => '',
 
 	// action links
 	'action_links'                   => [
@@ -65,4 +50,18 @@ return [
 	// plugin row meta
 	'plugin_row_meta'                => [],
 
+	// twitter
+	'twitter'                        => '',
+
+	// detail url
+	'detail_url'                     => '',
+
+	// github repo (user/repo)
+	'github_repo'                    => '',
+
+	// contact url
+	'contact_url'                    => '',
+
+	// github
+	'github'                         => '',
 ];
