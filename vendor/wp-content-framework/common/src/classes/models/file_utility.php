@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models File Utility
  *
- * @version 0.0.43
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,15 @@
  */
 
 namespace WP_Framework_Common\Classes\Models;
+
+use Exception;
+use function WP_Filesystem;
+use WP_Filesystem_Base;
+use WP_Filesystem_Direct;
+use WP_Framework;
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -44,7 +53,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Common\Traits\Package;
+	use Singleton, Hook, Package;
 
 	/**
 	 * @var array $_fs_methods
@@ -86,7 +95,7 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	private static $_fs_credentials;
 
 	/**
-	 * @var \WP_Filesystem_Base[] $_fs_cache
+	 * @var WP_Filesystem_Base[] $_fs_cache
 	 */
 	private static $_fs_cache = [];
 
@@ -101,13 +110,13 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 			return $this->fs()->$name( ...$args );
 		}
 
-		\WP_Framework::wp_die( sprintf( 'you cannot access file->%s', $name ), __FILE__, __LINE__ );
+		WP_Framework::wp_die( sprintf( 'you cannot access file->%s', $name ), __FILE__, __LINE__ );
 
 		return null;
 	}
 
 	/**
-	 * @return \WP_Filesystem_Base
+	 * @return WP_Filesystem_Base
 	 */
 	private function fs() {
 		if ( isset( self::$_fs_cache[ $this->app->plugin_name ] ) ) {
@@ -116,9 +125,11 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 
 		if ( ! self::$_fs_initialized ) {
 			if ( ! class_exists( "\WP_Filesystem_Base" ) ) {
+				/** @noinspection PhpIncludeInspection */
 				require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
 			}
 			if ( ! class_exists( "\WP_Filesystem_Direct" ) ) {
+				/** @noinspection PhpIncludeInspection */
 				require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
 			}
 
@@ -142,17 +153,18 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	}
 
 	/**
-	 * @return \WP_Filesystem_Base
+	 * @return WP_Filesystem_Base
 	 */
 	private function fs_with_credentials() {
 		if ( ! isset( self::$_fs_credentials ) ) {
+			/** @noinspection PhpIncludeInspection */
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 			self::$_fs_credentials = request_filesystem_credentials( '', '', false, false, null );
 		}
 
-		if ( \WP_Filesystem( self::$_fs_credentials ) ) {
+		if ( WP_Filesystem( self::$_fs_credentials ) ) {
 			global $wp_filesystem;
-			if ( $wp_filesystem instanceof \WP_Filesystem_Direct ) {
+			if ( $wp_filesystem instanceof WP_Filesystem_Direct ) {
 				self::$_fs_cache[ $this->app->plugin_name ] = $wp_filesystem;
 			}
 
@@ -168,7 +180,7 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * setup \WP_Filesystem_Direct
 	 */
 	private function fs_direct() {
-		return new \WP_Filesystem_Direct( false );
+		return new WP_Filesystem_Direct( false );
 	}
 
 	/**
@@ -194,21 +206,21 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
 	 * @return bool
 	 */
-	public function delete_upload_dir( \WP_Framework $app ) {
+	public function delete_upload_dir( WP_Framework $app ) {
 		return $this->delete_dir( $app->define->upload_dir );
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $dir
 	 *
 	 * @return bool
 	 */
-	public function delete_plugin_dir( \WP_Framework $app, $dir ) {
+	public function delete_plugin_dir( WP_Framework $app, $dir ) {
 		return $this->delete_dir( $app->define->plugin_dir . DS . $dir );
 	}
 
@@ -269,62 +281,62 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 *
 	 * @return string
 	 */
-	private function get_upload_file_path( \WP_Framework $app, $path ) {
+	private function get_upload_file_path( WP_Framework $app, $path ) {
 		return $app->define->upload_dir . DS . ltrim( str_replace( '/', DS, $path ), DS );
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 *
 	 * @return string
 	 */
-	private function get_upload_file_link( \WP_Framework $app, $path ) {
+	private function get_upload_file_link( WP_Framework $app, $path ) {
 		return $app->define->upload_url . '/' . ltrim( str_replace( DS, '/', $path ), '/' );
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 *
 	 * @return bool
 	 */
-	public function upload_file_exists( \WP_Framework $app, $path ) {
+	public function upload_file_exists( WP_Framework $app, $path ) {
 		return $this->exists( $this->get_upload_file_path( $app, $path ) );
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 * @param mixed $data
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
-	public function create_upload_file( \WP_Framework $app, $path, $data ) {
+	public function create_upload_file( WP_Framework $app, $path, $data ) {
 		$path = $this->get_upload_file_path( $app, $path );
 		if ( false === $this->mkdir_recursive( dirname( $path ), $this->get_dir_mode() ) || false === $this->put_contents( $path, $data, $this->get_file_mode() ) ) {
-			throw new \Exception( 'Failed to create file.' );
+			throw new Exception( 'Failed to create file.' );
 		}
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 * @param callable $generator
 	 *
 	 * @return bool
 	 */
-	public function create_upload_file_if_not_exists( \WP_Framework $app, $path, $generator ) {
+	public function create_upload_file_if_not_exists( WP_Framework $app, $path, $generator ) {
 		if ( ! $this->upload_file_exists( $app, $path ) ) {
 			if ( isset( $generator ) && is_callable( $generator ) ) {
 				try {
 					$this->create_upload_file( $app, $path, $generator() );
-				} catch ( \Exception $e ) {
+				} catch ( Exception $e ) {
 					return false;
 				}
 			} else {
@@ -336,23 +348,23 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 *
 	 * @return bool
 	 */
-	public function delete_upload_file( \WP_Framework $app, $path ) {
+	public function delete_upload_file( WP_Framework $app, $path ) {
 		return $this->delete( $this->get_upload_file_path( $app, $path ) );
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 * @param callable|null $generator
 	 *
 	 * @return bool|string
 	 */
-	public function get_upload_file_contents( \WP_Framework $app, $path, $generator = null ) {
+	public function get_upload_file_contents( WP_Framework $app, $path, $generator = null ) {
 		if ( $this->create_upload_file_if_not_exists( $app, $path, $generator ) ) {
 			return $this->get_contents( $this->get_upload_file_path( $app, $path ) );
 		}
@@ -361,13 +373,13 @@ class File_Utility implements \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $path
 	 * @param callable|null $generator
 	 *
 	 * @return string|false
 	 */
-	public function get_upload_file_url( \WP_Framework $app, $path, $generator = null ) {
+	public function get_upload_file_url( WP_Framework $app, $path, $generator = null ) {
 		if ( $this->create_upload_file_if_not_exists( $app, $path, $generator ) ) {
 			return $this->get_upload_file_link( $app, $path );
 		}

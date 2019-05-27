@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Interfaces Singleton
  *
- * @version 0.0.41
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,8 @@
  */
 
 namespace WP_Framework_Core\Interfaces;
+
+use WP_Framework;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -22,11 +24,11 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 interface Singleton extends Readonly, Translate, Utility, Package {
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
 	 * @return \WP_Framework_Core\Traits\Singleton
 	 */
-	public static function get_instance( \WP_Framework $app );
+	public static function get_instance( WP_Framework $app );
 
 	/**
 	 * @param string $config_name

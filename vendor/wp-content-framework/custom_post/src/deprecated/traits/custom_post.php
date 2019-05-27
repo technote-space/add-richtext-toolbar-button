@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Deprecated Traits Custom Post
  *
- * @version 0.0.29
+ * @version 0.0.34
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,9 @@
  */
 
 namespace WP_Framework_Custom_Post\Deprecated\Traits;
+
+use WP_Framework_Core\Traits\Singleton;
+use WP_Framework_Custom_Post\Traits\Package;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +24,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Custom_Post implements \WP_Framework_Core\Interfaces\Singleton {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Custom_Post\Traits\Package;
+	use Singleton, Package;
 
 	/**
 	 * @param \WP_Framework_Custom_Post\Traits\Custom_Post $instance

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Utility
  *
- * @version 0.0.51
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,12 @@
 
 namespace WP_Framework_Core\Traits;
 
+use Closure;
+use WP_Framework;
+use WP_Framework_Db\Classes\Models\Query\Builder;
+use WP_Framework_Db\Classes\Models\Query\Expression;
+use wpdb;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +24,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Utility
  * @package WP_Framework_Core\Traits
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  */
 trait Utility {
 
@@ -33,10 +39,10 @@ trait Utility {
 	private static $_common_cache_version = [];
 
 	/**
-	 * @return \wpdb
+	 * @return wpdb
 	 */
 	public function wpdb() {
-		/** @var \wpdb $wpdb */
+		/** @var wpdb $wpdb */
 		global $wpdb;
 
 		return $wpdb;
@@ -65,7 +71,7 @@ trait Utility {
 	}
 
 	/**
-	 * @return \WP_Framework_Db\Classes\Models\Query\Builder
+	 * @return Builder
 	 */
 	protected function builder() {
 		return $this->app->db->builder();
@@ -75,7 +81,7 @@ trait Utility {
 	 * @param string $table
 	 * @param null|string $as
 	 *
-	 * @return \WP_Framework_Db\Classes\Models\Query\Builder
+	 * @return Builder
 	 */
 	protected function table( $table, $as = null ) {
 		return $this->builder()->table( $as ? $this->alias( $table, $as ) : $table );
@@ -85,7 +91,7 @@ trait Utility {
 	 * @param string $table
 	 * @param null|string $as
 	 *
-	 * @return \WP_Framework_Db\Classes\Models\Query\Builder
+	 * @return Builder
 	 */
 	protected function wp_table( $table, $as = null ) {
 		return $this->table( $this->get_wp_table( $table, $as ) );
@@ -94,7 +100,7 @@ trait Utility {
 	/**
 	 * @param $value
 	 *
-	 * @return \WP_Framework_Db\Classes\Models\Query\Expression
+	 * @return Expression
 	 */
 	protected function raw( $value ) {
 		return $this->app->db->get_raw( $value );
@@ -134,11 +140,11 @@ trait Utility {
 	 * @return bool
 	 */
 	protected function is_closure( $func ) {
-		return $func instanceof \Closure;
+		return $func instanceof Closure;
 	}
 
 	/**
-	 * @param \Closure $func
+	 * @param Closure $func
 	 * @param mixed ...$args
 	 *
 	 * @return mixed

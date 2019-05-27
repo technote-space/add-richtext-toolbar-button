@@ -187,7 +187,7 @@ class Db extends \WP_Framework_Db\Classes\Models\Db {
 		$index      = 0;
 		foreach ( $_where as $field => $value ) {
 			$field  = trim( $field );
-			$format = $_where_format[ $index ++ ];
+			$format = $_where_format[ $index++ ];
 			if ( is_null( $value ) ) {
 				$conditions[] = "$field IS NULL";
 				continue;
@@ -435,7 +435,8 @@ class Db extends \WP_Framework_Db\Classes\Models\Db {
 		list( $conditions, $values ) = $this->build_conditions( $where, $columns );
 		$table  = $this->get_table( $table );
 		$fields = $this->build_fields( $fields, $columns );
-		$sql    = "SELECT {$fields} FROM `{$table}`";
+		/** @noinspection SqlResolve */
+		$sql = "SELECT {$fields} FROM `{$table}`";
 		if ( isset( $as ) ) {
 			$sql .= " AS $as";
 		}
@@ -579,8 +580,9 @@ class Db extends \WP_Framework_Db\Classes\Models\Db {
 		if ( ! isset( $this->table_defines[ $table ] ) || empty( $fields ) || empty( $data_list ) ) {
 			return false;
 		}
-		$columns     = $this->table_defines[ $table ]['columns'];
-		$table       = $this->get_table( $table );
+		$columns = $this->table_defines[ $table ]['columns'];
+		$table   = $this->get_table( $table );
+		/** @noinspection SqlResolve */
 		$sql         = "INSERT INTO `{$table}` ";
 		$names       = [];
 		$placeholder = [];

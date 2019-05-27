@@ -17,7 +17,7 @@
 /**
  * WP_Framework autoload
  *
- * @version 0.0.1
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -47,7 +47,7 @@ if ( ! defined( 'DS' ) ) {
 }
 
 if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
-	require_once dirname( __FILE__ ) . DS . 'src' . DS . 'framework_mock.php';
+	require_once __DIR__ . DS . 'src' . DS . 'framework_mock.php';
 
 	return;
 }
@@ -58,9 +58,9 @@ if (
 	( ! empty( $wp_version ) && version_compare( $wp_version, WP_FRAMEWORK_REQUIRED_WP_VERSION, '<' ) )
 ) {
 	// unsupported version
-	require_once dirname( __FILE__ ) . DS . 'src' . DS . 'framework_mock.php';
+	require_once __DIR__ . DS . 'src' . DS . 'framework_mock.php';
 
 	return;
 }
 
-require_once dirname( __FILE__ ) . DS . 'src' . DS . 'framework.php';
+require_once __DIR__ . DS . 'src' . DS . 'framework.php';

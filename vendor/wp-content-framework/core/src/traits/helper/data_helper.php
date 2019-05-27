@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Helper Data Helper
  *
- * @version 0.0.41
+ * @version 0.0.55
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,8 @@
 
 namespace WP_Framework_Core\Traits\Helper;
 
+use WP_Framework;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +20,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Data_Helper
  * @package WP_Framework_Core\Traits\Helper
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  */
 trait Data_Helper {
 
@@ -45,10 +47,12 @@ trait Data_Helper {
 	 * @param mixed $param
 	 * @param string $type
 	 * @param bool $check_null
+	 * @param bool $nullable
+	 * @param bool $update
 	 *
 	 * @return mixed
 	 */
-	protected function sanitize_input( $param, $type, $check_null = false ) {
+	protected function sanitize_input( $param, $type, $check_null = false, $nullable = false, $update = false ) {
 		if ( $check_null && is_null( $param ) ) {
 			return null;
 		}
@@ -69,9 +73,12 @@ trait Data_Helper {
 				$param -= 0;
 				break;
 			case 'bool':
-				// bool 以外は $param = null は null
-				// bool は !nullable (checkboxにチェックを入れたか入れてないかの二値しか取れない想定のため)
-				// したがって is_null のチェックはしない(null は false)
+				if ( $nullable && ( is_null( $param ) || $param === '' ) ) {
+					return null;
+				}
+				if ( $update && $param === '' ) {
+					return null;
+				}
 				if ( is_string( $param ) ) {
 					$param = strtolower( trim( $param ) );
 					if ( $param === 'true' ) {
@@ -81,19 +88,28 @@ trait Data_Helper {
 					} elseif ( $param === '0' ) {
 						$param = 0;
 					} else {
-						$param = ! empty( $param );
+						$param = ! empty( $param ) ? 1 : 0;
 					}
 				} else {
-					$param = ! empty( $param );
+					$param = ! empty( $param ) ? 1 : 0;
 				}
 				break;
 			default:
-				if ( is_null( $param ) ) {
+				if ( is_null( $param ) || ( (string) $param === '' ) ) {
 					return null;
 				}
 				break;
 		}
 
 		return $param;
+	}
+
+	/**
+	 * @param mixed $value
+	 *
+	 * @return bool
+	 */
+	protected function is_default( $value ) {
+		return ! is_array( $value ) && ! is_bool( $value ) && '' === (string) ( $value );
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Cache Classes Models Cache File
  *
- * @version 0.0.11
+ * @version 0.0.13
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,10 @@
  */
 
 namespace WP_Framework_Cache\Classes\Models\Cache;
+
+use WP_Framework_Cache\Traits\Cache;
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class File implements \WP_Framework_Cache\Interfaces\Cache {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Cache\Traits\Cache;
+	use Singleton, Hook, Cache;
 
 	/**
 	 * @var string[] $_dir

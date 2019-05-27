@@ -11,6 +11,13 @@
 
 namespace WP_Framework_Presenter\Classes\Models;
 
+use MatthiasMullie\Minify\CSS;
+use MatthiasMullie\Minify\JS;
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
+use WP_Framework_Presenter\Traits\Package;
+use WP_Framework_Presenter\Traits\Presenter;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -21,7 +28,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Presenter\Interfaces\Presenter {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Presenter\Traits\Package;
+	use Singleton, Hook, Presenter, Package;
 
 	/**
 	 * @var array $_script
@@ -119,7 +126,7 @@ class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	public function minify_js( $script, $wrap = true ) {
 		$script = preg_replace( '/<\s*\/?script\s*>/', '', $script );
 		if ( $this->apply_filters( 'minify_js' ) ) {
-			$minify = new \MatthiasMullie\Minify\JS();
+			$minify = new JS();
 			$minify->add( $script );
 			$script = $minify->minify();
 		}
@@ -196,7 +203,7 @@ class Minify implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	public function minify_css( $css, $wrap = true ) {
 		$css = preg_replace( '/<\s*\/?style\s*>/', '', $css );
 		if ( $this->apply_filters( 'minify_css' ) ) {
-			$minify = new \MatthiasMullie\Minify\CSS();
+			$minify = new CSS();
 			$minify->add( $css );
 			$css = $minify->minify();
 		}

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Input
  *
- * @version 0.0.29
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,9 @@
  */
 
 namespace WP_Framework_Common\Classes\Models;
+
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Traits\Singleton;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +24,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Input implements \WP_Framework_Core\Interfaces\Singleton {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Common\Traits\Package;
+	use Singleton, Package;
 
 	/**
 	 * @var array $_input

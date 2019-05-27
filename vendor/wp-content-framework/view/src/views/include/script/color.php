@@ -9,22 +9,24 @@
  * @link https://technote.space
  */
 
+use WP_Framework_Presenter\Interfaces\Presenter;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
+/** @var Presenter $instance */
 ?>
 
 <script>
-	( function ( $ ) {
-		$( ".<?php $instance->h( $instance->get_color_picker_class() );?>" ).each( function () {
+	( function( $ ) {
+		$( ".<?php $instance->h( $instance->get_color_picker_class() );?>" ).each( function() {
 			const $this = $( this );
 			$this.wpColorPicker( {
 				defaultColor: false,
-				change: function ( event, ui ) {
+				change: function( event, ui ) {
 					$this.val( ui.color.toString() ).trigger( 'change' );
 				},
-				clear: function () {
+				clear: function() {
 					$this.trigger( '<?php $instance->h( $instance->app->slug_name . '-' );?>cleared' );
 				},
 				hide: true,

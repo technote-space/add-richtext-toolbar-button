@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Api Configs Setting
  *
- * @version 0.0.1
+ * @version 0.0.14
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -31,7 +31,7 @@ return [
 				'check_referer_host'      => [
 					'label'   => 'Server host name which used to check referer host name.',
 					'default' => function ( $app ) {
-						/** @var \WP_Framework $app */
+						/** @var WP_Framework $app */
 						return $app->input->server( 'HTTP_HOST', '' );
 					},
 				],

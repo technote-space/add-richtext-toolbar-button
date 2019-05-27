@@ -9,10 +9,12 @@
  * @link https://technote.space
  */
 
+use WP_Framework_Presenter\Interfaces\Presenter;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
+/** @var Presenter $instance */
 /** @var array $args */
 /** @var string $id */
 /** @var string $class */
@@ -32,11 +34,14 @@ $attributes['size'] = isset( $size ) ? $size : '1';
 ! empty( $disabled ) and $attributes['disabled'] = 'disabled';
 isset( $selected ) and ! is_array( $selected ) and $selected = [ $selected ];
 empty( $multiple ) and ! empty( $selected ) and count( $selected ) > 1 and $selected = array_splice( $selected, 0, 1 );
+! empty( $selected ) and $selected = $instance->app->array->map( $selected, function ( $d ) use ( $instance ) {
+	return $instance->convert_select_value( $d );
+} );
 ?>
 <select <?php $instance->get_view( 'include/attributes', array_merge( $args, [ 'attributes' => $attributes ] ), true ); ?> >
 	<?php if ( ! empty( $options ) ): ?>
 		<?php foreach ( $options as $value => $option ): ?>
-            <option value="<?php $instance->h( $value ); ?>"<?php if ( ! empty( $selected ) && in_array( $value, $selected ) ): ?> selected="selected"<?php endif; ?>><?php $instance->h( $option, true ); ?></option>
+            <option value="<?php $instance->h( $value ); ?>"<?php if ( ! empty( $selected ) && in_array( $instance->convert_select_value( $value ), $selected, true ) ): ?> selected="selected"<?php endif; ?>><?php $instance->h( $option, true ); ?></option>
 		<?php endforeach; ?>
 	<?php endif; ?>
 </select>

@@ -2,7 +2,7 @@
 /**
  * WP_Framework Package Base
  *
- * @version 0.0.53
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,8 @@
  */
 
 namespace WP_Framework;
+
+use WP_Framework;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -32,7 +34,7 @@ abstract class Package_Base {
 	private $_caches = [];
 
 	/**
-	 * @var \WP_Framework $_app
+	 * @var WP_Framework $_app
 	 */
 	private $_app;
 
@@ -67,14 +69,14 @@ abstract class Package_Base {
 	protected $_namespace;
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $package
 	 * @param string $dir
 	 * @param string $version
 	 *
 	 * @return Package_Base
 	 */
-	public static function get_instance( \WP_Framework $app, $package, $dir, $version ) {
+	public static function get_instance( WP_Framework $app, $package, $dir, $version ) {
 		if ( ! isset( self::$_instances[ $package ] ) ) {
 			self::$_instances[ $package ] = new static( $app, $package, $dir, $version );
 		} else {
@@ -87,7 +89,7 @@ abstract class Package_Base {
 	/**
 	 * Main constructor.
 	 *
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $package
 	 * @param string $dir
 	 * @param string $version
@@ -98,7 +100,7 @@ abstract class Package_Base {
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $package
 	 * @param string $dir
 	 * @param string $version
@@ -151,7 +153,7 @@ abstract class Package_Base {
 
 	/**
 	 * @param $name
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
 	 * @return array
 	 */
@@ -313,7 +315,7 @@ abstract class Package_Base {
 
 	/**
 	 * @param string $name
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
 	 * @return array
 	 */

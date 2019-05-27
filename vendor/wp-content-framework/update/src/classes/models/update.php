@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Update Classes Models Update
  *
- * @version 0.0.6
+ * @version 0.0.7
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,11 @@
  */
 
 namespace WP_Framework_Update\Classes\Models;
+
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
+use WP_Framework_Presenter\Traits\Presenter;
+use WP_Framework_Update\Traits\Package;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +26,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Presenter\Interfaces\Presenter {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Update\Traits\Package;
+	use Singleton, Hook, Presenter, Package;
 
 	/**
 	 * setup update
@@ -92,11 +97,11 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$plugin_version = $this->app->get_plugin_version();
 		if ( $this->app->get_config( 'config', 'local_test_upgrade_notice' ) ) {
 			$readme = $this->app->define->plugin_dir . DS . 'readme.txt';
-			if ( is_readable( $readme ) ) {
+			if ( @is_readable( $readme ) ) {
 				$test_version   = $this->app->get_config( 'config', 'local_test_upgrade_version' );
 				$plugin_version = $test_version ? $test_version : $plugin_version;
 
-				return $this->parse_update_notice( file_get_contents( $readme ), $plugin_version );
+				return $this->parse_update_notice( @file_get_contents( $readme ), $plugin_version );
 			}
 
 			return false;

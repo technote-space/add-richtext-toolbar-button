@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Classes Main
  *
- * @version 0.0.53
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,46 @@
 
 namespace WP_Framework_Core\Classes;
 
+use Exception;
+use OutOfRangeException;
+use WP_Error;
+use WP_Framework;
+use WP_Framework\Package_Base;
+use WP_Framework_Admin\Classes\Models\Admin;
+use WP_Framework_Api\Classes\Models\Api;
+use WP_Framework_Cache\Classes\Models\Cache;
+use WP_Framework_Common\Classes\Models\Array_Utility;
+use WP_Framework_Common\Classes\Models\Config;
+use WP_Framework_Common\Classes\Models\Define;
+use WP_Framework_Common\Classes\Models\Deprecated;
+use WP_Framework_Common\Classes\Models\File_Utility;
+use WP_Framework_Common\Classes\Models\Filter;
+use WP_Framework_Common\Classes\Models\Input;
+use WP_Framework_Common\Classes\Models\Option;
+use WP_Framework_Common\Classes\Models\Setting;
+use WP_Framework_Common\Classes\Models\String_Utility;
+use WP_Framework_Common\Classes\Models\System;
+use WP_Framework_Common\Classes\Models\Uninstall;
+use WP_Framework_Common\Classes\Models\User;
+use WP_Framework_Common\Classes\Models\Utility;
+use WP_Framework_Core\Interfaces\Package;
+use WP_Framework_Core\Interfaces\Singleton;
+use WP_Framework_Cron\Classes\Models\Cron;
+use WP_Framework_Custom_Post\Classes\Models\Custom_Post;
+use WP_Framework_Db\Classes\Models\Db;
+use WP_Framework_Device\Classes\Models\Device;
+use WP_Framework_Log\Classes\Models\Log;
+use WP_Framework_Mail\Classes\Models\Mail;
+use WP_Framework_Post\Classes\Models\Post;
+use WP_Framework_Presenter\Classes\Models\Drawer;
+use WP_Framework_Presenter\Classes\Models\Minify;
+use WP_Framework_Session\Classes\Models\Session;
+use WP_Framework_Social\Classes\Models\Social;
+use WP_Framework_Test\Classes\Models\Test;
+use WP_Framework_Update\Classes\Models\Update;
+use WP_Framework_Update_Check\Classes\Models\Update_Check;
+use WP_Framework_Upgrade\Classes\Models\Upgrade;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,38 +58,38 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Class Main
  * @package WP_Framework_Core\Classes
- * @property \WP_Framework_Common\Classes\Models\Define $define
- * @property \WP_Framework_Common\Classes\Models\Config $config
- * @property \WP_Framework_Common\Classes\Models\Setting $setting
- * @property \WP_Framework_Common\Classes\Models\Filter $filter
- * @property \WP_Framework_Common\Classes\Models\Uninstall $uninstall
- * @property \WP_Framework_Common\Classes\Models\Utility $utility
- * @property \WP_Framework_Common\Classes\Models\Array_Utility $array
- * @property \WP_Framework_Common\Classes\Models\String_Utility $string
- * @property \WP_Framework_Common\Classes\Models\File_Utility $file
- * @property \WP_Framework_Common\Classes\Models\Option $option
- * @property \WP_Framework_Common\Classes\Models\User $user
- * @property \WP_Framework_Common\Classes\Models\Input $input
- * @property \WP_Framework_Common\Classes\Models\Deprecated $deprecated
- * @property \WP_Framework_Common\Classes\Models\System $system
- * @property \WP_Framework_Db\Classes\Models\Db $db
- * @property \WP_Framework_Log\Classes\Models\Log $log
- * @property \WP_Framework_Admin\Classes\Models\Admin $admin
- * @property \WP_Framework_Api\Classes\Models\Api $api
- * @property \WP_Framework_Presenter\Classes\Models\Drawer $drawer
- * @property \WP_Framework_Presenter\Classes\Models\Minify $minify
- * @property \WP_Framework_Mail\Classes\Models\Mail $mail
- * @property \WP_Framework_Test\Classes\Models\Test $test
- * @property \WP_Framework_Cron\Classes\Models\Cron $cron
- * @property \WP_Framework_Custom_Post\Classes\Models\Custom_Post $custom_post
- * @property \WP_Framework_Device\Classes\Models\Device $device
- * @property \WP_Framework_Session\Classes\Models\Session $session
- * @property \WP_Framework_Social\Classes\Models\Social $social
- * @property \WP_Framework_Post\Classes\Models\Post $post
- * @property \WP_Framework_Update\Classes\Models\Update $update
- * @property \WP_Framework_Update_Check\Classes\Models\Update_Check $update_check
- * @property \WP_Framework_Upgrade\Classes\Models\Upgrade $upgrade
- * @property \WP_Framework_Cache\Classes\Models\Cache $cache
+ * @property Define $define
+ * @property Config $config
+ * @property Setting $setting
+ * @property Filter $filter
+ * @property Uninstall $uninstall
+ * @property Utility $utility
+ * @property Array_Utility $array
+ * @property String_Utility $string
+ * @property File_Utility $file
+ * @property Option $option
+ * @property User $user
+ * @property Input $input
+ * @property Deprecated $deprecated
+ * @property System $system
+ * @property Db $db
+ * @property Log $log
+ * @property Admin $admin
+ * @property Api $api
+ * @property Drawer $drawer
+ * @property Minify $minify
+ * @property Mail $mail
+ * @property Test $test
+ * @property Cron $cron
+ * @property Custom_Post $custom_post
+ * @property Device $device
+ * @property Session $session
+ * @property Social $social
+ * @property Post $post
+ * @property Update $update
+ * @property Update_Check $update_check
+ * @property Upgrade $upgrade
+ * @property Cache $cache
  */
 class Main {
 
@@ -64,7 +104,7 @@ class Main {
 	private static $_shared_object = [];
 
 	/**
-	 * @var \WP_Framework $app
+	 * @var WP_Framework $app
 	 */
 	protected $app;
 
@@ -94,7 +134,7 @@ class Main {
 	private $_namespace_target_package;
 
 	/**
-	 * @var \WP_Framework|null[] $_alternative_instances
+	 * @var WP_Framework|null[] $_alternative_instances
 	 */
 	private $_alternative_instances;
 
@@ -104,11 +144,11 @@ class Main {
 	private $_property_instances = [];
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
 	 * @return Main
 	 */
-	public static function get_instance( \WP_Framework $app ) {
+	public static function get_instance( WP_Framework $app ) {
 		! isset( self::$_instances[ $app->plugin_name ] ) and self::$_instances[ $app->plugin_name ] = new self( $app );
 
 		return self::$_instances[ $app->plugin_name ];
@@ -117,9 +157,9 @@ class Main {
 	/**
 	 * Main constructor.
 	 *
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 */
-	private function __construct( \WP_Framework $app ) {
+	private function __construct( WP_Framework $app ) {
 		$this->app = $app;
 		$this->initialize();
 	}
@@ -127,8 +167,8 @@ class Main {
 	/**
 	 * @param string $name
 	 *
-	 * @return \WP_Framework_Core\Interfaces\Singleton
-	 * @throws \OutOfRangeException
+	 * @return Singleton
+	 * @throws OutOfRangeException
 	 */
 	public function __get( $name ) {
 		return $this->get( $name );
@@ -186,7 +226,7 @@ class Main {
 	/**
 	 * @param string $package
 	 *
-	 * @return \WP_Framework|null
+	 * @return WP_Framework|null
 	 */
 	private function get_alternative_instance( $package ) {
 		foreach ( $this->app->get_instances() as $instance ) {
@@ -201,23 +241,23 @@ class Main {
 	/**
 	 * @param string $name
 	 *
-	 * @return \WP_Framework_Core\Interfaces\Singleton
+	 * @return Singleton
 	 */
 	public function get( $name ) {
 		if ( isset( $this->_properties[ $name ] ) ) {
 			$class = $this->_properties[ $name ];
 			if ( ! isset( $this->_property_instances[ $class ] ) ) {
-				/** @var \WP_Framework_Core\Interfaces\Singleton $class */
+				/** @var Singleton $class */
 				try {
 					$this->_property_instances[ $class ] = $class::get_instance( $this->app );
-				} catch ( \Exception $e ) {
-					\WP_Framework::wp_die( $e->getMessage(), __FILE__, __LINE__ );
+				} catch ( Exception $e ) {
+					WP_Framework::wp_die( $e->getMessage(), __FILE__, __LINE__ );
 				}
 			}
 
 			return $this->_property_instances[ $class ];
 		}
-		\WP_Framework::wp_die( $name . ' is undefined.', __FILE__, __LINE__ );
+		WP_Framework::wp_die( $name . ' is undefined.', __FILE__, __LINE__ );
 
 		return null;
 	}
@@ -323,7 +363,7 @@ class Main {
 	 */
 	public function get_package_versions() {
 		return $this->app->array->combine( array_map( function ( $package ) {
-			/** @var \WP_Framework\Package_Base $package */
+			/** @var Package_Base $package */
 			return [
 				'version' => $package->get_version(),
 				'package' => $package->get_package(),
@@ -391,9 +431,9 @@ class Main {
 
 			return;
 		}
-		if ( $message instanceof \Exception ) {
+		if ( $message instanceof Exception ) {
 			$this->log->log( $message->getMessage(), isset( $context ) ? $context : $message->getTraceAsString(), empty( $level ) ? 'error' : $level );
-		} elseif ( $message instanceof \WP_Error ) {
+		} elseif ( $message instanceof WP_Error ) {
 			$this->log->log( $message->get_error_message(), isset( $context ) ? $context : $message->get_error_data(), empty( $level ) ? 'error' : $level );
 		} else {
 			$this->log->log( $message, $context, $level );
@@ -405,10 +445,10 @@ class Main {
 	 * @param mixed $context
 	 */
 	private function error_log( $message, $context ) {
-		if ( $message instanceof \Exception ) {
+		if ( $message instanceof Exception ) {
 			error_log( $message->getMessage() );
 			error_log( print_r( isset( $context ) ? $context : $message->getTraceAsString(), true ) );
-		} elseif ( $message instanceof \WP_Error ) {
+		} elseif ( $message instanceof WP_Error ) {
 			error_log( $message->get_error_message() );
 			error_log( print_r( isset( $context ) ? $context : $message->get_error_data(), true ) );
 		}
@@ -445,7 +485,7 @@ class Main {
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $instance
+	 * @param Package $instance
 	 * @param string $name
 	 * @param array $args
 	 * @param bool $echo
@@ -454,7 +494,7 @@ class Main {
 	 *
 	 * @return string
 	 */
-	public function get_view( \WP_Framework_Core\Interfaces\Package $instance, $name, array $args = [], $echo = false, $error = true, $remove_nl = false ) {
+	public function get_view( Package $instance, $name, array $args = [], $echo = false, $error = true, $remove_nl = false ) {
 		if ( ! $this->app->is_valid_package( 'presenter' ) ) {
 			return '';
 		}
@@ -465,12 +505,12 @@ class Main {
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $instance
+	 * @param Package $instance
 	 * @param string $name
 	 * @param array $args
 	 * @param int $priority
 	 */
-	public function add_script_view( \WP_Framework_Core\Interfaces\Package $instance, $name, array $args = [], $priority = 10 ) {
+	public function add_script_view( Package $instance, $name, array $args = [], $priority = 10 ) {
 		if ( ! $this->app->is_valid_package( 'presenter' ) ) {
 			return;
 		}
@@ -480,12 +520,12 @@ class Main {
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $instance
+	 * @param Package $instance
 	 * @param string $name
 	 * @param array $args
 	 * @param int $priority
 	 */
-	public function add_style_view( \WP_Framework_Core\Interfaces\Package $instance, $name, array $args = [], $priority = 10 ) {
+	public function add_style_view( Package $instance, $name, array $args = [], $priority = 10 ) {
 		if ( ! $this->app->is_valid_package( 'presenter' ) ) {
 			return;
 		}
@@ -495,7 +535,7 @@ class Main {
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $instance
+	 * @param Package $instance
 	 * @param string $handle
 	 * @param string $file
 	 * @param array $depends
@@ -503,7 +543,7 @@ class Main {
 	 * @param string $media
 	 * @param string $dir
 	 */
-	public function enqueue_style( \WP_Framework_Core\Interfaces\Package $instance, $handle, $file, array $depends = [], $ver = false, $media = 'all', $dir = 'css' ) {
+	public function enqueue_style( Package $instance, $handle, $file, array $depends = [], $ver = false, $media = 'all', $dir = 'css' ) {
 		if ( ! $this->app->is_valid_package( 'presenter' ) ) {
 			return;
 		}
@@ -513,7 +553,7 @@ class Main {
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $instance
+	 * @param Package $instance
 	 * @param string $handle
 	 * @param string $file
 	 * @param array $depends
@@ -521,7 +561,7 @@ class Main {
 	 * @param bool $in_footer
 	 * @param string $dir
 	 */
-	public function enqueue_script( \WP_Framework_Core\Interfaces\Package $instance, $handle, $file, array $depends = [], $ver = false, $in_footer = true, $dir = 'js' ) {
+	public function enqueue_script( Package $instance, $handle, $file, array $depends = [], $ver = false, $in_footer = true, $dir = 'js' ) {
 		if ( ! $this->app->is_valid_package( 'presenter' ) ) {
 			return;
 		}
@@ -531,14 +571,14 @@ class Main {
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $instance
+	 * @param Package $instance
 	 * @param string $handle
 	 * @param string $name
 	 * @param array $data
 	 *
 	 * @return bool
 	 */
-	public function localize_script( \WP_Framework_Core\Interfaces\Package $instance, $handle, $name, array $data ) {
+	public function localize_script( Package $instance, $handle, $name, array $data ) {
 		if ( ! $this->app->is_valid_package( 'presenter' ) ) {
 			return false;
 		}

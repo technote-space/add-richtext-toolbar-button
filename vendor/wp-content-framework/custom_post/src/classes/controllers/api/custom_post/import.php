@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Controller Api Custom Post Import
  *
- * @version 0.0.22
+ * @version 0.0.34
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,12 @@
  */
 
 namespace WP_Framework_Custom_Post\Classes\Controllers\Api\Custom_Post;
+
+use WP_Error;
+use WP_Framework_Api\Classes\Controllers\Api\Base;
+use WP_Framework_Custom_Post\Interfaces\Custom_Post;
+use WP_REST_Request;
+use WP_REST_Response;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -19,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Class Import
  * @package WP_Framework_Custom_Post\Classes\Controllers\Api\Custom_Post
  */
-class Import extends \WP_Framework_Api\Classes\Controllers\Api\Base {
+class Import extends Base {
 
 	/**
 	 * @return string
@@ -72,7 +78,7 @@ class Import extends \WP_Framework_Api\Classes\Controllers\Api\Base {
 						return false;
 					}
 
-					/** @var \WP_Framework_Custom_Post\Interfaces\Custom_Post $custom_post */
+					/** @var Custom_Post $custom_post */
 					$custom_post = $_custom_post->get_custom_post_type( $var );
 					if ( empty( $custom_post ) ) {
 						return false;
@@ -96,18 +102,18 @@ class Import extends \WP_Framework_Api\Classes\Controllers\Api\Base {
 	}
 
 	/**
-	 * @param \WP_REST_Request|array $params
+	 * @param WP_REST_Request|array $params
 	 *
-	 * @return int|\WP_Error|\WP_REST_Response
+	 * @return int|WP_Error|WP_REST_Response
 	 */
 	public function callback( $params ) {
 		/** @var \WP_Framework_Custom_Post\Classes\Models\Custom_Post $_custom_post */
 		$_custom_post = \WP_Framework_Custom_Post\Classes\Models\Custom_Post::get_instance( $this->app );
-		/** @var \WP_Framework_Custom_Post\Interfaces\Custom_Post $custom_post */
+		/** @var Custom_Post $custom_post */
 		$custom_post = $_custom_post->get_custom_post_type( $params['post_type'] );
 		list( $result, $message, $success, $fail ) = $custom_post->import( @file_get_contents( $_FILES['import']['tmp_name'] ) );
 
-		return new \WP_REST_Response( [
+		return new WP_REST_Response( [
 			'result'  => $result,
 			'message' => $message,
 			'success' => $success,

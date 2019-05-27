@@ -39,7 +39,7 @@ return [
 					'label'   => 'Assets Version',
 					'type'    => 'string',
 					'default' => function ( $app ) {
-						/** @var \WP_Framework $app */
+						/** @var WP_Framework $app */
 						return $app->get_plugin_version();
 					},
 				],

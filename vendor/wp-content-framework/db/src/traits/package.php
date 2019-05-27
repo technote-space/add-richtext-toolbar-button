@@ -11,6 +11,8 @@
 
 namespace WP_Framework_Db\Traits;
 
+use WP_Framework;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +20,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Package
  * @package WP_Framework_Db\Traits
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  */
 trait Package {
 

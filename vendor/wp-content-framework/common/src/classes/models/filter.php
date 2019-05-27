@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Filter
  *
- * @version 0.0.41
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,12 @@
  */
 
 namespace WP_Framework_Common\Classes\Models;
+
+use Exception;
+use WP_Framework;
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Interfaces\Singleton;
+use WP_Framework_Core\Traits\Hook;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -19,9 +25,9 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Class Filter
  * @package WP_Framework_Common\Classes\Models
  */
-class Filter implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook {
+class Filter implements Singleton, \WP_Framework_Core\Interfaces\Hook {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Common\Traits\Package;
+	use \WP_Framework_Core\Traits\Singleton, Hook, Package;
 
 	/**
 	 * @var array $_target_app
@@ -86,7 +92,7 @@ class Filter implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	/**
 	 * @param string $class
 	 *
-	 * @return false|\WP_Framework|\WP_Framework_Core\Interfaces\Singleton
+	 * @return false|WP_Framework|Singleton
 	 */
 	private function get_target_app( $class ) {
 		if ( ! $this->app->system->is_enough_version() ) {
@@ -113,9 +119,9 @@ class Filter implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			if ( false === $app ) {
 				if ( class_exists( $class ) && is_subclass_of( $class, '\WP_Framework_Core\Interfaces\Singleton' ) ) {
 					try {
-						/** @var \WP_Framework_Core\Interfaces\Singleton $class */
+						/** @var Singleton $class */
 						$app = $class::get_instance( $this->app );
-					} catch ( \Exception $e ) {
+					} catch ( Exception $e ) {
 					}
 				}
 			}

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Api Classes Controller Api Nonce
  *
- * @version 0.0.13
+ * @version 0.0.14
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,11 @@
  */
 
 namespace WP_Framework_Api\Classes\Controllers\Api;
+
+use WP_Error;
+use WP_Framework_Api\Classes\Models\Api;
+use WP_REST_Request;
+use WP_REST_Response;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -65,17 +70,17 @@ class Nonce extends Base {
 	}
 
 	/**
-	 * @param \WP_REST_Request|array $params
+	 * @param WP_REST_Request|array $params
 	 *
-	 * @return int|\WP_Error|\WP_REST_Response
+	 * @return int|WP_Error|WP_REST_Response
 	 */
 	public function callback( $params ) {
 		global $current_user;
 		$current_user = null;
 
-		/** @var \WP_Framework_Api\Classes\Models\Api $api */
-		$api = \WP_Framework_Api\Classes\Models\Api::get_instance( $this->app );
+		/** @var Api $api */
+		$api = Api::get_instance( $this->app );
 
-		return new \WP_REST_Response( $api->get_nonce_data() );
+		return new WP_REST_Response( $api->get_nonce_data() );
 	}
 }

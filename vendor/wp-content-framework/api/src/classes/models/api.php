@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Api Classes Models Api
  *
- * @version 0.0.13
+ * @version 0.0.14
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,16 @@
  */
 
 namespace WP_Framework_Api\Classes\Models;
+
+use WP_Error;
+use WP_Framework_Api\Classes\Controllers\Api\Base;
+use WP_Framework_Api\Traits\Package;
+use WP_Framework_Core\Traits\Loader;
+use WP_Framework_Core\Traits\Nonce;
+use WP_Framework_Presenter\Traits\Presenter;
+use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Server;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +31,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Presenter\Interfaces\Presenter, \WP_Framework_Core\Interfaces\Nonce {
 
-	use \WP_Framework_Core\Traits\Loader, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Core\Traits\Nonce, \WP_Framework_Api\Traits\Package;
+	use Loader, Presenter, Nonce, Package;
 
 	/**
 	 * @var bool $_use_all_api
@@ -106,7 +116,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 			return;
 		}
 		foreach ( $this->get_api_controllers() as $api ) {
-			/** @var \WP_Framework_Api\Classes\Controllers\Api\Base $api */
+			/** @var Base $api */
 			register_rest_route( $this->get_api_namespace(), $api->get_endpoint(), [
 				'methods'             => strtoupper( $api->get_method() ),
 				'permission_callback' => function () use ( $api ) {
@@ -127,7 +137,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 			return;
 		}
 		foreach ( $this->get_api_controllers() as $api ) {
-			/** @var \WP_Framework_Api\Classes\Controllers\Api\Base $api */
+			/** @var Base $api */
 			$action   = $this->get_api_namespace() . '_' . $api->get_endpoint();
 			$callback = function () use ( $api ) {
 				$this->ajax_action_execute( $api );
@@ -146,7 +156,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 		if ( ! empty( $this->_use_apis ) ) {
 			$this->_use_apis['get_nonce'] = true;
 		}
-		/** @var \WP_Framework_Api\Classes\Controllers\Api\Base $api */
+		/** @var Base $api */
 		foreach ( $this->get_api_controllers() as $api ) {
 			$name = $api->get_call_function_name();
 			if ( ! $this->_use_all_api && empty( $this->_use_apis[ $name ] ) ) {
@@ -212,12 +222,12 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	}
 
 	/**
-	 * @param \WP_Framework_Api\Classes\Controllers\Api\Base $api
+	 * @param Base $api
 	 */
-	private function ajax_action_execute( \WP_Framework_Api\Classes\Controllers\Api\Base $api ) {
+	private function ajax_action_execute( Base $api ) {
 		$result = $this->get_ajax_action_result( $api );
-		if ( ! is_wp_error( $result ) && ! ( $result instanceof \WP_REST_Response ) ) {
-			$result = new \WP_REST_Response( $result );
+		if ( ! is_wp_error( $result ) && ! ( $result instanceof WP_REST_Response ) ) {
+			$result = new WP_REST_Response( $result );
 		}
 		if ( is_wp_error( $result ) ) {
 			$result = $this->error_to_response( $result );
@@ -232,11 +242,11 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	}
 
 	/**
-	 * @param \WP_Error $error
+	 * @param WP_Error $error
 	 *
-	 * @return \WP_REST_Response
+	 * @return WP_REST_Response
 	 */
-	private function error_to_response( \WP_Error $error ) {
+	private function error_to_response( WP_Error $error ) {
 		$error_data = $error->get_error_data();
 		if ( is_array( $error_data ) && isset( $error_data['status'] ) ) {
 			$status = $error_data['status'];
@@ -256,25 +266,25 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 			array_shift( $errors );
 			$data['additional_errors'] = $errors;
 		}
-		$response = new \WP_REST_Response( $data, $status );
+		$response = new WP_REST_Response( $data, $status );
 
 		return $response;
 	}
 
 	/**
-	 * @param \WP_Framework_Api\Classes\Controllers\Api\Base $api
+	 * @param Base $api
 	 *
-	 * @return int|\WP_Error|\WP_REST_Response
+	 * @return int|WP_Error|WP_REST_Response
 	 */
-	private function get_ajax_action_result( \WP_Framework_Api\Classes\Controllers\Api\Base $api ) {
+	private function get_ajax_action_result( Base $api ) {
 		if ( ! $this->nonce_check() ) {
-			return new \WP_Error( 'rest_forbidden', 'Forbidden', [ 'status' => 403 ] );
+			return new WP_Error( 'rest_forbidden', 'Forbidden', [ 'status' => 403 ] );
 		}
 		if ( ! $this->app->user_can( $api->get_capability() ) ) {
-			return new \WP_Error( 'rest_forbidden', 'Forbidden', [ 'status' => 403 ] );
+			return new WP_Error( 'rest_forbidden', 'Forbidden', [ 'status' => 403 ] );
 		}
 		if ( strtoupper( $api->get_method() ) !== $this->app->input->method() ) {
-			return new \WP_Error( 'rest_no_route', __( 'No route was found matching the URL and request method' ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_no_route', __( 'No route was found matching the URL and request method' ), [ 'status' => 404 ] );
 		}
 
 		if ( ! $this->app->input->is_post() ) {
@@ -286,7 +296,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 		$args           = $api->get_args_setting();
 		$required       = [];
 		$invalid_params = [];
-		$request        = new \WP_REST_Request( $this->app->input->method() );
+		$request        = new WP_REST_Request( $this->app->input->method() );
 		$request->set_query_params( wp_unslash( $this->app->input->get() ) );
 		$request->set_body_params( wp_unslash( $this->app->input->post() ) );
 		foreach ( $args as $name => $setting ) {
@@ -321,14 +331,14 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 		}
 
 		if ( ! empty( $required ) ) {
-			return new \WP_Error( 'rest_missing_callback_param', sprintf( __( 'Missing parameter(s): %s' ), implode( ', ', $required ) ), [
+			return new WP_Error( 'rest_missing_callback_param', sprintf( __( 'Missing parameter(s): %s' ), implode( ', ', $required ) ), [
 				'status' => 400,
 				'params' => $required,
 			] );
 		}
 
 		if ( $invalid_params ) {
-			return new \WP_Error( 'rest_invalid_param', sprintf( __( 'Invalid parameter(s): %s' ), implode( ', ', array_keys( $invalid_params ) ) ), [
+			return new WP_Error( 'rest_invalid_param', sprintf( __( 'Invalid parameter(s): %s' ), implode( ', ', array_keys( $invalid_params ) ) ), [
 				'status' => 400,
 				'params' => $invalid_params,
 			] );
@@ -379,7 +389,7 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 
 		$api_controllers = $this->get_class_list();
 		if ( ! $this->app->utility->doing_ajax() ) {
-			/** @var \WP_Framework_Api\Classes\Controllers\Api\Base $class */
+			/** @var Base $class */
 			foreach ( $api_controllers as $name => $class ) {
 				if ( ! $class->is_valid() || ( is_admin() && $class->is_only_front() ) || ( ! is_admin() && $class->is_only_admin() ) ) {
 					unset( $api_controllers[ $name ] );
@@ -392,8 +402,8 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 
 	/**
 	 * @param mixed $result
-	 * @param \WP_REST_Server $server
-	 * @param \WP_REST_Request $request
+	 * @param WP_REST_Server $server
+	 * @param WP_REST_Request $request
 	 *
 	 * @return mixed
 	 */
@@ -401,8 +411,8 @@ class Api implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Present
 	private function rest_pre_dispatch(
 		/** @noinspection PhpUnusedParameterInspection */
 		$result,
-		\WP_REST_Server $server,
-		\WP_REST_Request $request
+		WP_REST_Server $server,
+		WP_REST_Request $request
 	) {
 		if ( $this->use_admin_ajax() ) {
 			return $result;
