@@ -51,7 +51,7 @@ return [
 				'comment'  => 'priority',
 			],
 			'is_valid_toolbar_button' => [
-				'type'     => 'TINYINT(1)',
+				'type'     => 'BIT(1)',
 				'unsigned' => true,
 				'null'     => false,
 				'default'  => 1,

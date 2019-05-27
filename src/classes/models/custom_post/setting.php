@@ -463,7 +463,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 						if ( empty( $setting ) ) {
 							continue;
 						}
-						$is_default = ! is_array( $data[ $key ] ) && '' === (string) ( $data[ $key ] );
+						$is_default = $this->is_default( $data[ $key ] );
 						$is_default and $data[ $key ] = $setting['value'];
 						$details[ $setting['label'] ] = $data[ $key ];
 					}
@@ -489,7 +489,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 						if ( empty( $setting ) ) {
 							continue;
 						}
-						$is_default = ! is_array( $data[ $key ] ) && '' === (string) ( $data[ $key ] );
+						$is_default = $this->is_default( $data[ $key ] );
 						$is_default and $data[ $key ] = $setting['value'];
 						if ( 'icon' === $key ) {
 							$details[ $setting['label'] ] = [
@@ -620,7 +620,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 						continue;
 					}
 
-					$is_default                          = ! is_array( $data[ $key ] ) && '' === (string) ( $data[ $key ] );
+					$is_default                          = $this->is_default( $data[ $key ] );
 					$setting['attributes']['data-value'] = $is_default ? $setting['value'] : $data[ $key ];
 					list( $name, $value ) = $this->parse_setting( $setting, $key );
 					$options[ $name ] = $value;
