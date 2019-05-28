@@ -11,9 +11,7 @@
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
 ?>
-
 <style>
     .display-area {
         max-width: 100px;

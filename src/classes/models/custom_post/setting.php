@@ -10,6 +10,12 @@
 
 namespace Richtext_Toolbar_Button\Classes\Models\Custom_Post;
 
+use Richtext_Toolbar_Button\Classes\Models\Assets;
+use Richtext_Toolbar_Button\Traits\Models\Custom_Post;
+use stdClass;
+use WP_Framework_Db\Classes\Models\Query\Builder;
+use WP_Post;
+
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
@@ -20,7 +26,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
  */
 class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post {
 
-	use \Richtext_Toolbar_Button\Traits\Models\Custom_Post;
+	use Custom_Post;
 
 	/**
 	 * @var array $_cache_setting
@@ -65,8 +71,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			return;
 		}
 
-		/** @var \Richtext_Toolbar_Button\Classes\Models\Assets $assets */
-		$assets = \Richtext_Toolbar_Button\Classes\Models\Assets::get_instance( $this->app );
+		/** @var Assets $assets */
+		$assets = Assets::get_instance( $this->app );
 		$assets->enqueue_plugin_assets();
 		$this->add_script_view( 'admin/script/custom_post/preview', [
 			'css_handle'         => $assets->get_css_handle(),
@@ -87,7 +93,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param array $params
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
@@ -291,7 +297,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
 			remove_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
 		}
-		$editor_settings = apply_filters( 'block_editor_settings', $editor_settings, is_singular() ? get_post() : new \stdClass() );
+		$editor_settings = apply_filters( 'block_editor_settings', $editor_settings, is_singular() ? get_post() : new stdClass() );
 		if ( function_exists( 'gutenberg_extend_block_editor_styles' ) ) {
 			add_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
 		}
@@ -301,12 +307,12 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $params
 	 */
 	protected function before_output_edit_form(
 		/** @noinspection PhpUnusedParameterInspection */
-		\WP_Post $post, array $params
+		WP_Post $post, array $params
 	) {
 		$this->setup_dashicon_picker();
 		$this->setup_media_uploader();
@@ -542,28 +548,28 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $old
 	 * @param array $new
 	 */
-	public function data_updated( $post_id, \WP_Post $post, array $old, array $new ) {
+	public function data_updated( $post_id, WP_Post $post, array $old, array $new ) {
 		$this->clear_cache_file();
 	}
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $data
 	 */
-	public function data_inserted( $post_id, \WP_Post $post, array $data ) {
+	public function data_inserted( $post_id, WP_Post $post, array $data ) {
 		$this->clear_cache_file();
 	}
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function untrash_post( $post_id, \WP_Post $post ) {
+	public function untrash_post( $post_id, WP_Post $post ) {
 		$this->clear_cache_file();
 	}
 
@@ -588,8 +594,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * clear options cache
 	 */
 	private function clear_cache_file() {
-		/** @var \Richtext_Toolbar_Button\Classes\Models\Assets $assets */
-		$assets = \Richtext_Toolbar_Button\Classes\Models\Assets::get_instance( $this->app );
+		/** @var Assets $assets */
+		$assets = Assets::get_instance( $this->app );
 		$assets->clear_cache_file();
 	}
 
@@ -607,7 +613,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			$updated_at_direction = 'front' === $target ? 'ASC' : 'DESC';
 			foreach (
 				$this->get_list_data( function ( $query ) use ( $priority_direction, $updated_at_direction, $group_name_direction ) {
-					/** @var \WP_Framework_Db\Classes\Models\Query\Builder $query */
+					/** @var Builder $query */
 					$query->order_by( 'priority', $priority_direction )
 					      ->order_by( 'updated_at', $updated_at_direction )
 					      ->order_by( 'group_name', $group_name_direction );
@@ -625,7 +631,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					list( $name, $value ) = $this->parse_setting( $setting, $key );
 					$options[ $name ] = $value;
 				}
-				/** @var \WP_Post $post */
+				/** @var WP_Post $post */
 				$post                  = $data['post'];
 				$options['class_name'] = $this->_get_class_name( $options, $post );
 				$options['title']      = $post->post_title;
@@ -690,7 +696,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param array $options
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return string
 	 */
@@ -722,7 +728,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @param array $options
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return string
 	 */
@@ -740,7 +746,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return string
 	 */
