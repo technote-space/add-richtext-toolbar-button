@@ -15,9 +15,6 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 
 return [
 
-	// db version
-	'db_version'          => '0.0.1',
-
 	// default delete rule
 	'default_delete_rule' => 'physical',
 

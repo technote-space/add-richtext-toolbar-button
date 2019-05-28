@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0.3
 Requires PHP: 5.6
 Tested up to: 5.2
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,11 @@ This plugin needs PHP5.6 or higher.
 6. Dashboard
 
 == Upgrade Notice ==
+
+= 1.1.6 =
+* ColorIndicatorを追加しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/122)
+* ツールバーボタンの挙動を修正しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/123)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/128)
 
 = 1.1.5 =
 * [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/121)
@@ -96,6 +101,11 @@ This plugin needs PHP5.6 or higher.
 * サイドバーの動作改善
 
 == Changelog ==
+
+= 1.1.6 (2019/5/28) =
+* Improved: [Add `ColorIndicator`](https://github.com/technote-space/add-richtext-toolbar-button/issues/122)
+* Fixed: [Behavior of Toolbar button](https://github.com/technote-space/add-richtext-toolbar-button/issues/123)
+* Added: [Stripe design preset](https://github.com/technote-space/add-richtext-toolbar-button/issues/129)
 
 = 1.1.5 (2019/4/28) =
 * Improved: [Consider incorrect argument](https://github.com/wp-content-framework/admin/issues/58)

@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Classes Models Custom Post
  *
- * @version 0.0.33
+ * @version 0.0.34
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,15 @@
  */
 
 namespace WP_Framework_Custom_Post\Classes\Models;
+
+use Exception;
+use stdClass;
+use WP_Framework_Common\Traits\Uninstall;
+use WP_Framework_Core\Traits\Loader;
+use WP_Framework_Custom_Post\Traits\Package;
+use WP_Framework_Presenter\Traits\Presenter;
+use WP_Post;
+use WP_Query;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +30,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework_Presenter\Interfaces\Presenter, \WP_Framework_Common\Interfaces\Uninstall {
 
-	use \WP_Framework_Core\Traits\Loader, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Common\Traits\Uninstall, \WP_Framework_Custom_Post\Traits\Package;
+	use Loader, Presenter, Uninstall, Package;
 
 	/**
 	 * @var \WP_Framework_Custom_Post\Interfaces\Custom_Post[] $_custom_posts
@@ -84,12 +93,12 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 
 	/**
 	 * @param array $actions
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function post_row_actions( array $actions, \WP_Post $post ) {
+	private function post_row_actions( array $actions, WP_Post $post ) {
 		if ( $this->is_valid_custom_post_type( $post->post_type ) ) {
 			$custom_post = $this->get_custom_post_type( $post->post_type );
 
@@ -101,7 +110,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 
 	/**
 	 * @param string $search
-	 * @param \WP_Query|string $wp_query $wp_query
+	 * @param WP_Query|string $wp_query $wp_query
 	 *
 	 * @return string
 	 */
@@ -126,7 +135,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 
 	/**
 	 * @param string $join
-	 * @param \WP_Query|string $wp_query
+	 * @param WP_Query|string $wp_query
 	 *
 	 * @return string
 	 */
@@ -150,7 +159,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	}
 
 	/**
-	 * @param \WP_Query $wp_query
+	 * @param WP_Query $wp_query
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_posts_orderby( $wp_query ) {
@@ -178,7 +187,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	 * @param string $type
 	 * @param string $perm
 	 *
-	 * @return array|bool|mixed|object|\stdClass
+	 * @return array|bool|mixed|object|stdClass
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function wp_count_posts( $counts, $type = 'post', $perm = '' ) {
@@ -187,7 +196,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 		}
 
 		if ( ! post_type_exists( $type ) ) {
-			return new \stdClass;
+			return new stdClass;
 		}
 
 		$cache_key = _count_posts_cache_key( $type, $perm ) . '_author';
@@ -214,11 +223,11 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param bool $update
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function save_post( $post_id, \WP_Post $post, $update ) {
+	private function save_post( $post_id, WP_Post $post, $update ) {
 		if ( $this->is_valid_update( $post->post_status, $post->post_type ) ) {
 			$custom_post = $this->get_custom_post_type( $post->post_type );
 			if ( ! empty( $custom_post ) ) {
@@ -249,7 +258,7 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 							}
 						}
 					} else {
-						throw new \Exception( $this->app->db->get_last_error() );
+						throw new Exception( $this->app->db->get_last_error() );
 					}
 				} ) ) {
 					$this->_validation_errors = [
@@ -264,10 +273,10 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function untrash_post( $post_id, \WP_Post $post ) {
+	private function untrash_post( $post_id, WP_Post $post ) {
 		if ( $this->is_valid_update( $post->post_status, $post->post_type, true ) ) {
 			$custom_post = $this->get_custom_post_type( $post->post_type );
 			if ( ! empty( $custom_post ) ) {
@@ -473,10 +482,10 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function edit_form_after_title( \WP_Post $post ) {
+	private function edit_form_after_title( WP_Post $post ) {
 		if ( $this->is_valid_custom_post_type( $post->post_type ) ) {
 			$custom_post = $this->get_custom_post_type( $post->post_type );
 			if ( ! empty( $custom_post ) ) {
@@ -491,10 +500,10 @@ class Custom_Post implements \WP_Framework_Core\Interfaces\Loader, \WP_Framework
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function edit_form_after_editor( \WP_Post $post ) {
+	private function edit_form_after_editor( WP_Post $post ) {
 		if ( $this->is_valid_custom_post_type( $post->post_type ) ) {
 			$custom_post = $this->get_custom_post_type( $post->post_type );
 			if ( ! empty( $custom_post ) ) {

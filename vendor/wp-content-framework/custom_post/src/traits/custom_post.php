@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.32
+ * @version 0.0.36
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,18 @@
 
 namespace WP_Framework_Custom_Post\Traits;
 
+use Closure;
+use WP_Error;
+use WP_Framework;
+use WP_Framework_Core\Traits\Helper\Data_Helper;
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
+use WP_Framework_Db\Classes\Models\Query\Builder;
+use WP_Framework_Presenter\Traits\Presenter;
+use WP_Post;
+use WP_Post_Type;
+use WP_Query;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,12 +30,12 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Custom_Post
  * @package WP_Framework_Custom_Post\Traits
- * @property \WP_Framework $app
- * @mixin \WP_Framework_Core\Traits\Helper\Data_Helper
+ * @property WP_Framework $app
+ * @mixin Data_Helper
  */
 trait Custom_Post {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, Package;
+	use Singleton, Hook, Presenter, Package;
 
 	/**
 	 * @var string $_slug
@@ -36,7 +48,7 @@ trait Custom_Post {
 	private $_related_data = [];
 
 	/**
-	 * @var \WP_Post_Type|\WP_Error $_post_type_obj
+	 * @var WP_Post_Type|WP_Error $_post_type_obj
 	 */
 	private $_post_type_obj;
 
@@ -89,7 +101,7 @@ trait Custom_Post {
 	/**
 	 * @param string|null $as
 	 *
-	 * @return \WP_Framework_Db\Classes\Models\Query\Builder
+	 * @return Builder
 	 */
 	protected function query( $as = null ) {
 		return $this->table( $this->get_related_table_name(), $as );
@@ -220,7 +232,7 @@ trait Custom_Post {
 	}
 
 	/**
-	 * @return \WP_Post_Type|\WP_Error
+	 * @return WP_Post_Type|WP_Error
 	 */
 	public function get_post_type_object() {
 		return $this->_post_type_obj;
@@ -232,7 +244,7 @@ trait Custom_Post {
 	 * @return bool
 	 */
 	public function user_can( $capability ) {
-		if ( ! ( $this->_post_type_obj instanceof \WP_Post_Type ) ) {
+		if ( ! ( $this->_post_type_obj instanceof WP_Post_Type ) ) {
 			return false;
 		}
 
@@ -358,13 +370,13 @@ trait Custom_Post {
 
 	/**
 	 * @param string $search
-	 * @param \WP_Query $wp_query
+	 * @param WP_Query $wp_query
 	 *
 	 * @return string
 	 */
 	public function posts_search(
 		/** @noinspection PhpUnusedParameterInspection */
-		$search, \WP_Query $wp_query
+		$search, WP_Query $wp_query
 	) {
 		if ( ! $wp_query->is_search() || ! $wp_query->is_main_query() || ! is_admin() || empty( $wp_query->query_vars['search_terms'] ) ) {
 			return $search;
@@ -419,7 +431,7 @@ trait Custom_Post {
 
 	/**
 	 * @param string $join
-	 * @param \WP_Query|string $wp_query
+	 * @param WP_Query|string $wp_query
 	 *
 	 * @return string
 	 */
@@ -434,7 +446,7 @@ trait Custom_Post {
 	}
 
 	/**
-	 * @param \WP_Query $wp_query
+	 * @param WP_Query $wp_query
 	 */
 	public function setup_posts_orderby( $wp_query ) {
 		if ( method_exists( $this, 'pre_get_posts' ) ) {
@@ -466,7 +478,7 @@ trait Custom_Post {
 				$orderby, $wp_query
 			) use ( &$func, $_orderby_list ) {
 				/** @var string $orderby */
-				/** @var \WP_Query $wp_query */
+				/** @var WP_Query $wp_query */
 				remove_filter( 'posts_orderby', $func );
 
 				$_orderby_list[] = $orderby;
@@ -487,7 +499,7 @@ trait Custom_Post {
 						$orderby, $wp_query
 					) use ( &$func, $k, $v, $table, $_order ) {
 						/** @var string $orderby */
-						/** @var \WP_Query $wp_query */
+						/** @var WP_Query $wp_query */
 						remove_filter( 'posts_orderby', $func );
 						$_orderby = $this->app->array->get( $v, 'orderby', "{$table}.{$k}" );
 
@@ -504,16 +516,25 @@ trait Custom_Post {
 	 * @return bool
 	 */
 	public function is_support_io() {
-		return $this->compare_wp_version( '4.7', '>=' ) && ! empty( $this->app->get_config( 'io', $this->get_post_type_slug() ) ) && $this->user_can( 'edit_others_posts' );
+		return $this->compare_wp_version( '4.7', '>=' ) && ! empty( $this->app->get_config( 'io', $this->get_post_type_slug() ) ) && $this->user_can( 'edit_others_posts' ) && $this->is_valid_export_post_status();
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function is_valid_export_post_status() {
+		$post_status = ! empty( $_REQUEST['post_status'] ) ? $_REQUEST['post_status'] : 'all';
+
+		return ! in_array( $post_status, $this->get_exclude_from_search_post_status() );
 	}
 
 	/**
 	 * @param array $actions
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
-	public function post_row_actions( array $actions, \WP_Post $post ) {
+	public function post_row_actions( array $actions, WP_Post $post ) {
 		unset( $actions['inline hide-if-no-js'] );
 		unset( $actions['edit'] );
 		unset( $actions['clone'] );
@@ -546,13 +567,13 @@ trait Custom_Post {
 
 	/**
 	 * @param array $actions
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
 	protected function filter_post_row_actions(
 		/** @noinspection PhpUnusedParameterInspection */
-		array $actions, \WP_Post $post
+		array $actions, WP_Post $post
 	) {
 		return $actions;
 	}
@@ -640,10 +661,10 @@ trait Custom_Post {
 		$export_data = [];
 		$setting     = $this->app->get_config( 'io', $this->get_post_type_slug() );
 		foreach (
-			$this->get_list_data( function ( $query ) use ( $post_ids ) {
-				/** @var \WP_Framework_Db\Classes\Models\Query\Builder $query */
+			$this->app->array->get( $this->get_list_data( function ( $query ) use ( $post_ids ) {
+				/** @var Builder $query */
 				$query->where_in( 'p.ID', $post_ids );
-			} )['data'] as $d
+			}, false ), 'data' ) as $d
 		) {
 			$data = [];
 			if ( in_array( 'title', $this->get_post_type_supports() ) ) {
@@ -733,7 +754,7 @@ trait Custom_Post {
 			$validation = $this->validate_insert( $item );
 			if ( empty( $validation ) ) {
 				$this->insert( $item );
-				$success ++;
+				$success++;
 			} else {
 				$failed[] = [ $item, $validation ];
 			}
@@ -861,11 +882,11 @@ trait Custom_Post {
 
 	/**
 	 * @param string $column_name
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
 	public function manage_posts_custom_column(
 		/** @noinspection PhpUnusedParameterInspection */
-		$column_name, \WP_Post $post
+		$column_name, WP_Post $post
 	) {
 		$data = $this->get_related_data( $post->ID );
 		if ( empty( $data ) ) {
@@ -876,12 +897,12 @@ trait Custom_Post {
 
 	/**
 	 * @param string $column_name
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $data
 	 */
 	protected function manage_posts_column(
 		/** @noinspection PhpUnusedParameterInspection */
-		$column_name, \WP_Post $post, array $data
+		$column_name, WP_Post $post, array $data
 	) {
 		foreach ( $this->get_manage_posts_columns() as $k => $v ) {
 			$key = $this->get_post_type() . '-' . $k;
@@ -912,11 +933,11 @@ trait Custom_Post {
 
 	/**
 	 * @param array $data
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
-	protected function set_post_data( array $data, \WP_Post $post ) {
+	protected function set_post_data( array $data, WP_Post $post ) {
 		$data['post_title'] = $post->post_title;
 		$data['post']       = $post;
 		if ( $this->user_can( 'read_post' ) ) {
@@ -924,7 +945,7 @@ trait Custom_Post {
 		}
 
 		foreach ( $this->get_data_field_settings() as $k => $v ) {
-			$data[ $k ] = $this->sanitize_input( $this->app->array->get( $data, $k ), $v['type'] );
+			$data[ $k ] = $this->sanitize_input( $this->app->array->get( $data, $k ), $v['type'], false, $v['nullable'] );
 		}
 
 		return $data;
@@ -976,7 +997,7 @@ trait Custom_Post {
 	}
 
 	/**
-	 * @param \Closure|null $callback
+	 * @param Closure|null $callback
 	 * @param bool $is_valid
 	 * @param int|null $per_page
 	 * @param int $page
@@ -989,7 +1010,7 @@ trait Custom_Post {
 		if ( $is_valid ) {
 			$query->where( 'p.post_status', 'publish' );
 		}
-		$exclude = get_post_stati( [ 'exclude_from_search' => true ] );
+		$exclude = $this->get_exclude_from_search_post_status();
 		if ( ! empty( $exclude ) ) {
 			$query->where_not_in( 'p.post_status', $exclude );
 		}
@@ -1036,7 +1057,7 @@ trait Custom_Post {
 	/**
 	 * @param int $per_page
 	 * @param int $page
-	 * @param \Closure|null $callback
+	 * @param Closure|null $callback
 	 * @param bool $is_valid
 	 *
 	 * @return array
@@ -1085,12 +1106,12 @@ trait Custom_Post {
 	/**
 	 * @param array $params
 	 * @param array $where
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param bool $update
 	 *
 	 * @return int|false
 	 */
-	public function update_data( array $params, array $where, \WP_Post $post, $update ) {
+	public function update_data( array $params, array $where, WP_Post $post, $update ) {
 		$params = array_merge( $params, $this->get_update_data_params( $post, $update ) );
 		list( $params, $where ) = $this->update_misc( $params, $where, $post, $update );
 
@@ -1099,55 +1120,82 @@ trait Custom_Post {
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $old
 	 * @param array $new
 	 */
-	public function data_updated( $post_id, \WP_Post $post, array $old, array $new ) {
+	public function data_updated( $post_id, WP_Post $post, array $old, array $new ) {
 
 	}
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $data
 	 */
-	public function data_inserted( $post_id, \WP_Post $post, array $data ) {
+	public function data_inserted( $post_id, WP_Post $post, array $data ) {
 
 	}
 
 	/**
 	 * @param array $params
 	 * @param array $where
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param bool $update
 	 *
 	 * @return array
 	 */
 	protected function update_misc(
 		/** @noinspection PhpUnusedParameterInspection */
-		array $params, array $where, \WP_Post $post, $update
+		array $params, array $where, WP_Post $post, $update
 	) {
 		return [ $params, $where ];
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param bool $update
 	 *
 	 * @return array
 	 */
 	public function get_update_data_params(
 		/** @noinspection PhpUnusedParameterInspection */
-		\WP_Post $post, $update
+		WP_Post $post, $update
 	) {
 		$params = [];
 		foreach ( $this->get_data_field_settings() as $k => $v ) {
-			$params[ $k ] = $this->get_post_field( $k, $update || ! $v['required'] ? null : $v['default'], null, $v );
-			$params[ $k ] = $this->sanitize_input( $params[ $k ], $v['type'], ! $update && $v['unset_if_null'] );
-			if ( ! isset( $params[ $k ] ) && ! $update && $v['unset_if_null'] ) {
-				unset( $params[ $k ] );
-				continue;
+			$is_bool  = 'bool' === $v['type'];
+			$not_sent = null === $this->app->input->post( $this->get_post_field_name( $k ) );
+			if ( $is_bool && $not_sent ) {
+				if ( $v['nullable'] ) {
+					if ( $update ) {
+						continue;
+					}
+					$params[ $k ] = null;
+				} else {
+					$params[ $k ] = 0;
+				}
+			} else {
+				$params[ $k ] = $this->get_post_field( $k, $update || ! $v['required'] ? null : $v['default'], null, $v, true, $update );
+				$params[ $k ] = $this->sanitize_input( $params[ $k ], $v['type'], ! $update && $v['unset_if_null'], $v['nullable'], $update );
+
+				if ( ! isset( $params[ $k ] ) ) {
+					if ( ! $not_sent ) {
+						if ( $v['unset_if_null'] ) {
+							$params[ $k ] = $v['default'];
+						} else {
+							$params[ $k ] = null;
+						}
+					} else {
+						if ( $update ) {
+							unset( $params[ $k ] );
+						} else {
+							if ( $v['unset_if_null'] ) {
+								unset( $params[ $k ] );
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -1156,9 +1204,9 @@ trait Custom_Post {
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function untrash_post( $post_id, \WP_Post $post ) {
+	public function untrash_post( $post_id, WP_Post $post ) {
 
 	}
 
@@ -1228,17 +1276,17 @@ trait Custom_Post {
 	 * @param array|null $post_array
 	 * @param array $setting
 	 * @param bool $filter
+	 * @param bool $update
 	 *
 	 * @return mixed
 	 */
-	protected function get_post_field( $key, $default = null, $post_array = null, array $setting = [], $filter = true ) {
+	protected function get_post_field( $key, $default = null, $post_array = null, array $setting = [], $filter = true, $update = false ) {
 		if ( isset( $post_array ) ) {
 			$value = $this->app->array->get( $post_array, $this->get_post_field_name( $key ), $default );
 		} else {
 			$value = $this->app->input->post( $this->get_post_field_name( $key ), $default );
 		}
-
-		if ( empty( $setting['nullable'] ) && (string) $value === '' ) {
+		if ( ! $update && 'bool' === $setting['type'] && (string) $value === '' ) {
 			$value = null;
 		}
 
@@ -1284,8 +1332,8 @@ trait Custom_Post {
 			$columns[ $k ]['default']       = isset( $v['default'] ) ? $v['default'] : ( 'string' === $type || 'text' === $type ? '' : 0 );
 			$columns[ $k ]['type']          = $type;
 			$columns[ $k ]['nullable']      = ! isset( $v['null'] ) || ! empty( $v['null'] );
-			$columns[ $k ]['required']      = ! isset( $v['default'] ) && ! $columns[ $k ]['nullable'];
-			$columns[ $k ]['unset_if_null'] = ! $columns[ $k ]['nullable'];
+			$columns[ $k ]['required']      = ! isset( $v['default'] ) && ! $columns[ $k ]['nullable'] && 'bool' !== $type;
+			$columns[ $k ]['unset_if_null'] = ! $columns[ $k ]['nullable'] && isset( $v['default'] );
 			if ( $columns[ $k ]['nullable'] && isset( $v['default'] ) and ( $prior_default || ! empty( $v['prior_default'] ) ) ) {
 				$columns[ $k ]['unset_if_null'] = true;
 			}
@@ -1304,9 +1352,9 @@ trait Custom_Post {
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function output_edit_form( \WP_Post $post ) {
+	public function output_edit_form( WP_Post $post ) {
 		$params = $this->get_edit_form_params( $post );
 		$this->before_output_edit_form( $post, $params );
 		$this->add_style_view( 'admin/style/custom_post', $params );
@@ -1324,34 +1372,34 @@ trait Custom_Post {
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $params
 	 */
-	protected function before_output_edit_form( \WP_Post $post, array $params ) {
+	protected function before_output_edit_form( WP_Post $post, array $params ) {
 
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $params
 	 */
-	protected function after_output_edit_form( \WP_Post $post, array $params ) {
+	protected function after_output_edit_form( WP_Post $post, array $params ) {
 
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function output_after_editor( \WP_Post $post ) {
+	public function output_after_editor( WP_Post $post ) {
 
 	}
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
-	protected function get_edit_form_params( \WP_Post $post ) {
+	protected function get_edit_form_params( WP_Post $post ) {
 		return $this->filter_edit_form_params( [
 			'post'    => $post,
 			'data'    => $this->get_related_data( $post->ID ),
@@ -1383,13 +1431,13 @@ trait Custom_Post {
 
 	/**
 	 * @param array $params
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
 	protected function filter_edit_form_params(
 		/** @noinspection PhpUnusedParameterInspection */
-		array $params, \WP_Post $post
+		array $params, WP_Post $post
 	) {
 		return $params;
 	}
@@ -1404,9 +1452,9 @@ trait Custom_Post {
 		$errors = [];
 		foreach ( $this->get_data_field_settings() as $k => $v ) {
 			$param    = $this->get_post_field( $k, null, $post_array, $v );
-			$param    = $this->sanitize_input( $param, $v['type'] );
+			$param    = $this->sanitize_input( $param, $v['type'], $v['unset_if_null'], $v['nullable'] );
 			$validate = $this->validate( $param, $v );
-			if ( $validate instanceof \WP_Error ) {
+			if ( $validate instanceof WP_Error ) {
 				$errors[ $k ][] = $validate->get_error_message();
 			}
 		}
@@ -1547,6 +1595,13 @@ trait Custom_Post {
 		$action = '&action=edit';
 
 		return admin_url( sprintf( $post_type_object->_edit_link . $action, $post->ID ) );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_exclude_from_search_post_status() {
+		return get_post_stati( [ 'exclude_from_search' => true ] );
 	}
 
 	/**

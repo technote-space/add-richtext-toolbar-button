@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Package
  *
- * @version 0.0.1
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,9 @@
 
 namespace WP_Framework_Core\Traits;
 
+use WP_Framework;
+use WP_Framework\Package_Base;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +21,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Package
  * @package WP_Framework_Core\Traits
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  */
 trait Package {
 
@@ -39,7 +42,7 @@ trait Package {
 	/**
 	 * @param string|null $package
 	 *
-	 * @return \WP_Framework\Package_Base
+	 * @return Package_Base
 	 */
 	protected function get_package_instance( $package = null ) {
 		return $this->app->get_package_instance( $package ? $package : $this->get_package() );

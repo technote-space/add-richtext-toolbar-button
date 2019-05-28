@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.6
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -8,12 +8,13 @@
  * @link https://technote.space/
  */
 
+use WP_Framework_Presenter\Interfaces\Presenter;
+
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
+/** @var Presenter $instance */
 ?>
-
 <script>
 	function artbGetIcon( icon, is_retry ) {
 		if ( /^https?:\/\//.test( icon ) || /^data:image/.test( icon ) ) {

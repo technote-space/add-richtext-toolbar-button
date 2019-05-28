@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.2
+ * @version 1.1.6
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -8,22 +8,23 @@
  * @link https://technote.space/
  */
 
+use WP_Framework_Presenter\Interfaces\Presenter;
+
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
+/** @var Presenter $instance */
 /** @var string $css_handle */
 /** @var string $fontawesome_handle */
 /** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 ?>
-
 <script>
 	( function( $ ) {
 		$( function() {
 			$( '.display-icon' ).each( function() {
 				const icon = artbGetIcon( $( this ).val() );
-				if ( !icon ) {
+				if ( ! icon ) {
 					return;
 				}
 				$( this ).closest( '.icon-wrapper' ).append( icon );

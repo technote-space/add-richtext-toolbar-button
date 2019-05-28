@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Loader
  *
- * @version 0.0.53
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,11 @@
 
 namespace WP_Framework_Core\Traits;
 
+use Exception;
+use Generator;
+use WP_Framework;
+use WP_Framework_Admin\Classes\Controllers\Admin\Base;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +23,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Loader
  * @package WP_Framework_Core\Traits\Controller
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  */
 trait Loader {
 
@@ -87,7 +92,7 @@ trait Loader {
 			$this->_list = [];
 			$cache       = $this->cache_get_common( 'class_settings', null, false, $this->is_common_cache_class_settings() );
 			if ( is_array( $cache ) ) {
-				/** @var \WP_Framework_Core\Traits\Singleton $class */
+				/** @var Singleton $class */
 				foreach ( $this->get_class_instances( $cache, $this->get_instanceof() ) as list( $class ) ) {
 					$slug = $class->get_class_name();
 					if ( ! isset( $this->_list[ $slug ] ) ) {
@@ -98,7 +103,7 @@ trait Loader {
 				$sort    = [];
 				$classes = [];
 				foreach ( $this->_get_namespaces() as $namespace ) {
-					/** @var \WP_Framework_Core\Traits\Singleton $class */
+					/** @var Singleton $class */
 					foreach ( $this->get_classes( $this->namespace_to_dir( $namespace ), $this->get_instanceof() ) as list( $class, $setting ) ) {
 						$slug = $class->get_class_name();
 						if ( ! isset( $classes[ $slug ] ) ) {
@@ -115,8 +120,8 @@ trait Loader {
 				}
 				if ( ! empty( $sort ) ) {
 					uasort( $classes, function ( $a, $b ) use ( $sort ) {
-						/** @var \WP_Framework_Core\Traits\Singleton[] $a */
-						/** @var \WP_Framework_Core\Traits\Singleton[] $b */
+						/** @var Singleton[] $a */
+						/** @var Singleton[] $b */
 						$pa = isset( $sort[ $a[0]->get_class_name() ] ) ? $sort[ $a[0]->get_class_name() ] : 10;
 						$pb = isset( $sort[ $b[0]->get_class_name() ] ) ? $sort[ $b[0]->get_class_name() ] : 10;
 
@@ -146,7 +151,7 @@ trait Loader {
 	/**
 	 * @param string $dir
 	 *
-	 * @return \Generator
+	 * @return Generator
 	 */
 	protected function get_class_settings( $dir ) {
 		foreach ( $this->app->file->scan_dir_namespace_class( $dir, true ) as list( $namespace, $class, $path ) ) {
@@ -162,7 +167,7 @@ trait Loader {
 	 * @param string $dir
 	 * @param string $instanceof
 	 *
-	 * @return \Generator
+	 * @return Generator
 	 */
 	protected function get_classes( $dir, $instanceof ) {
 		foreach ( $this->get_class_instances( $this->get_class_settings( $dir ), $instanceof ) as list( $instance, $setting ) ) {
@@ -174,7 +179,7 @@ trait Loader {
 	 * @param iterable $settings
 	 * @param string $instanceof
 	 *
-	 * @return \Generator
+	 * @return Generator
 	 */
 	protected function get_class_instances( $settings, $instanceof ) {
 		foreach ( $settings as $setting ) {
@@ -225,13 +230,13 @@ trait Loader {
 				/** @var \WP_Framework_Core\Interfaces\Singleton[] $setting */
 				$instance = $setting[0]::get_instance( $this->app );
 				if ( $instance instanceof $instanceof ) {
-					if ( class_exists( '\WP_Framework_Admin\Classes\Controllers\Admin\Base' ) && $instance instanceof \WP_Framework_Admin\Classes\Controllers\Admin\Base ) {
+					if ( class_exists( '\WP_Framework_Admin\Classes\Controllers\Admin\Base' ) && $instance instanceof Base ) {
 						$instance->set_relative_namespace( $setting[1] );
 					}
 
 					return $instance;
 				}
-			} catch ( \Exception $e ) {
+			} catch ( Exception $e ) {
 			}
 		}
 

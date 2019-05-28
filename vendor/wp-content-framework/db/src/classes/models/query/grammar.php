@@ -53,7 +53,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a select query into SQL.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -86,7 +86,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the components necessary for a select clause.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return array
 	 */
@@ -108,8 +108,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile an aggregated select clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $aggregate
+	 * @param Builder $query
+	 * @param array $aggregate
 	 *
 	 * @return string
 	 */
@@ -128,8 +128,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "select *" portion of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  array $columns
+	 * @param Builder $query
+	 * @param array $columns
 	 *
 	 * @return string|null
 	 */
@@ -148,8 +148,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "from" portion of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  string $table
+	 * @param Builder $query
+	 * @param string $table
 	 *
 	 * @return string
 	 */
@@ -163,8 +163,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "join" portions of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  array $joins
+	 * @param Builder $query
+	 * @param array $joins
 	 *
 	 * @return string
 	 */
@@ -181,7 +181,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "where" portions of the query.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -205,7 +205,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Get an array of all the where clauses for the query.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return array
 	 */
@@ -218,8 +218,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Format the where clause statements into one string.
 	 *
-	 * @param  Builder $query
-	 * @param  array $sql
+	 * @param Builder $query
+	 * @param array $sql
 	 *
 	 * @return string
 	 */
@@ -232,8 +232,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a raw where clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -247,8 +247,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a basic where clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -264,8 +264,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where in" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -283,8 +283,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where not in" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -304,8 +304,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	 *
 	 * For safety, where_integer_in_raw ensures this method is only used with integer values.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -325,8 +325,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	 *
 	 * For safety, where_integer_in_raw ensures this method is only used with integer values.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -344,8 +344,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where null" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -359,8 +359,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where not null" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -374,8 +374,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "between" where clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -393,8 +393,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where date" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -405,8 +405,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where time" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -417,8 +417,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where day" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -429,8 +429,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where month" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -441,8 +441,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "where year" clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -453,9 +453,9 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a date based where clause.
 	 *
-	 * @param  string $type
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param string $type
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -471,8 +471,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a where clause comparing two columns..
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -486,8 +486,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a nested where clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -503,8 +503,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a where condition with a sub-select.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -520,8 +520,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a where exists clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -535,8 +535,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a where exists clause.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -550,8 +550,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a where row values condition.
 	 *
-	 * @param  Builder $query
-	 * @param  array $where
+	 * @param Builder $query
+	 * @param array $where
 	 *
 	 * @return string
 	 */
@@ -568,8 +568,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "group by" portions of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  array $groups
+	 * @param Builder $query
+	 * @param array $groups
 	 *
 	 * @return string
 	 */
@@ -583,8 +583,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "having" portions of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  array $havings
+	 * @param Builder $query
+	 * @param array $havings
 	 *
 	 * @return string
 	 */
@@ -600,7 +600,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a single having clause.
 	 *
-	 * @param  array $having
+	 * @param array $having
 	 *
 	 * @return string
 	 */
@@ -620,7 +620,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a basic having clause.
 	 *
-	 * @param  array $having
+	 * @param array $having
 	 *
 	 * @return string
 	 */
@@ -634,7 +634,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a "between" having clause.
 	 *
-	 * @param  array $having
+	 * @param array $having
 	 *
 	 * @return string
 	 */
@@ -650,8 +650,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "order by" portions of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  array $orders
+	 * @param Builder $query
+	 * @param array $orders
 	 *
 	 * @return string
 	 */
@@ -666,8 +666,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the query orders to an array.
 	 *
-	 * @param  Builder $query
-	 * @param  array $orders
+	 * @param Builder $query
+	 * @param array $orders
 	 *
 	 * @return array
 	 */
@@ -685,7 +685,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the random statement into SQL.
 	 *
-	 * @param  string $seed
+	 * @param string $seed
 	 *
 	 * @return string
 	 */
@@ -696,8 +696,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "limit" portions of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  int $limit
+	 * @param Builder $query
+	 * @param int $limit
 	 *
 	 * @return string
 	 */
@@ -711,8 +711,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "offset" portions of the query.
 	 *
-	 * @param  Builder $query
-	 * @param  int $offset
+	 * @param Builder $query
+	 * @param int $offset
 	 *
 	 * @return string
 	 */
@@ -730,7 +730,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the "union" queries attached to the main query.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -755,7 +755,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a single union statement.
 	 *
-	 * @param  array $union
+	 * @param array $union
 	 *
 	 * @return string
 	 */
@@ -768,7 +768,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a union aggregate query into SQL.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -782,7 +782,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile an exists statement into SQL.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -795,8 +795,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile an insert statement into SQL.
 	 *
-	 * @param  Builder $query
-	 * @param  array $values
+	 * @param Builder $query
+	 * @param array $values
 	 *
 	 * @return string
 	 */
@@ -822,9 +822,9 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile an insert statement using a subquery into SQL.
 	 *
-	 * @param  Builder $query
-	 * @param  array $columns
-	 * @param  string $sql
+	 * @param Builder $query
+	 * @param array $columns
+	 * @param string $sql
 	 *
 	 * @return string
 	 */
@@ -835,8 +835,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile an update statement into SQL.
 	 *
-	 * @param  Builder $query
-	 * @param  array $values
+	 * @param Builder $query
+	 * @param array $values
 	 *
 	 * @return string
 	 */
@@ -877,7 +877,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile all of the columns for an update statement.
 	 *
-	 * @param  array $values
+	 * @param array $values
 	 *
 	 * @return string
 	 */
@@ -890,8 +890,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Prepare the bindings for an update statement.
 	 *
-	 * @param  array $bindings
-	 * @param  array $values
+	 * @param array $bindings
+	 * @param array $values
 	 *
 	 * @return array
 	 */
@@ -908,7 +908,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a delete statement into SQL.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -924,7 +924,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Prepare the bindings for a delete statement.
 	 *
-	 * @param  array $bindings
+	 * @param array $bindings
 	 *
 	 * @return array
 	 */
@@ -941,14 +941,14 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a delete query that does not use joins.
 	 *
-	 * @param  Builder $query
-	 * @param  string $table
-	 * @param  string $where
+	 * @param Builder $query
+	 * @param string $table
+	 * @param string $where
 	 *
 	 * @return string
 	 */
 	protected function compile_delete_without_joins( $query, $table, $where ) {
-		$sql = trim( "delete from {$table} {$where}" );
+		$sql = trim( /** @lang text */ "delete from {$table} {$where}" );
 		// When using MySQL, delete statements may contain order by statements and limits
 		// so we will compile both of those here. Once we have finished compiling this
 		// we will return the completed SQL statement so it will be executed for us.
@@ -965,9 +965,9 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile a delete query that uses joins.
 	 *
-	 * @param  Builder $query
-	 * @param  string $table
-	 * @param  string $where
+	 * @param Builder $query
+	 * @param string $table
+	 * @param string $where
 	 *
 	 * @return string
 	 */
@@ -976,13 +976,13 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 		$alias = stripos( $table, ' as ' ) !== false
 			? explode( ' as ', $table )[1] : $table;
 
-		return trim( "delete {$alias} from {$table}{$joins} {$where}" );
+		return trim( /** @lang text */ "delete {$alias} from {$table}{$joins} {$where}" );
 	}
 
 	/**
 	 * Compile a truncate table statement into SQL.
 	 *
-	 * @param  Builder $query
+	 * @param Builder $query
 	 *
 	 * @return string
 	 */
@@ -1004,8 +1004,8 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the lock into SQL.
 	 *
-	 * @param  Builder $query
-	 * @param  bool|string $value
+	 * @param Builder $query
+	 * @param bool|string $value
 	 *
 	 * @return string
 	 */
@@ -1032,7 +1032,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the SQL statement to define a savepoint.
 	 *
-	 * @param  string $name
+	 * @param string $name
 	 *
 	 * @return string
 	 */
@@ -1043,7 +1043,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Compile the SQL statement to execute a savepoint rollback.
 	 *
-	 * @param  string $name
+	 * @param string $name
 	 *
 	 * @return string
 	 */
@@ -1093,7 +1093,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Concatenate an array of segments, removing empties.
 	 *
-	 * @param  array $segments
+	 * @param array $segments
 	 *
 	 * @return string
 	 */
@@ -1106,7 +1106,7 @@ class Grammar extends \WP_Framework_Db\Classes\Models\Grammar {
 	/**
 	 * Remove the leading boolean from a statement.
 	 *
-	 * @param  string $value
+	 * @param string $value
 	 *
 	 * @return string
 	 */

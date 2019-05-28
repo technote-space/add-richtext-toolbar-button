@@ -2,7 +2,7 @@
 /**
  * WP_Framework mock
  *
- * @version 0.0.51
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -22,46 +22,46 @@ class WP_Framework {
 	/**
 	 * @var array
 	 */
-	private static $_instances = array();
+	private static $_instances = [];
 
 	/**
-     * @var bool $_framework_textdomain_loaded
-     */
+	 * @var bool $_framework_textdomain_loaded
+	 */
 	private static $_framework_textdomain_loaded = false;
 
 	/**
-     * @var string $original_plugin_name
-     */
+	 * @var string $original_plugin_name
+	 */
 	private $original_plugin_name;
 
 	/**
-     * @var string $plugin_name
-     */
+	 * @var string $plugin_name
+	 */
 	private $plugin_name;
 
 	/**
-     * @var string $plugin_file
-     */
+	 * @var string $plugin_file
+	 */
 	private $plugin_file;
 
 	/**
-     * @var string $plugin_dir
-     */
+	 * @var string $plugin_dir
+	 */
 	private $plugin_dir;
 
 	/**
-     * @var string $plugin_configs_dir
-     */
+	 * @var string $plugin_configs_dir
+	 */
 	private $plugin_configs_dir;
 
-	/** 
-     * @var string $textdomain
-     */
+	/**
+	 * @var string $textdomain
+	 */
 	private $textdomain;
 
-	/** 
-     * @var array $plugin_data
-     */
+	/**
+	 * @var array $plugin_data
+	 */
 	private $plugin_data;
 
 	/**
@@ -162,15 +162,20 @@ class WP_Framework {
 	 * set unsupported
 	 */
 	private function set_unsupported() {
-		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		add_action( 'init', function () {
+			$this->init();
+		} );
+		add_action( 'admin_notices', function () {
+			$this->admin_notices();
+		} );
 	}
 
 	/**
 	 * init
 	 */
-	public function init() {
+	private function init() {
 		if ( ! function_exists( 'get_plugin_data' ) ) {
+			/** @noinspection PhpIncludeInspection */
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 		$this->plugin_data = get_plugin_data( $this->plugin_file, false, false );
@@ -180,7 +185,7 @@ class WP_Framework {
 	 * @return string
 	 */
 	private function get_unsupported_php_version_message() {
-		$messages   = array();
+		$messages   = [];
 		$messages[] = sprintf( $this->translate( 'Your PHP version is %s.' ), phpversion() );
 		$messages[] = $this->translate( 'Please update your PHP.' );
 		$messages[] = sprintf( $this->translate( '<strong>%s</strong> requires PHP version %s or above.' ), $this->translate( $this->original_plugin_name ), WP_FRAMEWORK_REQUIRED_PHP_VERSION );
@@ -193,7 +198,7 @@ class WP_Framework {
 	 */
 	private function get_unsupported_wp_version_message() {
 		global $wp_version;
-		$messages   = array();
+		$messages   = [];
 		$messages[] = sprintf( $this->translate( 'Your WordPress version is %s.' ), $wp_version );
 		$messages[] = $this->translate( 'Please update your WordPress.' );
 		$messages[] = sprintf( $this->translate( '<strong>%s</strong> requires WordPress version %s or above.' ), $this->translate( $this->original_plugin_name ), WP_FRAMEWORK_REQUIRED_WP_VERSION );
@@ -204,7 +209,7 @@ class WP_Framework {
 	/**
 	 * admin_notices
 	 */
-	public function admin_notices() {
+	private function admin_notices() {
 		?>
         <div class="notice error notice-error">
 			<?php if ( $this->is_not_enough_php_version() ): ?>

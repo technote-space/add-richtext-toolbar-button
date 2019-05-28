@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.2
+ * @version 1.1.6
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -8,10 +8,12 @@
  * @link https://technote.space/
  */
 
+use WP_Framework_Presenter\Interfaces\Presenter;
+
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
+/** @var Presenter $instance */
 /** @var string $name_prefix */
 /** @var array $groups */
 /** @var string $fontawesome_handle */
@@ -117,7 +119,7 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 							const pseudo = undefined === match[ 2 ] ? '' : match[ 2 ];
 							const key = match[ 3 ];
 							const val = match[ 4 ];
-							if ( !styles[ pseudo ] ) {
+							if ( ! styles[ pseudo ] ) {
 								styles[ pseudo ] = [];
 							}
 							styles[ pseudo ].push( key + ': ' + val + ' !important;' );
@@ -176,7 +178,7 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 					const icon = artbGetIcon( $( this ).val().trim() );
 					const $area = $( this ).closest( '.icon-wrapper' ).find( '.display-area' );
 					$area.html( '' );
-					if ( !icon ) {
+					if ( ! icon ) {
 						return;
 					}
 					$area.append( icon );

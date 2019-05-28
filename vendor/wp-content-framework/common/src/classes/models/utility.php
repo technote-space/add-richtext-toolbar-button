@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Utility
  *
- * @version 0.0.45
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,13 @@
  */
 
 namespace WP_Framework_Common\Classes\Models;
+
+use Closure;
+use Exception;
+use WP_Framework;
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Traits\Singleton;
+use WP_Post;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +28,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Common\Traits\Package;
+	use Singleton, Package;
 
 	/**
 	 * @var float $_tick
@@ -57,7 +64,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return mixed
 	 */
 	public function value( $value, ...$args ) {
-		return $value instanceof \Closure ? $value( $this->app, ...$args ) : $value;
+		return $value instanceof Closure ? $value( $this->app, ...$args ) : $value;
 	}
 
 	/**
@@ -274,7 +281,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 		}
 
 		$post = get_post();
-		if ( empty( $post ) || ! $post instanceof \WP_Post ) {
+		if ( empty( $post ) || ! $post instanceof WP_Post ) {
 			return false;
 		}
 		! is_array( $tags ) and $tags = [ $tags ];
@@ -319,14 +326,14 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 * @param string $name
 	 * @param callable $func
 	 * @param int $timeout
 	 *
 	 * @return bool
 	 */
-	public function lock_process( \WP_Framework $app, $name, callable $func, $timeout = 60 ) {
+	public function lock_process( WP_Framework $app, $name, callable $func, $timeout = 60 ) {
 		$name         .= '__LOCK_PROCESS__';
 		$timeout_name = $name . 'TIMEOUT__';
 		$option       = $app->option;
@@ -347,7 +354,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 		$option->set( $timeout_name, time() + $timeout );
 		try {
 			$func();
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$app->log( $e );
 		} finally {
 			$option->delete( $name );
@@ -389,7 +396,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 */
 	private function get_framework_plugins() {
 		return $this->app->array->map( $this->app->get_instances(), function ( $instance ) {
-			/** @var \WP_Framework $instance */
+			/** @var WP_Framework $instance */
 			return $instance->plugin_name . '/' . $instance->get_plugin_version();
 		} );
 	}

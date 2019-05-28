@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Session Classes Models Session
  *
- * @version 0.0.7
+ * @version 0.0.8
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,10 @@
  */
 
 namespace WP_Framework_Session\Classes\Models;
+
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
+use WP_Framework_Session\Traits\Package;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Session implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Session\Traits\Package;
+	use Singleton, Hook, Package;
 
 	/**
 	 * @var bool $_session_initialized

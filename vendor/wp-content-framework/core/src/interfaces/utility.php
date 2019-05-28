@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Interfaces Utility
  *
- * @version 0.0.41
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,8 @@
  */
 
 namespace WP_Framework_Core\Interfaces;
+
+use wpdb;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -22,7 +24,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 interface Utility {
 
 	/**
-	 * @return \wpdb
+	 * @return wpdb
 	 */
 	public function wpdb();
 

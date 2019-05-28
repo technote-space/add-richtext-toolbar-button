@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Array Utility
  *
- * @version 0.0.44
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,13 @@
  */
 
 namespace WP_Framework_Common\Classes\Models;
+
+use /** @noinspection PhpUndefinedClassInspection */
+	JsonSerializable;
+use stdClass;
+use Traversable;
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Traits\Singleton;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +28,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Array_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Common\Traits\Package;
+	use Singleton, Package;
 
 	/**
 	 * @return bool
@@ -37,11 +44,11 @@ class Array_Utility implements \WP_Framework_Core\Interfaces\Singleton {
 	 * @return array
 	 */
 	public function to_array( $obj, $ignore_value = true ) {
-		if ( $obj instanceof \stdClass ) {
+		if ( $obj instanceof stdClass ) {
 			$obj = get_object_vars( $obj );
-		} /** @noinspection PhpUndefinedClassInspection */ elseif ( $obj instanceof \JsonSerializable ) {
+		} /** @noinspection PhpUndefinedClassInspection */ elseif ( $obj instanceof JsonSerializable ) {
 			$obj = (array) $obj->jsonSerialize();
-		} elseif ( $obj instanceof \Traversable ) {
+		} elseif ( $obj instanceof Traversable ) {
 			$obj = iterator_to_array( $obj );
 		} elseif ( ! is_array( $obj ) ) {
 			if ( method_exists( $obj, 'to_array' ) ) {

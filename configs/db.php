@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.4
+ * @version 1.1.6
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -51,7 +51,7 @@ return [
 				'comment'  => 'priority',
 			],
 			'is_valid_toolbar_button' => [
-				'type'     => 'TINYINT(1)',
+				'type'     => 'BIT(1)',
 				'unsigned' => true,
 				'null'     => false,
 				'default'  => 1,

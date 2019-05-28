@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.4
+ * @version 1.1.6
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -19,9 +19,6 @@ return [
 
 	// main menu title
 	'main_menu_title'                => 'Add RichText Toolbar Button',
-
-	// db version
-	'db_version'                     => '0.0.7',
 
 	// menu image url
 	'menu_image'                     => 'icon-24x24.png',

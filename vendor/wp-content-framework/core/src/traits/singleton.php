@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Singleton
  *
- * @version 0.0.51
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,11 @@
 
 namespace WP_Framework_Core\Traits;
 
+use Exception;
+use ReflectionClass;
+use WP_Framework;
+use WP_Framework_Common\Interfaces\Uninstall;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,24 +23,24 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Singleton
  * @package WP_Framework_Core\Traits
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  */
 trait Singleton {
 
 	use Readonly, Translate, Utility, Package;
 
 	/**
-	 * @var Singleton[] $_instances
+	 * @var Singleton[][] $_instances
 	 */
 	private static $_instances = [];
 
 	/**
-	 * @var string[] $_slugs
+	 * @var string[][] $_slugs
 	 */
 	private static $_slugs = [];
 
 	/**
-	 * @var \WP_Framework $app
+	 * @var WP_Framework $app
 	 */
 	protected $app;
 
@@ -60,16 +65,16 @@ trait Singleton {
 	private $_class_name_slug;
 
 	/**
-	 * @var \ReflectionClass $_reflection
+	 * @var ReflectionClass $_reflection
 	 */
 	private $_reflection;
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
-	 * @return \WP_Framework_Core\Traits\Singleton
+	 * @return Singleton
 	 */
-	public static function get_instance( \WP_Framework $app ) {
+	public static function get_instance( WP_Framework $app ) {
 		$_class = get_called_class();
 		if ( false === $_class ) {
 			$_class = get_class();
@@ -84,21 +89,21 @@ trait Singleton {
 		empty( $class ) and $class = $_class;
 		if ( empty( self::$_instances[ $key ] ) || ! array_key_exists( $class, self::$_instances[ $key ] ) ) {
 			try {
-				$reflection = new \ReflectionClass( $class );
-			} catch ( \Exception $e ) {
-				\WP_Framework::wp_die( [ 'unexpected error has occurred.', $e->getMessage(), $class, $_class ], __FILE__, __LINE__ );
+				$reflection = new ReflectionClass( $class );
+			} catch ( Exception $e ) {
+				WP_Framework::wp_die( [ 'unexpected error has occurred.', $e->getMessage(), $class, $_class ], __FILE__, __LINE__ );
 				exit;
 			}
 			if ( $reflection->isAbstract() ) {
 				self::$_instances[ $key ][ $class ] = null;
 			} else {
 				if ( $mapped ) {
-					/** @var \WP_Framework_Core\Traits\Singleton $class */
+					/** @var Singleton $class */
 					$instance                           = $class::get_instance( $app );
 					self::$_instances[ $key ][ $class ] = $instance;
 				} else {
 					$instance = new static( $app, $reflection );
-					if ( $app->is_uninstall() && $instance instanceof \WP_Framework_Common\Interfaces\Uninstall ) {
+					if ( $app->is_uninstall() && $instance instanceof Uninstall ) {
 						$app->uninstall->add_uninstall( function () use ( $instance ) {
 							$instance->uninstall();
 						}, $instance->get_uninstall_priority() );
@@ -122,18 +127,18 @@ trait Singleton {
 	/**
 	 * Singleton constructor.
 	 *
-	 * @param \WP_Framework $app
-	 * @param \ReflectionClass $reflection
+	 * @param WP_Framework $app
+	 * @param ReflectionClass $reflection
 	 */
-	private function __construct( \WP_Framework $app, \ReflectionClass $reflection ) {
+	private function __construct( WP_Framework $app, ReflectionClass $reflection ) {
 		$this->init( $app, $reflection );
 	}
 
 	/**
-	 * @param \WP_Framework $app
-	 * @param \ReflectionClass $reflection
+	 * @param WP_Framework $app
+	 * @param ReflectionClass $reflection
 	 */
-	protected function init( \WP_Framework $app, \ReflectionClass $reflection ) {
+	protected function init( WP_Framework $app, ReflectionClass $reflection ) {
 		$this->app         = $app;
 		$this->_reflection = $reflection;
 		$this->_class_name = $reflection->getName();
@@ -253,7 +258,7 @@ trait Singleton {
 	}
 
 	/**
-	 * @return \ReflectionClass
+	 * @return ReflectionClass
 	 */
 	public function get_reflection() {
 		return $this->_reflection;

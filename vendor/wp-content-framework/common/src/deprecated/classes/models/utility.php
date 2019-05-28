@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Deprecated Classes Models Utility
  *
- * @version 0.0.43
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,10 @@
  */
 
 namespace WP_Framework_Common\Deprecated\Classes\Models;
+
+use WP_Framework;
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Traits\Singleton;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Common\Traits\Package;
+	use Singleton, Package;
 
 	/**
 	 * @param string $name
@@ -73,7 +77,7 @@ class Utility implements \WP_Framework_Core\Interfaces\Singleton {
 				return $this->app->file->exists( ...$args );
 		}
 
-		\WP_Framework::wp_die( sprintf( 'you cannot access utility->%s', $name ), __FILE__, __LINE__ );
+		WP_Framework::wp_die( sprintf( 'you cannot access utility->%s', $name ), __FILE__, __LINE__ );
 
 		return null;
 	}

@@ -14,6 +14,8 @@
 
 namespace WP_Framework_Db\Classes\Models;
 
+use WP_Framework;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -25,19 +27,19 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 abstract class Grammar {
 
 	/**
-	 * @var \WP_Framework
+	 * @var WP_Framework
 	 */
 	protected $app;
 
 	/**
 	 * Create a new query builder instance.
 	 *
-	 * @param  \WP_Framework $app
+	 * @param WP_Framework $app
 	 *
 	 * @return void
 	 */
 	public function __construct(
-		\WP_Framework $app
+		WP_Framework $app
 	) {
 		$this->app = $app;
 	}
@@ -45,7 +47,7 @@ abstract class Grammar {
 	/**
 	 * Wrap an array of values.
 	 *
-	 * @param  array $values
+	 * @param array $values
 	 *
 	 * @return array
 	 */
@@ -56,7 +58,7 @@ abstract class Grammar {
 	/**
 	 * Wrap a table in keyword identifiers.
 	 *
-	 * @param  Query\Expression|string $table
+	 * @param Query\Expression|string $table
 	 *
 	 * @return string
 	 */
@@ -142,7 +144,7 @@ abstract class Grammar {
 	/**
 	 * Convert an array of column names into a delimited string.
 	 *
-	 * @param  array $columns
+	 * @param array $columns
 	 *
 	 * @return string
 	 */
@@ -153,7 +155,7 @@ abstract class Grammar {
 	/**
 	 * Create query parameter place-holders for an array.
 	 *
-	 * @param  array $values
+	 * @param array $values
 	 *
 	 * @return string
 	 */
@@ -164,7 +166,7 @@ abstract class Grammar {
 	/**
 	 * Get the appropriate query parameter place-holder for a value.
 	 *
-	 * @param  mixed $value
+	 * @param mixed $value
 	 *
 	 * @return string
 	 */
@@ -178,6 +180,8 @@ abstract class Grammar {
 				return '%d';
 			case 'double':
 				return '%f';
+			case 'NULL':
+				return 'NULL';
 			default:
 				return '%s';
 		}
@@ -186,7 +190,7 @@ abstract class Grammar {
 	/**
 	 * Quote the given string literal.
 	 *
-	 * @param  string|array $value
+	 * @param string|array $value
 	 *
 	 * @return string
 	 */
@@ -201,7 +205,7 @@ abstract class Grammar {
 	/**
 	 * Determine if the given value is a raw expression.
 	 *
-	 * @param  mixed $value
+	 * @param mixed $value
 	 *
 	 * @return bool
 	 */
@@ -212,7 +216,7 @@ abstract class Grammar {
 	/**
 	 * Get the value of a raw expression.
 	 *
-	 * @param  Query\Expression $expression
+	 * @param Query\Expression $expression
 	 *
 	 * @return string
 	 */

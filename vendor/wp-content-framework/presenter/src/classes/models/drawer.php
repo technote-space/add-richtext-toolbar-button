@@ -11,6 +11,12 @@
 
 namespace WP_Framework_Presenter\Classes\Models;
 
+use WP_Framework_Common\Traits\Uninstall;
+use WP_Framework_Core\Interfaces\Package;
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
+use WP_Framework_Presenter\Traits\Presenter;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -21,7 +27,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Drawer implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Presenter\Interfaces\Presenter, \WP_Framework_Common\Interfaces\Uninstall {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Common\Traits\Uninstall;
+	use Singleton, Hook, Presenter, Uninstall;
 
 	/**
 	 * @var string|false $_package
@@ -39,9 +45,9 @@ class Drawer implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
-	 * @param \WP_Framework_Core\Interfaces\Package $package
+	 * @param Package $package
 	 */
-	public function set_package( \WP_Framework_Core\Interfaces\Package $package ) {
+	public function set_package( Package $package ) {
 		$this->_package = $package->get_package();
 	}
 

@@ -2,12 +2,47 @@
 /**
  * WP_Framework
  *
- * @version 0.0.51
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space
  */
+
+use WP_Framework\Package_Base;
+use WP_Framework_Admin\Classes\Models\Admin;
+use WP_Framework_Api\Classes\Models\Api;
+use WP_Framework_Cache\Classes\Models\Cache;
+use WP_Framework_Common\Classes\Models\Array_Utility;
+use WP_Framework_Common\Classes\Models\Config;
+use WP_Framework_Common\Classes\Models\Define;
+use WP_Framework_Common\Classes\Models\Deprecated;
+use WP_Framework_Common\Classes\Models\File_Utility;
+use WP_Framework_Common\Classes\Models\Filter;
+use WP_Framework_Common\Classes\Models\Input;
+use WP_Framework_Common\Classes\Models\Option;
+use WP_Framework_Common\Classes\Models\Setting;
+use WP_Framework_Common\Classes\Models\String_Utility;
+use WP_Framework_Common\Classes\Models\System;
+use WP_Framework_Common\Classes\Models\Uninstall;
+use WP_Framework_Common\Classes\Models\User;
+use WP_Framework_Common\Classes\Models\Utility;
+use WP_Framework_Core\Classes\Main;
+use WP_Framework_Core\Interfaces\Package;
+use WP_Framework_Cron\Classes\Models\Cron;
+use WP_Framework_Custom_Post\Classes\Models\Custom_Post;
+use WP_Framework_Db\Classes\Models\Db;
+use WP_Framework_Device\Classes\Models\Device;
+use WP_Framework_Log\Classes\Models\Log;
+use WP_Framework_Mail\Classes\Models\Mail;
+use WP_Framework_Post\Classes\Models\Post;
+use WP_Framework_Presenter\Classes\Models\Drawer;
+use WP_Framework_Presenter\Classes\Models\Minify;
+use WP_Framework_Session\Classes\Models\Session;
+use WP_Framework_Social\Classes\Models\Social;
+use WP_Framework_Update\Classes\Models\Update;
+use WP_Framework_Update_Check\Classes\Models\Update_Check;
+use WP_Framework_Upgrade\Classes\Models\Upgrade;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -25,38 +60,38 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
  * @property string $relative_path
  * @property string $package_file
  *
- * @property \WP_Framework_Common\Classes\Models\Define $define
- * @property \WP_Framework_Common\Classes\Models\Config $config
- * @property \WP_Framework_Common\Classes\Models\Setting $setting
- * @property \WP_Framework_Common\Classes\Models\Filter $filter
- * @property \WP_Framework_Common\Classes\Models\Uninstall $uninstall
- * @property \WP_Framework_Common\Classes\Models\Utility $utility
- * @property \WP_Framework_Common\Classes\Models\Array_Utility $array
- * @property \WP_Framework_Common\Classes\Models\String_Utility $string
- * @property \WP_Framework_Common\Classes\Models\File_Utility $file
- * @property \WP_Framework_Common\Classes\Models\Option $option
- * @property \WP_Framework_Common\Classes\Models\User $user
- * @property \WP_Framework_Common\Classes\Models\Input $input
- * @property \WP_Framework_Common\Classes\Models\Deprecated $deprecated
- * @property \WP_Framework_Common\Classes\Models\System $system
- * @property \WP_Framework_Db\Classes\Models\Db $db
- * @property \WP_Framework_Log\Classes\Models\Log $log
- * @property \WP_Framework_Admin\Classes\Models\Admin $admin
- * @property \WP_Framework_Api\Classes\Models\Api $api
- * @property \WP_Framework_Presenter\Classes\Models\Drawer $drawer
- * @property \WP_Framework_Presenter\Classes\Models\Minify $minify
- * @property \WP_Framework_Mail\Classes\Models\Mail $mail
+ * @property Define $define
+ * @property Config $config
+ * @property Setting $setting
+ * @property Filter $filter
+ * @property Uninstall $uninstall
+ * @property Utility $utility
+ * @property Array_Utility $array
+ * @property String_Utility $string
+ * @property File_Utility $file
+ * @property Option $option
+ * @property User $user
+ * @property Input $input
+ * @property Deprecated $deprecated
+ * @property System $system
+ * @property Db $db
+ * @property Log $log
+ * @property Admin $admin
+ * @property Api $api
+ * @property Drawer $drawer
+ * @property Minify $minify
+ * @property Mail $mail
  * @property \WP_Framework_Test\Classes\Models\Test $test
- * @property \WP_Framework_Cron\Classes\Models\Cron $cron
- * @property \WP_Framework_Custom_Post\Classes\Models\Custom_Post $custom_post
- * @property \WP_Framework_Device\Classes\Models\Device $device
- * @property \WP_Framework_Session\Classes\Models\Session $session
- * @property \WP_Framework_Social\Classes\Models\Social $social
- * @property \WP_Framework_Post\Classes\Models\Post $post
- * @property \WP_Framework_Update\Classes\Models\Update $update
- * @property \WP_Framework_Update_Check\Classes\Models\Update_Check $update_check
- * @property \WP_Framework_Upgrade\Classes\Models\Upgrade $upgrade
- * @property \WP_Framework_Cache\Classes\Models\Cache $cache
+ * @property Cron $cron
+ * @property Custom_Post $custom_post
+ * @property Device $device
+ * @property Session $session
+ * @property Social $social
+ * @property Post $post
+ * @property Update $update
+ * @property Update_Check $update_check
+ * @property Upgrade $upgrade
+ * @property Cache $cache
  *
  * @method void main_init()
  * @method bool has_initialized()
@@ -74,12 +109,12 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
  * @method bool isset_shared_object( string $key, string | null $target = null )
  * @method void delete_shared_object( string $key, string | null $target = null )
  * @method bool send_mail( string $to, string $subject, string | array $body, string | false $text = false )
- * @method string get_view( \WP_Framework_Core\Interfaces\Package $instance, string $name, array $args = [], bool $echo = false, bool $error = true, bool $remove_nl = false )
- * @method void add_script_view( \WP_Framework_Core\Interfaces\Package $instance, string $name, array $args = [], int $priority = 10 )
- * @method void add_style_view( \WP_Framework_Core\Interfaces\Package $instance, string $name, array $args = [], int $priority = 10 )
- * @method void enqueue_style( \WP_Framework_Core\Interfaces\Package $instance, string $handle, string $file, array $depends = [], string | bool | null $ver = false, string $media = 'all', string $dir = 'css' )
- * @method void enqueue_script( \WP_Framework_Core\Interfaces\Package $instance, string $handle, string $file, array $depends = [], string | bool | null $ver = false, bool $in_footer = true, string $dir = 'js' )
- * @method bool localize_script( \WP_Framework_Core\Interfaces\Package $instance, string $handle, string $name, array $data )
+ * @method string get_view( Package $instance, string $name, array $args = [], bool $echo = false, bool $error = true, bool $remove_nl = false )
+ * @method void add_script_view( Package $instance, string $name, array $args = [], int $priority = 10 )
+ * @method void add_style_view( Package $instance, string $name, array $args = [], int $priority = 10 )
+ * @method void enqueue_style( Package $instance, string $handle, string $file, array $depends = [], string | bool | null $ver = false, string $media = 'all', string $dir = 'css' )
+ * @method void enqueue_script( Package $instance, string $handle, string $file, array $depends = [], string | bool | null $ver = false, bool $in_footer = true, string $dir = 'js' )
+ * @method bool localize_script( Package $instance, string $handle, string $name, array $data )
  * @method bool lock_process( string $name, callable $func, int $timeout = 60 )
  * @method bool is_enough_version()
  * @method void load_all_packages()
@@ -87,7 +122,7 @@ define( 'WP_FRAMEWORK_IS_MOCK', false );
 class WP_Framework {
 
 	/**
-	 * @var \WP_Framework[] $_instances
+	 * @var WP_Framework[] $_instances
 	 */
 	private static $_instances = [];
 
@@ -107,7 +142,7 @@ class WP_Framework {
 	private static $_packages_loaded = false;
 
 	/**
-	 * @var \WP_Framework\Package_Base[]
+	 * @var Package_Base[]
 	 */
 	private static $_packages = [];
 
@@ -139,7 +174,7 @@ class WP_Framework {
 	private $_package_directories;
 
 	/**
-	 * @var \WP_Framework\Package_Base[]
+	 * @var Package_Base[]
 	 */
 	private $_available_packages;
 
@@ -159,7 +194,7 @@ class WP_Framework {
 	private $_framework_initialized = false;
 
 	/**
-	 * @var \WP_Framework_Core\Classes\Main $_main
+	 * @var Main $_main
 	 */
 	private $_main;
 
@@ -174,7 +209,7 @@ class WP_Framework {
 	private $_plugin_data;
 
 	/**
-	 * @var array $readonly_properties
+	 * @var array $_readonly_properties
 	 */
 	private $_readonly_properties = [
 		'is_theme'             => false,
@@ -214,6 +249,7 @@ class WP_Framework {
 		$this->_is_allowed_access   = false;
 
 		if ( ! function_exists( 'get_plugin_data' ) ) {
+			/** @noinspection PhpIncludeInspection */
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 		$this->_plugin_data = $this->is_theme ? wp_get_theme() : get_plugin_data( $this->plugin_file, false, false );
@@ -227,7 +263,7 @@ class WP_Framework {
 	 * @param string $name
 	 *
 	 * @return mixed
-	 * @throws \OutOfRangeException
+	 * @throws OutOfRangeException
 	 */
 	public function __get( $name ) {
 		if ( array_key_exists( $name, $this->_readonly_properties ) ) {
@@ -241,13 +277,13 @@ class WP_Framework {
 	 * @param string $name
 	 * @param mixed $value
 	 *
-	 * @throws \OutOfRangeException
+	 * @throws OutOfRangeException
 	 */
 	public function __set( $name, $value ) {
 		if ( $this->_is_allowed_access && array_key_exists( $name, $this->_readonly_properties ) ) {
 			$this->_readonly_properties[ $name ] = $value;
 		} else {
-			throw new \OutOfRangeException( sprintf( 'you cannot access %s->%s.', static::class, $name ) );
+			throw new OutOfRangeException( sprintf( 'you cannot access %s->%s.', static::class, $name ) );
 		}
 	}
 
@@ -277,6 +313,8 @@ class WP_Framework {
 	/**
 	 * @param string $name
 	 * @param array $arguments
+	 *
+	 * @throws Exception
 	 */
 	public static function __callStatic( $name, $arguments ) {
 		if ( preg_match( '#register_uninstall_(.+)\z#', $name, $matches ) ) {
@@ -375,7 +413,7 @@ class WP_Framework {
 	}
 
 	/**
-	 * @return \WP_Framework\Package_Base[]
+	 * @return Package_Base[]
 	 */
 	public function get_packages() {
 		if ( ! isset( $this->_available_packages ) ) {
@@ -439,7 +477,7 @@ class WP_Framework {
 	/**
 	 * @param string $package
 	 *
-	 * @return \WP_Framework\Package_Base
+	 * @return Package_Base
 	 */
 	public function get_package_instance( $package = 'core' ) {
 		if ( ! isset( $this->_available_packages[ $package ] ) ) {
@@ -551,13 +589,13 @@ class WP_Framework {
 		}
 
 		return array_filter( self::$_instances, function ( $instance ) {
-			/** @var \WP_Framework $instance */
+			/** @var WP_Framework $instance */
 			return $instance->_framework_initialized;
 		} );
 	}
 
 	/**
-	 * @return \WP_Framework_Core\Classes\Main|\WP_Framework_Core\Interfaces\Singleton
+	 * @return Main|\WP_Framework_Core\Interfaces\Singleton
 	 */
 	private function get_main() {
 		if ( ! $this->_framework_initialized ) {
@@ -569,7 +607,7 @@ class WP_Framework {
 				/** @noinspection PhpIncludeInspection */
 				require_once $path;
 			}
-			$this->_main = \WP_Framework_Core\Classes\Main::get_instance( $this );
+			$this->_main = Main::get_instance( $this );
 		}
 
 		return $this->_main;
@@ -690,9 +728,9 @@ class WP_Framework {
 	}
 
 	/**
-	 * @param \WP_Framework $app
+	 * @param WP_Framework $app
 	 */
-	private static function update_framework_packages( \WP_Framework $app ) {
+	private static function update_framework_packages( WP_Framework $app ) {
 		foreach ( $app->_package_versions as $package => $version ) {
 			if ( ! isset( self::$_framework_package_versions[ $package ] ) || version_compare( self::$_framework_package_versions[ $package ], $version, '<' ) ) {
 				self::$_framework_package_versions[ $package ]     = $version;
@@ -739,14 +777,14 @@ class WP_Framework {
 			}
 
 			$version = self::$_framework_package_versions[ $key ];
-			/** @var \WP_Framework\Package_Base $class */
+			/** @var Package_Base $class */
 			$packages[ $key ] = $class::get_instance( $app, $key, $directory, $version );
 			$priority[ $key ] = $packages[ $key ]->get_priority();
 		}
 		array_multisort( $priority, $packages );
 		self::$_packages = [];
 		foreach ( $packages as $package ) {
-			/** @var \WP_Framework\Package_Base $package */
+			/** @var Package_Base $package */
 			self::$_packages[ $package->get_package() ] = $package;
 		}
 	}
@@ -808,6 +846,8 @@ class WP_Framework {
 
 	/**
 	 * @param bool $load_packages
+	 *
+	 * @throws Exception
 	 */
 	private function initialize_framework( $load_packages = false ) {
 		$this->plugins_loaded();
@@ -875,6 +915,8 @@ class WP_Framework {
 
 	/**
 	 * @param string $plugin_base_name
+	 *
+	 * @throws Exception
 	 */
 	private static function uninstall( $plugin_base_name ) {
 		$app = self::find_plugin( $plugin_base_name );
@@ -890,10 +932,11 @@ class WP_Framework {
 	/**
 	 * @param string $plugin_base_name
 	 *
-	 * @return \WP_Framework|null
+	 * @return WP_Framework|null
+	 * @throws Exception
 	 */
 	private static function find_plugin( $plugin_base_name ) {
-		/** @var \WP_Framework $instance */
+		/** @var WP_Framework $instance */
 		foreach ( self::$_instances as $plugin_name => $instance ) {
 			if ( $instance->is_theme ) {
 				continue;

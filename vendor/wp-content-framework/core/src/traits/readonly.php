@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Core Traits Readonly
  *
- * @version 0.0.1
+ * @version 0.0.54
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,9 @@
 
 namespace WP_Framework_Core\Traits;
 
+use OutOfRangeException;
+use WP_Framework;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +21,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Readonly
  * @package WP_Framework_Core\Traits
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  * @internal|@property-read array|string[] $readonly_properties
  */
 trait Readonly {
@@ -38,28 +41,14 @@ trait Readonly {
 	/**
 	 * @param string $name
 	 * @param mixed $value
-	 */
-	private function set_readonly_property( $name, $value ) {
-		if ( $this->is_readonly_property( $name ) ) {
-			$this->_is_allowed_access = true;
-			$this->$name              = $value;
-			$this->_is_allowed_access = false;
-		} else {
-			throw new \OutOfRangeException( sprintf( $this->translate( 'you cannot access %s->%s.' ), static::class, $name ) );
-		}
-	}
-
-	/**
-	 * @param string $name
-	 * @param mixed $value
 	 *
-	 * @throws \OutOfRangeException
+	 * @throws OutOfRangeException
 	 */
 	public function __set( $name, $value ) {
 		if ( $this->_is_allowed_access && $this->is_readonly_property( $name ) ) {
 			$this->$name = $value;
 		} else {
-			throw new \OutOfRangeException( sprintf( $this->translate( 'you cannot access %s->%s.' ), static::class, $name ) );
+			throw new OutOfRangeException( sprintf( $this->translate( 'you cannot access %s->%s.' ), static::class, $name ) );
 		}
 	}
 
@@ -67,7 +56,7 @@ trait Readonly {
 	 * @param string $name
 	 *
 	 * @return mixed
-	 * @throws \OutOfRangeException
+	 * @throws OutOfRangeException
 	 */
 	public function __get( $name ) {
 		if ( $this->is_readonly_property( $name ) ) {
@@ -77,7 +66,7 @@ trait Readonly {
 
 			return null;
 		}
-		throw new \OutOfRangeException( sprintf( $this->translate( '%s is undefined.' ), $name ) );
+		throw new OutOfRangeException( sprintf( $this->translate( '%s is undefined.' ), $name ) );
 	}
 
 	/**

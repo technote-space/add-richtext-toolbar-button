@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models Option
  *
- * @version 0.0.44
+ * @version 0.0.49
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,10 @@
  */
 
 namespace WP_Framework_Common\Classes\Models;
+
+use WP_Framework_Common\Traits\Package;
+use WP_Framework_Core\Traits\Hook;
+use WP_Framework_Core\Traits\Singleton;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -21,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  */
 class Option implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Common\Interfaces\Uninstall {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Common\Traits\Uninstall, \WP_Framework_Common\Traits\Package;
+	use Singleton, Hook, \WP_Framework_Common\Traits\Uninstall, Package;
 
 	/**
 	 * @var array $_options

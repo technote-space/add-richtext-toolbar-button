@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Interfaces Custom Post
  *
- * @version 0.0.29
+ * @version 0.0.36
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -10,6 +10,17 @@
  */
 
 namespace WP_Framework_Custom_Post\Interfaces;
+
+use Closure;
+use WP_Error;
+use WP_Framework_Core\Interfaces\Helper\Data_Helper;
+use WP_Framework_Core\Interfaces\Helper\Validate;
+use WP_Framework_Core\Interfaces\Hook;
+use WP_Framework_Core\Interfaces\Singleton;
+use WP_Framework_Presenter\Interfaces\Presenter;
+use WP_Post;
+use WP_Post_Type;
+use WP_Query;
 
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
@@ -19,7 +30,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Interface Custom_Post
  * @package WP_Framework_Custom_Post\Interfaces
  */
-interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Presenter\Interfaces\Presenter, \WP_Framework_Core\Interfaces\Helper\Data_Helper, \WP_Framework_Core\Interfaces\Helper\Validate {
+interface Custom_Post extends Singleton, Hook, Presenter, Data_Helper, Validate {
 
 	/**
 	 * @param array $data
@@ -63,7 +74,7 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	public function get_post_type();
 
 	/**
-	 * @return \WP_Post_Type|\WP_Error
+	 * @return WP_Post_Type|WP_Error
 	 */
 	public function get_post_type_object();
 
@@ -118,22 +129,22 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 
 	/**
 	 * @param string $search
-	 * @param \WP_Query $wp_query
+	 * @param WP_Query $wp_query
 	 *
 	 * @return string
 	 */
-	public function posts_search( $search, \WP_Query $wp_query );
+	public function posts_search( $search, WP_Query $wp_query );
 
 	/**
 	 * @param string $join
-	 * @param \WP_Query|string $wp_query
+	 * @param WP_Query|string $wp_query
 	 *
 	 * @return string
 	 */
 	public function posts_join( $join, $wp_query );
 
 	/**
-	 * @param \WP_Query $wp_query
+	 * @param WP_Query $wp_query
 	 */
 	public function setup_posts_orderby( $wp_query );
 
@@ -144,11 +155,11 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 
 	/**
 	 * @param array $actions
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
-	public function post_row_actions( array $actions, \WP_Post $post );
+	public function post_row_actions( array $actions, WP_Post $post );
 
 	/**
 	 * @param mixed $data
@@ -172,9 +183,9 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 
 	/**
 	 * @param string $column_name
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function manage_posts_custom_column( $column_name, \WP_Post $post );
+	public function manage_posts_custom_column( $column_name, WP_Post $post );
 
 	/**
 	 * @param int $post_id
@@ -192,7 +203,7 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	public function get_data( $id, $is_valid = true );
 
 	/**
-	 * @param \Closure|null $callback
+	 * @param Closure|null $callback
 	 * @param bool $is_valid
 	 * @param int|null $per_page
 	 * @param int $page
@@ -204,7 +215,7 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	/**
 	 * @param int $per_page
 	 * @param int $page
-	 * @param \Closure|null $callback
+	 * @param Closure|null $callback
 	 * @param bool $is_valid
 	 *
 	 * @return array
@@ -228,41 +239,41 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	/**
 	 * @param array $params
 	 * @param array $where
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param bool $update
 	 *
 	 * @return int
 	 */
-	public function update_data( array $params, array $where, \WP_Post $post, $update );
+	public function update_data( array $params, array $where, WP_Post $post, $update );
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $old
 	 * @param array $new
 	 */
-	public function data_updated( $post_id, \WP_Post $post, array $old, array $new );
+	public function data_updated( $post_id, WP_Post $post, array $old, array $new );
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param array $data
 	 */
-	public function data_inserted( $post_id, \WP_Post $post, array $data );
+	public function data_inserted( $post_id, WP_Post $post, array $data );
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 * @param bool $update
 	 *
 	 * @return array
 	 */
-	public function get_update_data_params( \WP_Post $post, $update );
+	public function get_update_data_params( WP_Post $post, $update );
 
 	/**
 	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function untrash_post( $post_id, \WP_Post $post );
+	public function untrash_post( $post_id, WP_Post $post );
 
 	/**
 	 * @param int $post_id
@@ -294,14 +305,14 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	public function get_data_field_settings();
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function output_edit_form( \WP_Post $post );
+	public function output_edit_form( WP_Post $post );
 
 	/**
-	 * @param \WP_Post $post
+	 * @param WP_Post $post
 	 */
-	public function output_after_editor( \WP_Post $post );
+	public function output_after_editor( WP_Post $post );
 
 	/**
 	 * @param array|null $post_array
@@ -347,6 +358,11 @@ interface Custom_Post extends \WP_Framework_Core\Interfaces\Singleton, \WP_Frame
 	 * @return string
 	 */
 	public function get_edit_post_link( $post_id );
+
+	/**
+	 * @return array
+	 */
+	public function get_exclude_from_search_post_status();
 
 	/**
 	 * @return int

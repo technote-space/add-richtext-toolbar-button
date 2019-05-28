@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Presenter Traits Presenter
  *
- * @version 0.0.19
+ * @version 0.0.20
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -11,6 +11,11 @@
 
 namespace WP_Framework_Presenter\Traits;
 
+use stdClass;
+use WP_Framework;
+use WP_Framework_Core\Interfaces\Nonce;
+use WP_Post;
+
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	exit;
 }
@@ -18,7 +23,7 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 /**
  * Trait Presenter
  * @package WP_Framework_Presenter\Traits
- * @property \WP_Framework $app
+ * @property WP_Framework $app
  * @mixin \WP_Framework_Core\Traits\Package
  */
 trait Presenter {
@@ -133,7 +138,7 @@ trait Presenter {
 	 */
 	private function get_presenter_args( array $args ) {
 		$args['field'] = array_merge( $this->app->array->get( $args, 'field', [] ), $this->app->input->all() );
-		if ( $this instanceof \WP_Framework_Core\Interfaces\Nonce ) {
+		if ( $this instanceof Nonce ) {
 			$args['nonce_key']   = $this->get_nonce_key();
 			$args['nonce_value'] = $this->create_nonce();
 		}
@@ -182,7 +187,7 @@ trait Presenter {
 	public function old( $name, $data, $key = null, $default = '', $checkbox = false ) {
 		if ( is_array( $data ) ) {
 			$default = $this->app->array->get( $data, $key, $default );
-		} elseif ( $data instanceof \stdClass ) {
+		} elseif ( $data instanceof stdClass ) {
 			$default = property_exists( $data, $key ) ? $data->$key : $default;
 		} elseif ( ! isset( $key ) ) {
 			$default = $data;
@@ -552,7 +557,7 @@ trait Presenter {
 	}
 
 	/**
-	 * @param null|int|\WP_Post $post
+	 * @param null|int|WP_Post $post
 	 * @param array $args
 	 * @param string|array $size
 	 *
@@ -843,6 +848,17 @@ trait Presenter {
 	}
 
 	/**
+	 * @param array $target
+	 *
+	 * @return array
+	 */
+	protected function get_translate_data( array $target ) {
+		return $this->app->array->map( $this->app->array->combine( $target, null ), function ( $value ) {
+			return $this->translate( $value );
+		} );
+	}
+
+	/**
 	 * @param string $type
 	 * @param bool $parse_db_type
 	 *
@@ -863,5 +879,14 @@ trait Presenter {
 		}
 
 		return 'input/text';
+	}
+
+	/**
+	 * @param mixed $value
+	 *
+	 * @return string
+	 */
+	public function convert_select_value( $value ) {
+		return is_bool( $value ) ? strval( (int) $value ) : strval( $value );
 	}
 }

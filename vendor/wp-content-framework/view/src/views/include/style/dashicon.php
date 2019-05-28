@@ -15,7 +15,6 @@
 if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 	return;
 }
-/** @var \WP_Framework_Presenter\Interfaces\Presenter $instance */
 ?>
 
 <style>
@@ -25,8 +24,8 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
         height: 252px;
         font-size: 14px;
         background-color: #fff;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.1);
-        box-shadow: 0 1px 2px rgba(0,0,0,.1);
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
         overflow: hidden;
         padding: 5px;
         box-sizing: border-box

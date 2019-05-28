@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.4
+ * @version 1.1.6
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -10,6 +10,8 @@
 
 namespace Richtext_Toolbar_Button\Classes\Controllers\Admin;
 
+use WP_Framework_Admin\Classes\Controllers\Admin\Base;
+
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
@@ -18,7 +20,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
  * Class Dashboard
  * @package Richtext_Toolbar_Button\Classes\Controllers\Admin
  */
-class Dashboard extends \WP_Framework_Admin\Classes\Controllers\Admin\Base {
+class Dashboard extends Base {
 
 	use \WP_Framework_Admin\Traits\Dashboard;
 
