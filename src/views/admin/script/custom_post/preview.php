@@ -19,7 +19,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 ?>
-
 <script>
 	( function( $ ) {
 		$( function() {

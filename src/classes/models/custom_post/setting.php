@@ -944,7 +944,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	private function get_groups() {
 		$groups  = array_filter( $this->app->array->pluck_unique( $this->app->array->get( $this->get_list_data( null, false ), 'data', [] ), 'group_name' ), function ( $d ) {
-			return '' !== $d;
+			return isset( $d ) && '' !== $d;
 		} );
 		$default = $this->apply_filters( 'default_group' );
 		if ( $default && ! in_array( $default, $groups ) ) {

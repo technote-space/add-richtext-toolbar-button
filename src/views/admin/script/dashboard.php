@@ -34,7 +34,7 @@ foreach ( $settings as $k => $v ) {
 						const icon = artbGetIcon( $( this ).val().trim() );
 						const $area = $( this ).closest( '.icon-wrapper' ).find( '.display-area' );
 						$area.html( '' );
-						if ( !icon ) {
+						if ( ! icon ) {
 							return;
 						}
 						$area.append( icon );
