@@ -971,6 +971,13 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'padding'          => 'padding: .5em;',
 			'shadow'           => 'box-shadow: 3px 3px 3px #ccc;',
 			'highlighter'      => 'background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, #6f6 75%);',
+			'stripe'           => [
+				'background-image: repeating-linear-gradient(-45deg, rgb(64, 255, 0), rgb(64, 255, 0) 2px, transparent 2px, transparent 4px);',
+				'background-size: 100% 0.6em',
+				'padding-bottom: 0.6em',
+				'background-position: 0 center',
+				'background-repeat: no-repeat',
+			],
 			'block'            => 'display: block;',
 			'inline block'     => 'display: inline-block;',
 			'icon'             => [
