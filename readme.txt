@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0.3
 Requires PHP: 5.6
 Tested up to: 5.2
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,9 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.1.7 =
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/128)
+
 = 1.1.6 =
 * ColorIndicatorを追加しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/122)
 * ツールバーボタンの挙動を修正しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/123)
@@ -71,36 +74,10 @@ This plugin needs PHP5.6 or higher.
 * いくつかのパフォーマンスの改善を行いました [詳細](https://github.com/wp-content-framework/core/issues/138)
 * [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/99)
 
-= 1.0.15 =
-* 設定のエクスポート及びインポートが可能になります。
-
-= 1.0.14 =
-* テーマのスタイルが設定プレビューに反映されるようになります。
-
-= 1.0.12 =
-* 複数のクラスの設定に対応しました (スペース区切りで複数のクラス名を指定できます)
-* 　すでに投稿で使用している場合に クラス名 や タグ名 の設定を変更しても投稿に付与したクラス名などは変わりません。
-* 　その影響で『エディタ』では 他のフォーマット(文字色など)が適用されているような挙動 になったりします。
-* 　不要になった設定は『ツールバーボタンが有効かどうか』を外してそのまま残しておくことをお勧めします。
-* [全てのフォーマットを外すボタン] をサイドバーに追加しました。
-
-= 1.0.9 =
-* Fatal error が起こる場合があるのを修正しました。
-
-= 1.0.7 =
-* `ContrastChecker` の導入(使用するには『詳細設定』から設定値を `true` にする必要があります)
-
-= 1.0.5 =
-* `disable-custom-font-sizes` の設定が反映されるように改善
-
-= 1.0.4 =
-* `disable-custom-colors` の設定が反映されるように改善
-
-= 1.0.3 =
-* ツールバーボタンが有効かどうかの設定追加(デザインは適用させたままボタンを消すことが可能)
-* サイドバーの動作改善
-
 == Changelog ==
+
+= 1.1.7 (2019/6/2) =
+* Improved: [Refactoring](https://github.com/technote-space/add-richtext-toolbar-button/issues/133)
 
 = 1.1.6 (2019/5/28) =
 * Improved: [Add `ColorIndicator`](https://github.com/technote-space/add-richtext-toolbar-button/issues/122)
