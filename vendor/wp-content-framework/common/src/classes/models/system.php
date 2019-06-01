@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Common Classes Models System
  *
- * @version 0.0.49
+ * @version 0.0.50
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -60,6 +60,8 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			if ( $this->app->is_theme ) {
 				$this->deactivate_theme();
 			}
+		} elseif ( $this->app->is_uninstall() ) {
+			$this->app_initialized();
 		} elseif ( ! self::$_setup_initialized_action ) {
 			self::$_setup_initialized_action = true;
 			add_action( 'init', function () {
@@ -77,7 +79,10 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return;
 		}
 
-		$this->setup_property();
+		if ( $this->app->is_uninstall() ) {
+			$this->app->load_all_packages();
+			$this->app->uninstall->get_class_list();
+		}
 		$this->do_action( 'app_initialized', $this->app );
 
 		if ( ! $this->app->option->is_app_activated() ) {
@@ -93,16 +98,6 @@ class System implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			switch_theme( WP_DEFAULT_THEME );
 			unset( $_GET['activated'] );
 		}, 999 );
-	}
-
-	/**
-	 * setup property
-	 */
-	private function setup_property() {
-		if ( $this->app->is_uninstall() ) {
-			$this->app->load_all_packages();
-			$this->app->uninstall->get_class_list();
-		}
 	}
 
 	/**

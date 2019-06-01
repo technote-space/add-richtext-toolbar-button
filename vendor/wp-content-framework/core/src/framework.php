@@ -2,7 +2,7 @@
 /**
  * WP_Framework
  *
- * @version 0.0.54
+ * @version 0.0.56
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -318,8 +318,7 @@ class WP_Framework {
 	 */
 	public static function __callStatic( $name, $arguments ) {
 		if ( preg_match( '#register_uninstall_(.+)\z#', $name, $matches ) ) {
-			$plugin_base_name = $matches[1];
-			self::uninstall( $plugin_base_name );
+			self::uninstall( $matches[1] );
 		}
 	}
 
