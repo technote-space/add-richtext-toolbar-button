@@ -42,7 +42,7 @@ This plugin needs PHP5.6 or higher.
 == Upgrade Notice ==
 
 = 1.1.7 =
-* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/128)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/135)
 
 = 1.1.6 =
 * ColorIndicatorを追加しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/122)
