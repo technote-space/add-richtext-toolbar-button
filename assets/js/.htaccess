@@ -2,6 +2,6 @@ Order Deny,Allow
 Deny from all
 
 #allow access to assets
-<Files add-richtext-toolbar-button-gutenberg.min.js>
+<Files *.min.js>
     Allow from all
 </Files>
