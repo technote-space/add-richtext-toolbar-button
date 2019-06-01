@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Update Classes Models Update
  *
- * @version 0.0.7
+ * @version 0.0.8
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -160,8 +160,8 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return false|string
 	 */
 	private function get_plugin_slug( $url ) {
-		if ( $this->app->string->starts_with( $url, 'https://wordpress.org/plugins/' ) ) {
-			return trim( str_replace( 'https://wordpress.org/plugins/', '', $url ), '/' );
+		if ( preg_match( '#\Ahttps://(\w+\.)?wordpress.org/plugins/(.+?)/?\z#', $url, $matches ) ) {
+			return $matches[2];
 		}
 
 		return false;

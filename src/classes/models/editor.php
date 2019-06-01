@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.6
+ * @version 1.1.7
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -49,7 +49,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'wp-format-library',
 			'lodash',
 		], $this->app->get_plugin_version() );
-		$this->localize_script( $handle, 'artb_params', $this->get_editor_params() );
+		$this->localize_script( $handle, 'artbParams', $this->get_editor_params() );
 
 		/** @var Assets $assets */
 		$assets = Assets::get_instance( $this->app );
