@@ -195,6 +195,9 @@ add_filter( 'artb/default_class_name', function ( $value, $post_id ) {
 }, 10, 2 );
 ```
 
+## @See
+[Register Grouped Format Type](https://github.com/technote-space/register-grouped-format-type)
+
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  
 [Blog](https://technote.space)
