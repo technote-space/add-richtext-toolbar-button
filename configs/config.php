@@ -15,7 +15,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 return [
 
 	// required wordpress version
-	'required_wordpress_version'     => '5.0.3',
+	'required_wordpress_version'     => '5.0',
 
 	// main menu title
 	'main_menu_title'                => 'Add RichText Toolbar Button',
