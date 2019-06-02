@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Custom_Post Traits Custom Post
  *
- * @version 0.0.36
+ * @version 0.0.37
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -82,7 +82,7 @@ trait Custom_Post {
 			return;
 		}
 
-		if ( isset( $_REQUEST['post_type'] ) && $_REQUEST['post_type'] === $post_type ) {
+		if ( $this->app->input->request( 'post_type' ) === $post_type ) {
 			add_filter( "views_edit-{$post_type}", function ( $views ) {
 				return $this->view_edit( $views );
 			} );
@@ -523,9 +523,7 @@ trait Custom_Post {
 	 * @return bool
 	 */
 	private function is_valid_export_post_status() {
-		$post_status = ! empty( $_REQUEST['post_status'] ) ? $_REQUEST['post_status'] : 'all';
-
-		return ! in_array( $post_status, $this->get_exclude_from_search_post_status() );
+		return ! in_array( $this->app->input->request( 'post_status', 'all' ), $this->get_exclude_from_search_post_status() );
 	}
 
 	/**
@@ -1286,7 +1284,7 @@ trait Custom_Post {
 		} else {
 			$value = $this->app->input->post( $this->get_post_field_name( $key ), $default );
 		}
-		if ( ! $update && 'bool' === $setting['type'] && (string) $value === '' ) {
+		if ( ! $update && 'bool' === $this->app->array->get( $setting, 'type' ) && (string) $value === '' ) {
 			$value = null;
 		}
 
