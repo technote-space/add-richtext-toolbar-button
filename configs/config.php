@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.6
+ * @version 1.1.8
  * @author Technote
  * @since 1.0.0
  * @copyright Technote All Rights Reserved
@@ -15,7 +15,7 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 return [
 
 	// required wordpress version
-	'required_wordpress_version'     => '5.0.3',
+	'required_wordpress_version'     => '5.0',
 
 	// main menu title
 	'main_menu_title'                => 'Add RichText Toolbar Button',
