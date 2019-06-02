@@ -41,7 +41,13 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.1.8 =
+* 細かいバグの修正
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/139)
+
 = 1.1.7 =
+* リファクタリング
+* 細かいバグの修正
 * [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/135)
 
 = 1.1.6 =
@@ -76,8 +82,12 @@ This plugin needs PHP5.6 or higher.
 
 == Changelog ==
 
+= 1.1.8 (2019/6/2) =
+* Fixed: [Warning while insert preset data](https://github.com/technote-space/add-richtext-toolbar-button/issues/137)
+
 = 1.1.7 (2019/6/2) =
 * Improved: [Refactoring](https://github.com/technote-space/add-richtext-toolbar-button/issues/133)
+* Fixed: [Uninstall behavior](https://github.com/wp-content-framework/common/issues/107)
 
 = 1.1.6 (2019/5/28) =
 * Improved: [Add `ColorIndicator`](https://github.com/technote-space/add-richtext-toolbar-button/issues/122)
