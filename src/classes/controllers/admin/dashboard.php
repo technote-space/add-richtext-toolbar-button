@@ -55,6 +55,7 @@ class Dashboard extends Base {
 	 * @param array $option
 	 *
 	 * @return array
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	protected function filter_view_setting(
 		/** @noinspection PhpUnusedParameterInspection */

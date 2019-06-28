@@ -1,17 +1,27 @@
-import { registerFormatType } from '../../../../../../../../misc/gutenberg/richtext-helpers';
+import { Common, RichText } from '@technote-space/register-grouped-format-type';
+import { getDefaultButtonGroupSetting, getColorButtonSetting, getFontSizeButtonSetting, getSettings } from './utils';
 
-/** @var {{ settings: {id: number, options: {tag_name: string, class_name: string, group_name: string, icon: string}, title: string, style: string, hide: boolean}[] }} artbParams */
+const { registerFormatTypeGroup, registerGroupedFormatType } = RichText;
+const { getToolbarButtonProps, getColorButtonProps, getFontSizesButtonProps } = Common.Helpers;
 
-Object.keys( artbParams.settings ).forEach( key => {
-	const setting = artbParams.settings[ key ];
-	registerFormatType( {
-		id: setting.id,
-		title: setting.title,
-		className: setting.options.class_name,
-		tagName: setting.options.tag_name,
-		group: setting.options.group_name,
-		icon: setting.options.icon,
-		style: setting.style,
-		hide: setting.hide,
+
+// register default buttons
+{
+	registerFormatTypeGroup( ...getDefaultButtonGroupSetting( artbParams ) );
+	registerGroupedFormatType( getColorButtonProps( ...getColorButtonSetting( artbParams, 'font-color' ) ) );
+	registerGroupedFormatType( getColorButtonProps( ...getColorButtonSetting( artbParams, 'background-color' ) ) );
+	registerGroupedFormatType( getFontSizesButtonProps( ...getFontSizeButtonSetting( artbParams, 'font-size' ) ) );
+}
+
+// register buttons
+{
+	const { groups, settings } = getSettings( artbParams );
+	Object.keys( groups ).forEach( group => {
+		registerFormatTypeGroup( group, groups[ group ] );
 	} );
-} );
+	settings.forEach( setting => {
+		registerGroupedFormatType( getToolbarButtonProps( ...setting ) );
+	} );
+}
+
+/** @var {{settings:{name, title, class_name, tag_name, is_valid, group_name, icon}[], default_buttons:{}, default_icon}} artbParams */

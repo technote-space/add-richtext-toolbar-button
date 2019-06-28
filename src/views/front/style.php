@@ -16,36 +16,41 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $wrap */
 /** @var array|null $pre_style */
 /** @var bool|null $is_editor */
-!isset($pre_style) and $pre_style = [];
+if ( ! isset( $pre_style ) ) {
+	$pre_style = [];
+}
+$style_content = '';
+foreach ( $settings as $setting ) {
+	if ( ! empty( $setting['options']['styles'] ) || ! empty( $is_editor ) ) {
+		$selector = ( ! empty( $wrap ) ? $wrap . ' ' : '' ) . $setting['selector'];
+		if ( empty( $setting['options']['styles'] ) ) {
+			if ( ! empty( $pre_style ) ) {
+				$style_content .= $selector . "{\n";
+				foreach ( $pre_style as $style ) {
+					$style_content .= "\t{$style}\n";
+				}
+				$style_content .= "}\n";
+			}
+		} else {
+			$tmp = $selector;
+			foreach ( $setting['options']['styles'] as $pseudo => $styles ) {
+				$selector = $tmp;
+				if ( '' !== $pseudo ) {
+					$selector .= ':' . $pseudo;
+				}
+				$style_content .= $selector . "{\n";
+				foreach ( $pre_style as $style ) {
+					$style_content .= "\t{$style}\n";
+				}
+				foreach ( $styles as $style ) {
+					$style_content .= "\t{$style}\n";
+				}
+				$style_content .= "}\n";
+			}
+		}
+	}
+}
 ?>
 <style>
-<?php foreach ($settings as $setting):?>
-<?php if (!empty($setting['options']['styles']) || !empty($is_editor)):?>
-<?php $selector = (!empty($wrap) ? $wrap . ' ' : '') . $setting['options']['selector'];?>
-<?php if (empty($setting['options']['styles'])):?>
-<?php if (!empty($pre_style)):?>
-<?php $instance->h($selector);?> {
-<?php foreach ($pre_style as $style):?>
-    <?php $instance->h($style, false, true, false);?>
-
-<?php endforeach;?>
-}
-<?php endif;?>
-<?php else:?>
-<?php foreach ($setting['options']['styles'] as $pseudo => $styles):?>
-<?php '' !== $pseudo and $selector .= ':' . $pseudo;?>
-<?php $instance->h($selector);?> {
-<?php foreach ($pre_style as $style):?>
-    <?php $instance->h($style, false, true, false);?>
-
-<?php endforeach;?>
-<?php foreach ($styles as $style):?>
-    <?php $instance->h($style, false, true, false);?>
-
-<?php endforeach;?>
-}
-<?php endforeach;?>
-<?php endif;?>
-<?php endif;?>
-<?php endforeach;?>
+	<?php $instance->h( $style_content, false, true, false ); ?>
 </style>
