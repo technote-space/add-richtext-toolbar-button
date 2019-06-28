@@ -18,11 +18,11 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 ?>
 
 <style>
-    .widefat td.<?php $instance->h($post_type);?>-preview {
-        padding: 0;
-    }
+	.widefat td.<?php $instance->h( $post_type ); ?>-preview {
+		padding: 0;
+	}
 
-    .preview-iframe {
-        max-width: 100%;
-    }
+	.preview-iframe {
+		max-width: 100%;
+	}
 </style>

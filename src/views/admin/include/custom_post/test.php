@@ -16,10 +16,10 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var Presenter $instance */
 ?>
 <fieldset>
-    <legend><?php $instance->h( 'preview', true ); ?></legend>
-    <div class="setting-preview">
-        <iframe class="preview-item-wrap"></iframe>
-    </div>
+	<legend><?php $instance->h( 'preview', true ); ?></legend>
+	<div class="setting-preview">
+		<iframe class="preview-item-wrap"></iframe>
+	</div>
 </fieldset>
 <div class="display-preview-settings-wrap">
 	<?php $instance->form( 'input/checkbox', [

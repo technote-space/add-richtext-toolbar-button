@@ -40,7 +40,7 @@ $instance->add_script_view( 'admin/script/icon' );
 					text: '<?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) );?>',
 				} ) );
 
-				<?php if ($editor_styles) :?>
+				<?php if ( $editor_styles ) : ?>
 				$( this ).contents().find( 'head' ).append( $( '<style>', {
 					type: 'text/css',
 					text: "<?php $instance->h( $editor_styles, false, true, false );?>",

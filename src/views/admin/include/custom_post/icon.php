@@ -22,8 +22,8 @@ $val    = $instance->old( $prefix . $name, $data, $name );
 $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 ?>
 <div class="icon-wrapper">
-    <div class="display-area"></div>
-    <div class="input-wrapper">
+	<div class="display-area"></div>
+	<div class="input-wrapper">
 		<?php $instance->form( 'input/text', [
 			'name'  => $prefix . $name,
 			'id'    => $prefix . $name,
@@ -49,5 +49,5 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 				'data-value'  => $instance->app->array->get( $data, $name ),
 			],
 		] ); ?>
-    </div>
+	</div>
 </div>

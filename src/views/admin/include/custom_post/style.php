@@ -41,10 +41,10 @@ $preset             = $instance->app->array->get( $column['args'], 'preset' );
 		'class' => 'button-primary reset-style',
 	] ); ?>
 </div>
-<?php if ( ! empty( $preset ) ): ?>
-    <fieldset>
-        <legend><?php $instance->h( 'preset', true ); ?></legend>
-		<?php foreach ( $preset as $key => $value ): ?>
+<?php if ( ! empty( $preset ) ) : ?>
+	<fieldset>
+		<legend><?php $instance->h( 'preset', true ); ?></legend>
+		<?php foreach ( $preset as $key => $value ) : ?>
 			<?php $instance->form( 'input/button', [
 				'value'      => $key,
 				'name'       => $key,
@@ -54,6 +54,6 @@ $preset             = $instance->app->array->get( $column['args'], 'preset' );
 				],
 			] ); ?>
 		<?php endforeach; ?>
-    </fieldset>
+	</fieldset>
 <?php endif; ?>
 <?php $instance->url( $instance->app->get_config( 'config', 'fontawesome_icon_url' ), 'Font Awesome Icons', true, true ); ?>

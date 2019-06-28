@@ -22,5 +22,5 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 		'value' => $value,
 		'class' => 'display-icon',
 	] ); ?>
-    <div class="display-area"></div>
+	<div class="display-area"></div>
 </div>

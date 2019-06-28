@@ -13,12 +13,12 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 }
 ?>
 <style>
-    .display-area {
-        max-width: 100px;
-        max-height: 100px;
-    }
+	.display-area {
+		max-width: 100px;
+		max-height: 100px;
+	}
 
-    .block.checkbox {
-        display: inline-block;
-    }
+	.block.checkbox {
+		display: inline-block;
+	}
 </style>
