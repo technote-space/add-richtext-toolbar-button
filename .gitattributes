@@ -1,0 +1,36 @@
+* text=auto
+*.php text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.sass text eol=lf
+*.scss text eol=lf
+*.css text eol=lf
+*.sh text eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+
+.git export-ignore
+.github export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+.editorconfig export-ignore
+.idea export-ignore
+.babelrc export-ignore
+.eslintrc export-ignore
+.npmignore export-ignore
+*.yml export-ignore
+*.xml export-ignore
+package.json export-ignore
+package-lock.json export-ignore
+composer.json export-ignore
+composer.lock export-ignore
+
+test export-ignore
+__test__ export-ignore
+assets/js/node_modules export-ignore
+assets/js/coverage export-ignore
+assets/js/.nyc_output export-ignore
+assets/js/src export-ignore
+assets/js/*.config.js export-ignore
+assets/js/jest* export-ignore
