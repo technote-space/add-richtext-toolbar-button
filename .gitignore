@@ -25,4 +25,12 @@ Thumbs.db
 logs
 /cache
 
+!tests/bin/**/*.sh
+/coverage
 /vendor
+/travis-ci
+
+/.coveralls.yml
+/phpcs.xml
+/phpmd.xml
+/phpunit.xml
