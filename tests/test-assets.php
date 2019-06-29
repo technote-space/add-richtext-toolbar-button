@@ -35,6 +35,11 @@ class AssetsTest extends WP_UnitTestCase {
 		static::$assets = Assets::get_instance( static::$app );
 	}
 
+	public static function tearDownAfterClass() {
+		wp_dequeue_style( static::$assets->get_css_handle() );
+		wp_dequeue_style( 'artb-css' );
+	}
+
 	public function test_remove_setting() {
 		$this->assertEquals( false, static::$app->setting->is_setting_removed( 'assets_version' ) );
 		static::$app->filter->do_action( 'post_load_admin_page' );
@@ -42,6 +47,8 @@ class AssetsTest extends WP_UnitTestCase {
 	}
 
 	public function test_setup_assets() {
+		wp_dequeue_style( static::$assets->get_css_handle() );
+
 		static::$app->setting->edit_setting( 'is_valid', 'default', false );
 		static::$app->delete_shared_object( '_hook_cache' );
 		$this->assertFalse( static::$app->filter->apply_filters( 'is_valid' ) );
@@ -89,6 +96,7 @@ class AssetsTest extends WP_UnitTestCase {
 
 	public function test_enqueue_plugin_assets() {
 		wp_dequeue_style( 'artb-css' );
+
 		$this->assertFalse( wp_style_is( 'artb-css' ) );
 		static::$assets->enqueue_plugin_assets( true );
 		$this->assertTrue( wp_style_is( 'artb-css' ) );
