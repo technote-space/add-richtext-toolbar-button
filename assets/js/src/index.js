@@ -4,6 +4,7 @@ import { getDefaultButtonGroupSetting, getColorButtonSetting, getFontSizeButtonS
 const { registerFormatTypeGroup, registerGroupedFormatType } = RichText;
 const { getToolbarButtonProps, getColorButtonProps, getFontSizesButtonProps } = Common.Helpers;
 
+console.log( artbParams );
 
 // register default buttons
 {
@@ -24,4 +25,4 @@ const { getToolbarButtonProps, getColorButtonProps, getFontSizesButtonProps } = 
 	} );
 }
 
-/** @var {{settings:{name, title, class_name, tag_name, is_valid, group_name, icon}[], default_buttons:{}, default_icon}} artbParams */
+/** @var {{settings:{name, title, className, tagName, isValid, groupName, icon}[], defaultButtons:{}, defaultIcon}} artbParams */

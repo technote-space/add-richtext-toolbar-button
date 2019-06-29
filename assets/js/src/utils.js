@@ -6,12 +6,12 @@ const { Icon } = Common.Components;
 
 const PREFIX = 'arbt--';
 const getName = name => PREFIX + name;
-const getIcon = params => icon => Icon( { icon: icon, defaultIcon: params.default_icon } );
+const getIcon = params => icon => Icon( { icon: icon, defaultIcon: params.defaultIcon } );
 const INSPECTOR_GROUP = getName( 'inspector' );
 const TOOL_BUTTON_GROUP = getName( 'tool-button' );
 
 /**
- * @param {{is_valid_contrast_checker, is_valid_remove_formatting}} params params
+ * @param {{isValidContrastChecker, isValidRemoveFormatting}} params params
  * @returns {array} group setting
  */
 export const getDefaultButtonGroupSetting = params => {
@@ -24,19 +24,19 @@ export const getDefaultButtonGroupSetting = params => {
 				title: translate( 'Inline Text Settings' ),
 				initialOpen: true,
 			},
-			useContrastChecker: params.is_valid_contrast_checker,
-			additionalInspectors: params.is_valid_remove_formatting ? [ getRemoveFormatButton( translate( 'Remove All formatting' ) ) ] : [],
+			useContrastChecker: params.isValidContrastChecker,
+			additionalInspectors: params.isValidRemoveFormatting ? [ getRemoveFormatButton( translate( 'Remove All formatting' ) ) ] : [],
 		},
 	];
 };
 
 /**
- * @param {{default_buttons:{name, title, icon, style, class_name, is_valid}, default_icon}} params params
+ * @param {{defaultButtons:{name, title, icon, style, className, isValid}, defaultIcon}} params params
  * @param {string} key key
  * @returns {array} color button setting
  */
 export const getColorButtonSetting = ( params, key ) => {
-	const setting = params.default_buttons[ key ];
+	const setting = params.defaultButtons[ key ];
 	return [
 		getName( setting.name ),
 		setting.title,
@@ -44,33 +44,33 @@ export const getColorButtonSetting = ( params, key ) => {
 		setting.style,
 		{
 			group: INSPECTOR_GROUP,
-			className: setting.class_name,
-			createDisabled: ! setting.is_valid,
+			className: setting.className,
+			createDisabled: ! setting.isValid,
 		},
 	];
 };
 
 /**
- * @param {{default_buttons:{name, title, icon, class_name, is_valid}, default_icon}} params params
+ * @param {{defaultButtons:{name, title, icon, className, isValid}, defaultIcon}} params params
  * @param {string} key key
  * @returns {array} font size button setting
  */
 export const getFontSizeButtonSetting = ( params, key ) => {
-	const setting = params.default_buttons[ key ];
+	const setting = params.defaultButtons[ key ];
 	return [
 		getName( setting.name ),
 		setting.title,
 		getIcon( params )( setting.icon ),
 		{
 			group: INSPECTOR_GROUP,
-			className: setting.class_name,
-			createDisabled: ! setting.is_valid,
+			className: setting.className,
+			createDisabled: ! setting.isValid,
 		},
 	];
 };
 
 /**
- * @param {{settings:{name, title, class_name, tag_name, is_valid, group_name, icon}[], default_icon}} params params
+ * @param {{settings:{name, title, className, tagName, isValid, groupName, icon}[], defaultIcon}} params params
  * @returns {{settings: Array, groups}} settings
  */
 export const getSettings = params => {
@@ -78,12 +78,12 @@ export const getSettings = params => {
 	const settings = [];
 	Object.keys( params.settings ).forEach( key => {
 		const setting = params.settings[ key ];
-		const group = getName( 'item--' + setting.group_name );
+		const group = getName( 'item--' + setting.groupName );
 		if ( ! ( group in groups ) ) {
 			groups[ group ] = {
 				toolbarGroup: TOOL_BUTTON_GROUP,
 				icon: getIcon( params )( setting.icon ),
-				label: setting.group_name,
+				label: setting.groupName,
 			};
 		}
 		settings.push( [
@@ -92,9 +92,9 @@ export const getSettings = params => {
 			getIcon( params )( setting.icon ),
 			{
 				title: setting.title,
-				className: setting.class_name,
-				tagName: setting.tag_name,
-				createDisabled: ! setting.is_valid,
+				className: setting.className,
+				tagName: setting.tagName,
+				createDisabled: ! setting.isValid,
 			},
 		] );
 	} );

@@ -484,8 +484,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 					->order_by( 'updated_at', $updated_at_direction )
 					->order_by( 'group_name', $group_name_direction );
 			} );
-			$this->cache_settings[ $target ] = $this->app->array->map( $this->app->array->get( $list_data, 'data' ), function ( $data ) use ( $setting_details ) {
-				return $this->data_to_setting( $data, $setting_details );
+			$this->cache_settings[ $target ] = $this->app->array->map( $this->app->array->get( $list_data, 'data' ), function ( $data ) use ( $setting_details, $target ) {
+				return $this->data_to_setting( $data, $setting_details, $target );
 			} );
 		}
 
@@ -495,10 +495,11 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	/**
 	 * @param array $data
 	 * @param array $setting_details
+	 * @param string $target
 	 *
 	 * @return array
 	 */
-	private function data_to_setting( $data, $setting_details ) {
+	private function data_to_setting( $data, $setting_details, $target ) {
 		$setting = [];
 		foreach ( array_keys( $this->get_setting_list() ) as $key ) {
 			$detail = $this->app->array->get( $setting_details, $key );
@@ -519,6 +520,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$setting['name']       = "setting-{$post->ID}";
 		$setting['selector']   = $this->get_selector( $setting );
 		$setting['is_valid']   = $setting['is_valid_toolbar_button'];
+		if ( 'editor' === $target ) {
+			foreach ( $setting as $key => $item ) {
+				$new_key = $this->app->string->camel( $key );
+				if ( $key !== $new_key ) {
+					$setting[ $new_key ] = $setting[ $key ];
+					unset( $setting[ $key ] );
+				}
+			}
+		}
 
 		return $setting;
 	}

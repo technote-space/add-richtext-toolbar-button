@@ -74,38 +74,38 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'                   => $setting->get_settings( 'editor' ),
-			'default_icon'               => $this->apply_filters( 'default_icon' ),
-			'is_valid_contrast_checker'  => $this->apply_filters( 'is_valid_contrast_checker' ),
-			'is_valid_remove_formatting' => $this->apply_filters( 'is_valid_remove_formatting' ),
-			'translate'                  => $this->get_translate_data( [
+			'settings'                => $setting->get_settings( 'editor' ),
+			'defaultIcon'             => $this->apply_filters( 'default_icon' ),
+			'isValidContrastChecker'  => $this->apply_filters( 'is_valid_contrast_checker' ),
+			'isValidRemoveFormatting' => $this->apply_filters( 'is_valid_remove_formatting' ),
+			'translate'               => $this->get_translate_data( [
 				'Please select text',
 				'Remove All formatting',
 				'Inline Text Settings',
 			] ),
-			'default_buttons'            => [
+			'defaultButtons'          => [
 				'font-color'       => [
-					'name'       => 'font-color',
-					'title'      => $this->translate( 'font color' ),
-					'icon'       => $this->apply_filters( 'font_color_icon' ),
-					'class_name' => $setting->get_default_class_name( 'font-color' ),
-					'style'      => 'color',
-					'is_valid'   => $this->apply_filters( 'is_valid_font_color' ),
+					'name'      => 'font-color',
+					'title'     => $this->translate( 'font color' ),
+					'icon'      => $this->apply_filters( 'font_color_icon' ),
+					'className' => $setting->get_default_class_name( 'font-color' ),
+					'style'     => 'color',
+					'isValid'   => $this->apply_filters( 'is_valid_font_color' ),
 				],
 				'background-color' => [
-					'name'       => 'background-color',
-					'title'      => $this->translate( 'background color' ),
-					'icon'       => $this->apply_filters( 'background_color_icon' ),
-					'class_name' => $setting->get_default_class_name( 'background-color' ),
-					'style'      => 'background-color',
-					'is_valid'   => $this->apply_filters( 'is_valid_background_color' ),
+					'name'      => 'background-color',
+					'title'     => $this->translate( 'background color' ),
+					'icon'      => $this->apply_filters( 'background_color_icon' ),
+					'className' => $setting->get_default_class_name( 'background-color' ),
+					'style'     => 'background-color',
+					'isValid'   => $this->apply_filters( 'is_valid_background_color' ),
 				],
 				'font-size'        => [
-					'name'       => 'font-size',
-					'title'      => $this->translate( 'font size' ),
-					'icon'       => $this->apply_filters( 'font_size_icon' ),
-					'class_name' => $setting->get_default_class_name( 'font-size' ),
-					'is_valid'   => $this->apply_filters( 'is_valid_font_size' ),
+					'name'      => 'font-size',
+					'title'     => $this->translate( 'font size' ),
+					'icon'      => $this->apply_filters( 'font_size_icon' ),
+					'className' => $setting->get_default_class_name( 'font-size' ),
+					'isValid'   => $this->apply_filters( 'is_valid_font_size' ),
 				],
 			],
 		];
