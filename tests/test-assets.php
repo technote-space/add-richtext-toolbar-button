@@ -33,9 +33,14 @@ class AssetsTest extends WP_UnitTestCase {
 	public static function setUpBeforeClass() {
 		static::$app    = WP_Framework::get_instance( ADD_RICHTEXT_TOOLBAR_BUTTON );
 		static::$assets = Assets::get_instance( static::$app );
+		static::reset();
 	}
 
 	public static function tearDownAfterClass() {
+		static::reset();
+	}
+
+	private static function reset() {
 		wp_dequeue_style( static::$assets->get_css_handle() );
 		wp_dequeue_style( 'artb-css' );
 	}

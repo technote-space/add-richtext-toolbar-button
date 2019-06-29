@@ -12,9 +12,11 @@ use WP_Framework_Common\Traits\Package;
 use WP_Framework_Core\Traits\Hook;
 use WP_Framework_Core\Traits\Singleton;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Style

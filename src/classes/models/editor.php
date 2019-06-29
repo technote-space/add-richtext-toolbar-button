@@ -13,9 +13,11 @@ use WP_Framework_Core\Traits\Hook;
 use WP_Framework_Core\Traits\Singleton;
 use WP_Framework_Presenter\Traits\Presenter;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Editor

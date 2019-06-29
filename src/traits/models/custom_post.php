@@ -11,9 +11,11 @@ namespace Richtext_Toolbar_Button\Traits\Models;
 use WP_Framework_Core\Traits\Helper\Data_Helper;
 use WP_Framework_Core\Traits\Helper\Validate;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Trait Custom_Post

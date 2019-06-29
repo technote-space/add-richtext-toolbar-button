@@ -34,20 +34,13 @@ class ValidationTest extends WP_UnitTestCase {
 	private static $setting;
 
 	/**
-	 * @var int $inserted
-	 */
-	private static $inserted;
-
-	/**
 	 * @SuppressWarnings(StaticAccess)
 	 */
 	public static function setUpBeforeClass() {
 		static::$app        = WP_Framework::get_instance( ADD_RICHTEXT_TOOLBAR_BUTTON );
 		static::$validation = Validation::get_instance( static::$app );
 		static::$setting    = Setting::get_instance( static::$app );
-
-		static::$app->db->table( 'setting' )->truncate();
-		static::$app->db->wp_table( 'posts' )->truncate();
+		static::reset();
 
 		$item                            = [];
 		$item['post_title']              = 'test title';
@@ -56,10 +49,16 @@ class ValidationTest extends WP_UnitTestCase {
 		$item['style']                   = 'background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, #f69 75%); font-weight: bold;';
 		$item['is_valid_toolbar_button'] = 1;
 		$item['priority']                = 50;
+		static::$setting->insert( $item );
+	}
 
-		$setting_id       = static::$setting->insert( $item );
-		$data             = static::$setting->get_data( $setting_id );
-		static::$inserted = $data['post_id'];
+	public static function tearDownAfterClass() {
+		static::reset();
+	}
+
+	private static function reset() {
+		static::$app->db->table( 'setting' )->truncate();
+		static::$app->db->wp_table( 'posts' )->truncate();
 	}
 
 	/**
@@ -72,9 +71,6 @@ class ValidationTest extends WP_UnitTestCase {
 	 * @param $callback
 	 */
 	public function test_validate_class_name( $class_name, $priority, $post_array, $errors, $callback ) {
-		if ( ! empty( $post_array['ID'] ) ) {
-			$post_array['ID'] = static::$inserted;
-		}
 		$errors = static::$validation->validate_class_name( $class_name, $priority, $post_array, $errors );
 		$callback( $errors );
 	}

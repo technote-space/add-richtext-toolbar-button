@@ -15,9 +15,11 @@ use Richtext_Toolbar_Button\Traits\Models\Custom_Post;
 use WP_Framework_Db\Classes\Models\Query\Builder;
 use WP_Post;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Setting
@@ -328,10 +330,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				$setting_details    = $this->get_setting_details( 'list' );
 				$data['class_name'] = $this->get_setting_class_name( $data, $post );
 				foreach ( [ 'class_name', 'tag_name' ] as $key ) {
-					$setting = $this->app->array->get( $setting_details, $key );
-					if ( empty( $setting ) ) {
-						continue;
-					}
+					$setting    = $this->app->array->get( $setting_details, $key );
 					$is_default = $this->is_default( $data[ $key ] );
 					if ( $is_default ) {
 						$data[ $key ] = $setting['value'];

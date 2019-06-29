@@ -40,9 +40,14 @@ class EditorTest extends WP_UnitTestCase {
 		static::$app    = WP_Framework::get_instance( ADD_RICHTEXT_TOOLBAR_BUTTON );
 		static::$editor = Editor::get_instance( static::$app );
 		static::$assets = Assets::get_instance( static::$app );
+		static::reset();
 	}
 
 	public static function tearDownAfterClass() {
+		static::reset();
+	}
+
+	private static function reset() {
 		wp_dequeue_script( 'add-richtext-toolbar-button-editor' );
 		wp_dequeue_style( static::$assets->get_css_handle() );
 	}
