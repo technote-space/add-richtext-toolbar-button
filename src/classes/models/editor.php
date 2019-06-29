@@ -26,7 +26,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	use Singleton, Hook, Presenter, Package;
 
 	/**
-	 * enqueue css for gutenberg
+	 * enqueue assets
 	 * @noinspection PhpUnusedPrivateMethodInspection
 	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
@@ -58,8 +58,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			}
 		}
 		$depends[] = 'lodash';
-		$this->enqueue_style( $handle, 'gutenberg.css', [], $this->app->get_plugin_version() );
-		$this->enqueue_script( $handle, 'add-richtext-toolbar-button-gutenberg.min.js', $depends, $this->app->get_plugin_version() );
+		$this->enqueue_script( $handle, 'index.min.js', $depends, $this->app->get_plugin_version() );
 		$this->localize_script( $handle, 'artbParams', $this->get_editor_params() );
 
 		/** @var Assets $assets */
