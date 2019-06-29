@@ -15,7 +15,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $name_prefix */
 /** @var array $groups */
 /** @var string $fontawesome_handle */
-/** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
@@ -85,12 +84,6 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 			// style
 			( function() {
 				const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
-				<?php if ( $editor_styles ) : ?>
-				$preview.find( 'head' ).append( $( '<style>', {
-					type: 'text/css',
-					text: "<?php $instance->h( $editor_styles, false, true, false );?>",
-				} ) );
-				<?php endif;?>
 				$preview.find( 'head' ).append( $( '<style>', {
 					type: 'text/css',
 					text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}',

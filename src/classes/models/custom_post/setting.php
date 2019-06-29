@@ -9,7 +9,6 @@
 namespace Richtext_Toolbar_Button\Classes\Models\Custom_Post;
 
 use Richtext_Toolbar_Button\Classes\Models\Assets;
-use Richtext_Toolbar_Button\Classes\Models\Editor;
 use Richtext_Toolbar_Button\Classes\Models\Style;
 use Richtext_Toolbar_Button\Traits\Models\Custom_Post;
 use WP_Framework_Db\Classes\Models\Query\Builder;
@@ -72,12 +71,9 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		/** @var Assets $assets */
 		$assets = Assets::get_instance( $this->app );
 		$assets->enqueue_plugin_assets();
-		/** @var Editor $editor */
-		$editor = Editor::get_instance( $this->app );
 		$this->add_script_view( 'admin/script/custom_post/preview', [
 			'css_handle'         => $assets->get_css_handle(),
 			'fontawesome_handle' => $this->app->get_config( 'config', 'fontawesome_handle' ),
-			'editor_styles'      => $editor->get_block_editor_styles(),
 		] );
 		$this->add_style_view( 'admin/style/custom_post/preview', [
 			'post_type' => $this->get_post_type(),
@@ -132,11 +128,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$params                = $this->app->array->set( $params, 'columns.class_name.default', $this->app->array->get( $params, 'columns.class_name.args.attributes.data-default' ) );
 		$params['name_prefix'] = $this->get_post_field_name_prefix();
 		$params['groups']      = $this->get_groups();
-
-		/** @var Editor $editor */
-		$editor                       = Editor::get_instance( $this->app );
 		$params['fontawesome_handle'] = $this->app->get_config( 'config', 'fontawesome_handle' );
-		$params['editor_styles']      = $editor->get_block_editor_styles();
 
 		return $params;
 	}

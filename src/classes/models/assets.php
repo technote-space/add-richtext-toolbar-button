@@ -37,15 +37,6 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 */
 	private function remove_setting() {
 		$this->app->setting->remove_setting( 'assets_version' );
-
-		/** @var Editor $editor */
-		$editor = Editor::get_instance( $this->app );
-		if ( $editor->is_support_gutenberg() ) {
-			$this->app->setting->remove_setting( 'support_block_editor_styles' );
-			$this->app->setting->remove_setting( 'block_width' );
-		} elseif ( ! $this->apply_filters( 'support_block_editor_styles' ) ) {
-			$this->app->setting->remove_setting( 'block_width' );
-		}
 	}
 
 	/**
