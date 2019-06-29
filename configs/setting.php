@@ -71,18 +71,6 @@ return [
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'support_block_editor_styles' => [
-					'label'   => 'whether to support block editor styles if theme does not support them',
-					'type'    => 'bool',
-					'default' => false,
-				],
-				'block_width'                 => [
-					'label'   => 'the width of wp-block',
-					'type'    => 'int',
-					'default' => -1,
-					'min'     => 300,
-					'max'     => 3000,
-				],
 			],
 		],
 	],
