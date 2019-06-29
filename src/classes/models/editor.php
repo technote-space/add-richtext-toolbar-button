@@ -26,11 +26,6 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	use Singleton, Hook, Presenter, Package;
 
 	/**
-	 * @var string $theme_key_cache
-	 */
-	private $theme_key_cache;
-
-	/**
 	 * enqueue css for gutenberg
 	 * @noinspection PhpUnusedPrivateMethodInspection
 	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
