@@ -205,9 +205,9 @@ class SettingTest extends WP_UnitTestCase {
 
 	public function test_get_error_messages() {
 		$errors = static::$setting->get_error_messages( 'post_title', [ 'test1', 'test2' ] );
-		static::assertCount( 2, $errors );
-		static::assertEquals( 'test1: [Setting name]', $errors[0] );
-		static::assertEquals( 'test2: [Setting name]', $errors[1] );
+		$this->assertCount( 2, $errors );
+		$this->assertEquals( 'test1: [Setting name]', $errors[0] );
+		$this->assertEquals( 'test2: [Setting name]', $errors[1] );
 	}
 
 	public function test_call_clear_cache_file() {
@@ -223,7 +223,7 @@ class SettingTest extends WP_UnitTestCase {
 	 */
 	public function test_delete() {
 		static::insert_settings();
-		static::assertEquals( 1, static::$setting->delete_data( 2 ) );
+		$this->assertEquals( 1, static::$setting->delete_data( 2 ) );
 	}
 
 	/**
@@ -236,36 +236,42 @@ class SettingTest extends WP_UnitTestCase {
 		static::$app->delete_shared_object( '_hook_cache' );
 		$this->assertNull( static::$app->filter->apply_filters( 'default_group' ) );
 		$settings = static::$setting->get_settings( 'editor' );
-		static::assertCount( 4, $settings );
-		static::assertArrayHasKey( 'icon', $settings[0] );
-		static::assertArrayHasKey( 'title', $settings[0] );
-		static::assertArrayHasKey( 'name', $settings[0] );
-		static::assertArrayHasKey( 'selector', $settings[0] );
-		static::assertArrayHasKey( 'tagName', $settings[0] );
-		static::assertArrayHasKey( 'groupName', $settings[0] );
-		static::assertArrayHasKey( 'isValidToolbarButton', $settings[0] );
-		static::assertArrayHasKey( 'isValid', $settings[0] );
+		$this->assertCount( 4, $settings );
+		$this->assertArrayHasKey( 'icon', $settings[0] );
+		$this->assertArrayHasKey( 'title', $settings[0] );
+		$this->assertArrayHasKey( 'name', $settings[0] );
+		$this->assertArrayHasKey( 'selector', $settings[0] );
+		$this->assertArrayHasKey( 'tagName', $settings[0] );
+		$this->assertArrayHasKey( 'groupName', $settings[0] );
+		$this->assertArrayHasKey( 'isValidToolbarButton', $settings[0] );
+		$this->assertArrayHasKey( 'isValid', $settings[0] );
 
 		static::$app->setting->edit_setting( 'default_group', 'default', 'default_test' );
 		static::$app->delete_shared_object( '_hook_cache' );
 		$this->assertEquals( 'default_test', static::$app->filter->apply_filters( 'default_group' ) );
 		$settings = static::$setting->get_settings( 'front' );
-		static::assertCount( 4, $settings );
-		static::assertArrayHasKey( 'icon', $settings[0] );
-		static::assertArrayHasKey( 'title', $settings[0] );
-		static::assertArrayHasKey( 'name', $settings[0] );
-		static::assertArrayHasKey( 'selector', $settings[0] );
-		static::assertArrayHasKey( 'tag_name', $settings[0] );
-		static::assertArrayHasKey( 'group_name', $settings[0] );
-		static::assertArrayHasKey( 'is_valid_toolbar_button', $settings[0] );
-		static::assertArrayHasKey( 'is_valid', $settings[0] );
+		$this->assertCount( 4, $settings );
+		$this->assertArrayHasKey( 'icon', $settings[0] );
+		$this->assertArrayHasKey( 'title', $settings[0] );
+		$this->assertArrayHasKey( 'name', $settings[0] );
+		$this->assertArrayHasKey( 'selector', $settings[0] );
+		$this->assertArrayHasKey( 'tag_name', $settings[0] );
+		$this->assertArrayHasKey( 'group_name', $settings[0] );
+		$this->assertArrayHasKey( 'is_valid_toolbar_button', $settings[0] );
+		$this->assertArrayHasKey( 'is_valid', $settings[0] );
 	}
 
 	public function test_get_valid_post_types() {
 		$post_types = static::$setting->get_valid_post_types();
-		static::assertContains( 'post', $post_types );
-		static::assertContains( 'page', $post_types );
-		static::assertContains( 'wp_block', $post_types );
+		$this->assertContains( 'post', $post_types );
+		$this->assertContains( 'page', $post_types );
+		$this->assertContains( 'wp_block', $post_types );
+	}
+
+	public function test_get_post_type_args() {
+		$args = static::$setting->get_post_type_args();
+		$this->assertEquals( 'Settings', $args['labels']['name'] );
+		$this->assertEquals( 'artb-dashboard', $args['show_in_menu'] );
 	}
 
 	/**

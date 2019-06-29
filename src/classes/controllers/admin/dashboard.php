@@ -10,9 +10,11 @@ namespace Richtext_Toolbar_Button\Classes\Controllers\Admin;
 
 use WP_Framework_Admin\Classes\Controllers\Admin\Base;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Dashboard
