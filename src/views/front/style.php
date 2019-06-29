@@ -21,9 +21,9 @@ if ( ! isset( $pre_style ) ) {
 }
 $style_content = '';
 foreach ( $settings as $setting ) {
-	if ( ! empty( $setting['options']['styles'] ) || ! empty( $is_editor ) ) {
+	if ( ! empty( $setting['styles'] ) || ! empty( $is_editor ) ) {
 		$selector = ( ! empty( $wrap ) ? $wrap . ' ' : '' ) . $setting['selector'];
-		if ( empty( $setting['options']['styles'] ) ) {
+		if ( empty( $setting['styles'] ) ) {
 			if ( ! empty( $pre_style ) ) {
 				$style_content .= $selector . "{\n";
 				foreach ( $pre_style as $style ) {
@@ -33,7 +33,7 @@ foreach ( $settings as $setting ) {
 			}
 		} else {
 			$tmp = $selector;
-			foreach ( $setting['options']['styles'] as $pseudo => $styles ) {
+			foreach ( $setting['styles'] as $pseudo => $styles ) {
 				$selector = $tmp;
 				if ( '' !== $pseudo ) {
 					$selector .= ':' . $pseudo;

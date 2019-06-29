@@ -10,6 +10,7 @@ namespace Richtext_Toolbar_Button\Classes\Models\Custom_Post;
 
 use Richtext_Toolbar_Button\Classes\Models\Assets;
 use Richtext_Toolbar_Button\Classes\Models\Style;
+use Richtext_Toolbar_Button\Classes\Models\Validation;
 use Richtext_Toolbar_Button\Traits\Models\Custom_Post;
 use WP_Framework_Db\Classes\Models\Query\Builder;
 use WP_Post;
@@ -115,22 +116,26 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			if ( empty( $column['type'] ) ) {
 				$column['type'] = 'VARCHAR';
 			}
-			if ( ! empty( $args['form_type'] ) ) {
-				$column['form_type'] = $args['form_type'];
-			}
-			if ( empty( $column['form_type'] ) ) {
-				$column['form_type'] = $this->get_form_by_type( $column['type'] );
-			}
-			$columns[ $key ] = $column;
+			$column['form_type'] = $this->get_form_type( $column );
+			$columns[ $key ]     = $column;
 		}
-		$params['columns']     = $columns;
-		$params                = $this->app->array->set( $params, 'columns.class_name.args.attributes.data-default', $this->get_default_class_name( $post->ID ) );
-		$params                = $this->app->array->set( $params, 'columns.class_name.default', $this->app->array->get( $params, 'columns.class_name.args.attributes.data-default' ) );
-		$params['name_prefix'] = $this->get_post_field_name_prefix();
-		$params['groups']      = $this->get_groups();
+		$params['columns']            = $columns;
+		$params                       = $this->app->array->set( $params, 'columns.class_name.args.attributes.data-default', $this->get_default_class_name( $post->ID ) );
+		$params                       = $this->app->array->set( $params, 'columns.class_name.default', $this->app->array->get( $params, 'columns.class_name.args.attributes.data-default' ) );
+		$params['name_prefix']        = $this->get_post_field_name_prefix();
+		$params['groups']             = $this->get_groups();
 		$params['fontawesome_handle'] = $this->app->get_config( 'config', 'fontawesome_handle' );
 
 		return $params;
+	}
+
+	/**
+	 * @param array $column
+	 *
+	 * @return string
+	 */
+	private function get_form_type( array $column ) {
+		return ! empty( $column['args']['form_type'] ) ? $column['args']['form_type'] : ( empty( $column['form_type'] ) ? $this->get_form_by_type( $column['type'] ) : $column['form_type'] );
 	}
 
 
@@ -494,44 +499,38 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return array
 	 */
 	private function data_to_setting( $data, $setting_details ) {
-		$options = [];
+		$setting = [];
 		foreach ( array_keys( $this->get_setting_list() ) as $key ) {
-			$setting = $this->app->array->get( $setting_details, $key );
-			if ( empty( $setting ) ) {
+			$detail = $this->app->array->get( $setting_details, $key );
+			if ( empty( $detail ) ) {
 				continue;
 			}
 
-			$is_default                          = $this->is_default( $data[ $key ] );
-			$setting['attributes']['data-value'] = $is_default ? $setting['value'] : $data[ $key ];
-			list( $name, $value ) = $this->parse_setting( $setting, $key ); // phpcs:ignore Generic.Formatting.MultipleStatementAlignment.NotSameWarning
-			$options[ $name ] = $value; // phpcs:ignore Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+			$is_default                         = $this->is_default( $data[ $key ] );
+			$detail['attributes']['data-value'] = $is_default ? $detail['value'] : $data[ $key ];
+			list( $name, $value ) = $this->parse_setting( $detail, $key ); // phpcs:ignore Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+			$setting[ $name ] = $value; // phpcs:ignore Generic.Formatting.MultipleStatementAlignment.NotSameWarning
 		}
 		/** @var WP_Post $post */
 		$post                  = $data['post'];
-		$options['class_name'] = $this->get_setting_class_name( $options, $post );
-		$options['group_name'] = $this->get_setting_group_name( $options, $post );
+		$setting['class_name'] = $this->get_setting_class_name( $setting, $post );
+		$setting['group_name'] = $this->get_setting_group_name( $setting, $post );
+		$setting['title']      = $post->post_title;
+		$setting['name']       = "setting-{$post->ID}";
+		$setting['selector']   = $this->get_selector( $setting );
+		$setting['is_valid']   = $setting['is_valid_toolbar_button'];
 
-		return [
-			'options'    => $options,
-			'title'      => $post->post_title,
-			'name'       => "setting-{$post->ID}",
-			'class_name' => $options['class_name'],
-			'tag_name'   => $options['tag_name'],
-			'group_name' => $options['group_name'],
-			'icon'       => $options['icon'],
-			'selector'   => $this->get_selector( $options ),
-			'is_valid'   => $options['is_valid_toolbar_button'],
-		];
+		return $setting;
 	}
 
 	/**
-	 * @param array $options
+	 * @param array $setting
 	 * @param WP_Post $post
 	 *
 	 * @return string
 	 */
-	private function get_setting_class_name( array $options, $post ) {
-		return $this->apply_filters( 'class_name', empty( $options['class_name'] ) ? $this->get_default_class_name( $post->ID ) : $options['class_name'], $options, $post );
+	private function get_setting_class_name( array $setting, $post ) {
+		return $this->apply_filters( 'class_name', empty( $setting['class_name'] ) ? $this->get_default_class_name( $post->ID ) : $setting['class_name'], $setting, $post );
 	}
 
 	/**
@@ -546,19 +545,19 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	/**
 	 * @return string
 	 */
-	private function get_default_class_name_prefix() {
+	public function get_default_class_name_prefix() {
 		return 'artb-';
 	}
 
 	/**
-	 * @param array $options
+	 * @param array $setting
 	 * @param WP_Post $post
 	 *
 	 * @return string
 	 */
-	private function get_setting_group_name( array $options, $post ) {
-		if ( ! empty( $options['group_name'] ) ) {
-			return $this->apply_filters( 'group_name', $options['group_name'], $options, $post );
+	private function get_setting_group_name( array $setting, $post ) {
+		if ( ! empty( $setting['group_name'] ) ) {
+			return $this->apply_filters( 'group_name', $setting['group_name'], $setting, $post );
 		}
 
 		$group_name = $this->apply_filters( 'default_group' );
@@ -566,7 +565,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			$group_name = $this->get_default_group_name( $post );
 		}
 
-		return $this->apply_filters( 'group_name', $group_name, $options, $post );
+		return $this->apply_filters( 'group_name', $group_name, $setting, $post );
 	}
 
 	/**
@@ -579,15 +578,15 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
-	 * @param array $options
+	 * @param array $setting
 	 *
 	 * @return string
 	 */
-	private function get_selector( array $options ) {
-		$class_names = $this->app->string->explode( $options['class_name'], ' ' );
+	private function get_selector( array $setting ) {
+		$class_names = $this->app->string->explode( $setting['class_name'], ' ' );
 		$class_names = '.' . implode( '.', $class_names );
 
-		return $this->apply_filters( 'get_selector', $options['tag_name'] . $class_names, $options['tag_name'], $options['class_name'], $options );
+		return $this->apply_filters( 'get_selector', $setting['tag_name'] . $class_names, $setting['tag_name'], $setting['class_name'], $setting );
 	}
 
 	/**
@@ -614,65 +613,19 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		/** @noinspection PhpUnusedParameterInspection */
 		array $errors, array $post_array
 	) {
+		/** @var Validation $validation */
+		$validation = Validation::get_instance( $this->app );
+
 		$class_name = trim( $this->get_post_field( 'class_name' ) );
 		$class_name = preg_replace( '/\s{2,}/', ' ', $class_name );
 		if ( '' !== $class_name ) {
-			$errors = $this->validate_class_name( $class_name, $post_array, $errors );
+			$priority = (int) $this->get_post_field( 'priority', 10 );
+			$errors   = $validation->validate_class_name( $class_name, $priority, $post_array, $errors );
 		}
 
 		$tag_name = trim( $this->get_post_field( 'tag_name' ) );
 		if ( '' !== $tag_name ) {
-			if ( 'div' === strtolower( $tag_name ) ) {
-				$errors['tag_name'][] = $this->translate( 'This tag name is unusable.' );
-			} elseif ( ! preg_match( '/\A[a-zA-Z]+\z/', $tag_name ) ) {
-				$errors['tag_name'][] = $this->translate( 'Invalid format.' );
-			}
-		}
-
-		return $errors;
-	}
-
-	/**
-	 * @param string $class_name
-	 * @param array $post_array
-	 * @param array $errors
-	 *
-	 * @return array
-	 */
-	private function validate_class_name( $class_name, $post_array, $errors ) {
-		if ( preg_match( '/\A' . preg_quote( $this->get_default_class_name_prefix(), '/' ) . '/', $class_name ) ) {
-			$errors['class_name'][] = $this->translate( 'The value is unusable.' );
-
-			return $errors;
-		}
-		if ( ! preg_match( '/\A([_a-zA-Z]+[a-zA-Z0-9-]*)(\s+[_a-zA-Z]+[_a-zA-Z0-9-]*)*\z/', $class_name ) ) {
-			$errors['class_name'][] = $this->translate( 'Invalid format.' );
-			$errors['class_name'][] = $this->translate( 'A class name must begin with a letter, followed by any number of hyphens, letters, or numbers.' );
-
-			return $errors;
-		}
-
-		if ( ! isset( $post_array['ID'] ) ) {
-			$post_array['ID'] = -1;
-		}
-		if ( $this->app->db->builder()
-			->from( $this->get_related_table_name() )
-			->where( 'post_id', '<>', $post_array['ID'] )
-			->where( 'class_name', $class_name )
-			->exists() ) {
-			$errors['class_name'][] = $this->translate( 'The value has already been used.' );
-		} else {
-			// この時点で $class_name は 英数及びアンダーバー、ハイフン、スーペースのみ
-			$priority = (int) $this->get_post_field( 'priority', 10 );
-			$replace  = " {$class_name} ";
-			if ( $this->app->db->builder()
-				->from( $this->get_related_table_name() )
-				->where( 'post_id', '<>', $post_array['ID'] )
-				->where( 'priority', '<=', $priority )
-				->where_raw( "LENGTH(%s) <> LENGTH(REPLACE(%s, CONCAT(' ', class_name, ' '), ''))", [ $replace, $replace ] )
-				->exists() ) {
-				$errors['class_name'][] = $this->translate( 'The value is included in the class name of other settings.' );
-			}
+			$errors = $validation->validate_tag_name( $tag_name, $errors );
 		}
 
 		return $errors;
