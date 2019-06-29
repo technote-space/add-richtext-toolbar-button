@@ -4,8 +4,6 @@ import { getDefaultButtonGroupSetting, getColorButtonSetting, getFontSizeButtonS
 const { registerFormatTypeGroup, registerGroupedFormatType } = RichText;
 const { getToolbarButtonProps, getColorButtonProps, getFontSizesButtonProps } = Common.Helpers;
 
-console.log( artbParams );
-
 // register default buttons
 {
 	registerFormatTypeGroup( ...getDefaultButtonGroupSetting( artbParams ) );
