@@ -524,7 +524,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			foreach ( $setting as $key => $item ) {
 				$new_key = $this->app->string->camel( $key );
 				if ( $key !== $new_key ) {
-					$setting[ $new_key ] = $setting[ $key ];
+					$setting[ $new_key ] = $item;
 					unset( $setting[ $key ] );
 				}
 			}
