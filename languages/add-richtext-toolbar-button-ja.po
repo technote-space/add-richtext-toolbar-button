@@ -58,6 +58,9 @@ msgstr "文字サイズボタンが有効かどうか"
 msgid "validity of ContrastChecker"
 msgstr "ContrastCheckerが有効かどうか"
 
+msgid "Validity of fontawesome"
+msgstr "Fontawesomeが有効かどうか"
+
 msgid "font color button icon"
 msgstr "文字色ボタンのアイコン"
 

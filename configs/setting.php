@@ -71,6 +71,11 @@ return [
 					'type'    => 'bool',
 					'default' => true,
 				],
+				'is_valid_fontawesome'       => [
+					'label'   => 'Validity of fontawesome',
+					'type'    => 'bool',
+					'default' => false,
+				],
 			],
 		],
 	],
