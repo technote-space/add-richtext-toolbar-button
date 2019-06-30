@@ -114,11 +114,12 @@ class SettingTest extends WP_UnitTestCase {
 	 * @throws ReflectionException
 	 */
 	public function test_setup_page() {
+		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
+
 		static::reset();
 		static::$app->setting->edit_setting( 'is_valid_fontawesome', 'default', true );
 		static::$app->delete_shared_object( '_hook_cache' );
 		$this->assertTrue( static::$app->filter->apply_filters( 'is_valid_fontawesome' ) );
-		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
 		$this->assertFalse( wp_style_is( $handle ) );
 		static::$setting->setup_page();
 		$this->assertTrue( wp_style_is( $handle ) );
@@ -127,7 +128,6 @@ class SettingTest extends WP_UnitTestCase {
 		static::$app->setting->edit_setting( 'is_valid_fontawesome', 'default', false );
 		static::$app->delete_shared_object( '_hook_cache' );
 		$this->assertFalse( static::$app->filter->apply_filters( 'is_valid_fontawesome' ) );
-		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
 		$this->assertFalse( wp_style_is( $handle ) );
 		static::$setting->setup_page();
 		$this->assertFalse( wp_style_is( $handle ) );
