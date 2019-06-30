@@ -116,6 +116,9 @@ border: 1px solid #acf;
 [before] color: #9cf;
 [before] border-right: 1px solid #acf;
 ```
+#### プリセット
+いくつかのデザインパターンを用意しています。  
+ボタンを押すことでスタイルのテキストエリアに挿入されます。
 
 ### ツールバーボタンが有効かどうか
 Gutenbergエディタのツールバーに表示するかどうかを指定します。  
@@ -163,6 +166,14 @@ Gutenbergエディタのツールバーに表示するかどうかを指定し�
 ### 文字サイズボタンのアイコン
 文字サイズを変更できるボタンのアイコンを指定します。
 
+### 全てのフォーマットを外すボタンが有効かどうか
+サイドバーに全てのフォーマットを外すボタンを追加するかどうかを指定します。
+
+### Fontawesomeが有効かどうか
+Fontawesomeを読み込むかどうかを指定します。  
+v1.2 以降はこの設定をONにしない限り読みこみません。  
+またOFFの場合はFontawesomeが必要な[プリセット](#プリセット)は表示されません。
+
 ### デフォルトアイコン
 設定でアイコンを指定しなかった場合に使用されるアイコンです。
 
@@ -199,7 +210,7 @@ add_filter( 'artb/default_class_name', function ( $value, $post_id ) {
 }, 10, 2 );
 ```
 
-## @See
+## Dependency
 [Register Grouped Format Type](https://github.com/technote-space/register-grouped-format-type)
 
 ## Author
