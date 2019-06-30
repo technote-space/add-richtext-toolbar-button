@@ -55,7 +55,7 @@ return [
 				'unsigned' => true,
 				'null'     => false,
 				'default'  => 1,
-				'comment'  => 'validity of toolbar button',
+				'comment'  => 'Validity of toolbar button',
 			],
 		],
 		'index'   => [

@@ -88,8 +88,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 */
 	public function setup_page() {
 		if ( $this->apply_filters( 'is_valid_fontawesome' ) ) {
-		$this->setup_fontawesome();
-	}
+			$this->setup_fontawesome();
+		}
 	}
 
 	/**
@@ -173,12 +173,12 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			],
 			'style'                   => [
 				'args' => [
-					'target'    => [
+					'target'               => [
 						'setting',
 						'front',
 					],
-					'form_type' => 'style',
-					'preset'    => $this->get_preset(),
+					'form_type'            => 'style',
+					'preset'               => $this->get_preset(),
 					'is_valid_fontawesome' => $this->apply_filters( 'is_valid_fontawesome' ),
 				],
 			],
@@ -300,7 +300,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 			'preview'                 => $this->get_manage_column_preview(),
 			'display'                 => $this->get_manage_column_display(),
 			'is_valid_toolbar_button' => [
-				'name'                  => $this->translate( 'validity of toolbar button' ),
+				'name'                  => $this->translate( 'Validity of toolbar button' ),
 				'callback'              => function ( $value ) {
 					return ! empty( $value ) ? $this->translate( 'Valid' ) : $this->translate( 'Invalid' );
 				},

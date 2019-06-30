@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-06-29 16:15+0900\n"
+"PO-Revision-Date: 2019-06-30 04:26+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,31 +43,31 @@ msgstr "グループ名"
 msgid "priority"
 msgstr "優先度"
 
-msgid "validity"
+msgid "Validity"
 msgstr "有効かどうか"
 
-msgid "validity of font color button"
+msgid "Validity of font color button"
 msgstr "文字色ボタンが有効かどうか"
 
-msgid "validity of background color button"
+msgid "Validity of background color button"
 msgstr "背景色ボタンが有効かどうか"
 
-msgid "validity of font size button"
+msgid "Validity of font size button"
 msgstr "文字サイズボタンが有効かどうか"
 
-msgid "validity of ContrastChecker"
+msgid "Validity of ContrastChecker"
 msgstr "ContrastCheckerが有効かどうか"
 
 msgid "Validity of fontawesome"
 msgstr "Fontawesomeが有効かどうか"
 
-msgid "font color button icon"
+msgid "Font color button icon"
 msgstr "文字色ボタンのアイコン"
 
-msgid "background color button icon"
+msgid "Background color button icon"
 msgstr "背景色ボタンのアイコン"
 
-msgid "font size button icon"
+msgid "Font size button icon"
 msgstr "文字サイズボタンのアイコン"
 
 msgid "Main Setting"
@@ -103,16 +103,16 @@ msgstr "その値は既に使用されています。"
 msgid "The value is unusable."
 msgstr "その値は使用できません。"
 
-msgid "test phrase"
+msgid "Test phrase"
 msgstr "テスト用文章"
 
 msgid "icon"
 msgstr "アイコン"
 
-msgid "select icon"
+msgid "Select icon"
 msgstr "アイコンを選択"
 
-msgid "media uploader"
+msgid "Media uploader"
 msgstr "メディアを選択"
 
 msgid "clear"
@@ -178,10 +178,10 @@ msgstr "インラインブロック"
 msgid "warning"
 msgstr "警告"
 
-msgid "default icon"
+msgid "Default icon"
 msgstr "デフォルトアイコン"
 
-msgid "default group"
+msgid "Default group"
 msgstr "デフォルトグループ"
 
 msgid "Font Awesome Icons"
@@ -229,10 +229,10 @@ msgstr "蛍光ペン(黄色)"
 msgid "Please select text"
 msgstr "文字を選択してください"
 
-msgid "validity of toolbar button"
+msgid "Validity of toolbar button"
 msgstr "ツールバーボタンが有効かどうか"
 
-msgid "validity of remove formatting button"
+msgid "Validity of remove formatting button"
 msgstr "全てのフォーマットを外すボタンが有効かどうか"
 
 msgid "This tag name is unusable."
