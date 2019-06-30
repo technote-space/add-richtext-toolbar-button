@@ -45,6 +45,7 @@ class Dashboard extends Base {
 			'is_valid_font_size',
 			'font_size_icon',
 			'is_valid_remove_formatting',
+			'is_valid_fontawesome',
 			'default_icon',
 			'default_group',
 			'test_phrase',

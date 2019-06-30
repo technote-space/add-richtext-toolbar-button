@@ -83,12 +83,14 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 
 			// style
 			( function() {
-				const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
 				$preview.find( 'head' ).append( $( '<style>', {
 					type: 'text/css',
 					text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}',
 				} ) );
+				<?php if ( ! empty( $fontawesome_handle ) ) : ?>
+				const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
 				$preview.find( 'head' ).append( fontawesome_css.clone() );
+				<?php endif;?>
 
 				const applyStyles = function( style ) {
 					const selector = '.preview-item';

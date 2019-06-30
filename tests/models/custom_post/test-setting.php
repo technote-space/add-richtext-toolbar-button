@@ -65,6 +65,7 @@ class SettingTest extends WP_UnitTestCase {
 		wp_dequeue_style( $handle );
 		static::set_property( static::$setting, '_setup_fontawesome', [] );
 		static::set_property( static::$setting, 'cache_settings', [] );
+		static::set_property( static::$setting, 'cache_setting', [] );
 	}
 
 	/**
@@ -114,10 +115,22 @@ class SettingTest extends WP_UnitTestCase {
 	 */
 	public function test_setup_page() {
 		static::reset();
+		static::$app->setting->edit_setting( 'is_valid_fontawesome', 'default', true );
+		static::$app->delete_shared_object( '_hook_cache' );
+		$this->assertTrue( static::$app->filter->apply_filters( 'is_valid_fontawesome' ) );
 		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
 		$this->assertFalse( wp_style_is( $handle ) );
 		static::$setting->setup_page();
 		$this->assertTrue( wp_style_is( $handle ) );
+
+		static::reset();
+		static::$app->setting->edit_setting( 'is_valid_fontawesome', 'default', false );
+		static::$app->delete_shared_object( '_hook_cache' );
+		$this->assertFalse( static::$app->filter->apply_filters( 'is_valid_fontawesome' ) );
+		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
+		$this->assertFalse( wp_style_is( $handle ) );
+		static::$setting->setup_page();
+		$this->assertFalse( wp_style_is( $handle ) );
 	}
 
 	/**
@@ -125,9 +138,10 @@ class SettingTest extends WP_UnitTestCase {
 	 */
 	public function test_output_edit_form() {
 		static::insert_settings();
-
+		static::$app->setting->edit_setting( 'is_valid_fontawesome', 'default', true );
 		static::$app->setting->edit_setting( 'default_group', 'default', null );
 		static::$app->delete_shared_object( '_hook_cache' );
+		$this->assertTrue( static::$app->filter->apply_filters( 'is_valid_fontawesome' ) );
 		$this->assertNull( static::$app->filter->apply_filters( 'default_group' ) );
 		ob_start();
 		static::$setting->output_edit_form( get_post( 1 ) );
@@ -144,14 +158,18 @@ class SettingTest extends WP_UnitTestCase {
 		$this->assertContains( '<legend>preset</legend>', $contents );
 		$this->assertContains( 'Font Awesome Icons', $contents );
 
+		static::insert_settings();
+		static::$app->setting->edit_setting( 'is_valid_fontawesome', 'default', false );
 		static::$app->setting->edit_setting( 'default_group', 'default', 'default_test' );
 		static::$app->delete_shared_object( '_hook_cache' );
+		$this->assertFalse( static::$app->filter->apply_filters( 'is_valid_fontawesome' ) );
 		$this->assertEquals( 'default_test', static::$app->filter->apply_filters( 'default_group' ) );
 		ob_start();
 		static::$setting->output_edit_form( get_post( 2 ) );
 		$contents = ob_get_contents();
 		ob_end_clean();
 		$this->assertContains( '<div class="block form custom-post">', $contents );
+		$this->assertNotContains( 'Font Awesome Icons', $contents );
 	}
 
 	/**

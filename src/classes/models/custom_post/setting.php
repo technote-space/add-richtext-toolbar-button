@@ -76,7 +76,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$assets->enqueue_plugin_assets();
 		$this->add_script_view( 'admin/script/custom_post/preview', [
 			'css_handle'         => $assets->get_css_handle(),
-			'fontawesome_handle' => $this->app->get_config( 'config', 'fontawesome_handle' ),
+			'fontawesome_handle' => $this->apply_filters( 'is_valid_fontawesome' ) ? $this->app->get_config( 'config', 'fontawesome_handle' ) : null,
 		] );
 		$this->add_style_view( 'admin/style/custom_post/preview', [
 			'post_type' => $this->get_post_type(),
@@ -87,7 +87,9 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * setup page
 	 */
 	public function setup_page() {
-		$this->setup_fontawesome();
+		if ( $this->apply_filters( 'is_valid_fontawesome' ) ) {
+			$this->setup_fontawesome();
+		}
 	}
 
 	/**
@@ -126,7 +128,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		$params                       = $this->app->array->set( $params, 'columns.class_name.default', $this->app->array->get( $params, 'columns.class_name.args.attributes.data-default' ) );
 		$params['name_prefix']        = $this->get_post_field_name_prefix();
 		$params['groups']             = $this->get_groups();
-		$params['fontawesome_handle'] = $this->app->get_config( 'config', 'fontawesome_handle' );
+		$params['fontawesome_handle'] = $this->apply_filters( 'is_valid_fontawesome' ) ? $this->app->get_config( 'config', 'fontawesome_handle' ) : null;
 
 		return $params;
 	}
@@ -175,8 +177,9 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 						'setting',
 						'front',
 					],
-					'form_type' => 'style',
-					'preset'    => $this->get_preset(),
+					'form_type'            => 'style',
+					'preset'               => $this->get_preset(),
+					'is_valid_fontawesome' => $this->apply_filters( 'is_valid_fontawesome' ),
 				],
 			],
 			'styles'                  => [
@@ -703,15 +706,19 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return array
 	 */
 	private function get_preset() {
-		$font_family = $this->app->get_config( 'config', 'fontawesome_font_family' );
+		$font_family = $this->apply_filters( 'is_valid_fontawesome' ) ? $this->app->get_config( 'config', 'fontawesome_font_family' ) : null;
 
-		return $this->apply_filters( 'get_preset', $this->app->array->map( $this->app->get_config( 'design_preset' ), function ( $preset ) use ( $font_family ) {
+		return $this->apply_filters( 'get_preset', array_filter( $this->app->array->map( $this->app->get_config( 'design_preset' ), function ( $preset ) use ( $font_family ) {
 			if ( $this->is_closure( $preset ) ) {
+				if ( ! $font_family ) {
+					return null;
+				}
+
 				return $preset( $font_family );
 			}
 
 			return $preset;
-		} ) );
+		} ) ) );
 	}
 
 	/**

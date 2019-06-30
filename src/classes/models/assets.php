@@ -87,7 +87,9 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 
 			return $style;
 		} );
-		$this->setup_fontawesome();
+		if ( $this->apply_filters( 'is_valid_fontawesome' ) ) {
+			$this->setup_fontawesome();
+		}
 	}
 
 	/**
