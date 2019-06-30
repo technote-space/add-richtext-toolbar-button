@@ -30,12 +30,12 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 
 		<?php $instance->form( 'dashicon', [
 			'target' => $target,
-			'value'  => 'select icon',
+			'value'  => 'Select icon',
 			'class'  => 'button-primary',
 		] ); ?>
 		<?php $instance->form( 'uploader', [
 			'target' => $target,
-			'value'  => 'media uploader',
+			'value'  => 'Media uploader',
 			'class'  => 'button-primary',
 		] ); ?>
 		<?php $instance->form( 'input/button', [
