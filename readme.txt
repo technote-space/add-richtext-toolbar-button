@@ -91,7 +91,7 @@ This plugin needs PHP5.6 or higher.
 
 == Changelog ==
 
-= 1.2.0 (2019/6/30) =
+= 1.2.0 (2019/7/1) =
 * Deleted: [Setting to apply theme style](https://github.com/technote-space/add-richtext-toolbar-button/issues/158)
 * Added: [Setting not to add fontawesome](https://github.com/technote-space/add-richtext-toolbar-button/issues/157)
 * Improved: [Some refactorings](https://github.com/technote-space/add-richtext-toolbar-button/issues/156)
