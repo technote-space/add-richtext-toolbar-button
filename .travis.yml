@@ -3,10 +3,13 @@ language: php
 sudo: false
 dist: trusty
 
+git:
+  depth: 3
+
 notifications:
   email: false
   slack:
-    secure: g9He5fJQG9GRiBbmKz4WaD+igR/+aDgbl39Lq5kRTIK1OkLXJmCD3p1zHTQFe5ufoHn55FW2g3ncW5VXhwIjdGdqvaWSWLLSRcgIrDXgRm9EnuZlMf5kxbLmDC0/Ko/XHgw19msjLh5/hzn/DLaS+pBxxgu+7x78l/u4toMgEpnPj0eNwwgcrIc0rX97wC4RlQd6A8+On0bDeZKpEO57Iqfixyogqb3HfkBDabB2V0ZKPeJOswhV9KKq8ztdiBOMqBOmQC5J7Fw0pm2CUOgaWwarrNoP4GfjYyI3a0m3nVrpzVF8fNceTGAXdCf04fiiZXdsERqCTX9nhdxqBAm2XMzt+nPDhdoK0Z4RKp4uKh8HRHQC473d0WTGKdx53YtM7uQZTkGhxfACw8nLAm5iGEM7NZ5AbMtmCMQol/H6rIivFhftnswLqNsC2lDZ2VWxO5p0XNgEhMJmXegPwnSk+fZ5GefGXhapCfmTYd3VZLwbScsUi/PrGQRiR5Evv8lhSgG0tij0CK+uy66jBINggpPqHeuOB5DT58mRGrJv7Lqx0ttdv3sQdEsj87F9Ib0JbBpBpgDlxY0yh6J3V2SRlcvfXeo88iYEvlYGEzzc+plaGD5qm4rvqTfHdeciF1ZTI+rOpGa4fqan4hXExx55r7Oz77R8UBao28yCqlKRjyE=
+    secure: g5FDqjTLfWRVIkTefDo1Qolh02RvXTj73b4r6nFhyad7ESMZV0AVk5q6Y5G3eU2sBcnzNYb6XU/7Pm0GEYN4WcGPirWDS24GgE/pFpnDj8ooxYVeGOGvRn1ROmsTG1Iodv2mcEwnusCf4TzIPwQsCzoqrH8YkNGXcxWOSaatolvAHrmzq0o9TJ0NHoPr0vUC8tGxg7D1JqQ+5INCcIOK2JZQf0LZySUYixTgbRx71wZJa60vnbye9A7LPDajJYqnbt3KAQ8M6Q/k3bhIvd5mkdZzmsj3o2tdCpNdKx2wi9l3Z39C5haVyBLuM3/m3UI8keWNkKnBnx7VY33eMcYyrSFrfM9lQMxWhXHicOLeelIE3TS51A30ISH53vo/9NBSjjybas3EIOqKj8mzMbuz2unODB8aRcfBE+3h818dI/K2GdKkrzvleAIyqoWEGrkjlTz8ChcxMQjyk3lTieGwYw5UDgmqAeRrwxfaYl+YupN0Un38PEwrbf+PfhaWEunUMjPqvfw5SJl+BqGDQtaDFAvTKo7m1Phi/K4BzB5+WhgAexi+L0tDvStUZREBnYf+JOiMaAfAVz1ufRwzkc24arLn4xmgfPUHzSy5r5evGUcvr8GClF/iKGo9l57K3l6dsatIb7RfWE3ywO4DBHo+B/0d3ue7szBHCppAo49Ub2A=
 
 branches:
   only:
@@ -15,14 +18,17 @@ branches:
 
 cache:
   directories:
-    - "$HOME/.composer/cache"
-    - "$HOME/.npm"
+    - "${HOME}/.composer/cache"
+    - "${HOME}/.npm"
+    - "${TRAVIS_BUILD_DIR}/.plugin"
 
 stages:
   - name: check
-    if: branch = master and tag IS blank and type IN (pull_request, api)
+    if: branch = master and tag IS blank and type IN (pull_request, api, cron)
   - name: test
     if: branch = master and tag IS blank and type IN (pull_request, api)
+  - name: test trunk
+    if: branch = master and tag IS blank and type IN (pull_request, api, cron)
   - name: prepare
     if: branch = master and tag IS blank and type IN (pull_request, api)
   - name: deploy
@@ -57,6 +63,7 @@ jobs:
       env:
         - WP_VERSION=latest
         - COVERAGE_REPORT=1
+        - ACTIVATE_POPULAR_PLUGINS=1
       script: bash travis-ci/bin/php/wp-test.sh
     - stage: test
       language: php
@@ -123,11 +130,6 @@ jobs:
     - stage: test
       language: php
       php: '5.6'
-      env: WP_VERSION=trunk
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
-      php: '5.6'
       env: WP_VERSION=4.9
       script: bash travis-ci/bin/php/wp-test.sh
     - stage: test
@@ -147,6 +149,22 @@ jobs:
       dist: trusty
       env: COVERAGE_REPORT=1
       script: bash travis-ci/bin/js/js-test.sh
+
+
+    - stage: test trunk
+      language: php
+      php: '7.3'
+      env:
+        - WP_VERSION=trunk
+        - WP_MULTISITE=1
+        - ACTIVATE_POPULAR_PLUGINS=1
+      script: bash travis-ci/bin/php/wp-test.sh
+
+    - stage: test trunk
+      language: php
+      php: '5.6'
+      env: WP_VERSION=trunk
+      script: bash travis-ci/bin/php/wp-test.sh
 
 
     - stage: prepare
