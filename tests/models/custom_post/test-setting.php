@@ -20,7 +20,7 @@ use Richtext_Toolbar_Button\Classes\Models\Custom_Post\Setting;
 class SettingTest extends WP_UnitTestCase {
 
 	/**
-	 * @var WP_Framework|Phake_IMock
+	 * @var WP_Framework
 	 */
 	protected static $app;
 

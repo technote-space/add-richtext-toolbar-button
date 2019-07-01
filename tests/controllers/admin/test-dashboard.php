@@ -18,7 +18,7 @@ use Richtext_Toolbar_Button\Classes\Controllers\Admin\Dashboard;
 class DashboardTest extends WP_UnitTestCase {
 
 	/**
-	 * @var WP_Framework|Phake_IMock
+	 * @var WP_Framework
 	 */
 	protected static $app;
 

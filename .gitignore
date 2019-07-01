@@ -34,3 +34,5 @@ logs
 /phpcs.xml
 /phpmd.xml
 /phpunit.xml
+/tests/bootstrap.php
+/tests/.plugin
