@@ -35,6 +35,7 @@ class AssetsTest extends WP_UnitTestCase {
 
 	/**
 	 * @SuppressWarnings(StaticAccess)
+	 * @throws ReflectionException
 	 */
 	public static function setUpBeforeClass() {
 		static::$app     = WP_Framework::get_instance( ADD_RICHTEXT_TOOLBAR_BUTTON );
@@ -43,6 +44,9 @@ class AssetsTest extends WP_UnitTestCase {
 		static::reset();
 	}
 
+	/**
+	 * @throws ReflectionException
+	 */
 	public static function tearDownAfterClass() {
 		static::reset();
 	}
@@ -102,6 +106,9 @@ class AssetsTest extends WP_UnitTestCase {
 		$this->assertFalse( static::$app->file->upload_file_exists( static::$app, $path ) );
 	}
 
+	/**
+	 * @throws ReflectionException
+	 */
 	public function test_enqueue_plugin_assets() {
 		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
 

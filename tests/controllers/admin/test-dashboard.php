@@ -29,25 +29,47 @@ class DashboardTest extends WP_UnitTestCase {
 
 	/**
 	 * @SuppressWarnings(StaticAccess)
+	 * @throws ReflectionException
 	 */
 	public static function setUpBeforeClass() {
 		static::$app       = WP_Framework::get_instance( ADD_RICHTEXT_TOOLBAR_BUTTON );
 		static::$dashboard = Dashboard::get_instance( static::$app );
+		static::reset();
+	}
+
+	/**
+	 * @throws ReflectionException
+	 */
+	public static function tearDownAfterClass() {
+		static::reset();
+	}
+
+	/**
+	 * @throws ReflectionException
+	 */
+	private static function reset() {
+		wp_dequeue_script( 'media-upload' );
+		wp_dequeue_script( 'thickbox' );
+		wp_dequeue_style( 'thickbox' );
+		static::get_output_js();
+		static::get_output_css();
 	}
 
 	/**
 	 * @throws ReflectionException
 	 */
 	public function test_action() {
-		$this->get_output_js();
-		$this->get_output_css();
+		static::reset();
+		$this->assertFalse( wp_script_is( 'media-upload' ) );
+		$this->assertFalse( wp_script_is( 'thickbox' ) );
+		$this->assertFalse( wp_style_is( 'thickbox' ) );
 
 		static::$dashboard->action();
 		$this->assertTrue( wp_script_is( 'media-upload' ) );
 		$this->assertTrue( wp_script_is( 'thickbox' ) );
 		$this->assertTrue( wp_style_is( 'thickbox' ) );
-		$this->assertNotEmpty( $this->get_output_js() );
-		$this->assertNotEmpty( $this->get_output_css() );
+		$this->assertNotEmpty( static::get_output_js() );
+		$this->assertNotEmpty( static::get_output_css() );
 	}
 
 	public function test_presenter() {
@@ -77,7 +99,7 @@ class DashboardTest extends WP_UnitTestCase {
 	 * @return false|string
 	 * @throws ReflectionException
 	 */
-	private function get_output_js() {
+	private static function get_output_js() {
 		ob_start();
 		static::$app->minify->output_js( true );
 		$contents = ob_get_contents();
@@ -92,7 +114,7 @@ class DashboardTest extends WP_UnitTestCase {
 	 * @return false|string
 	 * @throws ReflectionException
 	 */
-	private function get_output_css() {
+	private static function get_output_css() {
 		ob_start();
 		static::$app->minify->output_css( true );
 		$contents = ob_get_contents();
