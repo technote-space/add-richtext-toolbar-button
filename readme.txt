@@ -4,7 +4,7 @@ Tags: Gutenberg, rich text, Formatting, ツールバー, リッチテキスト
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.2
-Stable tag: 1.1.8
+Stable tag: 1.2.0
 Donate link: https://paypal.me/technote0space
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -41,6 +41,14 @@ This plugin needs PHP5.6 or higher.
 6. Dashboard
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+* Fontawesomeの追加を行わない設定を追加しました。[[デフォルトで false になるためアイコン等を使用している場合はダッシュボードから変更してください。]](color:red; font-weight:bold) [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/157)
+* プリセットのアイコンのデザインを修正しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/144)
+* できるだけテーマスタイルを適用する機能を削除しました。 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/158)
+* リファクタリング [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/156)
+* 細かいバグの修正 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/141), [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/145)
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/164)
 
 = 1.1.8 =
 * 細かいバグの修正
@@ -82,6 +90,14 @@ This plugin needs PHP5.6 or higher.
 * [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/99)
 
 == Changelog ==
+
+= 1.2.0 (2019/6/30) =
+* Deleted: [Setting to apply theme style](https://github.com/technote-space/add-richtext-toolbar-button/issues/158)
+* Added: [Setting not to add fontawesome](https://github.com/technote-space/add-richtext-toolbar-button/issues/157)
+* Improved: [Some refactorings](https://github.com/technote-space/add-richtext-toolbar-button/issues/156)
+* Fixed: [Behavior of remove all format button](https://github.com/technote-space/add-richtext-toolbar-button/issues/145)
+* Improved: [Preset design](https://github.com/technote-space/add-richtext-toolbar-button/issues/144)
+* Improved: [Use library](https://github.com/technote-space/add-richtext-toolbar-button/issues/140)
 
 = 1.1.8 (2019/6/2) =
 * Fixed: [Warning while insert preset data](https://github.com/technote-space/add-richtext-toolbar-button/issues/137)
@@ -131,7 +147,7 @@ This plugin needs PHP5.6 or higher.
 
 = 1.0.14 (2019/2/28) =
 
-* Improved: [Reflect theme style on setting preview](https://github.com/technote-space/add-richtext-toolbar-button/issues/82)
+* Improved: [Apply theme style on setting preview](https://github.com/technote-space/add-richtext-toolbar-button/issues/82)
 * Improved: [Class name check](https://github.com/technote-space/add-richtext-toolbar-button/issues/87)
 
 = 1.0.13 (2019/2/25) =
