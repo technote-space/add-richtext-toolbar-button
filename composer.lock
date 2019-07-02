@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93333a602b3ea64262862a89957ce01a",
+    "content-hash": "25759dabfcafec54d48bf43aafa6dd09",
     "packages": [
         {
             "name": "matthiasmullie/minify",
@@ -362,16 +362,16 @@
         },
         {
             "name": "wp-content-framework/custom_post",
-            "version": "v0.0.37",
+            "version": "v0.0.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/custom_post.git",
-                "reference": "3f755799c75fdbdcc1f8eaf2b5dad8cdff67778d"
+                "reference": "8daf9150b21b6616d999054c90792f14e044796a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/custom_post/zipball/3f755799c75fdbdcc1f8eaf2b5dad8cdff67778d",
-                "reference": "3f755799c75fdbdcc1f8eaf2b5dad8cdff67778d",
+                "url": "https://api.github.com/repos/wp-content-framework/custom_post/zipball/8daf9150b21b6616d999054c90792f14e044796a",
+                "reference": "8daf9150b21b6616d999054c90792f14e044796a",
                 "shasum": ""
             },
             "require": {
@@ -403,7 +403,7 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2019-06-02T13:37:17+00:00"
+            "time": "2019-07-02T16:42:07+00:00"
         },
         {
             "name": "wp-content-framework/db",
@@ -878,16 +878,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "dc784032a3f6f4e7a4b882e272b771f6fe4c37cf"
+                "reference": "239400de7a173fe9901b9ac7c06497751f00727a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/dc784032a3f6f4e7a4b882e272b771f6fe4c37cf",
-                "reference": "dc784032a3f6f4e7a4b882e272b771f6fe4c37cf",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/239400de7a173fe9901b9ac7c06497751f00727a",
+                "reference": "239400de7a173fe9901b9ac7c06497751f00727a",
                 "shasum": ""
             },
             "require": {
@@ -945,7 +945,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2019-06-30T00:37:05+00:00"
+            "time": "2019-07-01T23:21:34+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1031,64 +1031,6 @@
             ],
             "description": "Official version of pdepend to be handled with Composer",
             "time": "2017-12-13T13:21:38+00:00"
-        },
-        {
-            "name": "phake/phake",
-            "version": "v2.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mlively/Phake.git",
-                "reference": "d5832f1a0dd2370e14d38bcbaeb6770e8546cff2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mlively/Phake/zipball/d5832f1a0dd2370e14d38bcbaeb6770e8546cff2",
-                "reference": "d5832f1a0dd2370e14d38bcbaeb6770e8546cff2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "sebastian/comparator": "~1.1"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "dev-master",
-                "doctrine/common": "2.3.*",
-                "ext-soap": "*",
-                "hamcrest/hamcrest-php": "1.1.*",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "suggest": {
-                "doctrine/common": "Allows mock annotations to use import statements for classes.",
-                "hamcrest/hamcrest-php": "Use Hamcrest matchers."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Phake": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Mike Lively",
-                    "email": "m@digitalsandwich.com"
-                }
-            ],
-            "description": "The Phake mock testing library",
-            "homepage": "https://github.com/mlively/Phake",
-            "keywords": [
-                "mock",
-                "testing"
-            ],
-            "time": "2017-03-20T05:16:34+00:00"
         },
         {
             "name": "php-coveralls/php-coveralls",
