@@ -45,18 +45,18 @@ class EditorTest extends WP_UnitTestCase {
 
 	public static function tearDownAfterClass() {
 		static::reset();
-		static::$app->file->delete( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js' );
 	}
 
 	private static function reset() {
 		wp_dequeue_script( 'add-richtext-toolbar-button-editor' );
 		wp_dequeue_style( static::$assets->get_css_handle() );
-		static::$app->file->put_contents( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js', '' );
+		static::$app->file->delete( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js' );
 	}
 
 	public function test_enqueue_block_editor_assets() {
 		wp_dequeue_script( 'add-richtext-toolbar-button-editor' );
 		wp_dequeue_style( static::$assets->get_css_handle() );
+		static::$app->file->put_contents( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js', '' );
 
 		static::$app->setting->edit_setting( 'is_valid', 'default', false );
 		static::$app->delete_shared_object( '_hook_cache' );

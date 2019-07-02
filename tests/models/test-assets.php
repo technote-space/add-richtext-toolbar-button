@@ -71,6 +71,7 @@ class AssetsTest extends WP_UnitTestCase {
 
 	public function test_setup_assets() {
 		wp_dequeue_style( static::$assets->get_css_handle() );
+		$this->assertFalse( wp_style_is( static::$assets->get_css_handle() ) );
 
 		static::$app->setting->edit_setting( 'is_valid', 'default', false );
 		static::$app->delete_shared_object( '_hook_cache' );

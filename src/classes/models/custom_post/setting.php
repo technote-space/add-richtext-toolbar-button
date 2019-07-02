@@ -235,13 +235,6 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	}
 
 	/**
-	 * @return string
-	 */
-	private function get_id_prefix() {
-		return $this->app->slug_name . '-';
-	}
-
-	/**
 	 * @param string $name
 	 * @param string|array $setting
 	 *
@@ -257,7 +250,6 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				return $this->app->array->get( $detail, 'default' );
 			} );
 			$ret     = [
-				'id'         => $this->get_id_prefix() . $name,
 				'class'      => 'add-richtext-toolbar-option',
 				'name'       => $this->get_post_field_name_prefix() . $name,
 				'value'      => $value,
