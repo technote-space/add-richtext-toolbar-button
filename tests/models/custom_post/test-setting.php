@@ -72,6 +72,7 @@ class SettingTest extends WP_UnitTestCase {
 	 * @throws ReflectionException
 	 */
 	public function test_insert_presets() {
+		static::reset();
 		$this->assertEmpty( static::$app->get_option( 'has_inserted_presets' ) );
 		$this->assertEmpty( static::$setting->get_list_data( null, false )['data'] );
 		static::$app->filter->do_action( 'app_activated' );
