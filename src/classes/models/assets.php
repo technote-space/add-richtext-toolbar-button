@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.6
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -15,9 +13,11 @@ use WP_Framework_Core\Traits\Hook;
 use WP_Framework_Core\Traits\Singleton;
 use WP_Framework_Presenter\Traits\Presenter;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Assets
@@ -28,31 +28,24 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	use Singleton, Hook, Presenter, Package;
 
 	/**
-	 * @var bool|null $_cleared_cache_file
+	 * @var bool|null $cleared_cache_file
 	 */
-	private $_cleared_cache_file = null;
+	private $cleared_cache_file = null;
 
 	/**
 	 * remove setting
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function remove_setting() {
 		$this->app->setting->remove_setting( 'assets_version' );
-
-		/** @var Custom_Post\Setting $setting */
-		$setting = Custom_Post\Setting::get_instance( $this->app );
-		if ( $setting->is_support_gutenberg() ) {
-			$this->app->setting->remove_setting( 'support_block_editor_styles' );
-			$this->app->setting->remove_setting( 'block_width' );
-		} elseif ( ! $this->apply_filters( 'support_block_editor_styles' ) ) {
-			$this->app->setting->remove_setting( 'block_width' );
-		}
 	}
 
 	/**
 	 * setup assets
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_assets() {
 		if ( ! $this->apply_filters( 'is_valid' ) ) {
 			return;
@@ -61,9 +54,11 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	}
 
 	/**
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+	 *
 	 * @param string $key
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function changed_option( $key ) {
 		if ( $this->app->string->starts_with( $key, $this->get_filter_prefix() ) ) {
 			$this->clear_cache_file();
@@ -87,12 +82,14 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				$params['wrap']      = $this->apply_filters( 'editor_wrap_selector', '.components-tooltip .components-popover__content' );
 				$params['pre_style'] = $this->get_pre_style_for_editor();
 				$params['is_editor'] = true;
-				$style               .= $this->get_view( 'front/style', $params );
+				$style               = $style . $this->get_view( 'front/style', $params );
 			}
 
 			return $style;
 		} );
-		$this->setup_fontawesome();
+		if ( $this->apply_filters( 'is_valid_fontawesome' ) ) {
+			$this->setup_fontawesome();
+		}
 	}
 
 	/**
@@ -146,16 +143,16 @@ class Assets implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return bool
 	 */
 	public function clear_cache_file() {
-		if ( isset( $this->_cleared_cache_file ) ) {
-			return $this->_cleared_cache_file;
+		if ( isset( $this->cleared_cache_file ) ) {
+			return $this->cleared_cache_file;
 		}
-		$this->_cleared_cache_file = false;
+		$this->cleared_cache_file = false;
 
 		$deleted = false;
 		foreach ( [ true, false ] as $is_editor ) {
 			$deleted |= $this->app->file->delete_upload_file( $this->app, 'css' . DS . $this->get_cache_file_name( $is_editor ) );
 		}
-		$this->_cleared_cache_file = $deleted;
+		$this->cleared_cache_file = $deleted;
 		$this->app->option->set( $this->get_filter_prefix() . 'assets_version', $this->app->utility->uuid() );
 
 		return $deleted;

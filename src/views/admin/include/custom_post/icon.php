@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.6
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -22,8 +20,8 @@ $val    = $instance->old( $prefix . $name, $data, $name );
 $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 ?>
 <div class="icon-wrapper">
-    <div class="display-area"></div>
-    <div class="input-wrapper">
+	<div class="display-area"></div>
+	<div class="input-wrapper">
 		<?php $instance->form( 'input/text', [
 			'name'  => $prefix . $name,
 			'id'    => $prefix . $name,
@@ -32,12 +30,12 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 
 		<?php $instance->form( 'dashicon', [
 			'target' => $target,
-			'value'  => 'select icon',
+			'value'  => 'Select icon',
 			'class'  => 'button-primary',
 		] ); ?>
 		<?php $instance->form( 'uploader', [
 			'target' => $target,
-			'value'  => 'media uploader',
+			'value'  => 'Media uploader',
 			'class'  => 'button-primary',
 		] ); ?>
 		<?php $instance->form( 'input/button', [
@@ -49,5 +47,5 @@ $target = '#' . preg_replace( '#/#', '\\/', $prefix . $name );
 				'data-value'  => $instance->app->array->get( $data, $name ),
 			],
 		] ); ?>
-    </div>
+	</div>
 </div>

@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.7
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -15,9 +13,11 @@ use WP_Framework_Core\Traits\Hook;
 use WP_Framework_Core\Traits\Singleton;
 use WP_Framework_Presenter\Traits\Presenter;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Editor
@@ -28,57 +28,44 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	use Singleton, Hook, Presenter, Package;
 
 	/**
-	 * enqueue css for gutenberg
+	 * enqueue assets
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function enqueue_block_editor_assets() {
 		if ( ! $this->apply_filters( 'is_valid' ) ) {
 			return;
 		}
 
-		$handle = 'add-richtext-toolbar-button-editor';
-		$this->enqueue_style( $handle, 'gutenberg.css', [], $this->app->get_plugin_version() );
-		$this->enqueue_script( $handle, 'add-richtext-toolbar-button-gutenberg.min.js', [
-			'wp-editor',
-			'wp-data',
-			'wp-element',
-			'wp-rich-text',
+		$handle  = 'add-richtext-toolbar-button-editor';
+		$depends = [
+			'wp-block-editor',
+			'wp-blocks',
 			'wp-components',
-			'wp-url',
-			'wp-i18n',
+			'wp-compose',
+			'wp-core-data',
+			'wp-data',
+			'wp-editor',
+			'wp-element',
 			'wp-format-library',
-			'lodash',
-		], $this->app->get_plugin_version() );
+			'wp-hooks',
+			'wp-i18n',
+			'wp-rich-text',
+			'wp-server-side-render',
+			'wp-url',
+		];
+		foreach ( $depends as $key => $depend ) {
+			if ( ! $this->app->editor->is_support_editor_package( $depend ) ) {
+				unset( $depends[ $key ] );
+			}
+		}
+		$depends[] = 'lodash';
+		$this->enqueue_script( $handle, 'index.min.js', $depends, $this->app->get_plugin_version() );
 		$this->localize_script( $handle, 'artbParams', $this->get_editor_params() );
 
 		/** @var Assets $assets */
 		$assets = Assets::get_instance( $this->app );
 		$assets->enqueue_plugin_assets( true );
-	}
-
-	/**
-	 * @param array $editor_settings
-	 *
-	 * @return array
-	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function block_editor_settings( $editor_settings ) {
-		if ( $this->app->isset_shared_object( '__is_doing_block_editor_settings' ) ) {
-			return $editor_settings;
-		}
-
-		/** @var Custom_Post\Setting $setting */
-		$setting = Custom_Post\Setting::get_instance( $this->app );
-		$styles  = $setting->get_block_editor_styles( true );
-		if ( $styles ) {
-			$editor_settings['styles'][] = [ 'css' => $styles ];
-			$width                       = $this->apply_filters( 'block_width' );
-			if ( $width > 0 ) {
-				$editor_settings['styles'][] = [ 'css' => '.wp-block { max-width: ' . $width . 'px }' ];
-			}
-		}
-
-		return $editor_settings;
 	}
 
 	/**
@@ -89,14 +76,39 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$setting = Custom_Post\Setting::get_instance( $this->app );
 
 		return [
-			'settings'                   => $setting->get_settings( 'editor' ),
-			'default_icon'               => $this->apply_filters( 'default_icon' ),
-			'is_valid_contrast_checker'  => $this->apply_filters( 'is_valid_contrast_checker' ),
-			'is_valid_remove_formatting' => $this->apply_filters( 'is_valid_remove_formatting' ),
-			'inspector_title'            => $this->translate( 'Inline Text Settings' ),
-			'translate'                  => [
-				'Please select text'    => $this->translate( 'Please select text' ),
-				'Remove All formatting' => $this->translate( 'Remove All formatting' ),
+			'settings'                => $setting->get_settings( 'editor' ),
+			'defaultIcon'             => $this->apply_filters( 'default_icon' ),
+			'isValidContrastChecker'  => $this->apply_filters( 'is_valid_contrast_checker' ),
+			'isValidRemoveFormatting' => $this->apply_filters( 'is_valid_remove_formatting' ),
+			'translate'               => $this->get_translate_data( [
+				'Please select text',
+				'Remove All formatting',
+				'Inline Text Settings',
+			] ),
+			'defaultButtons'          => [
+				'font-color'       => [
+					'name'      => 'font-color',
+					'title'     => $this->translate( 'font color' ),
+					'icon'      => $this->apply_filters( 'font_color_icon' ),
+					'className' => $setting->get_default_class_name( 'font-color' ),
+					'style'     => 'color',
+					'isValid'   => $this->apply_filters( 'is_valid_font_color' ),
+				],
+				'background-color' => [
+					'name'      => 'background-color',
+					'title'     => $this->translate( 'background color' ),
+					'icon'      => $this->apply_filters( 'background_color_icon' ),
+					'className' => $setting->get_default_class_name( 'background-color' ),
+					'style'     => 'background-color',
+					'isValid'   => $this->apply_filters( 'is_valid_background_color' ),
+				],
+				'font-size'        => [
+					'name'      => 'font-size',
+					'title'     => $this->translate( 'font size' ),
+					'icon'      => $this->apply_filters( 'font_size_icon' ),
+					'className' => $setting->get_default_class_name( 'font-size' ),
+					'isValid'   => $this->apply_filters( 'is_valid_font_size' ),
+				],
 			],
 		];
 	}

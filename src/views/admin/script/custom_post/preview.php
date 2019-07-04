@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.6
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -16,7 +14,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var Presenter $instance */
 /** @var string $css_handle */
 /** @var string $fontawesome_handle */
-/** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 ?>
 <script>
@@ -30,8 +27,6 @@ $instance->add_script_view( 'admin/script/icon' );
 				$( this ).closest( '.icon-wrapper' ).append( icon );
 			} );
 
-			const main_css = $( '#<?php $instance->h( $css_handle );?>-css' );
-			const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
 			$( '.preview-iframe' ).each( function() {
 				$( this ).contents().find( 'body' ).append( '<div id="preview-wrap">' );
 
@@ -40,18 +35,17 @@ $instance->add_script_view( 'admin/script/icon' );
 					text: '<?php $instance->h( $instance->app->filter->apply_filters( 'test_phrase' ) );?>',
 				} ) );
 
-				<?php if ($editor_styles) :?>
-				$( this ).contents().find( 'head' ).append( $( '<style>', {
-					type: 'text/css',
-					text: "<?php $instance->h( $editor_styles, false, true, false );?>",
-				} ) );
-				<?php endif;?>
 				$( this ).contents().find( 'head' ).append( $( '<style>', {
 					type: 'text/css',
 					text: 'body{font-size: 13px; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em}',
 				} ) );
+
+				const main_css = $( '#<?php $instance->h( $css_handle );?>-css' );
 				$( this ).contents().find( 'head' ).append( main_css.clone() );
+				<?php if ( ! empty( $fontawesome_handle ) ) : ?>
+				const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
 				$( this ).contents().find( 'head' ).append( fontawesome_css.clone() );
+				<?php endif;?>
 			} );
 		} );
 	} )( jQuery );

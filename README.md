@@ -1,8 +1,12 @@
 # Add RichText Toolbar Button
 
+[![Build Status](https://travis-ci.com/technote-space/add-richtext-toolbar-button.svg?branch=master)](https://travis-ci.com/technote-space/add-richtext-toolbar-button)
+[![Coverage Status](https://coveralls.io/repos/github/technote-space/add-richtext-toolbar-button/badge.svg?branch=master)](https://coveralls.io/github/technote-space/add-richtext-toolbar-button?branch=master)
+[![CodeFactor](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button/badge)](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![PHP: >=5.6](https://img.shields.io/badge/PHP-%3E%3D5.6-orange.svg)](http://php.net/)
-[![WordPress: >=5.0](https://img.shields.io/badge/WordPress-%3E%3D5.0-brightgreen.svg)](https://wordpress.org/)
+![WordPress Plugin: Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/add-richtext-toolbar-button.svg)
+![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/add-richtext-toolbar-button.svg)
 
 ![バナー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/banner-772x250.png)
 
@@ -112,6 +116,9 @@ border: 1px solid #acf;
 [before] color: #9cf;
 [before] border-right: 1px solid #acf;
 ```
+#### プリセット
+いくつかのデザインパターンを用意しています。  
+ボタンを押すことでスタイルのテキストエリアに挿入されます。
 
 ### ツールバーボタンが有効かどうか
 Gutenbergエディタのツールバーに表示するかどうかを指定します。  
@@ -159,6 +166,14 @@ Gutenbergエディタのツールバーに表示するかどうかを指定し�
 ### 文字サイズボタンのアイコン
 文字サイズを変更できるボタンのアイコンを指定します。
 
+### 全てのフォーマットを外すボタンが有効かどうか
+サイドバーに全てのフォーマットを外すボタンを追加するかどうかを指定します。
+
+### Fontawesomeが有効かどうか
+Fontawesomeを読み込むかどうかを指定します。  
+v1.2 以降はこの設定をONにしない限り読みこみません。  
+またOFFの場合はFontawesomeが必要な[プリセット](#プリセット)は表示されません。
+
 ### デフォルトアイコン
 設定でアイコンを指定しなかった場合に使用されるアイコンです。
 
@@ -195,7 +210,7 @@ add_filter( 'artb/default_class_name', function ( $value, $post_id ) {
 }, 10, 2 );
 ```
 
-## @See
+## Dependency
 [Register Grouped Format Type](https://github.com/technote-space/register-grouped-format-type)
 
 ## Author

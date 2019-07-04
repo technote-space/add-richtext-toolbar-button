@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.2
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -17,71 +15,64 @@ return [
 	9 => [
 		'Main Setting' => [
 			10 => [
-				'is_valid'                    => [
-					'label'   => 'validity',
+				'is_valid'                   => [
+					'label'   => 'Validity',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'is_valid_font_color'         => [
-					'label'   => 'validity of font color button',
+				'is_valid_font_color'        => [
+					'label'   => 'Validity of font color button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'font_color_icon'             => [
-					'label'   => 'font color button icon',
+				'font_color_icon'            => [
+					'label'   => 'Font color button icon',
 					'default' => 'dashicons-editor-textcolor',
 				],
-				'is_valid_background_color'   => [
-					'label'   => 'validity of background color button',
+				'is_valid_background_color'  => [
+					'label'   => 'Validity of background color button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'background_color_icon'       => [
-					'label'   => 'background color button icon',
+				'background_color_icon'      => [
+					'label'   => 'Background color button icon',
 					'default' => 'dashicons-editor-textcolor',
 				],
-				'is_valid_font_size'          => [
-					'label'   => 'validity of font size button',
+				'is_valid_font_size'         => [
+					'label'   => 'Validity of font size button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'font_size_icon'              => [
-					'label'   => 'font size button icon',
+				'font_size_icon'             => [
+					'label'   => 'Font size button icon',
 					'default' => 'dashicons-editor-textcolor',
 				],
-				'test_phrase'                 => [
-					'label'     => 'test phrase',
+				'test_phrase'                => [
+					'label'     => 'Test phrase',
 					'default'   => 'Hello world!',
 					'translate' => true,
 				],
-				'default_icon'                => [
-					'label'   => 'default icon',
+				'default_icon'               => [
+					'label'   => 'Default icon',
 					'default' => 'dashicons-edit',
 				],
-				'default_group'               => [
-					'label' => 'default group',
+				'default_group'              => [
+					'label' => 'Default group',
 				],
-				'is_valid_contrast_checker'   => [
-					'label'   => 'validity of ContrastChecker',
+				'is_valid_contrast_checker'  => [
+					'label'   => 'Validity of ContrastChecker',
 					'type'    => 'bool',
 					'default' => false,
 				],
-				'is_valid_remove_formatting'  => [
-					'label'   => 'validity of remove formatting button',
+				'is_valid_remove_formatting' => [
+					'label'   => 'Validity of remove formatting button',
 					'type'    => 'bool',
 					'default' => true,
 				],
-				'support_block_editor_styles' => [
-					'label'   => 'whether to support block editor styles if theme does not support them',
+				'is_valid_fontawesome'       => [
+					'label'   => 'Validity of fontawesome',
 					'type'    => 'bool',
 					'default' => false,
-				],
-				'block_width'                 => [
-					'label'   => 'the width of wp-block',
-					'type'    => 'int',
-					'default' => -1,
-					'min'     => 300,
-					'max'     => 3000,
 				],
 			],
 		],

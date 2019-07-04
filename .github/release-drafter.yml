@@ -1,5 +1,5 @@
 # Config for https://github.com/apps/release-drafter
-name-template: 'v$NEXT_PATCH_VERSION :rainbow:'
+name-template: 'v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: ':rocket: Features'

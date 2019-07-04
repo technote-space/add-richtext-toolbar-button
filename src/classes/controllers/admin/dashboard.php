@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.6
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -12,9 +10,11 @@ namespace Richtext_Toolbar_Button\Classes\Controllers\Admin;
 
 use WP_Framework_Admin\Classes\Controllers\Admin\Base;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Class Dashboard
@@ -45,6 +45,7 @@ class Dashboard extends Base {
 			'is_valid_font_size',
 			'font_size_icon',
 			'is_valid_remove_formatting',
+			'is_valid_fontawesome',
 			'default_icon',
 			'default_group',
 			'test_phrase',
@@ -57,6 +58,7 @@ class Dashboard extends Base {
 	 * @param array $option
 	 *
 	 * @return array
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	protected function filter_view_setting(
 		/** @noinspection PhpUnusedParameterInspection */

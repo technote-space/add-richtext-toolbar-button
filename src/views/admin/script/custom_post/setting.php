@@ -1,8 +1,6 @@
 <?php
 /**
- * @version 1.1.6
  * @author Technote
- * @since 1.0.0
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
  * @link https://technote.space/
@@ -17,7 +15,6 @@ if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 /** @var string $name_prefix */
 /** @var array $groups */
 /** @var string $fontawesome_handle */
-/** @var string $editor_styles */
 $instance->add_script_view( 'admin/script/icon' );
 $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 ?>
@@ -48,15 +45,15 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 				$tagName.on( 'input', function() {
 					const original = $( this ).val();
 					const replaced = $( this ).val()
-					                          .replace( /あ/g, 'a' )
-					                          .replace( /い/g, 'i' )
-					                          .replace( /う/g, 'u' )
-					                          .replace( /え/g, 'e' )
-					                          .replace( /お/g, 'o' )
-					                          .replace( /　/g, ' ' )
-					                          .replace( /[Ａ-Ｚａ-ｚ０-９]/g, function( s ) {
-						                          return String.fromCharCode( s.charCodeAt( 0 ) - 0xFEE0 );
-					                          } ).replace( /[^a-zA-Z]/g, '' );
+						.replace( /あ/g, 'a' )
+						.replace( /い/g, 'i' )
+						.replace( /う/g, 'u' )
+						.replace( /え/g, 'e' )
+						.replace( /お/g, 'o' )
+						.replace( /　/g, ' ' )
+						.replace( /[Ａ-Ｚａ-ｚ０-９]/g, function( s ) {
+							return String.fromCharCode( s.charCodeAt( 0 ) - 0xFEE0 );
+						} ).replace( /[^a-zA-Z]/g, '' );
 					if ( original !== replaced ) {
 						$tagName.val( replaced );
 					}
@@ -66,17 +63,17 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 				$className.on( 'input', function() {
 					const original = $( this ).val();
 					const replaced = $( this ).val()
-					                          .replace( /あ/g, 'a' )
-					                          .replace( /い/g, 'i' )
-					                          .replace( /う/g, 'u' )
-					                          .replace( /え/g, 'e' )
-					                          .replace( /お/g, 'o' )
-					                          .replace( /　/g, ' ' )
-					                          .replace( /ー/g, '-' )
-					                          .replace( /＿/g, '_' )
-					                          .replace( /[Ａ-Ｚａ-ｚ０-９]/g, function( s ) {
-						                          return String.fromCharCode( s.charCodeAt( 0 ) - 0xFEE0 );
-					                          } ).replace( /[^_a-zA-Z0-9-\s]/g, '' );
+						.replace( /あ/g, 'a' )
+						.replace( /い/g, 'i' )
+						.replace( /う/g, 'u' )
+						.replace( /え/g, 'e' )
+						.replace( /お/g, 'o' )
+						.replace( /　/g, ' ' )
+						.replace( /ー/g, '-' )
+						.replace( /＿/g, '_' )
+						.replace( /[Ａ-Ｚａ-ｚ０-９]/g, function( s ) {
+							return String.fromCharCode( s.charCodeAt( 0 ) - 0xFEE0 );
+						} ).replace( /[^_a-zA-Z0-9-\s]/g, '' );
 					if ( original !== replaced ) {
 						$className.val( replaced );
 					}
@@ -86,18 +83,14 @@ $phrase = $instance->app->filter->apply_filters( 'test_phrase' );
 
 			// style
 			( function() {
-				const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
-				<?php if ($editor_styles) :?>
-				$preview.find( 'head' ).append( $( '<style>', {
-					type: 'text/css',
-					text: "<?php $instance->h( $editor_styles, false, true, false );?>",
-				} ) );
-				<?php endif;?>
 				$preview.find( 'head' ).append( $( '<style>', {
 					type: 'text/css',
 					text: 'body{font-size: 15px; line-height: 1; margin: 0; background: transparent!important} body::before, body::after {background: transparent!important} #preview-wrap{margin: 1em} .auxiliary-line #preview-wrap{border: dashed #ddd 2px} .auxiliary-line #preview-wrap .preview-item{border: dotted #666 1px}',
 				} ) );
+				<?php if ( ! empty( $fontawesome_handle ) ) : ?>
+				const fontawesome_css = $( '#<?php $instance->h( $fontawesome_handle );?>-css' );
 				$preview.find( 'head' ).append( fontawesome_css.clone() );
+				<?php endif;?>
 
 				const applyStyles = function( style ) {
 					const selector = '.preview-item';
