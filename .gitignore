@@ -36,3 +36,4 @@ logs
 /phpunit.xml
 /tests/bootstrap.php
 /tests/.plugin
+composer.lock
