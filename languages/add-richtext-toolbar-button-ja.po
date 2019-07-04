@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: add-richtext-toolbar-button\n"
 "POT-Creation-Date: 2018-07-01 17:47+0900\n"
-"PO-Revision-Date: 2019-06-30 04:26+0900\n"
+"PO-Revision-Date: 2019-07-04 16:29+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,17 +43,32 @@ msgstr "グループ名"
 msgid "priority"
 msgstr "優先度"
 
+msgid "validity"
+msgstr "有効かどうか"
+
 msgid "Validity"
 msgstr "有効かどうか"
+
+msgid "validity of font color button"
+msgstr "文字色ボタンが有効かどうか"
 
 msgid "Validity of font color button"
 msgstr "文字色ボタンが有効かどうか"
 
+msgid "validity of background color button"
+msgstr "背景色ボタンが有効かどうか"
+
 msgid "Validity of background color button"
 msgstr "背景色ボタンが有効かどうか"
 
+msgid "validity of font size button"
+msgstr "文字サイズボタンが有効かどうか"
+
 msgid "Validity of font size button"
 msgstr "文字サイズボタンが有効かどうか"
+
+msgid "validity of ContrastChecker"
+msgstr "ContrastCheckerが有効かどうか"
 
 msgid "Validity of ContrastChecker"
 msgstr "ContrastCheckerが有効かどうか"
@@ -61,11 +76,20 @@ msgstr "ContrastCheckerが有効かどうか"
 msgid "Validity of fontawesome"
 msgstr "Fontawesomeが有効かどうか"
 
+msgid "font color button icon"
+msgstr "文字色ボタンのアイコン"
+
 msgid "Font color button icon"
 msgstr "文字色ボタンのアイコン"
 
+msgid "background color button icon"
+msgstr "背景色ボタンのアイコン"
+
 msgid "Background color button icon"
 msgstr "背景色ボタンのアイコン"
+
+msgid "font size button icon"
+msgstr "文字サイズボタンのアイコン"
 
 msgid "Font size button icon"
 msgstr "文字サイズボタンのアイコン"
@@ -103,14 +127,23 @@ msgstr "その値は既に使用されています。"
 msgid "The value is unusable."
 msgstr "その値は使用できません。"
 
+msgid "test phrase"
+msgstr "テスト用文章"
+
 msgid "Test phrase"
 msgstr "テスト用文章"
 
 msgid "icon"
 msgstr "アイコン"
 
+msgid "select icon"
+msgstr "アイコンを選択"
+
 msgid "Select icon"
 msgstr "アイコンを選択"
+
+msgid "media uploader"
+msgstr "メディアを選択"
 
 msgid "Media uploader"
 msgstr "メディアを選択"
@@ -178,8 +211,14 @@ msgstr "インラインブロック"
 msgid "warning"
 msgstr "警告"
 
+msgid "default icon"
+msgstr "デフォルトアイコン"
+
 msgid "Default icon"
 msgstr "デフォルトアイコン"
+
+msgid "default group"
+msgstr "デフォルトグループ"
 
 msgid "Default group"
 msgstr "デフォルトグループ"
@@ -229,8 +268,14 @@ msgstr "蛍光ペン(黄色)"
 msgid "Please select text"
 msgstr "文字を選択してください"
 
+msgid "validity of toolbar button"
+msgstr "ツールバーボタンが有効かどうか"
+
 msgid "Validity of toolbar button"
 msgstr "ツールバーボタンが有効かどうか"
+
+msgid "validity of remove formatting button"
+msgstr "全てのフォーマットを外すボタンが有効かどうか"
 
 msgid "Validity of remove formatting button"
 msgstr "全てのフォーマットを外すボタンが有効かどうか"
