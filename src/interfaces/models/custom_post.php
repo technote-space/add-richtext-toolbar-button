@@ -8,9 +8,11 @@
 
 namespace Richtext_Toolbar_Button\Interfaces\Models;
 
+// @codeCoverageIgnoreStart
 if ( ! defined( 'ADD_RICHTEXT_TOOLBAR_BUTTON' ) ) {
 	exit;
 }
+// @codeCoverageIgnoreEnd
 
 /**
  * Interface Custom_Post
