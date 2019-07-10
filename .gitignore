@@ -35,5 +35,5 @@ logs
 /phpmd.xml
 /phpunit.xml
 /tests/bootstrap.php
-/tests/.plugin
+/.plugin
 composer.lock
