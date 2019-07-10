@@ -37,8 +37,8 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			return;
 		}
 
-		$handle  = 'add-richtext-toolbar-button-editor';
-		$depends = [
+		$handle = 'add-richtext-toolbar-button-editor';
+		$this->enqueue_script( $handle, 'index.min.js', $this->app->editor->filter_packages( [
 			'wp-block-editor',
 			'wp-blocks',
 			'wp-components',
@@ -53,14 +53,7 @@ class Editor implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			'wp-rich-text',
 			'wp-server-side-render',
 			'wp-url',
-		];
-		foreach ( $depends as $key => $depend ) {
-			if ( ! $this->app->editor->is_support_editor_package( $depend ) ) {
-				unset( $depends[ $key ] );
-			}
-		}
-		$depends[] = 'lodash';
-		$this->enqueue_script( $handle, 'index.min.js', $depends, $this->app->get_plugin_version() );
+		], [ 'lodash' ] ), $this->app->get_plugin_version() );
 		$this->localize_script( $handle, 'artbParams', $this->get_editor_params() );
 
 		/** @var Assets $assets */

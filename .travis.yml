@@ -17,9 +17,10 @@ branches:
     - "/^v[0-9\\.]+/"
 
 cache:
+  yarn: true
   directories:
     - "${HOME}/.composer/cache"
-    - "${HOME}/.npm"
+    - node_modules
     - "${TRAVIS_BUILD_DIR}/.plugin"
 
 stages:

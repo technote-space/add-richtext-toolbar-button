@@ -3,8 +3,8 @@
   "version": "1.2.0",
   "description": "add richtext toolbar button",
   "scripts": {
-    "start": "npm run build",
-    "test": "npm run lint && npm run cover",
+    "start": "yarn build",
+    "test": "yarn lint && yarn cover",
     "lint": "eslint src/**/**/*.js && eslint __tests__/**/**/*.js",
     "cover": "jest --coverage",
     "develop": "webpack --mode development --config webpack.config.js",
@@ -14,16 +14,16 @@
   "author": "Technote <technote.space@gmail.com> (https://technote.space)",
   "license": "GPL-3.0",
   "dependencies": {
-    "@technote-space/register-grouped-format-type": "^1.0.17"
+    "@technote-space/register-grouped-format-type": "^1.0.18"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.5.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
     "@wordpress/block-editor": "^2.2.0",
     "@wordpress/blocks": "^6.4.0",
@@ -46,12 +46,12 @@
     "eslint": "^6.0.1",
     "eslint-plugin-react": "^7.14.2",
     "jest": "^24.8.0",
-    "jest-extended": "^0.11.1",
-    "lodash": "^4.17.11",
+    "jest-extended": "^0.11.2",
+    "lodash": "^4.17.13",
     "mousetrap": "^1.6.3",
     "react-autosize-textarea": "^7.0.0",
     "speed-measure-webpack-plugin": "^1.3.1",
-    "webpack": "^4.35.2",
+    "webpack": "^4.35.3",
     "webpack-cli": "~3.3.5"
   }
 }
