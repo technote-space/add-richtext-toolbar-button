@@ -82,6 +82,6 @@ window.artbParams = window.artbParams || {
 
 addFilter( 'gh-pages.renderContent', 'plugin/renderContent', () => <Fragment>
 	<p>This page is demonstration of <a href="https://github.com/technote-space/add-richtext-toolbar-button">Add RichText Toolbar Button</a></p>
-	<p>YThis plugin makes it easy to add RichText toolbar button.</p>
+	<p>This plugin makes it easy to add RichText toolbar button.</p>
 	<img className='playground__content__screenshot' src='./screenshot.gif'/>
 </Fragment> );
