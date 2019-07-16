@@ -18,6 +18,9 @@ return [
 	// main menu title
 	'main_menu_title'                => 'Add RichText Toolbar Button',
 
+	// update
+	'update_info_file_url'           => 'https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/master/update.json',
+
 	// menu image url
 	'menu_image'                     => 'icon-24x24.png',
 
