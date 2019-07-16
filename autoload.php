@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/technote-space/add-richtext-toolbar-button
  * Description: This plugin makes it easy to add RichText toolbar button.
  * Author: Technote
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author URI: https://technote.space
  * Text Domain: add-richtext-toolbar-button
  * Domain Path: /languages/
