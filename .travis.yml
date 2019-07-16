@@ -17,10 +17,12 @@ branches:
     - "/^v[0-9\\.]+/"
 
 cache:
+  yarn: true
   directories:
     - "${HOME}/.composer/cache"
-    - "${HOME}/.npm"
+    - node_modules
     - "${TRAVIS_BUILD_DIR}/.plugin"
+    - "${TRAVIS_BUILD_DIR}/.work/cache"
 
 stages:
   - name: check
@@ -29,8 +31,8 @@ stages:
     if: branch = master and tag IS blank and type IN (pull_request, api)
   - name: test trunk
     if: branch = master and tag IS blank and type IN (pull_request, api, cron)
-  - name: prepare
-    if: branch = master and tag IS blank and type IN (pull_request, api)
+#  - name: prepare
+#    if: branch = master and tag IS blank and type IN (pull_request, api)
   - name: deploy
     if: tag IS present
 
@@ -167,13 +169,13 @@ jobs:
       script: bash travis-ci/bin/php/wp-test.sh
 
 
-    - stage: prepare
-      language: node_js
-      node_js: '11'
-      dist: trusty
-      script:
-        - source travis-ci/bin/deploy/env.sh
-        - bash travis-ci/bin/deploy/wp-check-diff.sh
+#    - stage: prepare
+#      language: node_js
+#      node_js: '11'
+#      dist: trusty
+#      script:
+#        - source travis-ci/bin/deploy/env.sh
+#        - bash travis-ci/bin/deploy/wp-check-diff.sh
 
 
     - stage: deploy
@@ -197,17 +199,39 @@ jobs:
         on:
           tags: true
 
+#    - stage: deploy
+#      language: node_js
+#      node_js: '11'
+#      dist: trusty
+#      script: skip
+#      before_deploy:
+#        - source travis-ci/bin/deploy/env.sh
+#      deploy:
+#        provider: script
+#        skip_cleanup: true
+#        script: bash travis-ci/bin/deploy/wp-release.sh
+#        on:
+#          tags: true
+
     - stage: deploy
       language: node_js
       node_js: '11'
       dist: trusty
+      env:
+        - GH_PAGES_PLUGIN_SCRIPT="./index.min.js"
+        - GH_PAGES_TITLE="Add RichText Toolbar Button"
+        - GH_PAGES_TEMPLATE=gutenberg
+        - GH_PAGES_TRACKING_ID=UA-78163306-3
       script: skip
       before_deploy:
         - source travis-ci/bin/deploy/env.sh
+        - bash travis-ci/bin/deploy/gh-pages.sh
       deploy:
-        provider: script
+        provider: pages
         skip_cleanup: true
-        script: bash travis-ci/bin/deploy/wp-release.sh
+        github_token: ${GITHUB_TOKEN}
+        keep_history: true
+        local_dir: ${GH_PAGES_DIR}
         on:
           tags: true
 

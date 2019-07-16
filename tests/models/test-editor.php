@@ -34,12 +34,18 @@ class EditorTest extends WP_UnitTestCase {
 	private static $assets;
 
 	/**
+	 * @var bool $is_ci
+	 */
+	private static $is_ci;
+
+	/**
 	 * @SuppressWarnings(StaticAccess)
 	 */
 	public static function setUpBeforeClass() {
 		static::$app    = WP_Framework::get_instance( ADD_RICHTEXT_TOOLBAR_BUTTON );
 		static::$editor = Editor::get_instance( static::$app );
 		static::$assets = Assets::get_instance( static::$app );
+		static::$is_ci  = ! empty( getenv( 'CI' ) );
 		static::reset();
 	}
 
@@ -50,13 +56,17 @@ class EditorTest extends WP_UnitTestCase {
 	private static function reset() {
 		wp_dequeue_script( 'add-richtext-toolbar-button-editor' );
 		wp_dequeue_style( static::$assets->get_css_handle() );
-		static::$app->file->delete( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js' );
+		if ( static::$is_ci ) {
+			static::$app->file->delete( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js' );
+		}
 	}
 
 	public function test_enqueue_block_editor_assets() {
 		wp_dequeue_script( 'add-richtext-toolbar-button-editor' );
 		wp_dequeue_style( static::$assets->get_css_handle() );
-		static::$app->file->put_contents( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js', '' );
+		if ( static::$is_ci ) {
+			static::$app->file->put_contents( static::$app->define->plugin_assets_dir . DS . 'js' . DS . 'index.min.js', '' );
+		}
 
 		static::$app->setting->edit_setting( 'is_valid', 'default', false );
 		static::$app->delete_shared_object( '_hook_cache' );

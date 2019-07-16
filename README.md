@@ -5,14 +5,15 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button/badge)](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![PHP: >=5.6](https://img.shields.io/badge/PHP-%3E%3D5.6-orange.svg)](http://php.net/)
-![WordPress Plugin: Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/add-richtext-toolbar-button.svg)
-![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/add-richtext-toolbar-button.svg)
+[![WordPress: >=5.0](https://img.shields.io/badge/WordPress-%3E%3D5.0-brightgreen.svg)](https://wordpress.org/)
 
 ![バナー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/banner-772x250.png)
 
 Gutenberg エディタのツールバーに文章修飾用のボタンを追加するプラグインです。
 
-[WordPress公式ディレクトリ](https://ja.wordpress.org/plugins/add-richtext-toolbar-button/)
+[デモ](https://technote-space.github.io/add-richtext-toolbar-button)
+
+[最新バージョン](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
 
 ## スクリーンショット
 ### 動作
@@ -44,11 +45,11 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 - WordPress 5.0 以上
 
 ## 導入手順
-1. 管理画面のプラグインから「新規追加」  
-![手順1](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902182243.png)  
-2. 「リッチテキスト」で検索し「今すぐインストール」を押下  
-![手順2](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902221559.png)
-3. 「有効化」  
+1. 最新版をGitHubからダウンロード  
+[add-richtext-toolbar-button.zip](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
+2. 「プラグインのアップロード」からインストール
+![install](https://raw.githubusercontent.com/technote-space/screenshots/master/misc/install-wp-plugin.png)
+3. プラグインを有効化
 
 ## 使用方法
 ### 設定の追加

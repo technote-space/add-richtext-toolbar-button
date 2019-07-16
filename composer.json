@@ -1,72 +1,83 @@
 {
-    "name": "technote-space/add-richtext-toolbar-button",
-    "description": "This plugin makes it easy to add RichText toolbar button.",
-    "type": "wordpress-plugin",
-    "license": "GPL-2.0+",
-    "authors": [
-        {
-            "name": "Technote",
-            "email": "technote.space@gmail.com",
-            "homepage": "https://technote.space"
-        }
-    ],
-    "require": {
-        "php": ">=5.6",
-        "wp-content-framework/core": "~0.0",
-        "wp-content-framework/custom_post": "~0.0",
-        "wp-content-framework/update": "~0.0",
-        "wp-content-framework/editor": "^0.0"
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "*",
-        "wp-coding-standards/wpcs": "*",
-        "phpmd/phpmd": "^2.6",
-        "phpcompatibility/phpcompatibility-wp": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-        "roave/security-advisories": "dev-master",
-        "php-coveralls/php-coveralls": "^2.1",
-        "phpunit/phpunit": "^4.8 || ^5.7 || ^7.5"
-    },
-    "scripts": {
-        "setup": [
-            "composer install --no-dev",
-            "npm install --prefix assets/js --save-dev",
-            "npm run build --prefix assets/js"
-        ],
-        "test": [
-            "@phpcs",
-            "@phpmd",
-            "@phpunit"
-        ],
-        "phpunit": [
-            "phpunit"
-        ],
-        "phpcs": [
-            "phpcs --standard=./phpcs.xml"
-        ],
-        "fix": [
-            "phpcbf --standard=./phpcs.xml"
-        ],
-        "phpmd": [
-            "phpmd ./src/,./configs/,./tests/ text phpmd.xml"
-        ],
-        "coveralls": [
-            "php-coveralls -v"
-        ],
-        "bin:wp-test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/wp-test.sh",
-        "bin:wp-test-p": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ACTIVATE_POPULAR_PLUGINS=1 ./travis-ci/bin/php/wp-test.sh",
-        "bin:phpcs": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/phpcs.sh",
-        "bin:phpmd": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/phpmd.sh",
-        "bin:js-lint": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/js/js-lint.sh",
-        "bin:js-test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/js/js-test.sh",
-        "bin:build": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/create.sh",
-        "bin:test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 bash ./travis-ci/bin/test.sh",
-        "bin:test-p": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/test.sh",
-        "bin:diff": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/wp-check-diff.sh",
-        "bin:download": "rm -rdf ./travis-ci && rm -f ./tests/bootstrap.php ./.coveralls.yml ./phpcs.xml ./phpmd.xml phpunit.xml && git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci",
-        "bin:prepare": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/prepare.sh"
-    },
-    "config": {
-        "process-timeout": 1200
+  "name": "technote-space/add-richtext-toolbar-button",
+  "description": "This plugin makes it easy to add RichText toolbar button.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Technote",
+      "email": "technote.space@gmail.com",
+      "homepage": "https://technote.space"
     }
+  ],
+  "require": {
+    "php": ">=5.6",
+    "wp-content-framework/core": "^0.0.59",
+    "wp-content-framework/custom_post": "^0.0.38",
+    "wp-content-framework/update": "^0.0.8",
+    "wp-content-framework/editor": "^0.0.7",
+    "wp-content-framework/update_check": "^0.0.5"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "*",
+    "phpmd/phpmd": "^2.6",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+    "roave/security-advisories": "dev-master",
+    "php-coveralls/php-coveralls": "^2.1",
+    "phpunit/phpunit": "^4.8 || ^5.7 || ^7.5"
+  },
+  "scripts": {
+    "setup": [
+      "composer install --no-dev",
+      "yarn --audit --cwd assets/js install",
+      "yarn --cwd assets/js build"
+    ],
+    "test": [
+      "@phpcs",
+      "@phpmd",
+      "@phpunit"
+    ],
+    "phpunit": [
+      "phpunit"
+    ],
+    "phpcs": [
+      "phpcs --standard=./phpcs.xml"
+    ],
+    "fix": [
+      "phpcbf --standard=./phpcs.xml"
+    ],
+    "phpmd": [
+      "phpmd ./src/,./configs/,./tests/ text phpmd.xml"
+    ],
+    "coveralls": [
+      "php-coveralls -v"
+    ],
+    "bin:wp-test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/wp-test.sh",
+    "bin:wp-test-p": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ACTIVATE_POPULAR_PLUGINS=1 ./travis-ci/bin/php/wp-test.sh",
+    "bin:phpcs": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/phpcs.sh",
+    "bin:phpmd": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/phpmd.sh",
+    "bin:js-lint": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/js/js-lint.sh",
+    "bin:js-test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/js/js-test.sh",
+    "bin:build": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/create.sh",
+    "bin:test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 bash ./travis-ci/bin/test.sh",
+    "bin:test-p": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/test.sh",
+    "bin:diff": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/wp-check-diff.sh",
+    "bin:download": [
+      "mkdir -p ./travis-ci/.git",
+      "chmod -R +w ./travis-ci/.git && rm -rdf ./travis-ci",
+      "rm -f ./tests/bootstrap.php ./.coveralls.yml ./phpcs.xml ./phpmd.xml phpunit.xml",
+      "git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci"
+    ],
+    "bin:prepare": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/prepare.sh",
+    "bin:gh-pages": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_PLUGIN_SCRIPT='./index.min.js' GH_PAGES_TITLE='Add RichText Toolbar Button' GH_PAGES_TEMPLATE=gutenberg  bash ./travis-ci/bin/deploy/gh-pages.sh",
+    "bin:update": [
+      "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash ./travis-ci/bin/update/composer.sh",
+      "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash ./travis-ci/bin/update/package.sh"
+    ]
+  },
+  "config": {
+    "process-timeout": 1200
+  }
 }
