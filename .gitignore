@@ -26,9 +26,10 @@ logs
 /cache
 
 !tests/bin/**/*.sh
-/coverage
+coverage/
 /vendor
 /travis-ci
+/gh-pages
 
 /.coveralls.yml
 /phpcs.xml
@@ -36,4 +37,6 @@ logs
 /phpunit.xml
 /tests/bootstrap.php
 /.plugin
+/.work
 composer.lock
+!/bin
