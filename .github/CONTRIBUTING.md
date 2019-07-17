@@ -1,12 +1,9 @@
 # Contributing
-
-[issues]: /issues
-[fork]: /fork
-[pr]: /compare
-[js-style]: https://standardjs.com/
+[issues]: https://github.com/technote-space/add-richtext-toolbar-button/issues
+[fork]: https://github.com/technote-space/add-richtext-toolbar-button/fork
+[pr]: https://github.com/technote-space/add-richtext-toolbar-button/compare
 [eslint]: https://eslint.org/
 [jest]: https://jestjs.io/
-[mocha]: https://mochajs.org/
 [phpcs]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage
 [phpmd]: https://phpmd.org/documentation/index.html
 [wp-test]: https://developer.wordpress.org/cli/commands/scaffold/plugin-tests/
@@ -23,12 +20,12 @@ Please note we have a [Contributor Code of Conduct][code-of-conduct], please fol
    - `composer setup`  # install and build
    - `composer bin:download`  # download test scripts
    - `composer bin:prepare`   # prepare test settings and download dependent plugins
-1. Make sure the tests pass on your machine: `composer bin:test-p`, which contains
+1. Make sure the tests pass on your machine: `composer bin:test`, which contains
    - [`PHPCS`][phpcs]
    - [`PHPMD`][phpmd]
    - [`WordPress Plugin Tests`][wp-test]
    - [`ESLint`][eslint]
-   - [`Jest`][jest] or [`Mocha`][mocha]
+   - [`Jest`][jest]
    - `Build test`
 1. Create a new branch: `git checkout -b my-branch-name`
 1. Make your change, add tests, and make sure the tests still pass.
@@ -36,10 +33,10 @@ Please note we have a [Contributor Code of Conduct][code-of-conduct], please fol
 1. Pat your self on the back and wait for your pull request to be reviewed and merged.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
-- Follow the style guides ([JavaScript Standard Style][js-style], [PHPCS][phpcs], [PHPMD][phpmd]). Any linting errors should be shown when running 
-  - `composer bin:js-lint`
-  - `composer bin:phpcs`
-  - `composer bin:phpmd`
+- Follow the style guides. Any linting errors should be shown when running 
+  - `composer bin:js-lint`  # [`ESLint`][eslint]
+  - `composer bin:phpcs`    # [`PHPCS`][phpcs]
+  - `composer bin:phpmd`    # [`PHPMD`][phpmd]
 - Write and update tests.
 - Keep your change as focused as possible. If there are multiple changes you would like to make that are not dependent upon each other, consider submitting them as separate pull requests.
 - Write a [good commit message](https://github.com/erlang/otp/wiki/writing-good-commit-messages).
