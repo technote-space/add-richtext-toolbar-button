@@ -78,6 +78,9 @@
     ]
   },
   "config": {
-    "process-timeout": 1200
+    "process-timeout": 1200,
+    "platform": {
+      "php": "5.6"
+    }
   }
 }
