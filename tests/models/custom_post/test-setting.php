@@ -5,10 +5,15 @@
  * @package Tests
  */
 
-use PHPUnit\Framework\TestCase;
+namespace Richtext_Toolbar_Button\Tests\Models\CustomPost;
 
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
 use Richtext_Toolbar_Button\Classes\Models\Assets;
 use Richtext_Toolbar_Button\Classes\Models\Custom_Post\Setting;
+use WP_Framework;
+use WP_UnitTestCase;
 
 /**
  * @noinspection PhpUndefinedClassInspection
@@ -97,14 +102,14 @@ class SettingTest extends WP_UnitTestCase {
 
 		global $typenow;
 		wp_dequeue_style( static::$assets->get_css_handle() );
-		$typenow = 'post';
+		$typenow = 'post'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		do_action( 'load-edit.php' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 		$this->assertFalse( wp_style_is( static::$assets->get_css_handle() ) );
 		$this->assertEmpty( $this->get_output_js() );
 		$this->assertEmpty( $this->get_output_css() );
 
 		wp_dequeue_style( static::$assets->get_css_handle() );
-		$typenow = 'artb-setting';
+		$typenow = 'artb-setting'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		do_action( 'load-edit.php' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 		$this->assertTrue( wp_style_is( static::$assets->get_css_handle() ) );
 		$this->assertNotEmpty( $this->get_output_js() );

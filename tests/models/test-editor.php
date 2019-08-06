@@ -5,10 +5,13 @@
  * @package Tests
  */
 
-use PHPUnit\Framework\TestCase;
+namespace Richtext_Toolbar_Button\Tests\Models;
 
+use PHPUnit\Framework\TestCase;
 use Richtext_Toolbar_Button\Classes\Models\Assets;
 use Richtext_Toolbar_Button\Classes\Models\Editor;
+use WP_Framework;
+use WP_UnitTestCase;
 
 /**
  * @noinspection PhpUndefinedClassInspection
