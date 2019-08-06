@@ -2,7 +2,7 @@
 /**
  * Class AssetsTest
  *
- * @package Test_Travis
+ * @package Tests
  */
 
 use PHPUnit\Framework\TestCase;
