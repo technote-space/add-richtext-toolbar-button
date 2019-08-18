@@ -63,7 +63,6 @@
     "bin:build": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/create.sh",
     "bin:test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 bash ./travis-ci/bin/test.sh",
     "bin:test-p": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/test.sh",
-    "bin:diff": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/wp-check-diff.sh",
     "bin:download": [
       "mkdir -p ./travis-ci/.git",
       "chmod -R +w ./travis-ci/.git && rm -rdf ./travis-ci",

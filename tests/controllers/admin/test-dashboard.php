@@ -2,12 +2,17 @@
 /**
  * Class DashboardTest
  *
- * @package Test_Travis
+ * @package Tests
  */
 
-use PHPUnit\Framework\TestCase;
+namespace Richtext_Toolbar_Button\Tests\Controllers\Admin;
 
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
 use Richtext_Toolbar_Button\Classes\Controllers\Admin\Dashboard;
+use WP_Framework;
+use WP_UnitTestCase;
 
 /**
  * @noinspection PhpUndefinedClassInspection

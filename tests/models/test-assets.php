@@ -2,13 +2,19 @@
 /**
  * Class AssetsTest
  *
- * @package Test_Travis
+ * @package Tests
  */
 
-use PHPUnit\Framework\TestCase;
+namespace Richtext_Toolbar_Button\Tests\Models;
 
+use Exception;
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
 use Richtext_Toolbar_Button\Classes\Models\Assets;
 use Richtext_Toolbar_Button\Classes\Models\Custom_Post\Setting;
+use WP_Framework;
+use WP_UnitTestCase;
 
 /**
  * @noinspection PhpUndefinedClassInspection
