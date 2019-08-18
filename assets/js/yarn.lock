@@ -1465,10 +1465,10 @@
     "@wordpress/rich-text" "^3.4.0"
     "@wordpress/url" "^2.6.0"
 
-"@wordpress/hooks@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/hooks/-/hooks-2.4.0.tgz#30f15751aa06a8d3b67afb65a83db60e3afd0159"
-  integrity sha512-z3+8Yq4IQ3DOvUF4VsXOfntdyk1fJ8RZBYlZTW8WfmHV7VKTDbX3LfHXmC2VCjXhVkeWQVKozi2weoEYopfGKA==
+"@wordpress/hooks@^2.4.0", "@wordpress/hooks@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/hooks/-/hooks-2.5.0.tgz#fe5348b0bdcb297d1822b7e7b21af1028cd84734"
+  integrity sha512-+nsYv5AdX7Oj9gVHvtDIQSE9gntrJwA5FpXSEVlZ2u2E5lhjGQS+a+IrRhxZL/7f2eKby5zvQV6vYCrqMtKxYg==
   dependencies:
     "@babel/runtime" "^7.4.4"
 
