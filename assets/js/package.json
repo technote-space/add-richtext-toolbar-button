@@ -27,7 +27,7 @@
     "@babel/register": "^7.5.5",
     "@wordpress/block-editor": "^3.0.0",
     "@wordpress/blocks": "^6.5.0",
-    "@wordpress/components": "^8.1.0",
+    "@wordpress/components": "^8.2.0",
     "@wordpress/compose": "^3.5.0",
     "@wordpress/core-data": "^2.5.0",
     "@wordpress/data": "^4.7.0",
