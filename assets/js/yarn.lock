@@ -1511,10 +1511,10 @@
     "@wordpress/rich-text" "^3.5.0"
     "@wordpress/url" "^2.7.0"
 
-"@wordpress/hooks@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/hooks/-/hooks-2.5.0.tgz#fe5348b0bdcb297d1822b7e7b21af1028cd84734"
-  integrity sha512-+nsYv5AdX7Oj9gVHvtDIQSE9gntrJwA5FpXSEVlZ2u2E5lhjGQS+a+IrRhxZL/7f2eKby5zvQV6vYCrqMtKxYg==
+"@wordpress/hooks@^2.5.0", "@wordpress/hooks@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/hooks/-/hooks-2.6.0.tgz#3551f25bccebbb5072ec1300f04be19dd5f8c7dd"
+  integrity sha512-93THIW9EklVkJLN3wr8PUdWqttRu/wGZgXUrM6fqqOGwm4uCL4S+jQe800kwZioRHvgW5moNLrvSdfanQ4QyEQ==
   dependencies:
     "@babel/runtime" "^7.4.4"
 
