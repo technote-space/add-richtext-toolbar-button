@@ -1,6 +1,7 @@
 # Add RichText Toolbar Button
 
 [![Build Status](https://travis-ci.com/technote-space/add-richtext-toolbar-button.svg?branch=master)](https://travis-ci.com/technote-space/add-richtext-toolbar-button)
+[![Build Status](https://github.com/technote-space/add-richtext-toolbar-button/workflows/Build/badge.svg)](https://github.com/technote-space/add-richtext-toolbar-button/actions)
 [![Coverage Status](https://coveralls.io/repos/github/technote-space/add-richtext-toolbar-button/badge.svg?branch=master)](https://coveralls.io/github/technote-space/add-richtext-toolbar-button?branch=master)
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button/badge)](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
@@ -14,6 +15,53 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 [デモ](https://technote-space.github.io/add-richtext-toolbar-button)
 
 [最新バージョン](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [スクリーンショット](#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88)
+  - [動作](#%E5%8B%95%E4%BD%9C)
+  - [ツールバー](#%E3%83%84%E3%83%BC%E3%83%AB%E3%83%90%E3%83%BC)
+  - [サイドバー](#%E3%82%B5%E3%82%A4%E3%83%89%E3%83%90%E3%83%BC)
+  - [設定追加](#%E8%A8%AD%E5%AE%9A%E8%BF%BD%E5%8A%A0)
+  - [設定一覧](#%E8%A8%AD%E5%AE%9A%E4%B8%80%E8%A6%A7)
+  - [ダッシュボード](#%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89)
+- [要件](#%E8%A6%81%E4%BB%B6)
+- [導入手順](#%E5%B0%8E%E5%85%A5%E6%89%8B%E9%A0%86)
+- [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+  - [設定の追加](#%E8%A8%AD%E5%AE%9A%E3%81%AE%E8%BF%BD%E5%8A%A0)
+  - [ボタンの利用](#%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%AE%E5%88%A9%E7%94%A8)
+  - [インラインテキスト設定の利用](#%E3%82%A4%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E8%A8%AD%E5%AE%9A%E3%81%AE%E5%88%A9%E7%94%A8)
+- [設定](#%E8%A8%AD%E5%AE%9A)
+  - [タグ名](#%E3%82%BF%E3%82%B0%E5%90%8D)
+  - [クラス名](#%E3%82%AF%E3%83%A9%E3%82%B9%E5%90%8D)
+  - [グループ名](#%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%90%8D)
+  - [アイコン](#%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3)
+  - [スタイル](#%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB)
+    - [プリセット](#%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88)
+  - [ツールバーボタンが有効かどうか](#%E3%83%84%E3%83%BC%E3%83%AB%E3%83%90%E3%83%BC%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [優先度](#%E5%84%AA%E5%85%88%E5%BA%A6)
+- [ダッシュボード](#%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89-1)
+  - [有効かどうか](#%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [文字色ボタンが有効かどうか](#%E6%96%87%E5%AD%97%E8%89%B2%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [文字色ボタンのアイコン](#%E6%96%87%E5%AD%97%E8%89%B2%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%AE%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3)
+  - [背景色ボタンが有効かどうか](#%E8%83%8C%E6%99%AF%E8%89%B2%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [背景色ボタンのアイコン](#%E8%83%8C%E6%99%AF%E8%89%B2%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%AE%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3)
+  - [文字サイズボタンが有効かどうか](#%E6%96%87%E5%AD%97%E3%82%B5%E3%82%A4%E3%82%BA%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [文字サイズボタンのアイコン](#%E6%96%87%E5%AD%97%E3%82%B5%E3%82%A4%E3%82%BA%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%AE%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3)
+  - [全てのフォーマットを外すボタンが有効かどうか](#%E5%85%A8%E3%81%A6%E3%81%AE%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%82%92%E5%A4%96%E3%81%99%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [Fontawesomeが有効かどうか](#fontawesome%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
+  - [デフォルトアイコン](#%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3)
+  - [デフォルトグループ](#%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97)
+  - [テスト用文章](#%E3%83%86%E3%82%B9%E3%83%88%E7%94%A8%E6%96%87%E7%AB%A0)
+- [カラーパレットやフォントサイズ一覧の変更](#%E3%82%AB%E3%83%A9%E3%83%BC%E3%83%91%E3%83%AC%E3%83%83%E3%83%88%E3%82%84%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%82%B5%E3%82%A4%E3%82%BA%E4%B8%80%E8%A6%A7%E3%81%AE%E5%A4%89%E6%9B%B4)
+- [プラグイン独自のフィルタ](#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E7%8B%AC%E8%87%AA%E3%81%AE%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF)
+- [Dependency](#dependency)
+- [Author](#author)
+- [プラグイン作成用フレームワーク](#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E4%BD%9C%E6%88%90%E7%94%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## スクリーンショット
 ### 動作
