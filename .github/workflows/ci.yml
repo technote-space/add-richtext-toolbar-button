@@ -125,6 +125,7 @@ jobs:
         env:
           CI: 1
           TRAVIS_BUILD_DIR: ${{ github.workspace }}
+          WP_VERSION: ${{ matrix.WP_VERSION }}
           ACTIVATE_POPULAR_PLUGINS: ${{ matrix.ACTIVATE_POPULAR_PLUGINS }}
       - name: Run tests
         run: bash travis-ci/bin/php/wp-test.sh
