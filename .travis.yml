@@ -31,10 +31,12 @@ stages:
     if: branch = master and tag IS blank and type IN (pull_request, api)
   - name: test trunk
     if: branch = master and tag IS blank and type IN (pull_request, api, cron)
-#  - name: prepare
-#    if: branch = master and tag IS blank and type IN (pull_request, api)
   - name: deploy
     if: tag IS present
+
+before_install:
+  - npm install -g npm@latest
+  - npm install -g yarn@latest
 
 before_script:
   - git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
@@ -69,28 +71,11 @@ jobs:
       script: bash travis-ci/bin/php/wp-test.sh
     - stage: test
       language: php
-      php: '7.3'
-      env:
-        - WP_VERSION=latest
-        - WP_MULTISITE=1
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
-      php: '7.2'
-      env: WP_VERSION=latest
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
       php: '7.2'
       env:
         - WP_VERSION=5.2
         - WP_MULTISITE=1
         - COVERAGE_REPORT=1
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
-      php: '7.1'
-      env: WP_VERSION=latest
       script: bash travis-ci/bin/php/wp-test.sh
     - stage: test
       language: php
@@ -109,13 +94,6 @@ jobs:
       script: bash travis-ci/bin/php/wp-test.sh
     - stage: test
       language: php
-      php: '7.0'
-      env:
-        - WP_VERSION=latest
-        - WP_MULTISITE=1
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
       php: '5.6'
       env:
         - WP_VERSION=latest
@@ -129,22 +107,7 @@ jobs:
         - WP_MULTISITE=1
         - COVERAGE_REPORT=1
       script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
-      php: '5.6'
-      env: WP_VERSION=4.9
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
-      php: '5.6'
-      env: WP_VERSION=3.9
-      script: bash travis-ci/bin/php/wp-test.sh
 
-    - stage: test
-      language: node_js
-      node_js: '10'
-      dist: trusty
-      script: bash travis-ci/bin/js/js-test.sh
     - stage: test
       language: node_js
       node_js: '11'
@@ -169,15 +132,6 @@ jobs:
       script: bash travis-ci/bin/php/wp-test.sh
 
 
-#    - stage: prepare
-#      language: node_js
-#      node_js: '11'
-#      dist: trusty
-#      script:
-#        - source travis-ci/bin/deploy/env.sh
-#        - bash travis-ci/bin/deploy/wp-check-diff.sh
-
-
     - stage: deploy
       language: node_js
       node_js: '11'
@@ -198,20 +152,6 @@ jobs:
         overwrite: true
         on:
           tags: true
-
-#    - stage: deploy
-#      language: node_js
-#      node_js: '11'
-#      dist: trusty
-#      script: skip
-#      before_deploy:
-#        - source travis-ci/bin/deploy/env.sh
-#      deploy:
-#        provider: script
-#        skip_cleanup: true
-#        script: bash travis-ci/bin/deploy/wp-release.sh
-#        on:
-#          tags: true
 
     - stage: deploy
       language: node_js
@@ -234,7 +174,3 @@ jobs:
         local_dir: ${GH_PAGES_DIR}
         on:
           tags: true
-
-  allow_failures:
-    - env: WP_VERSION=4.9
-    - env: WP_VERSION=3.9
