@@ -1,6 +1,7 @@
 # Add RichText Toolbar Button
 
 [![Build Status](https://travis-ci.com/technote-space/add-richtext-toolbar-button.svg?branch=master)](https://travis-ci.com/technote-space/add-richtext-toolbar-button)
+[![Build Status](https://github.com/technote-space/add-richtext-toolbar-button/workflows/Build/badge.svg)](https://github.com/technote-space/add-richtext-toolbar-button/actions)
 [![Coverage Status](https://coveralls.io/repos/github/technote-space/add-richtext-toolbar-button/badge.svg?branch=master)](https://coveralls.io/github/technote-space/add-richtext-toolbar-button?branch=master)
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button/badge)](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
@@ -14,6 +15,9 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 [デモ](https://technote-space.github.io/add-richtext-toolbar-button)
 
 [最新バージョン](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
+
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 ## スクリーンショット
 ### 動作
