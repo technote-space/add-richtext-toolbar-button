@@ -1,4 +1,4 @@
-import { Common, RichText } from '@technote-space/register-grouped-format-type';
+import { Common, RichText } from './wrapper';
 
 const { getRemoveFormatButton } = RichText;
 const { getTranslator } = Common.Helpers;
