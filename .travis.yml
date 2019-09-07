@@ -24,6 +24,11 @@ cache:
     - "${TRAVIS_BUILD_DIR}/.plugin"
     - "${TRAVIS_BUILD_DIR}/.work/cache"
 
+addons:
+  apt:
+    packages:
+      - unar
+
 stages:
   - name: check
     if: branch = master and tag IS blank and type IN (pull_request, api, cron)
