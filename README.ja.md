@@ -8,7 +8,7 @@
 [![PHP: >=5.6](https://img.shields.io/badge/PHP-%3E%3D5.6-orange.svg)](http://php.net/)
 [![WordPress: >=5.0](https://img.shields.io/badge/WordPress-%3E%3D5.0-brightgreen.svg)](https://wordpress.org/)
 
-![バナー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/banner-772x250.png)
+![バナー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/banner-772x250.png)
 
 *Read this in other languages: [English](README.md), [日本語](README.ja.md).*
 
@@ -68,27 +68,27 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 ## スクリーンショット
 ### 動作
 
-![動作](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201903070308.gif)
+![動作](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201903070308.gif)
 
 ### ツールバー
 
-![ツールバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902150444.png)
+![ツールバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902150444.png)
 
 ### サイドバー
 
-![サイドバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181831.png)
+![サイドバー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902181831.png)
 
 ### 設定追加
 
-![設定追加](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902170345.png)
+![設定追加](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902170345.png)
 
 ### 設定一覧
 
-![設定一覧](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902150436.png)
+![設定一覧](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902150436.png)
 
 ### ダッシュボード
 
-![ダッシュボード](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181859.png)
+![ダッシュボード](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902181859.png)
 
 ## 要件
 - PHP 5.6 以上
@@ -112,16 +112,16 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 1. 記事の投稿画面に移動（Gutenbergエディタ）
 2. 修飾したい文字列を選択
 3. 適用するボタンを押下
-![ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181846.png)
+![ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902181846.png)
 
 ### インラインテキスト設定の利用
 1. 記事の投稿画面に移動（Gutenbergエディタ）
 2. 修飾したい文字列を選択
 3. 右側のサイドバーから適用する色やサイズを選択
-![インラインテキスト設定](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181842.png)
+![インラインテキスト設定](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902181842.png)
 * サイドバーが見つからない場合  
 右上の歯車マークを押してサイドバーを表示
-![設定](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181841.png)
+![設定](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902181841.png)
 
 ## 設定
 ### タグ名
@@ -190,7 +190,7 @@ Gutenbergエディタのツールバーに表示するかどうかを指定し�
 ### 文字色ボタンが有効かどうか
 文字色を変更できるボタンを追加するかどうかを指定します。
 
-![文字色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902170357.png)
+![文字色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902170357.png)
 
 [インラインテキスト設定の利用](#インラインテキスト設定の利用) からは常に使用できるため、ツールバーにもボタンが必要な場合に有効にします。
 
@@ -200,7 +200,7 @@ Gutenbergエディタのツールバーに表示するかどうかを指定し�
 ### 背景色ボタンが有効かどうか
 背景色を変更できるボタンを追加するかどうかを指定します。
 
-![背景色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902170358.png)
+![背景色ボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902170358.png)
 
 [インラインテキスト設定の利用](#インラインテキスト設定の利用) からは常に使用できるため、ツールバーにもボタンが必要な場合に有効にします。
 
@@ -210,7 +210,7 @@ Gutenbergエディタのツールバーに表示するかどうかを指定し�
 ### 文字サイズボタンが有効かどうか
 文字サイズを変更できるボタンを追加するかどうかを指定します。
 
-![文字サイズボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181852.png)
+![文字サイズボタン](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/201902181852.png)
 
 [インラインテキスト設定の利用](#インラインテキスト設定の利用) からは常に使用できるため、ツールバーにもボタンが必要な場合に有効にします。
 
