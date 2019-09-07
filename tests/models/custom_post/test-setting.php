@@ -7,6 +7,7 @@
 
 namespace Richtext_Toolbar_Button\Tests\Models\CustomPost;
 
+use Closure;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -234,12 +235,49 @@ class SettingTest extends WP_UnitTestCase {
 		$this->assertEquals( 'test2: [Setting name]', $errors[1] );
 	}
 
-	public function test_call_clear_cache_file() {
+	/**
+	 * @dataProvider cache_clear_test_targets
+	 *
+	 * @param Closure $func
+	 *
+	 * @throws ReflectionException
+	 */
+	public function test_call_clear_cache_file( $func ) {
 		$post = get_post( 1 );
-		static::$setting->data_updated( 1, $post, [], [] );
-		static::$setting->data_inserted( 1, $post, [] );
-		static::$setting->untrash_post( 1, $post );
-		static::$setting->trash_post( 1 );
+
+		static::set_property( static::$assets, 'cleared_cache_file', null );
+		static::$app->file->put_contents( static::$app->define->upload_dir . DS . 'css' . DS . 'artb.css', '' );
+		$this->assertTrue( static::$app->file->upload_file_exists( static::$app, 'css' . DS . 'artb.css' ) );
+		$func( $post );
+		$this->assertFalse( static::$app->file->upload_file_exists( static::$app, 'css' . DS . 'artb.css' ) );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function cache_clear_test_targets() {
+		return [
+			[
+				function ( $post ) {
+					static::$setting->data_updated( 1, $post, [], [] );
+				},
+			],
+			[
+				function ( $post ) {
+					static::$setting->data_inserted( 1, $post, [] );
+				},
+			],
+			[
+				function ( $post ) {
+					static::$setting->untrash_post( 1, $post );
+				},
+			],
+			[
+				function () {
+					static::$setting->trash_post( 1 );
+				},
+			],
+		];
 	}
 
 	/**
