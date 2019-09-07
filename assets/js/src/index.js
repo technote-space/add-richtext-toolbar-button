@@ -1,4 +1,4 @@
-import { Common, RichText } from '@technote-space/register-grouped-format-type';
+import { Common, RichText } from './wrapper';
 import { getDefaultButtonGroupSetting, getColorButtonSetting, getFontSizeButtonSetting, getSettings } from './utils';
 
 const { registerFormatTypeGroup, registerGroupedFormatType } = RichText;

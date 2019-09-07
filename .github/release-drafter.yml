@@ -9,8 +9,10 @@ categories:
   - title: ':bug: Bug Fixes'
     labels:
       - 'Type: Bug'
-      - 'Type: Maintenance'
       - 'Type: Security'
+  - title: ':wrench: Maintenance'
+    labels:
+      - 'Type: Maintenance'
   - title: ':green_book: Docs'
     labels:
       - 'Type: Documentation'
