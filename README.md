@@ -8,7 +8,7 @@
 [![PHP: >=5.6](https://img.shields.io/badge/PHP-%3E%3D5.6-orange.svg)](http://php.net/)
 [![WordPress: >=5.0](https://img.shields.io/badge/WordPress-%3E%3D5.0-brightgreen.svg)](https://wordpress.org/)
 
-![Banner](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/banner-772x250.png)
+![Banner](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/banner-772x250.png)
 
 *Read this in other languages: [English](README.md), [日本語](README.ja.md).*
 
@@ -66,27 +66,27 @@ This plugin makes it easy to add RichText toolbar button.
 ## Screenshots
 ### Behavior
 
-![Behavior](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201903070308.gif)
+![Behavior](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201903070308.gif)
 
 ### Toolbar
 
-![Toolbar](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902150444.png)
+![Toolbar](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902150444.png)
 
 ### Sidebar
 
-![Sidebar](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181831.png)
+![Sidebar](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181831.png)
 
 ### Add setting
 
-![Add setting](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170345.png)
+![Add setting](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902170345.png)
 
 ### Setting list
 
-![Setting list](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902150436.png)
+![Setting list](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902150436.png)
 
 ### Dashboard
 
-![Dashboard](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181859.png)
+![Dashboard](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181859.png)
 
 ## Requirements
 - \>= PHP 5.6
@@ -110,13 +110,13 @@ This plugin makes it easy to add RichText toolbar button.
 1. Go to editor page.
 1. Select sentence which you want to add style.
 1. Apply button.
-![Button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181846.png)
+![Button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181846.png)
 
 ### Use `Inline Text Settings`
 1. Go to editor page.
 1. Select sentence which you want to add style.
 1. Apply color and font size from sidebar on the right.
-![Inline Text Settings](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181842.png)
+![Inline Text Settings](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181842.png)
 
 ## Setting
 ### Tag name
@@ -179,7 +179,7 @@ When this setting is off, all functions are disabled.
 ### Validity of font color button
 Specify whether to add a button that can change the text color.
 
-![font color button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170357.png)
+![font color button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902170357.png)
 
 ### Font color button icon
 Specify the icon of `font color button`
@@ -187,7 +187,7 @@ Specify the icon of `font color button`
 ### Validity of background color button
 Specify whether to add a button that can change the background color.
 
-![background color button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902170358.png)
+![background color button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902170358.png)
 
 ### Background color button icon
 Specify the icon of `background color button`
@@ -195,7 +195,7 @@ Specify the icon of `background color button`
 ### Validity of font size button
 Specify whether to add a button that can change the font size.
 
-![font size button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201902181852.png)
+![font size button](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201902181852.png)
 
 ### Font size button icon
 Specify the icon of `font size button`
