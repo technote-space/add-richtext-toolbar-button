@@ -71,6 +71,7 @@ jobs:
       php: '7.3'
       env:
         - WP_VERSION=latest
+        - WP_MULTISITE=1
         - COVERAGE_REPORT=1
         - ACTIVATE_POPULAR_PLUGINS=1
       script: bash travis-ci/bin/php/wp-test.sh
@@ -79,14 +80,6 @@ jobs:
       php: '7.2'
       env:
         - WP_VERSION=5.2
-        - WP_MULTISITE=1
-        - COVERAGE_REPORT=1
-      script: bash travis-ci/bin/php/wp-test.sh
-    - stage: test
-      language: php
-      php: '7.1'
-      env:
-        - WP_VERSION=5.1
         - WP_MULTISITE=1
         - COVERAGE_REPORT=1
       script: bash travis-ci/bin/php/wp-test.sh
