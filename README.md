@@ -18,8 +18,50 @@ This plugin makes it easy to add RichText toolbar button.
 
 [Latest version](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Screenshots](#screenshots)
+  - [Behavior](#behavior)
+  - [Toolbar](#toolbar)
+  - [Sidebar](#sidebar)
+  - [Add setting](#add-setting)
+  - [Setting list](#setting-list)
+  - [Dashboard](#dashboard)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Add setting](#add-setting-1)
+  - [Use button](#use-button)
+  - [Use `Inline Text Settings`](#use-inline-text-settings)
+- [Setting](#setting)
+  - [Tag name](#tag-name)
+  - [Class name](#class-name)
+  - [Group name](#group-name)
+  - [Icon](#icon)
+  - [Style](#style)
+    - [Preset](#preset)
+  - [Validity of toolbar button](#validity-of-toolbar-button)
+  - [Priority](#priority)
+- [Dashboard](#dashboard-1)
+  - [Validity](#validity)
+  - [Validity of font color button](#validity-of-font-color-button)
+  - [Font color button icon](#font-color-button-icon)
+  - [Validity of background color button](#validity-of-background-color-button)
+  - [Background color button icon](#background-color-button-icon)
+  - [Validity of font size button](#validity-of-font-size-button)
+  - [Font size button icon](#font-size-button-icon)
+  - [Validity of remove formatting button](#validity-of-remove-formatting-button)
+  - [Validity of fontawesome](#validity-of-fontawesome)
+  - [Default icon](#default-icon)
+  - [Default group](#default-group)
+  - [Test phrase](#test-phrase)
+- [Dependency](#dependency)
+- [Author](#author)
+- [Plugin framework](#plugin-framework)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Screenshots
 ### Behavior
