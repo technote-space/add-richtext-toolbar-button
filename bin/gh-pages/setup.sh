@@ -13,4 +13,4 @@ yarn --cwd ${JS_DIR} install
 yarn --cwd ${JS_DIR} build
 
 cp -f ${JS_DIR}/index.min.js ${GH_PAGES_DIR}/
-curl -o ${GH_PAGES_DIR}/screenshot.gif https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/.github/images/201903070308.gif
+curl -o ${GH_PAGES_DIR}/screenshot.gif https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/img/201903070308.gif
