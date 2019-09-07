@@ -16,7 +16,7 @@ This plugin makes it easy to add RichText toolbar button.
 
 [Demonstration](https://technote-space.github.io/add-richtext-toolbar-button)
 
-[Latest version](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
+[Latest version](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/release.zip)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -94,7 +94,7 @@ This plugin makes it easy to add RichText toolbar button.
 
 ## Installation
 1. Download latest version  
-[add-richtext-toolbar-button.zip](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/add-richtext-toolbar-button.zip)
+[release.zip](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/release.zip)
 1. Install plugin
 ![install](https://raw.githubusercontent.com/technote-space/screenshots/master/misc/install-wp-plugin.png)
 1. Activate plugin
