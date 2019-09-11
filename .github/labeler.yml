@@ -2,6 +2,8 @@ javascript:
   - '**/*.js'
 typescript:
   - '**/*.ts'
+php:
+  - '**/*.php'
 dependencies:
   - '**/*.lock'
   - '**/*-lock.json'
