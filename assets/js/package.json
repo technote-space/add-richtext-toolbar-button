@@ -14,7 +14,7 @@
   "author": "Technote <technote.space@gmail.com> (https://technote.space)",
   "license": "GPL-3.0",
   "dependencies": {
-    "@technote-space/register-grouped-format-type": "^1.0.24"
+    "@technote-space/register-grouped-format-type": "^1.0.25"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
