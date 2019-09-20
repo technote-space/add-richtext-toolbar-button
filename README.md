@@ -146,7 +146,7 @@ Pseudo classes like **before** and **after** are described by the following rule
 ```
 [Pseudo-classes] property: value
 ```  
-ex.
+e.g.
 ```
 display: block;
 padding: 10px;
