@@ -9,6 +9,7 @@ fi
 SCRIPT_DIR=${1}
 source ${SCRIPT_DIR}/variables.sh
 
+yarn --cwd ${JS_DIR} cache clean
 yarn --cwd ${JS_DIR} install
 yarn --cwd ${JS_DIR} build
 

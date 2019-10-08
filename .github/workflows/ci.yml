@@ -12,14 +12,17 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
-          fetch-depth: 2
-      - name: Install Package dependencies
-        run: composer prepare:js
+          fetch-depth: 3
+      - name: Prepare setting
+        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
       - name: Check code style
-        run: composer eslint
+        run: bash travis-ci/bin/js/js-lint.sh
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -30,19 +33,17 @@ jobs:
   phpcs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
-          fetch-depth: 2
+          fetch-depth: 3
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
-        env:
-          CI: 1
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
-      - name: Install Composer dependencies
-        run: composer prepare:php
       - name: Check code style
-        run: composer phpcs
+        run: bash travis-ci/bin/php/phpcs.sh
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -53,19 +54,17 @@ jobs:
   phpmd:
     name: PHPMD
     runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
-          fetch-depth: 2
+          fetch-depth: 3
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
-        env:
-          CI: 1
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
-      - name: Install Composer dependencies
-        run: composer prepare:php
       - name: Check code style
-        run: composer phpmd
+        run: bash travis-ci/bin/php/phpmd.sh
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -78,14 +77,30 @@ jobs:
     name: Jest
     needs: eslint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['8', '10', '11', '12']
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
-          fetch-depth: 2
-      - name: Install Package dependencies
-        run: composer prepare:js
+          fetch-depth: 3
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Prepare setting
+        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
       - name: Run tests
-        run: composer jest
+        run: bash travis-ci/bin/js/js-test.sh
+      - name: Codecov
+        run: curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          COVERAGE_FILE: ./assets/js/coverage/lcov.info
+        if: matrix.node == '12'
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -97,6 +112,9 @@ jobs:
     name: PHPUnit
     needs: [phpcs, phpmd]
     runs-on: ubuntu-16.04
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     services:
       mysql:
         image: mysql
@@ -115,7 +133,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
         with:
-          fetch-depth: 2
+          fetch-depth: 3
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
@@ -123,19 +141,22 @@ jobs:
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
         env:
-          CI: 1
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
           WP_VERSION: ${{ matrix.WP_VERSION }}
+          WP_MULTISITE: ${{ matrix.WP_MULTISITE }}
           ACTIVATE_POPULAR_PLUGINS: ${{ matrix.ACTIVATE_POPULAR_PLUGINS }}
       - name: Run tests
         run: bash travis-ci/bin/php/wp-test.sh
         env:
-          CI: 1
           DB_PASS: root
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
           WP_VERSION: ${{ matrix.WP_VERSION }}
           WP_MULTISITE: ${{ matrix.WP_MULTISITE }}
           ACTIVATE_POPULAR_PLUGINS: ${{ matrix.ACTIVATE_POPULAR_PLUGINS }}
+      - name: Codecov
+        run: curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          COVERAGE_FILE: ./coverage/clover.xml
+        if: matrix.ACTIVATE_POPULAR_PLUGINS == 1
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
