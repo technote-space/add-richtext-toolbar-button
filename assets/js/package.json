@@ -31,7 +31,7 @@
     "@wordpress/compose": "^3.7.1",
     "@wordpress/core-data": "^2.7.1",
     "@wordpress/data": "^4.9.1",
-    "@wordpress/editor": "^9.7.1",
+    "@wordpress/editor": "^9.7.2",
     "@wordpress/element": "^2.8.1",
     "@wordpress/format-library": "^1.9.1",
     "@wordpress/hooks": "^2.6.0",
