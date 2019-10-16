@@ -1414,21 +1414,21 @@
     refx "^3.0.0"
     rememo "^3.0.0"
 
-"@wordpress/element@^2.8.1":
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/@wordpress/element/-/element-2.8.1.tgz#da964c6557cca523660d683e79cbd4903b428e21"
-  integrity sha512-iKdeuf0aSKVO1PxjCCmCUBYk531Iesh6E2ayWsWjj/JNRAcVuAOGiAIxCxU7pE127upjSLmkRh+dXNZ244IWQw==
+"@wordpress/element@^2.8.1", "@wordpress/element@^2.8.2":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/@wordpress/element/-/element-2.8.2.tgz#57e9286a26021cb4dc116d5080a74c2c1fdc5484"
+  integrity sha512-pwy2qvbkNIoB+XTwtvsAKP/pmCoqFq3vyH9uakNIVHJF/DzOwwLS3y5I5hHTuNYmmgFuGALQVZlUVVkujRpWfg==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@wordpress/escape-html" "^1.5.0"
+    "@wordpress/escape-html" "^1.5.1"
     lodash "^4.17.15"
     react "^16.9.0"
     react-dom "^16.9.0"
 
-"@wordpress/escape-html@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/escape-html/-/escape-html-1.5.0.tgz#f56b89a45f2051cec7c7b1c51937411f27cf5b6b"
-  integrity sha512-9jGwPbpdJ309EP4Acf6/zwHWeuYi0Bi5RAZx9q+BIYC7bjxLs3oFDS5QkEAi2mzrVAhIz+BbEWBGRg70U1RLlA==
+"@wordpress/escape-html@^1.5.0", "@wordpress/escape-html@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@wordpress/escape-html/-/escape-html-1.5.1.tgz#4c2242c4b125ab596567eb02c9ef2e95e5bab193"
+  integrity sha512-C4chmaS4US5+SDQKcYuqU+MZJa41o7Wq7IwDsqIQfnrqTEhjk5JBFQm2M0slWOti9hry9CAGlmorp5XvE/eiyg==
   dependencies:
     "@babel/runtime" "^7.4.4"
 

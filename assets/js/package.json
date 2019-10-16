@@ -32,7 +32,7 @@
     "@wordpress/core-data": "^2.7.1",
     "@wordpress/data": "^4.9.1",
     "@wordpress/editor": "^9.7.1",
-    "@wordpress/element": "^2.8.1",
+    "@wordpress/element": "^2.8.2",
     "@wordpress/format-library": "^1.9.1",
     "@wordpress/hooks": "^2.6.0",
     "@wordpress/i18n": "^3.6.1",
