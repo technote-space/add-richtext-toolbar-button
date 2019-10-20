@@ -25,7 +25,6 @@
     "phpcompatibility/phpcompatibility-wp": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
     "roave/security-advisories": "dev-master",
-    "php-coveralls/php-coveralls": "^2.1",
     "phpunit/phpunit": "^4.8 || ^5.7 || ^7.5"
   },
   "scripts": {
@@ -79,9 +78,6 @@
     ],
     "jest:update": [
       "yarn --cwd assets/js cover:update"
-    ],
-    "coveralls": [
-      "php-coveralls -v"
     ],
     "bin:wp-test": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ./travis-ci/bin/php/wp-test.sh",
     "bin:wp-test-p": "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) ACTIVATE_POPULAR_PLUGINS=1 ./travis-ci/bin/php/wp-test.sh",

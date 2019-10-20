@@ -1,5 +1,5 @@
 module.exports = {
-	verbose: false,
+	verbose: true,
 	transform: {
 		'^.+\\.js$': '<rootDir>/node_modules/babel-jest',
 	},
