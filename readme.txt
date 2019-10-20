@@ -36,6 +36,10 @@ This plugin needs PHP5.6 or higher.
 
 == Upgrade Notice ==
 
+= 1.3.3 =
+* パッケージの更新
+* [すべての差分](https://github.com/technote-space/add-richtext-toolbar-button/pull/243)
+
 = 1.3.0 =
 * Gutenberg v6.3 以上への対応
 * GitHub Actions の導入 [詳細](https://github.com/technote-space/add-richtext-toolbar-button/issues/192)
