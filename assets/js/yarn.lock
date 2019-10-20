@@ -904,10 +904,10 @@
     webpack "^4.41.2"
     webpack-cli "~3.3.9"
 
-"@technote-space/register-grouped-format-type@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@technote-space/register-grouped-format-type/-/register-grouped-format-type-1.1.7.tgz#98bf7cf7c8af3d1400766b7858d99a884520698b"
-  integrity sha512-wkpbcjojxygOYtQBwM+1QoKJWD1IRlmLYzpyMrjOOM93YV7dYvtZHe/4U/YBtdH0T3mGdWosgLwHrNrHErPiZw==
+"@technote-space/register-grouped-format-type@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@technote-space/register-grouped-format-type/-/register-grouped-format-type-1.1.8.tgz#9b815c3605c2d41c945048a8892250985470e422"
+  integrity sha512-yEyVBqHaoqmMVxxpnXYRcrQLdxHdCcnbXy9ol8lNAQ9IpO2q2QNW50zgV60OXO1j8XVH1KdpdKLdTP7kh78sAQ==
   dependencies:
     "@babel/core" "^7.6.4"
     "@babel/plugin-proposal-object-rest-spread" "^7.6.2"
