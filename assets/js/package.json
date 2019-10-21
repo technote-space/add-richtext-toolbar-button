@@ -37,7 +37,7 @@
     "@wordpress/hooks": "^2.6.0",
     "@wordpress/i18n": "^3.6.1",
     "@wordpress/rich-text": "^3.7.2",
-    "@wordpress/server-side-render": "^1.3.2",
+    "@wordpress/server-side-render": "^1.3.3",
     "@wordpress/url": "^2.8.1",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
