@@ -1150,14 +1150,14 @@
     "@babel/runtime" "^7.4.4"
     "@wordpress/dom-ready" "^2.5.1"
 
-"@wordpress/api-fetch@^3.6.2":
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/@wordpress/api-fetch/-/api-fetch-3.6.2.tgz#7454054c924c735d3717d81c49df8c357618f3d1"
-  integrity sha512-x4nPtpgVqQjoTFbCu4hWwRHeQoXSO2k+Et+QvNmNF7UC8hQX5R2psdamtH2OsWa4Z/FJxYwgkbzlje4dipqAdg==
+"@wordpress/api-fetch@^3.6.2", "@wordpress/api-fetch@^3.6.4":
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/@wordpress/api-fetch/-/api-fetch-3.6.4.tgz#49d4710f01d5ef0f1ddf1ea75bfd9b18e79e9930"
+  integrity sha512-mZnC3Ixa+3AbuH3Sk1f1ect0ZyQTY+VHXpyPbmGGbFBSqozxTX9bbwdcJ5Z28STDWhzIW+jLPY406vZ8rRcg6A==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@wordpress/i18n" "^3.6.1"
-    "@wordpress/url" "^2.8.1"
+    "@wordpress/url" "^2.8.2"
 
 "@wordpress/autop@^2.5.1":
   version "2.5.1"
@@ -1300,17 +1300,17 @@
     "@wordpress/is-shallow-equal" "^1.6.1"
     lodash "^4.17.15"
 
-"@wordpress/core-data@^2.7.2":
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/@wordpress/core-data/-/core-data-2.7.2.tgz#135cfd4073790766439ca89a5260e6cd23e99df8"
-  integrity sha512-8KEz6lHZuzl4LIZ7AIvlLOniUyqpqvNuKYsCNNB8z9s7cZ+kIYOSNGNf6l+pWLQbI1h/eTYsT0+VgWq8cfYVlA==
+"@wordpress/core-data@^2.7.2", "@wordpress/core-data@^2.7.4":
+  version "2.7.4"
+  resolved "https://registry.yarnpkg.com/@wordpress/core-data/-/core-data-2.7.4.tgz#51f43f8124c58253eb09eb3655630ec5c413dced"
+  integrity sha512-z/2pwitMDtvd2obUIWMkvgIfFdV/WW6C3AiwoicRfTcAxZBau78ucWrCKNHEgZpbx2toElc9OpMGs/ccnmL9cg==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@wordpress/api-fetch" "^3.6.2"
+    "@wordpress/api-fetch" "^3.6.4"
     "@wordpress/data" "^4.9.2"
     "@wordpress/deprecated" "^2.6.1"
     "@wordpress/is-shallow-equal" "^1.6.1"
-    "@wordpress/url" "^2.8.1"
+    "@wordpress/url" "^2.8.2"
     equivalent-key-map "^0.2.2"
     lodash "^4.17.15"
     rememo "^3.0.0"
@@ -1595,10 +1595,10 @@
     "@babel/runtime" "^7.4.4"
     lodash "^4.17.15"
 
-"@wordpress/url@^2.8.1":
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/@wordpress/url/-/url-2.8.1.tgz#a09cc4642eb5f0c3c9a3b4da9d6fd6c99efa44a4"
-  integrity sha512-+J25oxopwyd1NlURCmq1uiP1Wdp2JYiiDAdXGo7UYEwNJ4Hdl9GB/QLJm+Cj3xY35GN4cf0pcF6DNGAMMXO9FQ==
+"@wordpress/url@^2.8.1", "@wordpress/url@^2.8.2":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/@wordpress/url/-/url-2.8.2.tgz#b0048c44b81b80e07fc7db253589246f7f981939"
+  integrity sha512-adTOs94K5G1riTQveIH/pJoDmFGegzBWFSDe/YzhP6mg64AGOWLQLwi0xzfIyoFC4d+kchx4fCyFTqYfcCbRVg==
   dependencies:
     "@babel/runtime" "^7.4.4"
     qs "^6.5.2"
