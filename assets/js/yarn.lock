@@ -1188,10 +1188,10 @@
     "@wordpress/i18n" "^3.6.1"
     lodash "^4.17.15"
 
-"@wordpress/block-editor@^3.2.2":
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@wordpress/block-editor/-/block-editor-3.2.2.tgz#acafe58b6b68e0f58d28053dea1f9a0f46fcfc2f"
-  integrity sha512-VaqY1XZLfcKv9M75wpsVYBCVwezLWRUFO9HuSSIErgiCP2st94VQWeOow+rDWDxrI18d5L+lVYkHXBLZEbf9yA==
+"@wordpress/block-editor@^3.2.2", "@wordpress/block-editor@^3.2.4":
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@wordpress/block-editor/-/block-editor-3.2.4.tgz#df2883e5ad2c56a9d464b41f9b0393b2db424ed7"
+  integrity sha512-VVCUegDIzfzkQyou3RKVqXlYnjpbEnCM4w3RqIlq8Y2KyTE4n9slkxvydgFtcPSUbNkus1/iX4bjE3z5uKW33Q==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@wordpress/a11y" "^2.5.1"
@@ -1210,7 +1210,7 @@
     "@wordpress/keycodes" "^2.6.2"
     "@wordpress/rich-text" "^3.7.2"
     "@wordpress/token-list" "^1.6.1"
-    "@wordpress/url" "^2.8.1"
+    "@wordpress/url" "^2.8.2"
     "@wordpress/viewport" "^2.8.2"
     "@wordpress/wordcount" "^2.6.2"
     classnames "^2.2.5"
@@ -1432,13 +1432,13 @@
   dependencies:
     "@babel/runtime" "^7.4.4"
 
-"@wordpress/format-library@^1.9.2":
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/@wordpress/format-library/-/format-library-1.9.2.tgz#cf6c31d2ecfa7451a73f482fa5fd86346829153d"
-  integrity sha512-mtXvxAiO2n0zjTCF/Jw/Gz9WUcCYfPL13KarOY5Qlm+2BX/8K3lCUDyGdtiKJD5CqkUCGItbJuH9mDvmQHvTZg==
+"@wordpress/format-library@^1.9.4":
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/@wordpress/format-library/-/format-library-1.9.4.tgz#033c6385d970cea7ab1df175b0d59fa1d18fdc58"
+  integrity sha512-DI+mUtVSKYL3RFOaEl5TSapgm/EB6qoTczpI2xw83YxwCAw1FLnAxBZ94zwAP6y9Drktjm31p4z/SujXCv5P4A==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@wordpress/block-editor" "^3.2.2"
+    "@wordpress/block-editor" "^3.2.4"
     "@wordpress/components" "^8.3.2"
     "@wordpress/dom" "^2.5.2"
     "@wordpress/element" "^2.8.2"
@@ -1446,7 +1446,7 @@
     "@wordpress/i18n" "^3.6.1"
     "@wordpress/keycodes" "^2.6.2"
     "@wordpress/rich-text" "^3.7.2"
-    "@wordpress/url" "^2.8.1"
+    "@wordpress/url" "^2.8.2"
     lodash "^4.17.15"
 
 "@wordpress/hooks@^2.6.0":
@@ -1595,10 +1595,10 @@
     "@babel/runtime" "^7.4.4"
     lodash "^4.17.15"
 
-"@wordpress/url@^2.8.1":
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/@wordpress/url/-/url-2.8.1.tgz#a09cc4642eb5f0c3c9a3b4da9d6fd6c99efa44a4"
-  integrity sha512-+J25oxopwyd1NlURCmq1uiP1Wdp2JYiiDAdXGo7UYEwNJ4Hdl9GB/QLJm+Cj3xY35GN4cf0pcF6DNGAMMXO9FQ==
+"@wordpress/url@^2.8.1", "@wordpress/url@^2.8.2":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/@wordpress/url/-/url-2.8.2.tgz#b0048c44b81b80e07fc7db253589246f7f981939"
+  integrity sha512-adTOs94K5G1riTQveIH/pJoDmFGegzBWFSDe/YzhP6mg64AGOWLQLwi0xzfIyoFC4d+kchx4fCyFTqYfcCbRVg==
   dependencies:
     "@babel/runtime" "^7.4.4"
     qs "^6.5.2"
