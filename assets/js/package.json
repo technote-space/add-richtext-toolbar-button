@@ -25,7 +25,7 @@
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
-    "@wordpress/block-editor": "^3.2.2",
+    "@wordpress/block-editor": "^3.4.0",
     "@wordpress/blocks": "^6.7.2",
     "@wordpress/components": "^8.3.2",
     "@wordpress/compose": "^3.7.2",
