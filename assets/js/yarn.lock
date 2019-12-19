@@ -1595,10 +1595,10 @@
     "@babel/runtime" "^7.4.4"
     lodash "^4.17.15"
 
-"@wordpress/url@^2.8.1":
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/@wordpress/url/-/url-2.8.1.tgz#a09cc4642eb5f0c3c9a3b4da9d6fd6c99efa44a4"
-  integrity sha512-+J25oxopwyd1NlURCmq1uiP1Wdp2JYiiDAdXGo7UYEwNJ4Hdl9GB/QLJm+Cj3xY35GN4cf0pcF6DNGAMMXO9FQ==
+"@wordpress/url@^2.8.1", "@wordpress/url@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/url/-/url-2.9.0.tgz#302f3e8db59a0bec74b2cbade7a0d3527e89c934"
+  integrity sha512-ntrXO42/NElNHIrezoYPjWrXNyNYqyHzvvtBVSMLwwwMf7836t/C7GACuk56O3PwQEmSikMNStHQnNCwmyeaag==
   dependencies:
     "@babel/runtime" "^7.4.4"
     qs "^6.5.2"
