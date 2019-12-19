@@ -29,7 +29,7 @@
     "@wordpress/blocks": "^6.7.2",
     "@wordpress/components": "^8.3.2",
     "@wordpress/compose": "^3.7.2",
-    "@wordpress/core-data": "^2.7.2",
+    "@wordpress/core-data": "^2.9.0",
     "@wordpress/data": "^4.9.2",
     "@wordpress/editor": "^9.7.2",
     "@wordpress/element": "^2.8.2",
