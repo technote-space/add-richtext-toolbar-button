@@ -5,13 +5,14 @@ on:
 
 name: Release
 
+env:
+  CI: 1
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -48,7 +49,6 @@ jobs:
           git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
           bash travis-ci/bin/deploy/gh-pages.sh
         env:
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
           GH_PAGES_PLUGIN_SCRIPT: ./index.min.js
           GH_PAGES_TITLE: Add RichText Toolbar Button
           GH_PAGES_TEMPLATE: gutenberg
@@ -71,9 +71,6 @@ jobs:
     name: Upload build files
     needs: test
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - name: Checkout
         uses: actions/checkout@master

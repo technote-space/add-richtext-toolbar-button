@@ -5,11 +5,12 @@
   "scripts": {
     "start": "yarn build",
     "test": "yarn lint && yarn cover",
-    "lint": "eslint src/**/**/*.js && eslint __tests__/**/**/*.js",
+    "lint": "eslint src/**/**/*.js __tests__/**/**/*.js",
+    "lint:fix": "eslint --fix src/**/**/*.ts __tests__/**/**/*.ts",
     "cover": "jest --coverage",
     "develop": "webpack --mode development --config webpack.config.js",
     "build": "webpack --mode production --config webpack.config.js",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "update": "ncu -u && yarn install && yarn upgrade && yarn audit"
   },
   "author": "Technote <technote.space@gmail.com> (https://technote.space)",
   "license": "GPL-3.0",
@@ -41,7 +42,6 @@
     "@wordpress/url": "^2.8.1",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
-    "coveralls": "^3.0.7",
     "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.16.0",
