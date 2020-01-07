@@ -69,7 +69,7 @@ class SettingTest extends WP_UnitTestCase {
 
 		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
 		wp_dequeue_style( $handle );
-		static::set_property( static::$setting, '_setup_fontawesome', [] );
+		static::set_property( static::$setting, 'setup_fontawesome', [] );
 		static::set_property( static::$setting, 'cache_settings', [] );
 		static::set_property( static::$setting, 'cache_setting', [] );
 	}
@@ -346,7 +346,7 @@ class SettingTest extends WP_UnitTestCase {
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		static::set_property( static::$app->minify, '_has_output_script', false );
+		static::set_property( static::$app->minify, 'has_output_script', false );
 
 		return $contents;
 	}
@@ -361,7 +361,7 @@ class SettingTest extends WP_UnitTestCase {
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		static::set_property( static::$app->minify, '_end_footer', false );
+		static::set_property( static::$app->minify, 'end_footer', false );
 
 		return $contents;
 	}

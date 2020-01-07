@@ -66,7 +66,7 @@ class AssetsTest extends WP_UnitTestCase {
 
 		$handle = static::$app->get_config( 'config', 'fontawesome_handle' );
 		wp_dequeue_style( $handle );
-		static::set_property( static::$setting, '_setup_fontawesome', [] );
+		static::set_property( static::$setting, 'setup_fontawesome', [] );
 	}
 
 	public function test_remove_setting() {
