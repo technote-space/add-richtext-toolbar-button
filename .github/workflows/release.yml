@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Prepare setting
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Build
@@ -54,8 +54,8 @@ jobs:
           GH_PAGES_TEMPLATE: gutenberg
           GH_PAGES_TRACKING_ID: UA-78163306-3
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@master
-        env:
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: gh-pages
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Prepare setting
