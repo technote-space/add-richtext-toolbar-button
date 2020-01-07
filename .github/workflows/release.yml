@@ -5,16 +5,17 @@ on:
 
 name: Release
 
+env:
+  CI: 1
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Prepare setting
@@ -40,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Build
@@ -48,14 +49,13 @@ jobs:
           git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
           bash travis-ci/bin/deploy/gh-pages.sh
         env:
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
           GH_PAGES_PLUGIN_SCRIPT: ./index.min.js
           GH_PAGES_TITLE: Add RichText Toolbar Button
           GH_PAGES_TEMPLATE: gutenberg
           GH_PAGES_TRACKING_ID: UA-78163306-3
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@master
-        env:
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: gh-pages
@@ -71,12 +71,9 @@ jobs:
     name: Upload build files
     needs: test
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Prepare setting

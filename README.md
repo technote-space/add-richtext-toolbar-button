@@ -1,6 +1,6 @@
 # Add RichText Toolbar Button
 
-[![Build Status](https://github.com/technote-space/add-richtext-toolbar-button/workflows/Build/badge.svg)](https://github.com/technote-space/add-richtext-toolbar-button/actions)
+[![CI Status](https://github.com/technote-space/add-richtext-toolbar-button/workflows/CI/badge.svg)](https://github.com/technote-space/add-richtext-toolbar-button/actions)
 [![Build Status](https://travis-ci.com/technote-space/add-richtext-toolbar-button.svg?branch=master)](https://travis-ci.com/technote-space/add-richtext-toolbar-button)
 [![codecov](https://codecov.io/gh/technote-space/add-richtext-toolbar-button/branch/master/graph/badge.svg)](https://codecov.io/gh/technote-space/add-richtext-toolbar-button)
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button/badge)](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button)

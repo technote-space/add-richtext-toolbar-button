@@ -110,7 +110,7 @@ class DashboardTest extends WP_UnitTestCase {
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		static::set_property( static::$app->minify, '_has_output_script', false );
+		static::set_property( static::$app->minify, 'has_output_script', false );
 
 		return $contents;
 	}
@@ -125,7 +125,7 @@ class DashboardTest extends WP_UnitTestCase {
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		static::set_property( static::$app->minify, '_end_footer', false );
+		static::set_property( static::$app->minify, 'end_footer', false );
 
 		return $contents;
 	}

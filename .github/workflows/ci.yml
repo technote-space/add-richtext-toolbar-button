@@ -6,15 +6,16 @@ on:
     tags:
       - "!*"
 
-name: Build
+name: CI
+
+env:
+  CI: 1
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
 
 jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
@@ -33,9 +34,6 @@ jobs:
   phpcs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
@@ -54,9 +52,6 @@ jobs:
   phpmd:
     name: PHPMD
     runs-on: ubuntu-latest
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v1
         with:
@@ -79,10 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['8', '10', '11', '12']
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+        node: ['10', '11', '12']
     steps:
       - uses: actions/checkout@v1
         with:
@@ -112,9 +104,6 @@ jobs:
     name: PHPUnit
     needs: [phpcs, phpmd]
     runs-on: ubuntu-16.04
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     services:
       mysql:
         image: mysql
