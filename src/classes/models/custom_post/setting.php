@@ -97,12 +97,8 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @param WP_Post $post
 	 *
 	 * @return array
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	protected function filter_edit_form_params(
-		/** @noinspection PhpUnusedParameterInspection */
-		array $params, $post
-	) {
+	protected function filter_edit_form_params( array $params, $post ) {
 		$setting_details = $this->get_setting_details( 'setting' );
 		$columns         = [];
 		foreach ( $setting_details as $key => $args ) {
@@ -325,12 +321,11 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 				$setting_details    = $this->get_setting_details( 'list' );
 				$data['class_name'] = $this->get_setting_class_name( $data, $post );
 				foreach ( [ 'class_name', 'tag_name' ] as $key ) {
-					$setting    = $this->app->array->get( $setting_details, $key );
 					$is_default = $this->is_default( $data[ $key ] );
 					if ( $is_default ) {
+						$setting      = $this->app->array->get( $setting_details, $key );
 						$data[ $key ] = $setting['value'];
 					}
-					$details[ $setting['label'] ] = $data[ $key ];
 				}
 
 				return $this->get_view( 'admin/custom_post/setting/preview', [
@@ -399,10 +394,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @param array $new
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	public function data_updated(
-		/** @noinspection PhpUnusedParameterInspection */
-		$post_id, WP_Post $post, array $old, array $new
-	) {
+	public function data_updated( $post_id, WP_Post $post, array $old, array $new ) {
 		$this->clear_cache_file();
 	}
 
@@ -412,10 +404,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @param array $data
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	public function data_inserted(
-		/** @noinspection PhpUnusedParameterInspection */
-		$post_id, WP_Post $post, array $data
-	) {
+	public function data_inserted( $post_id, WP_Post $post, array $data ) {
 		$this->clear_cache_file();
 	}
 
@@ -424,10 +413,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @param WP_Post $post
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	public function untrash_post(
-		/** @noinspection PhpUnusedParameterInspection */
-		$post_id, WP_Post $post
-	) {
+	public function untrash_post( $post_id, WP_Post $post ) {
 		$this->clear_cache_file();
 	}
 
@@ -435,9 +421,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @param int $post_id
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	public function trash_post(
-		/** @noinspection PhpUnusedParameterInspection */ $post_id
-	) {
+	public function trash_post( $post_id ) {
 		$this->clear_cache_file();
 	}
 
@@ -613,10 +597,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 	 * @return array
 	 *
 	 */
-	protected function filter_validate_input(
-		/** @noinspection PhpUnusedParameterInspection */
-		array $errors, array $post_array
-	) {
+	protected function filter_validate_input( array $errors, array $post_array ) {
 		/** @var Validation $validation */
 		$validation = Validation::get_instance( $this->app );
 

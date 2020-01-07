@@ -40,6 +40,7 @@ class Style implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Co
 		$index  = [];
 
 		foreach ( preg_split( '/\R|;/', $style ) as $k => $v ) {
+			$matches = null;
 			if ( ! preg_match( '/^(\[([-().#>+~|*a-z]+)]\s*)?(.+?)\s*:\s*(.+?)\s*$/', $v, $matches ) ) {
 				continue;
 			}
