@@ -2,6 +2,8 @@ on:
   push:
     tags:
       - 'v*'
+  repository_dispatch:
+    types: [release]
 
 name: Release
 
@@ -11,13 +13,17 @@ env:
 
 jobs:
   test:
-    name: Test
-    runs-on: ubuntu-latest
+    name: Test before release
+    runs-on: ubuntu-16.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - name: Switch PHP version
+        env:
+          PHP_VERSION: '5.6'
+        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
       - name: Run tests
@@ -41,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Build
@@ -49,6 +55,7 @@ jobs:
           git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
           bash travis-ci/bin/deploy/gh-pages.sh
         env:
+          TRAVIS_BUILD_DIR: ${{ github.workspace }}
           GH_PAGES_PLUGIN_SCRIPT: ./index.min.js
           GH_PAGES_TITLE: Add RichText Toolbar Button
           GH_PAGES_TEMPLATE: gutenberg
@@ -70,18 +77,23 @@ jobs:
   releases:
     name: Upload build files
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
+    if: github.event_name != 'repository_dispatch'
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - name: Switch PHP version
+        env:
+          PHP_VERSION: '5.6'
+        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
       - name: Build
         run: source travis-ci/bin/deploy/env.sh && bash travis-ci/bin/deploy/create.sh
       - name: Upload
-        uses: technote-fork/action-gh-release@v1
+        uses: technote-space/action-gh-release@v2
         with:
           files: release.zip
           draft: true
