@@ -5,8 +5,8 @@
   "scripts": {
     "start": "yarn build",
     "test": "yarn lint && yarn cover",
-    "lint": "eslint src/**/**/*.js __tests__/**/**/*.js",
-    "lint:fix": "eslint --fix src/**/**/*.ts __tests__/**/**/*.ts",
+    "lint": "eslint 'src/**/*.js' '__tests__/**/*.js'",
+    "lint:fix": "eslint --fix 'src/**/*.js' '__tests__/**/*.js'",
     "cover": "jest --coverage",
     "develop": "webpack --mode development --config webpack.config.js",
     "build": "webpack --mode production --config webpack.config.js",
