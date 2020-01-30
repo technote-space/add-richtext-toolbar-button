@@ -38,5 +38,4 @@ coverage/
 /tests/bootstrap.php
 /.plugin
 /.work
-composer.lock
 !/bin
