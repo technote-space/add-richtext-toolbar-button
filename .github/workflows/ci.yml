@@ -16,15 +16,17 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
+    env:
+      LINT: 1
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: assets/js/
           SUFFIX_FILTER: .js
           FILES: .eslintrc
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -53,10 +55,11 @@ jobs:
   phpcs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
+    env:
+      LINT: 1
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: |
@@ -64,6 +67,7 @@ jobs:
             src/
             tests/
           SUFFIX_FILTER: .php
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -92,10 +96,11 @@ jobs:
   phpmd:
     name: PHPMD
     runs-on: ubuntu-latest
+    env:
+      LINT: 1
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: |
@@ -104,6 +109,7 @@ jobs:
             tests/
           SUFFIX_FILTER: .php
           SEPARATOR: ','
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -139,8 +145,7 @@ jobs:
         node: ['10', '11', '12']
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: assets/js/
@@ -150,6 +155,7 @@ jobs:
           FILES: |
             yarn.lock
             jest.config.js
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -210,8 +216,7 @@ jobs:
             ACTIVATE_POPULAR_PLUGINS: 1
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: |
@@ -220,6 +225,7 @@ jobs:
             tests/
           SUFFIX_FILTER: .php
           FILES: composer.lock
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
