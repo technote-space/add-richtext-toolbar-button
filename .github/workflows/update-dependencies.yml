@@ -23,7 +23,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GLOBAL_INSTALL_PACKAGES: npm-check-updates
           EXECUTE_COMMANDS: |
             composer bin:download
             composer bin:update
