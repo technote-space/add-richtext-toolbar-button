@@ -1,0 +1,35 @@
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+name: Check version
+
+jobs:
+  checkVersion:
+    name: Check version
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.pull_request.head.ref, 'release/')
+    steps:
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+      - uses: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
+        if: contains(env.COMMIT_MESSAGE, 'trigger workflow')
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
+        if: github.event.action == 'opened'
+      - name: Set running flag
+        run: |
+          if [[ ! -f readme.txt ]]; then
+            echo "::set-env name=RUNNING::"
+          fi
+
+      - name: Check version
+        uses: technote-space/wp-version-check-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH_PREFIX: release/
+          IGNORE_CONTEXT_CHECK: true
+        if: env.RUNNING

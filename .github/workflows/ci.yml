@@ -1,10 +1,4 @@
-on:
-  pull_request:
-  push:
-    branches:
-      - master
-    tags:
-      - "!*"
+on: push
 
 name: CI
 
@@ -16,19 +10,30 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
+    env:
+      LINT: 1
     steps:
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: assets/js/
-          SUFFIX_FILTER: .js
+          SUFFIX_FILTER: |
+            .js
+            .ts
           FILES: .eslintrc
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+        if: "! env.GIT_DIFF"
+
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Cache node dependencies
         uses: actions/cache@v1
         with:
@@ -36,129 +41,165 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Check code style
         run: bash travis-ci/bin/js/js-lint.sh
-        if: env.GIT_DIFF
-      - uses: 8398a7/action-slack@v1
+        if: env.RUNNING
+      - uses: 8398a7/action-slack@v2
         with:
-          type: failure
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
+
   phpcs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
+    env:
+      LINT: 1
     steps:
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: |
             configs/
             src/
             tests/
           SUFFIX_FILTER: .php
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+        if: "! env.GIT_DIFF"
+
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Check code style
         run: bash travis-ci/bin/php/phpcs.sh
-        if: env.GIT_DIFF
-      - uses: 8398a7/action-slack@v1
+        if: env.RUNNING
+      - uses: 8398a7/action-slack@v2
         with:
-          type: failure
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
+
   phpmd:
     name: PHPMD
     runs-on: ubuntu-latest
+    env:
+      LINT: 1
     steps:
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: |
             configs/
             src/
             tests/
           SUFFIX_FILTER: .php
           SEPARATOR: ','
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+        if: "! env.GIT_DIFF"
+
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
-        if: env.GIT_DIFF
+        if: env.RUNNING
       - name: Check code style
         run: bash travis-ci/bin/php/phpmd.sh
-        if: env.GIT_DIFF
-      - uses: 8398a7/action-slack@v1
+        if: env.RUNNING
+      - uses: 8398a7/action-slack@v2
         with:
-          type: failure
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
 
-  jest:
-    name: Jest
+  cover:
+    name: Coverage
     needs: eslint
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '11', '12']
+        node: ['11', '12']
     steps:
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: assets/js/
           SUFFIX_FILTER: |
             .js
+            .ts
             .snap
           FILES: |
             yarn.lock
             jest.config.js
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+        if: "! env.GIT_DIFF"
+      - name: Set running flag
+        if: matrix.node == '12' && startsWith(github.ref, 'refs/tags/')
+        run: echo "::set-env name=RUNNING::1"
+      - name: Set running flag
+        run: |
+          if [[ ! -f assets/js/package.json ]] || ! < assets/js/package.json jq -r '.scripts | keys[]' | grep -qe '^cover$'; then
+            echo "::set-env name=RUNNING::"
+          fi
+
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Cache node dependencies
         uses: actions/cache@v1
         with:
@@ -166,13 +207,13 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Run tests
         run: bash travis-ci/bin/js/js-test.sh
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Codecov
         run: |
           if [ -n "$CODECOV_TOKEN" ]; then
@@ -181,14 +222,15 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           COVERAGE_FILE: ./assets/js/coverage/lcov.info
-        if: matrix.node == '12' && (env.GIT_DIFF || github.event_name == 'push')
-      - uses: 8398a7/action-slack@v1
+        if: env.RUNNING && matrix.node == '12'
+      - uses: 8398a7/action-slack@v2
         with:
-          type: failure
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
+
   phpunit:
     name: PHPUnit
     needs: [phpcs, phpmd]
@@ -209,41 +251,56 @@ jobs:
             WP_MULTISITE: '1'
             ACTIVATE_POPULAR_PLUGINS: 1
     steps:
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: |
             configs/
             src/
             tests/
           SUFFIX_FILTER: .php
           FILES: composer.lock
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+        if: "! env.GIT_DIFF"
+      - name: Set running flag
+        if: matrix.ACTIVATE_POPULAR_PLUGINS == 1 && startsWith(github.ref, 'refs/tags/')
+        run: echo "::set-env name=RUNNING::1"
+      - name: Set running flag
+        run: |
+          if [[ ! -f composer.json ]] || ! < composer.json jq -r '.scripts | keys[]' | grep -qe '^phpunit$'; then
+            echo "::set-env name=RUNNING::"
+          fi
+
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
         run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
         env:
           WP_VERSION: ${{ matrix.WP_VERSION }}
           WP_MULTISITE: ${{ matrix.WP_MULTISITE }}
           ACTIVATE_POPULAR_PLUGINS: ${{ matrix.ACTIVATE_POPULAR_PLUGINS }}
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Run tests
         run: bash travis-ci/bin/php/wp-test.sh
         env:
@@ -251,7 +308,7 @@ jobs:
           WP_VERSION: ${{ matrix.WP_VERSION }}
           WP_MULTISITE: ${{ matrix.WP_MULTISITE }}
           ACTIVATE_POPULAR_PLUGINS: ${{ matrix.ACTIVATE_POPULAR_PLUGINS }}
-        if: env.GIT_DIFF || github.event_name == 'push'
+        if: env.RUNNING
       - name: Codecov
         run: |
           if [ -n "$CODECOV_TOKEN" ]; then
@@ -260,23 +317,141 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           COVERAGE_FILE: ./coverage/clover.xml
-        if: matrix.ACTIVATE_POPULAR_PLUGINS == 1 && (env.GIT_DIFF || github.event_name == 'push')
-      - uses: 8398a7/action-slack@v1
+        if: env.RUNNING && matrix.ACTIVATE_POPULAR_PLUGINS == 1
+      - uses: 8398a7/action-slack@v2
         with:
-          type: failure
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
 
-  slack:
-    name: Slack
-    needs: [jest, phpunit]
+  pages:
+    name: Publish GitHub Pages
+    needs: [cover, phpunit]
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     steps:
-      - uses: 8398a7/action-slack@v1
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
+      - uses: actions/checkout@v2
         with:
-          type: success
+          persist-credentials: false
+      - name: Set running flag
+        run: |
+          if [[ ! -f composer.json ]] || [[ ! -d bin/gh-pages ]]; then
+            echo "::set-env name=RUNNING::"
+          fi
+
+      - name: Get Yarn Cache Directory
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        if: env.RUNNING
+      - name: Cache node dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+        if: env.RUNNING
+      - name: Build
+        run: |
+          git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
+          bash travis-ci/bin/deploy/gh-pages.sh
+        env:
+          TRAVIS_BUILD_DIR: ${{ github.workspace }}
+          GH_PAGES_APP_ID:
+          GH_PAGES_PLUGIN_SCRIPT: ./index.min.js
+          GH_PAGES_PLUGIN_STYLE:
+          GH_PAGES_TITLE: Add RichText Toolbar Button
+          GH_PAGES_TEMPLATE: gutenberg
+          GH_PAGES_TRACKING_ID: UA-78163306-3
+        if: env.RUNNING
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: gh-pages
+        if: env.RUNNING
+      - uses: 8398a7/action-slack@v2
+        with:
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+
+  releases:
+    name: Upload build files
+    needs: [cover, phpunit]
+    runs-on: ubuntu-16.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Switch PHP version
+        env:
+          PHP_VERSION: '5.6'
+        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Prepare setting
+        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+      - name: Build
+        run: source travis-ci/bin/deploy/env.sh && bash travis-ci/bin/deploy/create.sh
+      - name: Upload
+        uses: technote-space/action-gh-release@v2
+        with:
+          files: release.zip
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: 8398a7/action-slack@v2
+        with:
+          status: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+
+  publishRelease:
+    name: Create Release
+    needs: [pages, releases]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get version
+        run: echo "::set-env name=TAG_NAME::${HEAD_REF#refs/tags/}"
+        env:
+          HEAD_REF: ${{ github.ref }}
+      - name: Create Release
+        id: drafter
+        uses: technote-space/release-drafter@v6
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          DRAFT: false
+          NAME: ${{ env.TAG_NAME }}
+          TAG: ${{ env.TAG_NAME }}
+      - uses: 8398a7/action-slack@v2
+        with:
+          status: ${{ job.status }}
+          text: ${{ format('<{0}>', steps.drafter.outputs.html_url) }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always() && steps.drafter.outputs.html_url
+      - uses: 8398a7/action-slack@v2
+        with:
+          status: ${{ job.status }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always() && ! steps.drafter.outputs.html_url
