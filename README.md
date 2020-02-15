@@ -20,7 +20,8 @@ This plugin makes it easy to add RichText toolbar button.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
+<details>
+<summary>Details</summary>
 
 - [Screenshots](#screenshots)
   - [Behavior](#behavior)
@@ -41,7 +42,6 @@ This plugin makes it easy to add RichText toolbar button.
   - [Group name](#group-name)
   - [Icon](#icon)
   - [Style](#style)
-    - [Preset](#preset)
   - [Validity of toolbar button](#validity-of-toolbar-button)
   - [Priority](#priority)
 - [Dashboard](#dashboard-1)
@@ -61,6 +61,7 @@ This plugin makes it easy to add RichText toolbar button.
 - [Author](#author)
 - [Plugin framework](#plugin-framework)
 
+</details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Screenshots
