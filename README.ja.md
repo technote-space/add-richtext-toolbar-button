@@ -18,9 +18,12 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 [最新バージョン](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/release.zip)
 
+## Table of Contents
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
+<details>
+<summary>Details</summary>
 
 - [スクリーンショット](#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88)
   - [動作](#%E5%8B%95%E4%BD%9C)
@@ -41,7 +44,6 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
   - [グループ名](#%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%90%8D)
   - [アイコン](#%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3)
   - [スタイル](#%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB)
-    - [プリセット](#%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88)
   - [ツールバーボタンが有効かどうか](#%E3%83%84%E3%83%BC%E3%83%AB%E3%83%90%E3%83%BC%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B)
   - [優先度](#%E5%84%AA%E5%85%88%E5%BA%A6)
 - [ダッシュボード](#%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89-1)
@@ -63,6 +65,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 - [Author](#author)
 - [プラグイン作成用フレームワーク](#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E4%BD%9C%E6%88%90%E7%94%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF)
 
+</details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## スクリーンショット
