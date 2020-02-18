@@ -1,3 +1,4 @@
 node_modules/
 coverage/
 *.min.js
+.eslintcache
