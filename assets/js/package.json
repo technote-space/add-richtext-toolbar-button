@@ -12,11 +12,12 @@
     "build": "webpack --mode production --config webpack.config.js",
     "update": "ncu -u && yarn install && yarn upgrade && yarn audit"
   },
-  "author": "Technote <technote.space@gmail.com> (https://technote.space)",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "@technote-space/register-grouped-format-type": "^1.2.11"
+  "author": {
+    "name": "Technote",
+    "email": "technote.space@gmail.com",
+    "url": "https://technote.space"
   },
+  "license": "GPL-3.0",
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
