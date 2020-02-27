@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
 
 name: Check version
 
@@ -11,15 +11,9 @@ jobs:
     if: startsWith(github.event.pull_request.head.ref, 'release/')
     steps:
       - name: Set running flag
-        run: echo "::set-env name=RUNNING::"
+        run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - name: Set running flag
-        run: echo "::set-env name=RUNNING::1"
-        if: contains(env.COMMIT_MESSAGE, 'trigger workflow')
-      - name: Set running flag
-        run: echo "::set-env name=RUNNING::1"
-        if: github.event.action == 'opened'
       - name: Set running flag
         run: |
           if [[ ! -f readme.txt ]]; then
