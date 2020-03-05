@@ -8,7 +8,7 @@ jobs:
   checkVersion:
     name: Check version
     runs-on: ubuntu-latest
-    if: startsWith(github.event.pull_request.head.ref, 'release/')
+    if: startsWith(github.head_ref, 'release/')
     steps:
       - name: Set running flag
         run: echo "::set-env name=RUNNING::1"

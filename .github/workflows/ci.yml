@@ -19,7 +19,6 @@ jobs:
       - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: assets/js/
           SUFFIX_FILTER: |
             .js
@@ -61,7 +60,6 @@ jobs:
       - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: |
             configs/
             src/
@@ -103,7 +101,6 @@ jobs:
       - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: |
             configs/
             src/
@@ -148,7 +145,6 @@ jobs:
       - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: assets/js/
           SUFFIX_FILTER: |
             .js
@@ -232,7 +228,6 @@ jobs:
       - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFIX_FILTER: |
             configs/
             src/
@@ -377,8 +372,6 @@ jobs:
         with:
           files: release.zip
           draft: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publishRelease:
     name: Create Release
@@ -413,8 +406,6 @@ jobs:
     if: always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: 8398a7/action-slack@v2
         with:
           status: failure
