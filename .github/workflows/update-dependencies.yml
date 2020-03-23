@@ -22,15 +22,13 @@ jobs:
         with:
           EXCLUDE_MERGED: 'true'
       - name: Update dependencies
-        uses: technote-space/create-pr-action@v1
+        uses: technote-space/create-pr-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           EXECUTE_COMMANDS: |
             composer bin:download
             composer bin:update
           COMMIT_MESSAGE: 'chore: update dependencies'
-          PR_BRANCH_NAME: 'chore-update-${PR_ID}'
-          PR_TITLE: 'chore: update dependencies (${PR_MERGE_REF})'
           PR_DEFAULT_BRANCH_PREFIX: release/
           PR_DEFAULT_BRANCH_NAME: next-${CURRENT_VERSION}
           PR_DEFAULT_BRANCH_TITLE: 'feat: release'
