@@ -18,10 +18,14 @@ jobs:
     name: Update dependencies
     runs-on: ubuntu-latest
     steps:
+      - uses: technote-space/load-config-action@v1
+        with:
+          CONFIG_FILENAME: workflow-settings.json
       - uses: technote-space/auto-cancel-redundant-job@v1
         with:
           EXCLUDE_MERGED: 'true'
       - name: Update dependencies
+        id: update_deps
         uses: technote-space/create-pr-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -34,3 +38,28 @@ jobs:
           PR_DEFAULT_BRANCH_TITLE: 'feat: release'
           TARGET_BRANCH_PREFIX: release/
           AUTO_MERGE_THRESHOLD_DAYS: 14
+
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::"
+      - name: Set running flag
+        run: echo "::set-env name=RUNNING::1"
+        if: steps.update_deps.outputs.result != 'succeeded' && github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.user.id == github.event.pull_request.base.user.id && startsWith(github.head_ref, 'release/')
+      - uses: actions/checkout@v2
+        if: env.RUNNING
+      - name: Set running flag
+        run: |
+          if [[ ! -f readme.txt ]]; then
+            echo "::set-env name=RUNNING::"
+          fi
+      - name: Get version
+        uses: technote-space/get-next-version-action@v1
+        with:
+          EXCLUDE_MESSAGES: ${{ env.EXCLUDE_MESSAGES }}
+        if: env.RUNNING
+      - name: Check package version
+        uses: technote-space/wp-version-check-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH_PREFIX: release/
+          NEXT_VERSION: ${{ env.NEXT_VERSION }}
+        if: env.NEXT_VERSION
