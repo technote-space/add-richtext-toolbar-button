@@ -313,6 +313,9 @@ jobs:
             echo "::set-env name=RUNNING::"
           fi
 
+      - uses: technote-space/load-config-action@v1
+        with:
+          CONFIG_FILENAME: gh-pages.json
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -331,12 +334,6 @@ jobs:
           bash travis-ci/bin/deploy/gh-pages.sh
         env:
           TRAVIS_BUILD_DIR: ${{ github.workspace }}
-          GH_PAGES_APP_ID:
-          GH_PAGES_PLUGIN_SCRIPT: ./index.min.js
-          GH_PAGES_PLUGIN_STYLE:
-          GH_PAGES_TITLE: Add RichText Toolbar Button
-          GH_PAGES_TEMPLATE: gutenberg
-          GH_PAGES_TRACKING_ID: UA-78163306-3
         if: env.RUNNING
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
