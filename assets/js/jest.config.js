@@ -3,8 +3,8 @@ module.exports = {
 	transform: {
 		'^.+\\.js$': '<rootDir>/node_modules/babel-jest',
 	},
-	moduleFileExtensions: [ 'js' ],
-	setupFiles: [ '<rootDir>/jest.setup.js' ],
+	moduleFileExtensions: ['js'],
+	setupFiles: ['<rootDir>/jest.setup.js'],
 	coverageDirectory: 'coverage',
-	setupFilesAfterEnv: [ 'jest-extended' ],
+	setupFilesAfterEnv: ['jest-extended'],
 };
