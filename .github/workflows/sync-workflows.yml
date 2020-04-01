@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync workflows
-        uses: technote-space/create-pr-action@v1
+        uses: technote-space/create-pr-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           EXECUTE_COMMANDS: |
@@ -20,7 +20,6 @@ jobs:
             git clone --depth=1 https://github.com/technote-space/github-actions-workflows.git .github/workflows/.tmp/workflows
 
             bash .github/workflows/.tmp/workflows/wp-plugin/copy.sh
-            sed -i "s/GH_PAGES_TITLE:.*$/GH_PAGES_TITLE: Add RichText Toolbar Button/" .github/workflows/ci.yml
 
             rm -rdf .github/workflows/.tmp
           COMMIT_MESSAGE: 'chore: sync workflows'
