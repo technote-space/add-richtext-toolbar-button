@@ -1,31 +1,31 @@
-import { Common, RichText } from './wrapper';
+import { Helpers, Components, RichText } from './wrapper';
 
 const { getRemoveFormatButton } = RichText;
-const { getTranslator } = Common.Helpers;
-const { Icon } = Common.Components;
+const { getTranslator }         = Helpers;
+const { Icon }                  = Components;
 
-const PREFIX = 'arbt--';
-const getName = name => PREFIX + name;
-const getIcon = params => icon => Icon( { icon: icon, defaultIcon: params.defaultIcon } );
-const INSPECTOR_GROUP = getName( 'inspector' );
-const TOOL_BUTTON_GROUP = getName( 'tool-button' );
+const PREFIX            = 'arbt--';
+const getName           = name => PREFIX + name;
+const getIcon           = params => icon => Icon({ icon: icon, defaultIcon: params.defaultIcon });
+const INSPECTOR_GROUP   = getName('inspector');
+const TOOL_BUTTON_GROUP = getName('tool-button');
 
 /**
  * @param {{isValidContrastChecker, isValidRemoveFormatting}} params params
  * @returns {array} group setting
  */
 export const getDefaultButtonGroupSetting = params => {
-	const translate = getTranslator( params );
+	const translate = getTranslator(params);
 	return [
 		INSPECTOR_GROUP,
 		{
 			toolbarGroup: INSPECTOR_GROUP,
 			inspectorSettings: {
-				title: translate( 'Inline Text Settings' ),
+				title: translate('Inline Text Settings'),
 				initialOpen: true,
 			},
 			useContrastChecker: params.isValidContrastChecker,
-			additionalInspectors: params.isValidRemoveFormatting ? [ getRemoveFormatButton( translate( 'Remove All formatting' ) ) ] : [],
+			additionalInspectors: params.isValidRemoveFormatting ? [getRemoveFormatButton(translate('Remove All formatting'))] : [],
 		},
 	];
 };
@@ -35,17 +35,17 @@ export const getDefaultButtonGroupSetting = params => {
  * @param {string} key key
  * @returns {array} color button setting
  */
-export const getColorButtonSetting = ( params, key ) => {
+export const getColorButtonSetting = (params, key) => {
 	const setting = params.defaultButtons[ key ];
 	return [
-		getName( setting.name ),
+		getName(setting.name),
 		setting.title,
-		getIcon( params )( setting.icon ),
+		getIcon(params)(setting.icon),
 		setting.style,
 		{
 			group: INSPECTOR_GROUP,
 			className: setting.className,
-			createDisabled: ! setting.isValid,
+			createDisabled: !setting.isValid,
 		},
 	];
 };
@@ -55,16 +55,16 @@ export const getColorButtonSetting = ( params, key ) => {
  * @param {string} key key
  * @returns {array} font size button setting
  */
-export const getFontSizeButtonSetting = ( params, key ) => {
+export const getFontSizeButtonSetting = (params, key) => {
 	const setting = params.defaultButtons[ key ];
 	return [
-		getName( setting.name ),
+		getName(setting.name),
 		setting.title,
-		getIcon( params )( setting.icon ),
+		getIcon(params)(setting.icon),
 		{
 			group: INSPECTOR_GROUP,
 			className: setting.className,
-			createDisabled: ! setting.isValid,
+			createDisabled: !setting.isValid,
 		},
 	];
 };
@@ -74,29 +74,31 @@ export const getFontSizeButtonSetting = ( params, key ) => {
  * @returns {{settings: Array, groups}} settings
  */
 export const getSettings = params => {
-	const groups = {};
+	const groups   = {};
 	const settings = [];
-	Object.keys( params.settings ).forEach( key => {
+	Object.keys(params.settings).forEach(key => {
 		const setting = params.settings[ key ];
-		const group = getName( 'item--' + setting.groupName );
-		if ( ! ( group in groups ) ) {
+		const group   = getName('item--' + setting.groupName);
+		if (!(group in groups)) {
 			groups[ group ] = {
 				toolbarGroup: TOOL_BUTTON_GROUP,
-				icon: getIcon( params )( setting.icon ),
+				icon: getIcon(params)(setting.icon),
 				label: setting.groupName,
+				className: 'arbt-button',
+				menuClassName: 'arbt-menu',
 			};
 		}
-		settings.push( [
+		settings.push([
 			group,
 			setting.name,
-			getIcon( params )( setting.icon ),
+			getIcon(params)(setting.icon),
 			{
 				title: setting.title,
 				className: setting.className,
 				tagName: setting.tagName,
-				createDisabled: ! setting.isValid,
+				createDisabled: !setting.isValid,
 			},
-		] );
-	} );
+		]);
+	});
 	return { groups, settings };
 };

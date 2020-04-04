@@ -1,6 +1,6 @@
 import { setupGlobal } from '@technote-space/gutenberg-test-helper';
 
-setupGlobal( {
+setupGlobal({
 	globalParams: {
 		artbParams: {
 			translate: {},
@@ -67,4 +67,4 @@ setupGlobal( {
 			],
 		},
 	},
-} );
+});

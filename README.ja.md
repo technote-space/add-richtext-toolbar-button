@@ -1,12 +1,11 @@
 # Add RichText Toolbar Button
 
 [![CI Status](https://github.com/technote-space/add-richtext-toolbar-button/workflows/CI/badge.svg)](https://github.com/technote-space/add-richtext-toolbar-button/actions)
-[![Build Status](https://travis-ci.com/technote-space/add-richtext-toolbar-button.svg?branch=master)](https://travis-ci.com/technote-space/add-richtext-toolbar-button)
 [![codecov](https://codecov.io/gh/technote-space/add-richtext-toolbar-button/branch/master/graph/badge.svg)](https://codecov.io/gh/technote-space/add-richtext-toolbar-button)
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button/badge)](https://www.codefactor.io/repository/github/technote-space/add-richtext-toolbar-button)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![PHP: >=5.6](https://img.shields.io/badge/PHP-%3E%3D5.6-orange.svg)](http://php.net/)
-[![WordPress: >=5.0](https://img.shields.io/badge/WordPress-%3E%3D5.0-brightgreen.svg)](https://wordpress.org/)
+[![WordPress: >=5.4](https://img.shields.io/badge/WordPress-%3E%3D5.4-brightgreen.svg)](https://wordpress.org/)
 
 ![バナー](https://raw.githubusercontent.com/technote-space/add-richtext-toolbar-button/images/assets/banner-772x250.png)
 
@@ -95,7 +94,7 @@ Gutenberg エディタのツールバーに文章修飾用のボタンを追加�
 
 ## 要件
 - PHP 5.6 以上
-- WordPress 5.0 以上
+- WordPress 5.4 以上
 
 ## 導入手順
 1. 最新版をGitHubからダウンロード  
