@@ -84,6 +84,7 @@ export const getSettings = params => {
 				toolbarGroup: TOOL_BUTTON_GROUP,
 				icon: getIcon(params)(setting.icon),
 				label: setting.groupName,
+				className: 'arbt-button',
 				menuClassName: 'arbt-menu',
 			};
 		}
