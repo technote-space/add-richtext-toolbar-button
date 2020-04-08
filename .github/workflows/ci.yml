@@ -10,6 +10,7 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       LINT: 1
     steps:
@@ -54,6 +55,7 @@ jobs:
   phpcs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       LINT: 1
     steps:
@@ -95,6 +97,7 @@ jobs:
   phpmd:
     name: PHPMD
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       LINT: 1
     steps:
@@ -138,6 +141,7 @@ jobs:
     name: Coverage
     needs: eslint
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
         node: ['11', '12']
@@ -209,6 +213,7 @@ jobs:
     name: PHPUnit
     needs: [phpcs, phpmd]
     runs-on: ubuntu-16.04
+    timeout-minutes: 5
     services:
       mysql:
         image: mysql
@@ -271,6 +276,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
         if: env.RUNNING
+      - uses: actions/cache@v1
+        with:
+          path: .plugin
+          key: plugin-cache-${{ github.run_id }}
+          restore-keys: |
+            plugin-cache-
+        if: env.RUNNING && matrix.ACTIVATE_POPULAR_PLUGINS == 1
       - name: Prepare setting
         run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
         env:
@@ -302,6 +314,7 @@ jobs:
     name: Publish GitHub Pages
     needs: [cover, phpunit]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Set running flag
@@ -318,6 +331,7 @@ jobs:
       - uses: technote-space/load-config-action@v1
         with:
           CONFIG_FILENAME: gh-pages.json
+        if: env.RUNNING
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -334,8 +348,6 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
           bash travis-ci/bin/deploy/gh-pages.sh
-        env:
-          TRAVIS_BUILD_DIR: ${{ github.workspace }}
         if: env.RUNNING
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -349,6 +361,7 @@ jobs:
     name: Upload build files
     needs: [cover, phpunit]
     runs-on: ubuntu-16.04
+    timeout-minutes: 5
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v2
@@ -381,6 +394,7 @@ jobs:
     name: Create Release
     needs: [pages, releases]
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Get version
         run: echo "::set-env name=TAG_NAME::${HEAD_REF#refs/tags/}"
@@ -407,6 +421,7 @@ jobs:
     name: Slack
     needs: publishRelease
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     if: always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v1
