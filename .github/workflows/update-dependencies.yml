@@ -9,7 +9,6 @@ on:
 name: Update dependencies
 
 env:
-  CI: 1
   GITHUB_ACTION: 1
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
 
