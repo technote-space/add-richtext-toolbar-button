@@ -143,7 +143,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        node: ['11', '12']
+        node: ['12', '14']
     steps:
       - name: Set running flag
         run: echo "::set-env name=RUNNING::1"
