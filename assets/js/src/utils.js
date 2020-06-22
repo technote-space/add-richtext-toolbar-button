@@ -15,19 +15,19 @@ const TOOL_BUTTON_GROUP = getName('tool-button');
  * @returns {array} group setting
  */
 export const getDefaultButtonGroupSetting = params => {
-	const translate = getTranslator(params);
-	return [
-		INSPECTOR_GROUP,
-		{
-			toolbarGroup: INSPECTOR_GROUP,
-			inspectorSettings: {
-				title: translate('Inline Text Settings'),
-				initialOpen: true,
-			},
-			useContrastChecker: params.isValidContrastChecker,
-			additionalInspectors: params.isValidRemoveFormatting ? [getRemoveFormatButton(translate('Remove All formatting'))] : [],
-		},
-	];
+  const translate = getTranslator(params);
+  return [
+    INSPECTOR_GROUP,
+    {
+      toolbarGroup: INSPECTOR_GROUP,
+      inspectorSettings: {
+        title: translate('Inline Text Settings'),
+        initialOpen: true,
+      },
+      useContrastChecker: params.isValidContrastChecker,
+      additionalInspectors: params.isValidRemoveFormatting ? [getRemoveFormatButton(translate('Remove All formatting'))] : [],
+    },
+  ];
 };
 
 /**
@@ -36,18 +36,18 @@ export const getDefaultButtonGroupSetting = params => {
  * @returns {array} color button setting
  */
 export const getColorButtonSetting = (params, key) => {
-	const setting = params.defaultButtons[ key ];
-	return [
-		getName(setting.name),
-		setting.title,
-		getIcon(params)(setting.icon),
-		setting.style,
-		{
-			group: INSPECTOR_GROUP,
-			className: setting.className,
-			createDisabled: !setting.isValid,
-		},
-	];
+  const setting = params.defaultButtons[ key ];
+  return [
+    getName(setting.name),
+    setting.title,
+    getIcon(params)(setting.icon),
+    setting.style,
+    {
+      group: INSPECTOR_GROUP,
+      className: setting.className,
+      createDisabled: !setting.isValid,
+    },
+  ];
 };
 
 /**
@@ -56,17 +56,17 @@ export const getColorButtonSetting = (params, key) => {
  * @returns {array} font size button setting
  */
 export const getFontSizeButtonSetting = (params, key) => {
-	const setting = params.defaultButtons[ key ];
-	return [
-		getName(setting.name),
-		setting.title,
-		getIcon(params)(setting.icon),
-		{
-			group: INSPECTOR_GROUP,
-			className: setting.className,
-			createDisabled: !setting.isValid,
-		},
-	];
+  const setting = params.defaultButtons[ key ];
+  return [
+    getName(setting.name),
+    setting.title,
+    getIcon(params)(setting.icon),
+    {
+      group: INSPECTOR_GROUP,
+      className: setting.className,
+      createDisabled: !setting.isValid,
+    },
+  ];
 };
 
 /**
@@ -74,31 +74,31 @@ export const getFontSizeButtonSetting = (params, key) => {
  * @returns {{settings: Array, groups}} settings
  */
 export const getSettings = params => {
-	const groups   = {};
-	const settings = [];
-	Object.keys(params.settings).forEach(key => {
-		const setting = params.settings[ key ];
-		const group   = getName('item--' + setting.groupName);
-		if (!(group in groups)) {
-			groups[ group ] = {
-				toolbarGroup: TOOL_BUTTON_GROUP,
-				icon: getIcon(params)(setting.icon),
-				label: setting.groupName,
-				className: 'arbt-button',
-				menuClassName: 'arbt-menu',
-			};
-		}
-		settings.push([
-			group,
-			setting.name,
-			getIcon(params)(setting.icon),
-			{
-				title: setting.title,
-				className: setting.className,
-				tagName: setting.tagName,
-				createDisabled: !setting.isValid,
-			},
-		]);
-	});
-	return { groups, settings };
+  const groups   = {};
+  const settings = [];
+  Object.keys(params.settings).forEach(key => {
+    const setting = params.settings[ key ];
+    const group   = getName('item--' + setting.groupName);
+    if (!(group in groups)) {
+      groups[ group ] = {
+        toolbarGroup: TOOL_BUTTON_GROUP,
+        icon: getIcon(params)(setting.icon),
+        label: setting.groupName,
+        className: 'arbt-button',
+        menuClassName: 'arbt-menu',
+      };
+    }
+    settings.push([
+      group,
+      setting.name,
+      getIcon(params)(setting.icon),
+      {
+        title: setting.title,
+        className: setting.className,
+        tagName: setting.tagName,
+        createDisabled: !setting.isValid,
+      },
+    ]);
+  });
+  return { groups, settings };
 };

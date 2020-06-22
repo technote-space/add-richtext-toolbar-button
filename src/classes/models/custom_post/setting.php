@@ -50,6 +50,10 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 		}
 		$this->app->option->set( 'has_inserted_presets', true );
 
+		if ( ! $this->is_empty() ) {
+			return;
+		}
+
 		foreach ( $this->apply_filters( 'get_setting_presets', $this->app->get_config( 'preset' ) ) as $item ) {
 			$item['post_title'] = $this->translate( $this->app->array->search( $item, 'name', 'class_name', 'tag_name', '' ) );
 			unset( $item['name'] );

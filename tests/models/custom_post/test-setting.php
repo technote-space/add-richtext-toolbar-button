@@ -83,7 +83,13 @@ class SettingTest extends WP_UnitTestCase {
 		$this->assertEmpty( static::$setting->get_list_data( null, false )['data'] );
 		static::$app->filter->do_action( 'app_activated' );
 		$this->assertNotEmpty( static::$app->get_option( 'has_inserted_presets' ) );
-		$this->assertNotEmpty( static::$setting->get_list_data( null, false )['data'] );
+		$list = static::$setting->get_list_data( null, false );
+		$this->assertCount( 7, $list['data'] );
+
+		static::$app->option->delete( 'has_inserted_presets' );
+		static::$app->filter->do_action( 'app_activated' );
+		$list2 = static::$setting->get_list_data( null, false );
+		$this->assertEquals( $list['data'], $list2['data'] );
 
 		static::reset();
 		static::$app->option->set( 'has_inserted_presets', true );
