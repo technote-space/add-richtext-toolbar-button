@@ -6,21 +6,21 @@ const { getToolbarButtonProps, getColorButtonProps, getFontSizesButtonProps } = 
 
 // register default buttons
 {
-	registerFormatTypeGroup(...getDefaultButtonGroupSetting(artbParams));
-	registerGroupedFormatType(getColorButtonProps(...getColorButtonSetting(artbParams, 'font-color')));
-	registerGroupedFormatType(getColorButtonProps(...getColorButtonSetting(artbParams, 'background-color')));
-	registerGroupedFormatType(getFontSizesButtonProps(...getFontSizeButtonSetting(artbParams, 'font-size')));
+  registerFormatTypeGroup(...getDefaultButtonGroupSetting(artbParams));
+  registerGroupedFormatType(getColorButtonProps(...getColorButtonSetting(artbParams, 'font-color')));
+  registerGroupedFormatType(getColorButtonProps(...getColorButtonSetting(artbParams, 'background-color')));
+  registerGroupedFormatType(getFontSizesButtonProps(...getFontSizeButtonSetting(artbParams, 'font-size')));
 }
 
 // register buttons
 {
-	const { groups, settings } = getSettings(artbParams);
-	Object.keys(groups).forEach(group => {
-		registerFormatTypeGroup(group, groups[ group ]);
-	});
-	settings.forEach(setting => {
-		registerGroupedFormatType(getToolbarButtonProps(...setting));
-	});
+  const { groups, settings } = getSettings(artbParams);
+  Object.keys(groups).forEach(group => {
+    registerFormatTypeGroup(group, groups[ group ]);
+  });
+  settings.forEach(setting => {
+    registerGroupedFormatType(getToolbarButtonProps(...setting));
+  });
 }
 
 /** @var {{settings:{name, title, className, tagName, isValid, groupName, icon}[], defaultButtons:{}, defaultIcon}} artbParams */
