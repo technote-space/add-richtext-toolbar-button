@@ -16,7 +16,8 @@
     "wp-content-framework/custom_post": "^1.0",
     "wp-content-framework/update": "^1.0",
     "wp-content-framework/editor": "^1.0",
-    "wp-content-framework/update_check": "^1.0"
+    "wp-content-framework/update_check": "^1.0",
+    "wp-content-framework/log": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "*",
