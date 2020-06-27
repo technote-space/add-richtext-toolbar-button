@@ -117,16 +117,16 @@
         },
         {
             "name": "technote/gutenberg-package-versions",
-            "version": "v0.2.55",
+            "version": "v0.2.56",
             "source": {
                 "type": "git",
                 "url": "https://github.com/technote-space/gutenberg-package-versions.git",
-                "reference": "f8aeb24b4427d74ef0382cba6760e0da8e545834"
+                "reference": "b345b3c37ce4c380c12a0c72901aecf2d013ee37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/technote-space/gutenberg-package-versions/zipball/f8aeb24b4427d74ef0382cba6760e0da8e545834",
-                "reference": "f8aeb24b4427d74ef0382cba6760e0da8e545834",
+                "url": "https://api.github.com/repos/technote-space/gutenberg-package-versions/zipball/b345b3c37ce4c380c12a0c72901aecf2d013ee37",
+                "reference": "b345b3c37ce4c380c12a0c72901aecf2d013ee37",
                 "shasum": ""
             },
             "require": {
@@ -164,25 +164,31 @@
                 "gutenberg",
                 "wordpress"
             ],
-            "time": "2020-06-22T16:16:59+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-24T16:18:47+00:00"
         },
         {
             "name": "technote/gutenberg-packages",
-            "version": "v0.2.14",
+            "version": "v0.2.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/technote-space/gutenberg-packages.git",
-                "reference": "9144bca70e6a9e21dceb23c66426d19c615bf0aa"
+                "reference": "0a07402e02246df43c04c985d0b3ba2124372ef0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/technote-space/gutenberg-packages/zipball/9144bca70e6a9e21dceb23c66426d19c615bf0aa",
-                "reference": "9144bca70e6a9e21dceb23c66426d19c615bf0aa",
+                "url": "https://api.github.com/repos/technote-space/gutenberg-packages/zipball/0a07402e02246df43c04c985d0b3ba2124372ef0",
+                "reference": "0a07402e02246df43c04c985d0b3ba2124372ef0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
-                "technote/gutenberg-package-versions": "^0.2.54"
+                "technote/gutenberg-package-versions": "^0.2.56"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.6.0",
@@ -216,20 +222,26 @@
                 "gutenberg",
                 "wordpress"
             ],
-            "time": "2020-06-23T12:20:28+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-25T18:42:56+00:00"
         },
         {
             "name": "wp-content-framework/admin",
-            "version": "v1.0.12",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/admin.git",
-                "reference": "133466b953d3993242121172df69e0d5b52ea61a"
+                "reference": "b2c816039acab56ee52082a157171c29ded39524"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/133466b953d3993242121172df69e0d5b52ea61a",
-                "reference": "133466b953d3993242121172df69e0d5b52ea61a",
+                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/b2c816039acab56ee52082a157171c29ded39524",
+                "reference": "b2c816039acab56ee52082a157171c29ded39524",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +274,13 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T16:31:46+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-24T17:07:39+00:00"
         },
         {
             "name": "wp-content-framework/api",
@@ -306,6 +324,12 @@
             "keywords": [
                 "framework",
                 "wordpress"
+            ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
             ],
             "time": "2020-06-23T02:38:20+00:00"
         },
@@ -353,6 +377,12 @@
                 "framework",
                 "wordpress"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-06-23T12:19:39+00:00"
         },
         {
@@ -399,20 +429,26 @@
                 "framework",
                 "wordpress"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-06-23T02:01:37+00:00"
         },
         {
             "name": "wp-content-framework/controller",
-            "version": "v1.0.12",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/controller.git",
-                "reference": "67ca9a97f56b67623f69deeec7d5da24a3bff05c"
+                "reference": "1378dd40f032e1f17b29dcb376cb35d70f2b132c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/controller/zipball/67ca9a97f56b67623f69deeec7d5da24a3bff05c",
-                "reference": "67ca9a97f56b67623f69deeec7d5da24a3bff05c",
+                "url": "https://api.github.com/repos/wp-content-framework/controller/zipball/1378dd40f032e1f17b29dcb376cb35d70f2b132c",
+                "reference": "1378dd40f032e1f17b29dcb376cb35d70f2b132c",
                 "shasum": ""
             },
             "require": {
@@ -420,7 +456,7 @@
                 "wp-content-framework/presenter": "^1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.5",
@@ -444,20 +480,26 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T16:31:51+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-27T15:12:46+00:00"
         },
         {
             "name": "wp-content-framework/core",
-            "version": "v1.0.12",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/core.git",
-                "reference": "8ddffdd779893c48395a1a8f2a672a4256cd080c"
+                "reference": "8f933c7a7e39d7d68ea225ad4aacced77e249788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/core/zipball/8ddffdd779893c48395a1a8f2a672a4256cd080c",
-                "reference": "8ddffdd779893c48395a1a8f2a672a4256cd080c",
+                "url": "https://api.github.com/repos/wp-content-framework/core/zipball/8f933c7a7e39d7d68ea225ad4aacced77e249788",
+                "reference": "8f933c7a7e39d7d68ea225ad4aacced77e249788",
                 "shasum": ""
             },
             "require": {
@@ -466,7 +508,7 @@
                 "wp-content-framework/common": "^1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phake/phake": "~2.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
@@ -497,27 +539,33 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T02:36:44+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-27T15:12:44+00:00"
         },
         {
             "name": "wp-content-framework/cron",
-            "version": "v1.0.9",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/cron.git",
-                "reference": "6787c75fbf37713a89886b893c16431bde77453a"
+                "reference": "0262f38e398a8264f1e631c852550429cb3e67ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/cron/zipball/6787c75fbf37713a89886b893c16431bde77453a",
-                "reference": "6787c75fbf37713a89886b893c16431bde77453a",
+                "url": "https://api.github.com/repos/wp-content-framework/cron/zipball/0262f38e398a8264f1e631c852550429cb3e67ac",
+                "reference": "0262f38e398a8264f1e631c852550429cb3e67ac",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.5",
@@ -541,7 +589,13 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T16:37:30+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-26T17:40:05+00:00"
         },
         {
             "name": "wp-content-framework/custom_post",
@@ -591,6 +645,12 @@
                 "framework",
                 "wordpress"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-06-23T12:19:41+00:00"
         },
         {
@@ -637,20 +697,26 @@
                 "framework",
                 "wordpress"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-06-23T16:37:33+00:00"
         },
         {
             "name": "wp-content-framework/editor",
-            "version": "v1.0.12",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/editor.git",
-                "reference": "bf9621d3080dae76a84c0389209df308d2307a98"
+                "reference": "d40bb57fb6aa64cf4091c9418e251f31cb9a4721"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/editor/zipball/bf9621d3080dae76a84c0389209df308d2307a98",
-                "reference": "bf9621d3080dae76a84c0389209df308d2307a98",
+                "url": "https://api.github.com/repos/wp-content-framework/editor/zipball/d40bb57fb6aa64cf4091c9418e251f31cb9a4721",
+                "reference": "d40bb57fb6aa64cf4091c9418e251f31cb9a4721",
                 "shasum": ""
             },
             "require": {
@@ -684,20 +750,26 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T16:37:38+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-25T18:42:50+00:00"
         },
         {
             "name": "wp-content-framework/log",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/log.git",
-                "reference": "549d63360e5538e8fdf4eae2c66f40bb2e3bd3f6"
+                "reference": "5aa2e0e53a3627b45e573c411d88921406d094ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/549d63360e5538e8fdf4eae2c66f40bb2e3bd3f6",
-                "reference": "549d63360e5538e8fdf4eae2c66f40bb2e3bd3f6",
+                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/5aa2e0e53a3627b45e573c411d88921406d094ec",
+                "reference": "5aa2e0e53a3627b45e573c411d88921406d094ec",
                 "shasum": ""
             },
             "require": {
@@ -707,7 +779,7 @@
                 "wp-content-framework/db": "^1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.5",
@@ -731,7 +803,13 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T02:37:38+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-26T12:59:01+00:00"
         },
         {
             "name": "wp-content-framework/presenter",
@@ -776,27 +854,33 @@
                 "framework",
                 "wordpress"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-06-23T16:37:49+00:00"
         },
         {
             "name": "wp-content-framework/session",
-            "version": "v1.0.9",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/session.git",
-                "reference": "903f6418a21b6885b3719ceb1c2b51b4969ed60a"
+                "reference": "8925abc564a6b5bae4114fcb1c7ae9290cb90295"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/session/zipball/903f6418a21b6885b3719ceb1c2b51b4969ed60a",
-                "reference": "903f6418a21b6885b3719ceb1c2b51b4969ed60a",
+                "url": "https://api.github.com/repos/wp-content-framework/session/zipball/8925abc564a6b5bae4114fcb1c7ae9290cb90295",
+                "reference": "8925abc564a6b5bae4114fcb1c7ae9290cb90295",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.5",
@@ -820,20 +904,26 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T16:37:43+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-26T17:40:02+00:00"
         },
         {
             "name": "wp-content-framework/update",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/update.git",
-                "reference": "064d13c261fdbc9cd1e17c4c9409cf4b7a27a55b"
+                "reference": "cd4a21b06d2b8c3ea60b34339e16d1b9db2f024b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/064d13c261fdbc9cd1e17c4c9409cf4b7a27a55b",
-                "reference": "064d13c261fdbc9cd1e17c4c9409cf4b7a27a55b",
+                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/cd4a21b06d2b8c3ea60b34339e16d1b9db2f024b",
+                "reference": "cd4a21b06d2b8c3ea60b34339e16d1b9db2f024b",
                 "shasum": ""
             },
             "require": {
@@ -841,7 +931,7 @@
                 "wp-content-framework/presenter": "^1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.5",
@@ -865,7 +955,13 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T02:37:36+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-27T15:12:41+00:00"
         },
         {
             "name": "wp-content-framework/update_check",
@@ -910,20 +1006,26 @@
                 "framework",
                 "wordpress"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-06-23T02:37:34+00:00"
         },
         {
             "name": "wp-content-framework/view",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/view.git",
-                "reference": "f723ba55006210697b7ebf70f0085255359ec48c"
+                "reference": "2b1bae26590ceeb30eb321796b13dbf55967a743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/view/zipball/f723ba55006210697b7ebf70f0085255359ec48c",
-                "reference": "f723ba55006210697b7ebf70f0085255359ec48c",
+                "url": "https://api.github.com/repos/wp-content-framework/view/zipball/2b1bae26590ceeb30eb321796b13dbf55967a743",
+                "reference": "2b1bae26590ceeb30eb321796b13dbf55967a743",
                 "shasum": ""
             },
             "require": {
@@ -931,7 +1033,7 @@
                 "wp-content-framework/presenter": "^1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.5",
@@ -955,7 +1057,13 @@
                 "framework",
                 "wordpress"
             ],
-            "time": "2020-06-23T16:37:52+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/technote0space",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-06-26T12:59:04+00:00"
         },
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -1046,6 +1154,20 @@
             "keywords": [
                 "Xdebug",
                 "performance"
+            ],
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-06-04T11:16:35+00:00"
         },
@@ -1259,6 +1381,12 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/pdepend/pdepend",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-06-20T10:53:13+00:00"
         },
         {
@@ -2460,6 +2588,16 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
+            "funding": [
+                {
+                    "url": "https://github.com/Ocramius",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/roave/security-advisories",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-06-19T13:23:43+00:00"
         },
         {
@@ -3088,6 +3226,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-05-22T10:56:48+00:00"
         },
         {
@@ -3159,6 +3311,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-05-30T21:06:01+00:00"
         },
         {
@@ -3209,6 +3375,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-05-30T17:48:24+00:00"
         },
         {
@@ -3271,6 +3451,20 @@
                 "polyfill",
                 "portable"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-06-06T08:46:27+00:00"
         },
         {
@@ -3330,6 +3524,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-05-11T07:51:54+00:00"
         },
         {
@@ -3441,5 +3649,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "5.6"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
