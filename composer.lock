@@ -117,23 +117,23 @@
         },
         {
             "name": "technote/gutenberg-package-versions",
-            "version": "v0.2.56",
+            "version": "v0.2.59",
             "source": {
                 "type": "git",
                 "url": "https://github.com/technote-space/gutenberg-package-versions.git",
-                "reference": "b345b3c37ce4c380c12a0c72901aecf2d013ee37"
+                "reference": "2bbe437266af916a364abba6ce8a6d3ca298caac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/technote-space/gutenberg-package-versions/zipball/b345b3c37ce4c380c12a0c72901aecf2d013ee37",
-                "reference": "b345b3c37ce4c380c12a0c72901aecf2d013ee37",
+                "url": "https://api.github.com/repos/technote-space/gutenberg-package-versions/zipball/2bbe437266af916a364abba6ce8a6d3ca298caac",
+                "reference": "2bbe437266af916a364abba6ce8a6d3ca298caac",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.6.0",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.6.0 || ^0.7.0",
                 "phpcompatibility/phpcompatibility-wp": "*",
                 "phpmd/phpmd": "^2.8",
                 "phpunit/phpunit": "^4.8 || ^5.7 || ^7.5",
@@ -164,31 +164,25 @@
                 "gutenberg",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-06-24T16:18:47+00:00"
+            "time": "2020-07-09T16:27:35+00:00"
         },
         {
             "name": "technote/gutenberg-packages",
-            "version": "v0.2.15",
+            "version": "v0.2.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/technote-space/gutenberg-packages.git",
-                "reference": "0a07402e02246df43c04c985d0b3ba2124372ef0"
+                "reference": "49775ba4516de118286b3f8169ca65316bde7a27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/technote-space/gutenberg-packages/zipball/0a07402e02246df43c04c985d0b3ba2124372ef0",
-                "reference": "0a07402e02246df43c04c985d0b3ba2124372ef0",
+                "url": "https://api.github.com/repos/technote-space/gutenberg-packages/zipball/49775ba4516de118286b3f8169ca65316bde7a27",
+                "reference": "49775ba4516de118286b3f8169ca65316bde7a27",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
-                "technote/gutenberg-package-versions": "^0.2.56"
+                "technote/gutenberg-package-versions": "^0.2.59"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.6.0",
@@ -222,26 +216,20 @@
                 "gutenberg",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-06-25T18:42:56+00:00"
+            "time": "2020-07-16T03:10:54+00:00"
         },
         {
             "name": "wp-content-framework/admin",
-            "version": "v1.0.14",
+            "version": "v1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/admin.git",
-                "reference": "bf47e4ae198a0c030172430446cc0e1afb8f696c"
+                "reference": "41605a47c381193275a7dc1bb27e2357b6104815"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/bf47e4ae198a0c030172430446cc0e1afb8f696c",
-                "reference": "bf47e4ae198a0c030172430446cc0e1afb8f696c",
+                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/41605a47c381193275a7dc1bb27e2357b6104815",
+                "reference": "41605a47c381193275a7dc1bb27e2357b6104815",
                 "shasum": ""
             },
             "require": {
@@ -274,26 +262,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-01T03:56:17+00:00"
+            "time": "2020-07-15T02:48:17+00:00"
         },
         {
             "name": "wp-content-framework/api",
-            "version": "v1.0.10",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/api.git",
-                "reference": "0c890d04c543acd79147cd2acaff05a47b6aae22"
+                "reference": "4425b832280f3801cb323978dc667864691a7a41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/api/zipball/0c890d04c543acd79147cd2acaff05a47b6aae22",
-                "reference": "0c890d04c543acd79147cd2acaff05a47b6aae22",
+                "url": "https://api.github.com/repos/wp-content-framework/api/zipball/4425b832280f3801cb323978dc667864691a7a41",
+                "reference": "4425b832280f3801cb323978dc667864691a7a41",
                 "shasum": ""
             },
             "require": {
@@ -325,26 +307,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-01T03:56:09+00:00"
+            "time": "2020-07-14T09:54:13+00:00"
         },
         {
             "name": "wp-content-framework/cache",
-            "version": "v1.0.10",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/cache.git",
-                "reference": "503e70f36a1d4ccb7f80a1444734b805191d4446"
+                "reference": "7b91e14c0e222fde6c09490e0b495d9555fccb8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/cache/zipball/503e70f36a1d4ccb7f80a1444734b805191d4446",
-                "reference": "503e70f36a1d4ccb7f80a1444734b805191d4446",
+                "url": "https://api.github.com/repos/wp-content-framework/cache/zipball/7b91e14c0e222fde6c09490e0b495d9555fccb8e",
+                "reference": "7b91e14c0e222fde6c09490e0b495d9555fccb8e",
                 "shasum": ""
             },
             "require": {
@@ -377,26 +353,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-01T03:56:16+00:00"
+            "time": "2020-07-14T09:54:16+00:00"
         },
         {
             "name": "wp-content-framework/common",
-            "version": "v1.0.11",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/common.git",
-                "reference": "cbf71280bac8f62a57f1f5e7d741cbfe974ea540"
+                "reference": "4df6ee778d66d904ad93a135977c78ceebf8811b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/common/zipball/cbf71280bac8f62a57f1f5e7d741cbfe974ea540",
-                "reference": "cbf71280bac8f62a57f1f5e7d741cbfe974ea540",
+                "url": "https://api.github.com/repos/wp-content-framework/common/zipball/4df6ee778d66d904ad93a135977c78ceebf8811b",
+                "reference": "4df6ee778d66d904ad93a135977c78ceebf8811b",
                 "shasum": ""
             },
             "require": {
@@ -429,26 +399,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-01T03:56:11+00:00"
+            "time": "2020-07-14T09:15:49+00:00"
         },
         {
             "name": "wp-content-framework/controller",
-            "version": "v1.0.14",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/controller.git",
-                "reference": "21ceaa56e914f12eda9d02799d7d38f6b1ca8af5"
+                "reference": "bad0da3301c2482b8c62825248e74675c55cb85a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/controller/zipball/21ceaa56e914f12eda9d02799d7d38f6b1ca8af5",
-                "reference": "21ceaa56e914f12eda9d02799d7d38f6b1ca8af5",
+                "url": "https://api.github.com/repos/wp-content-framework/controller/zipball/bad0da3301c2482b8c62825248e74675c55cb85a",
+                "reference": "bad0da3301c2482b8c62825248e74675c55cb85a",
                 "shasum": ""
             },
             "require": {
@@ -480,26 +444,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-04T14:39:02+00:00"
+            "time": "2020-07-11T14:56:23+00:00"
         },
         {
             "name": "wp-content-framework/core",
-            "version": "v1.0.14",
+            "version": "v1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/core.git",
-                "reference": "151d7985339e14b1d7fb22186e5c95ed5ecf50f2"
+                "reference": "0a0763daaf0d0c4ffd4d3c80b61ad8ad69b170a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/core/zipball/151d7985339e14b1d7fb22186e5c95ed5ecf50f2",
-                "reference": "151d7985339e14b1d7fb22186e5c95ed5ecf50f2",
+                "url": "https://api.github.com/repos/wp-content-framework/core/zipball/0a0763daaf0d0c4ffd4d3c80b61ad8ad69b170a1",
+                "reference": "0a0763daaf0d0c4ffd4d3c80b61ad8ad69b170a1",
                 "shasum": ""
             },
             "require": {
@@ -539,26 +497,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-04T14:38:59+00:00"
+            "time": "2020-07-18T09:35:37+00:00"
         },
         {
             "name": "wp-content-framework/cron",
-            "version": "v1.0.10",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/cron.git",
-                "reference": "0262f38e398a8264f1e631c852550429cb3e67ac"
+                "reference": "94844c6cba8bee95e0542433046c5263c4cea4c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/cron/zipball/0262f38e398a8264f1e631c852550429cb3e67ac",
-                "reference": "0262f38e398a8264f1e631c852550429cb3e67ac",
+                "url": "https://api.github.com/repos/wp-content-framework/cron/zipball/94844c6cba8bee95e0542433046c5263c4cea4c0",
+                "reference": "94844c6cba8bee95e0542433046c5263c4cea4c0",
                 "shasum": ""
             },
             "require": {
@@ -589,26 +541,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-06-26T17:40:05+00:00"
+            "time": "2020-07-17T16:10:21+00:00"
         },
         {
             "name": "wp-content-framework/custom_post",
-            "version": "v1.0.13",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/custom_post.git",
-                "reference": "1e1a6cd147fce802d6dcce6421be796a8bdd51d4"
+                "reference": "6e62fb7a81fc77647bd46fbae4eb62be0b50f73b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/custom_post/zipball/1e1a6cd147fce802d6dcce6421be796a8bdd51d4",
-                "reference": "1e1a6cd147fce802d6dcce6421be796a8bdd51d4",
+                "url": "https://api.github.com/repos/wp-content-framework/custom_post/zipball/6e62fb7a81fc77647bd46fbae4eb62be0b50f73b",
+                "reference": "6e62fb7a81fc77647bd46fbae4eb62be0b50f73b",
                 "shasum": ""
             },
             "require": {
@@ -645,26 +591,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-01T03:56:13+00:00"
+            "time": "2020-07-14T09:54:19+00:00"
         },
         {
             "name": "wp-content-framework/db",
-            "version": "v1.0.9",
+            "version": "v1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/db.git",
-                "reference": "59d3452df38963a4889ecbf2af4fc79e4018e182"
+                "reference": "fa33c82c4701c705175049a5c570ad119d5f9b55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/db/zipball/59d3452df38963a4889ecbf2af4fc79e4018e182",
-                "reference": "59d3452df38963a4889ecbf2af4fc79e4018e182",
+                "url": "https://api.github.com/repos/wp-content-framework/db/zipball/fa33c82c4701c705175049a5c570ad119d5f9b55",
+                "reference": "fa33c82c4701c705175049a5c570ad119d5f9b55",
                 "shasum": ""
             },
             "require": {
@@ -697,31 +637,25 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-02T13:38:50+00:00"
+            "time": "2020-07-16T18:14:35+00:00"
         },
         {
             "name": "wp-content-framework/editor",
-            "version": "v1.0.14",
+            "version": "v1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/editor.git",
-                "reference": "b3ccc4efe8447dec16d822112519a2725b4e4283"
+                "reference": "dc82c85adf47aac6fe3e7e3d7c87f0427877f942"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/editor/zipball/b3ccc4efe8447dec16d822112519a2725b4e4283",
-                "reference": "b3ccc4efe8447dec16d822112519a2725b4e4283",
+                "url": "https://api.github.com/repos/wp-content-framework/editor/zipball/dc82c85adf47aac6fe3e7e3d7c87f0427877f942",
+                "reference": "dc82c85adf47aac6fe3e7e3d7c87f0427877f942",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0",
-                "technote/gutenberg-packages": "^0.2.15"
+                "technote/gutenberg-packages": "^0.2.18"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -750,26 +684,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-02T02:51:58+00:00"
+            "time": "2020-07-16T03:10:37+00:00"
         },
         {
             "name": "wp-content-framework/log",
-            "version": "v1.0.13",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/log.git",
-                "reference": "ccb165db13a0e14f87a80488f42be7defa87306e"
+                "reference": "02e43876002e97b126208dea83a193688f0a2bfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/ccb165db13a0e14f87a80488f42be7defa87306e",
-                "reference": "ccb165db13a0e14f87a80488f42be7defa87306e",
+                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/02e43876002e97b126208dea83a193688f0a2bfe",
+                "reference": "02e43876002e97b126208dea83a193688f0a2bfe",
                 "shasum": ""
             },
             "require": {
@@ -803,13 +731,7 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-03T14:10:48+00:00"
+            "time": "2020-07-18T03:35:07+00:00"
         },
         {
             "name": "wp-content-framework/presenter",
@@ -854,26 +776,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
             "time": "2020-07-01T03:56:06+00:00"
         },
         {
             "name": "wp-content-framework/session",
-            "version": "v1.0.10",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/session.git",
-                "reference": "8925abc564a6b5bae4114fcb1c7ae9290cb90295"
+                "reference": "c0b274a0bee0d7a6328b73725bc497b972469f39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/session/zipball/8925abc564a6b5bae4114fcb1c7ae9290cb90295",
-                "reference": "8925abc564a6b5bae4114fcb1c7ae9290cb90295",
+                "url": "https://api.github.com/repos/wp-content-framework/session/zipball/c0b274a0bee0d7a6328b73725bc497b972469f39",
+                "reference": "c0b274a0bee0d7a6328b73725bc497b972469f39",
                 "shasum": ""
             },
             "require": {
@@ -904,26 +820,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-06-26T17:40:02+00:00"
+            "time": "2020-07-17T16:10:24+00:00"
         },
         {
             "name": "wp-content-framework/update",
-            "version": "v1.0.13",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/update.git",
-                "reference": "20d16a9452bb06824af7a53c05a55da28940064b"
+                "reference": "8cb53fd9cb194043adf3e8c6eea1f894f4a2c66f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/20d16a9452bb06824af7a53c05a55da28940064b",
-                "reference": "20d16a9452bb06824af7a53c05a55da28940064b",
+                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/8cb53fd9cb194043adf3e8c6eea1f894f4a2c66f",
+                "reference": "8cb53fd9cb194043adf3e8c6eea1f894f4a2c66f",
                 "shasum": ""
             },
             "require": {
@@ -955,26 +865,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-04T05:33:52+00:00"
+            "time": "2020-07-18T09:35:40+00:00"
         },
         {
             "name": "wp-content-framework/update_check",
-            "version": "v1.0.10",
+            "version": "v1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/update_check.git",
-                "reference": "7ccbf70243dec4321c1e49d9dc86a71b3e16d517"
+                "reference": "e621bc6a192dd221d7d75f530a0edd9565d8989b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/update_check/zipball/7ccbf70243dec4321c1e49d9dc86a71b3e16d517",
-                "reference": "7ccbf70243dec4321c1e49d9dc86a71b3e16d517",
+                "url": "https://api.github.com/repos/wp-content-framework/update_check/zipball/e621bc6a192dd221d7d75f530a0edd9565d8989b",
+                "reference": "e621bc6a192dd221d7d75f530a0edd9565d8989b",
                 "shasum": ""
             },
             "require": {
@@ -1006,26 +910,20 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-01T03:56:20+00:00"
+            "time": "2020-07-08T03:53:04+00:00"
         },
         {
             "name": "wp-content-framework/view",
-            "version": "v1.0.13",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/view.git",
-                "reference": "67d98c7c86036077076999810a872b262e1b799e"
+                "reference": "2b1104ef60c8716eab68a1f1d3b8f34a2ccbb391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/view/zipball/67d98c7c86036077076999810a872b262e1b799e",
-                "reference": "67d98c7c86036077076999810a872b262e1b799e",
+                "url": "https://api.github.com/repos/wp-content-framework/view/zipball/2b1104ef60c8716eab68a1f1d3b8f34a2ccbb391",
+                "reference": "2b1104ef60c8716eab68a1f1d3b8f34a2ccbb391",
                 "shasum": ""
             },
             "require": {
@@ -1057,13 +955,7 @@
                 "framework",
                 "wordpress"
             ],
-            "funding": [
-                {
-                    "url": "https://paypal.me/technote0space",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-07-03T14:10:45+00:00"
+            "time": "2020-07-17T16:10:28+00:00"
         },
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -1154,20 +1046,6 @@
             "keywords": [
                 "Xdebug",
                 "performance"
-            ],
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-06-04T11:16:35+00:00"
         },
@@ -1381,12 +1259,6 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "funding": [
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/pdepend/pdepend",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-06-20T10:53:13+00:00"
         },
         {
@@ -2321,12 +2193,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "57353ec1a34527a2dbbd3c0fb9418ffc008c6f60"
+                "reference": "9f386dba391018e90a5f1e51abeffc6bf27583db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/57353ec1a34527a2dbbd3c0fb9418ffc008c6f60",
-                "reference": "57353ec1a34527a2dbbd3c0fb9418ffc008c6f60",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/9f386dba391018e90a5f1e51abeffc6bf27583db",
+                "reference": "9f386dba391018e90a5f1e51abeffc6bf27583db",
                 "shasum": ""
             },
             "conflict": {
@@ -2395,6 +2267,7 @@
                 "friendsofsymfony/user-bundle": ">=1.2,<1.3.5",
                 "fuel/core": "<1.8.1",
                 "getgrav/grav": "<1.7-beta.8",
+                "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
                 "gree/jose": "<=2.2",
                 "gregwar/rst": "<1.0.3",
                 "guzzlehttp/guzzle": ">=4-rc.2,<4.2.4|>=5,<5.3.1|>=6,<6.2.1",
@@ -2462,8 +2335,8 @@
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
                 "silverstripe/comments": ">=1.3,<1.9.99|>=2,<2.9.99|>=3,<3.1.1",
                 "silverstripe/forum": "<=0.6.1|>=0.7,<=0.7.3",
-                "silverstripe/framework": "<4.4.5|>=4.5,<4.5.2",
-                "silverstripe/graphql": ">=2,<2.0.5|>=3,<3.1.2",
+                "silverstripe/framework": "<4.4.7|>=4.5,<4.5.4",
+                "silverstripe/graphql": ">=2,<2.0.5|>=3,<3.1.2|>=3.2,<3.2.4",
                 "silverstripe/registry": ">=2.1,<2.1.2|>=2.2,<2.2.1",
                 "silverstripe/restfulserver": ">=1,<1.0.9|>=2,<2.0.4",
                 "silverstripe/subsites": ">=2,<2.1.1",
@@ -2589,17 +2462,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "funding": [
-                {
-                    "url": "https://github.com/Ocramius",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/roave/security-advisories",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-07-03T16:50:03+00:00"
+            "time": "2020-07-16T05:17:29+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3227,20 +3090,6 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-05-22T10:56:48+00:00"
         },
         {
@@ -3312,20 +3161,6 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-05-30T21:06:01+00:00"
         },
         {
@@ -3376,34 +3211,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-05-30T17:48:24+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.17.1",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "2edd75b8b35d62fd3eeabba73b26b8f1f60ce13d"
+                "reference": "1c302646f6efc070cd46856e600e5e0684d6b454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/2edd75b8b35d62fd3eeabba73b26b8f1f60ce13d",
-                "reference": "2edd75b8b35d62fd3eeabba73b26b8f1f60ce13d",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/1c302646f6efc070cd46856e600e5e0684d6b454",
+                "reference": "1c302646f6efc070cd46856e600e5e0684d6b454",
                 "shasum": ""
             },
             "require": {
@@ -3415,7 +3236,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17-dev"
+                    "dev-master": "1.18-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -3452,21 +3273,7 @@
                 "polyfill",
                 "portable"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-06-06T08:46:27+00:00"
+            "time": "2020-07-14T12:35:20+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -3525,38 +3332,24 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-05-11T07:51:54+00:00"
         },
         {
             "name": "webmozart/assert",
-            "version": "1.9.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "9dc4f203e36f2b486149058bade43c851dd97451"
+                "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/9dc4f203e36f2b486149058bade43c851dd97451",
-                "reference": "9dc4f203e36f2b486149058bade43c851dd97451",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0",
+                "php": "^5.3.3 || ^7.0 || ^8.0",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
@@ -3588,7 +3381,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2020-06-16T10:16:42+00:00"
+            "time": "2020-07-08T17:02:28+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -3650,6 +3443,5 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "5.6"
-    },
-    "plugin-api-version": "1.1.0"
+    }
 }
