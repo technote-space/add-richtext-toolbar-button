@@ -1,6 +1,6 @@
 {
   "name": "add-richtext-toolbar-button",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "add richtext toolbar button",
   "scripts": {
     "start": "yarn build",
