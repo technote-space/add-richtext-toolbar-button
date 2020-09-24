@@ -38,4 +38,4 @@ coverage/
 /tests/bootstrap.php
 /.plugin
 /.work
-!/bin
+!/bin/*
