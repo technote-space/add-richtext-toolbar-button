@@ -10,7 +10,7 @@
     "cover": "jest --coverage",
     "develop": "webpack --mode development --config webpack.config.js",
     "build": "webpack --mode production --config webpack.config.js",
-    "update": "ncu -u && yarn install && yarn upgrade && yarn audit"
+    "update": "npx npm-check-updates -u && yarn install && yarn upgrade && yarn audit"
   },
   "author": {
     "name": "Technote",
