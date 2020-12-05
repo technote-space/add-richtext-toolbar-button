@@ -13,8 +13,6 @@
 
 Gutenberg エディタのツールバーに文章修飾用のボタンを追加するプラグインです。
 
-[デモ](https://technote-space.github.io/add-richtext-toolbar-button)
-
 [最新バージョン](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/release.zip)
 
 ## Table of Contents
