@@ -13,8 +13,6 @@
 
 This plugin makes it easy to add RichText toolbar button.
 
-[Demonstration](https://technote-space.github.io/add-richtext-toolbar-button)
-
 [Latest version](https://github.com/technote-space/add-richtext-toolbar-button/releases/latest/download/release.zip)
 
 ## Table of Contents
