@@ -32,6 +32,11 @@ jobs:
         if: env.RUNNING1
         with:
           EXCLUDE_MERGED: 'true'
+      - name: Switch PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer:v1
       - name: Update dependencies
         if: env.RUNNING1
         id: update_deps
