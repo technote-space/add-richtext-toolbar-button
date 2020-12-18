@@ -13,7 +13,8 @@ jobs:
     steps:
       - uses: technote-space/load-config-action@v1
         with:
-          CONFIG_FILENAME: workflow-settings.json
+          CONFIG_FILENAME: workflow-settings.json, workflow-details.json
+          IGNORE_WARNING: 'true'
       - name: Set running flag
         run: echo "RUNNING=1" >> $GITHUB_ENV
       - uses: actions/checkout@v2
