@@ -246,16 +246,16 @@
         },
         {
             "name": "wp-content-framework/admin",
-            "version": "v1.0.43",
+            "version": "v1.0.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/admin.git",
-                "reference": "1ebc6101c9d749080993ae229a5fb22988902960"
+                "reference": "70eda919e35a506db1ec64f560e4f7353c5a91e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/1ebc6101c9d749080993ae229a5fb22988902960",
-                "reference": "1ebc6101c9d749080993ae229a5fb22988902960",
+                "url": "https://api.github.com/repos/wp-content-framework/admin/zipball/70eda919e35a506db1ec64f560e4f7353c5a91e9",
+                "reference": "70eda919e35a506db1ec64f560e4f7353c5a91e9",
                 "shasum": ""
             },
             "require": {
@@ -294,20 +294,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-03T03:03:29+00:00"
+            "time": "2021-02-10T04:24:24+00:00"
         },
         {
             "name": "wp-content-framework/api",
-            "version": "v1.0.38",
+            "version": "v1.0.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/api.git",
-                "reference": "3048211e0054d8a25b003d10440ed10530665937"
+                "reference": "a7d697b48f67ec5f3ac94f577d25447da4bfd385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/api/zipball/3048211e0054d8a25b003d10440ed10530665937",
-                "reference": "3048211e0054d8a25b003d10440ed10530665937",
+                "url": "https://api.github.com/repos/wp-content-framework/api/zipball/a7d697b48f67ec5f3ac94f577d25447da4bfd385",
+                "reference": "a7d697b48f67ec5f3ac94f577d25447da4bfd385",
                 "shasum": ""
             },
             "require": {
@@ -345,7 +345,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-01T18:32:50+00:00"
+            "time": "2021-02-09T02:24:15+00:00"
         },
         {
             "name": "wp-content-framework/cache",
@@ -453,16 +453,16 @@
         },
         {
             "name": "wp-content-framework/controller",
-            "version": "v1.0.40",
+            "version": "v1.0.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/controller.git",
-                "reference": "f9d333466beef83473476cbb331b948180263b5f"
+                "reference": "7a87b7e1731ab0b3b88b69b59e07794db1593d3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/controller/zipball/f9d333466beef83473476cbb331b948180263b5f",
-                "reference": "f9d333466beef83473476cbb331b948180263b5f",
+                "url": "https://api.github.com/repos/wp-content-framework/controller/zipball/7a87b7e1731ab0b3b88b69b59e07794db1593d3e",
+                "reference": "7a87b7e1731ab0b3b88b69b59e07794db1593d3e",
                 "shasum": ""
             },
             "require": {
@@ -500,7 +500,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-06T12:53:01+00:00"
+            "time": "2021-02-13T14:00:37+00:00"
         },
         {
             "name": "wp-content-framework/core",
@@ -774,16 +774,16 @@
         },
         {
             "name": "wp-content-framework/log",
-            "version": "v1.0.44",
+            "version": "v1.0.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/log.git",
-                "reference": "274bb70bbf4013c5844e7f265e788ba863a7d18b"
+                "reference": "aa6704a4a7c93073e6b6064b0da9879bcbafb3bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/274bb70bbf4013c5844e7f265e788ba863a7d18b",
-                "reference": "274bb70bbf4013c5844e7f265e788ba863a7d18b",
+                "url": "https://api.github.com/repos/wp-content-framework/log/zipball/aa6704a4a7c93073e6b6064b0da9879bcbafb3bb",
+                "reference": "aa6704a4a7c93073e6b6064b0da9879bcbafb3bb",
                 "shasum": ""
             },
             "require": {
@@ -823,20 +823,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-05T06:44:52+00:00"
+            "time": "2021-02-12T15:09:52+00:00"
         },
         {
             "name": "wp-content-framework/presenter",
-            "version": "v1.0.31",
+            "version": "v1.0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/presenter.git",
-                "reference": "02c16374fa24190ee733590a47e6df7f01bdc570"
+                "reference": "dbdc509e7089cbe48efa217dd9f72582c874d032"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/presenter/zipball/02c16374fa24190ee733590a47e6df7f01bdc570",
-                "reference": "02c16374fa24190ee733590a47e6df7f01bdc570",
+                "url": "https://api.github.com/repos/wp-content-framework/presenter/zipball/dbdc509e7089cbe48efa217dd9f72582c874d032",
+                "reference": "dbdc509e7089cbe48efa217dd9f72582c874d032",
                 "shasum": ""
             },
             "require": {
@@ -874,7 +874,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-01T12:50:06+00:00"
+            "time": "2021-02-08T06:44:42+00:00"
         },
         {
             "name": "wp-content-framework/session",
@@ -928,16 +928,16 @@
         },
         {
             "name": "wp-content-framework/update",
-            "version": "v1.0.41",
+            "version": "v1.0.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/update.git",
-                "reference": "076287ee57e8c137778105121beb49b7cf318968"
+                "reference": "a19ff045998b591c12321e042cc03337fbd1d913"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/076287ee57e8c137778105121beb49b7cf318968",
-                "reference": "076287ee57e8c137778105121beb49b7cf318968",
+                "url": "https://api.github.com/repos/wp-content-framework/update/zipball/a19ff045998b591c12321e042cc03337fbd1d913",
+                "reference": "a19ff045998b591c12321e042cc03337fbd1d913",
                 "shasum": ""
             },
             "require": {
@@ -975,20 +975,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-06T07:49:03+00:00"
+            "time": "2021-02-13T06:13:15+00:00"
         },
         {
             "name": "wp-content-framework/update_check",
-            "version": "v1.0.28",
+            "version": "v1.0.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/update_check.git",
-                "reference": "98c1d0fc77991a3c916b66b0b995964675a7c303"
+                "reference": "eb27f738547f9aa5d1b46e16ea51ab53ce49292f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/update_check/zipball/98c1d0fc77991a3c916b66b0b995964675a7c303",
-                "reference": "98c1d0fc77991a3c916b66b0b995964675a7c303",
+                "url": "https://api.github.com/repos/wp-content-framework/update_check/zipball/eb27f738547f9aa5d1b46e16ea51ab53ce49292f",
+                "reference": "eb27f738547f9aa5d1b46e16ea51ab53ce49292f",
                 "shasum": ""
             },
             "require": {
@@ -1026,7 +1026,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-02-03T03:03:22+00:00"
+            "time": "2021-02-10T04:25:06+00:00"
         },
         {
             "name": "wp-content-framework/view",
@@ -2344,12 +2344,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "f7d723a10c7cb36e11430182f5813ecb1b887da0"
+                "reference": "5f40d4d577a71466f9723122251b46bdaf634709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/f7d723a10c7cb36e11430182f5813ecb1b887da0",
-                "reference": "f7d723a10c7cb36e11430182f5813ecb1b887da0",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/5f40d4d577a71466f9723122251b46bdaf634709",
+                "reference": "5f40d4d577a71466f9723122251b46bdaf634709",
                 "shasum": ""
             },
             "conflict": {
@@ -2466,7 +2466,7 @@
                 "october/backend": ">=1.0.319,<1.0.470",
                 "october/cms": "= 1.0.469|>=1.0.319,<1.0.469",
                 "october/october": ">=1.0.319,<1.0.466",
-                "october/rain": ">=1.0.319,<1.0.468",
+                "october/rain": "<1.0.472|>=1.1,<1.1.2",
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
                 "openid/php-openid": "<2.3",
@@ -2510,7 +2510,7 @@
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
                 "shopware/core": "<=6.3.4",
-                "shopware/platform": "<=6.3.4",
+                "shopware/platform": "<=6.3.5",
                 "shopware/shopware": "<5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
@@ -2657,7 +2657,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-02T10:05:32+00:00"
+            "time": "2021-02-10T03:02:31+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
