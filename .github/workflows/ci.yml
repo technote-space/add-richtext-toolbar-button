@@ -44,10 +44,10 @@ jobs:
             ${{ runner.os }}-yarn-
         if: env.RUNNING
       - name: Prepare setting
-        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+        run: git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper && bash ci-helper/bin/prepare.sh
         if: env.RUNNING
       - name: Check code style
-        run: bash travis-ci/bin/js/js-lint.sh
+        run: bash ci-helper/bin/js/js-lint.sh
         if: env.RUNNING
 
   phpcs:
@@ -88,10 +88,10 @@ jobs:
             ${{ runner.os }}-composer-
         if: env.RUNNING
       - name: Prepare setting
-        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+        run: git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper && bash ci-helper/bin/prepare.sh
         if: env.RUNNING
       - name: Check code style
-        run: bash travis-ci/bin/php/phpcs.sh
+        run: bash ci-helper/bin/php/phpcs.sh
         if: env.RUNNING
 
   phpmd:
@@ -132,10 +132,10 @@ jobs:
             ${{ runner.os }}-composer-
         if: env.RUNNING
       - name: Prepare setting
-        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+        run: git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper && bash ci-helper/bin/prepare.sh
         if: env.RUNNING
       - name: Check code style
-        run: bash travis-ci/bin/php/phpmd.sh
+        run: bash ci-helper/bin/php/phpmd.sh
         if: env.RUNNING
 
   cover:
@@ -191,10 +191,10 @@ jobs:
             ${{ runner.os }}-yarn-
         if: env.RUNNING
       - name: Prepare setting
-        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+        run: git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper && bash ci-helper/bin/prepare.sh
         if: env.RUNNING
       - name: Run tests
-        run: bash travis-ci/bin/js/js-test.sh
+        run: bash ci-helper/bin/js/js-test.sh
         if: env.RUNNING
       - name: Codecov
         run: |
@@ -229,7 +229,13 @@ jobs:
     steps:
       - name: Set running flag
         run: echo "RUNNING=1" >> $GITHUB_ENV
+      - uses: technote-space/load-config-action@v1
+        with:
+          CONFIG_FILENAME: workflow-settings.json, workflow-details.json
+          IGNORE_WARNING: 'true'
       - uses: actions/checkout@v2
+        with:
+          submodules: ${{ env.CHECKOUT_SUBMODULES }}
       - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v4
         with:
@@ -278,7 +284,7 @@ jobs:
             plugin-cache-
         if: env.RUNNING && matrix.ACTIVATE_POPULAR_PLUGINS == 1
       - name: Prepare setting
-        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+        run: git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper && bash ci-helper/bin/prepare.sh
         env:
           WP_VERSION: ${{ matrix.WP_VERSION }}
           WP_MULTISITE: ${{ matrix.WP_MULTISITE }}
@@ -287,7 +293,7 @@ jobs:
       - run: sudo systemctl start mysql
         if: env.RUNNING
       - name: Run tests
-        run: bash travis-ci/bin/php/wp-test.sh
+        run: bash ci-helper/bin/php/wp-test.sh
         env:
           DB_PASS: root
           WP_VERSION: ${{ matrix.WP_VERSION }}
@@ -341,8 +347,8 @@ jobs:
         if: env.RUNNING
       - name: Build
         run: |
-          git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci
-          bash travis-ci/bin/deploy/gh-pages.sh
+          git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper
+          bash ci-helper/bin/deploy/gh-pages.sh
         if: env.RUNNING
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -377,9 +383,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
       - name: Prepare setting
-        run: git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci && bash travis-ci/bin/prepare.sh
+        run: git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper && bash ci-helper/bin/prepare.sh
       - name: Build
-        run: source travis-ci/bin/deploy/env.sh && bash travis-ci/bin/deploy/create.sh
+        run: source ci-helper/bin/deploy/env.sh && bash ci-helper/bin/deploy/create.sh
       - name: Upload
         uses: technote-space/action-gh-release@v2
         with:
