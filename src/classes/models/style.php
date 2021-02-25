@@ -75,6 +75,7 @@ class Style implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Co
 	 * @param bool $is_editor
 	 *
 	 * @return array|string
+	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
 	 */
 	public function decode_style( $style, $is_editor = false ) {
 		$styles = @json_decode( $style, true ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged

@@ -313,7 +313,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @return array
-	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	private function get_manage_column_preview() {
 		return [
@@ -343,7 +343,7 @@ class Setting implements \Richtext_Toolbar_Button\Interfaces\Models\Custom_Post 
 
 	/**
 	 * @return array
-	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	private function get_manage_column_display() {
 		return [
