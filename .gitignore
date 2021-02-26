@@ -28,7 +28,7 @@ logs
 !tests/bin/**/*.sh
 coverage/
 /vendor
-/travis-ci
+/ci-helper
 /gh-pages
 
 /.coveralls.yml

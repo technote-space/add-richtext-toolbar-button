@@ -20,11 +20,11 @@
     "wp-content-framework/log": "^1.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "*",
-    "wp-coding-standards/wpcs": "*",
-    "phpmd/phpmd": "^2.8",
-    "phpcompatibility/phpcompatibility-wp": "*",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "phpmd/phpmd": "^2.9",
+    "squizlabs/php_codesniffer": "^3.5",
+    "wp-coding-standards/wpcs": "^2.3",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
     "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "^4.8 || ^5.7 || ^7.5"
   },
@@ -80,26 +80,26 @@
     "jest:update": [
       "yarn --cwd assets/js cover:update"
     ],
-    "bin:wp-test": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./travis-ci/bin/php/wp-test.sh",
-    "bin:wp-test-p": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ACTIVATE_POPULAR_PLUGINS=1 ./travis-ci/bin/php/wp-test.sh",
-    "bin:phpcs": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./travis-ci/bin/php/phpcs.sh",
-    "bin:phpmd": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./travis-ci/bin/php/phpmd.sh",
-    "bin:js-lint": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./travis-ci/bin/js/js-lint.sh",
-    "bin:js-test": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./travis-ci/bin/js/js-test.sh",
-    "bin:build": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./travis-ci/bin/deploy/env.sh && bash ./travis-ci/bin/deploy/create.sh",
-    "bin:test": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 bash ./travis-ci/bin/test.sh",
-    "bin:test-p": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/test.sh",
+    "bin:wp-test": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./ci-helper/bin/php/wp-test.sh",
+    "bin:wp-test-p": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ACTIVATE_POPULAR_PLUGINS=1 ./ci-helper/bin/php/wp-test.sh",
+    "bin:phpcs": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./ci-helper/bin/php/phpcs.sh",
+    "bin:phpmd": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./ci-helper/bin/php/phpmd.sh",
+    "bin:js-lint": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./ci-helper/bin/js/js-lint.sh",
+    "bin:js-test": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ./ci-helper/bin/js/js-test.sh",
+    "bin:build": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 source ./ci-helper/bin/deploy/env.sh && bash ./ci-helper/bin/deploy/create.sh",
+    "bin:test": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 bash ./ci-helper/bin/test.sh",
+    "bin:test-p": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} TRAVIS_REPO_SLUG=technote-space/add-richtext-toolbar-button TRAVIS_TAG=v1.2.3 ACTIVATE_POPULAR_PLUGINS=1 bash ./ci-helper/bin/test.sh",
     "bin:download": [
-      "mkdir -p ./travis-ci/.git",
-      "chmod -R +w ./travis-ci/.git && rm -rdf ./travis-ci",
+      "mkdir -p ./ci-helper/.git",
+      "chmod -R +w ./ci-helper/.git && rm -rdf ./ci-helper",
       "rm -f ./tests/bootstrap.php ./.coveralls.yml ./phpcs.xml ./phpmd.xml phpunit.xml",
-      "git clone --depth=1 https://github.com/wp-content-framework/travis-ci.git travis-ci"
+      "git clone --depth=1 https://github.com/wp-content-framework/ci-helper.git ci-helper"
     ],
-    "bin:prepare": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ACTIVATE_POPULAR_PLUGINS=1 bash ./travis-ci/bin/prepare.sh",
-    "bin:gh-pages": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} GH_PAGES_PLUGIN_SCRIPT='./index.min.js' GH_PAGES_TITLE='Add RichText Toolbar Button' GH_PAGES_TEMPLATE=gutenberg  bash ./travis-ci/bin/deploy/gh-pages.sh",
+    "bin:prepare": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} ACTIVATE_POPULAR_PLUGINS=1 bash ./ci-helper/bin/prepare.sh",
+    "bin:gh-pages": "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} GH_PAGES_PLUGIN_SCRIPT='./index.min.js' GH_PAGES_TITLE='Add RichText Toolbar Button' GH_PAGES_TEMPLATE=gutenberg  bash ./ci-helper/bin/deploy/gh-pages.sh",
     "bin:update": [
-      "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash ./travis-ci/bin/update/composer.sh",
-      "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash ./travis-ci/bin/update/package.sh"
+      "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash ./ci-helper/bin/update/composer.sh",
+      "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash ./ci-helper/bin/update/package.sh"
     ]
   },
   "config": {
