@@ -1,5 +1,8 @@
 on: push
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 name: CI
 
 env:
@@ -13,9 +16,6 @@ jobs:
     env:
       LINT: 1
     steps:
-      - uses: technote-space/auto-cancel-redundant-workflow@v1
-        with:
-          EXCLUDE_MERGED: 'true'
       - name: Set running flag
         run: echo "RUNNING=1" >> $GITHUB_ENV
       - uses: actions/checkout@v2
